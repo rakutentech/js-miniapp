@@ -33,7 +33,7 @@
     "test": "mocha -r ts-node/register tests/**/*.spec.ts --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results/mocha/results.xml",
     "coverage": "nyc npm test",
     "version": "npx -c 'echo $npm_package_version'",
-    "docs": "chmod +x scripts/docs.sh && scripts/docs.sh"
+    "docs": "scripts/docs.sh"
   },
   "files": [
     "README.md",
