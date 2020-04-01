@@ -15,7 +15,7 @@ MiniAppBridge.execCallback = function(messageId, value) {
     queueObj.onSuccess(value);
     var index = queue.indexOf(queueObj)
     if(index != -1) {
-        queueObj.splice(index, 1);
+        queue.splice(index, 1);
     }
 }
 
