@@ -1,5 +1,13 @@
 let MiniAppBridge = {}
 var queue = []
+var isPlatform = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    }
+};
 
 MiniAppBridge.exec = function(action, onSuccess, onError) {
     const callback = {}
@@ -7,15 +15,19 @@ MiniAppBridge.exec = function(action, onSuccess, onError) {
     callback.onError = onError;
     callback.id = Math.random();
     queue.unshift(callback)
-    webkit.messageHandlers.MiniApp.postMessage(JSON.stringify({action: action, id: callback.id}));
+    if(isPlatform.iOS()){
+        webkit.messageHandlers.MiniApp.postMessage(JSON.stringify({action: action, id: callback.id}));
+    } else {
+        window.MiniApp.getUniqueId(JSON.stringify({action: action, id: callback.id}))
+    }
 }
 
 MiniAppBridge.execCallback = function(messageId, value) {
     var queueObj = queue.find(callback => callback.id = messageId)
     queueObj.onSuccess(value);
-    var index = queue.indexOf(queueObj)
-    if(index != -1) {
-        queue.splice(index, 1);
+    var messageObjIndex = queue.indexOf(queueObj)
+    if(messageObjIndex != -1) {
+        queue.splice(messageObjIndex, 1);
     }
 }
 
