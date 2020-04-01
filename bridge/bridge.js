@@ -13,7 +13,10 @@ MiniAppBridge.exec = function(action, onSuccess, onError) {
 MiniAppBridge.execCallback = function(messageId, value) {
     var queueObj = queue.find(callback => callback.id = messageId)
     queueObj.onSuccess(value);
-    queue.shift(queueObj)
+    var index = queue.indexOf(queueObj)
+    if(index != -1) {
+        queueObj.splice(index, 1);
+    }
 }
 
 window.MiniApp = {
