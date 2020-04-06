@@ -16,9 +16,9 @@ MiniAppBridge.exec = function(action, onSuccess, onError) {
     callback.id = Math.random();
     messageQueue.unshift(callback)
     if(isPlatform.iOS()){
-        webkit.messageHandlers.MiniApp.postMessage(JSON.stringify({action: action, id: callback.id}));
+        webkit.messageHandlers.MiniAppiOS.postMessage(JSON.stringify({action: action, id: callback.id}));
     } else {
-        window.MiniApp.getUniqueId(JSON.stringify({action: action, id: callback.id}))
+        window.MiniAppAndroid.getUniqueId(JSON.stringify({action: action, id: callback.id}))
     }
 }
 
