@@ -26,27 +26,47 @@ MiniAppBridge.exec = function(action, onSuccess, onError) {
     if(isPlatform.iOS()){
         webkit.messageHandlers.MiniAppiOS.postMessage(JSON.stringify({action: action, id: callback.id}));
     } else {
-        window.MiniAppAndroid.getUniqueId(JSON.stringify({action: action, id: callback.id}))
+        window.MiniAppAndroid.postMessage(JSON.stringify({action: action, id: callback.id}))
     }
 }
 
 /**
- * Callback method that will be called from native side
+ * Success Callback method that will be called from native side
  * to this bridge. This method will send back the value to the
  * mini apps that uses promises
- * such as iOS & Android
  * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
  * @param  {[String]} value Response value sent from the native on invoking the action command
  */
-MiniAppBridge.execCallback = function(messageId, value) {
+MiniAppBridge.execSuccessCallback = function(messageId, value) {
     var queueObj = messageQueue.find(callback => callback.id = messageId)
     queueObj.onSuccess(value);
+    removeFromMessageQueue(queueObj)
+}
+
+/**
+ * Error Callback method that will be called from native side
+ * to this bridge. This method will send back the error message to the
+ * mini apps that uses promises
+ * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
+ * @param  {[String]} errorMessage Error message sent from the native on invoking the action command
+ */
+MiniAppBridge.execErrorCallback = function(messageId, errorMessage) {
+    var queueObj = messageQueue.find(callback => callback.id = messageId)
+    queueObj.onError(errorMessage);
+    removeFromMessageQueue(queueObj)
+}
+
+/**
+ * Method to remove the callback object from the message queue after successfull/error communication
+ * with the native application
+ * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ */
+function removeFromMessageQueue(queueObj) {
     var messageObjIndex = messageQueue.indexOf(queueObj)
     if(messageObjIndex != -1) {
         messageQueue.splice(messageObjIndex, 1);
     }
 }
-
 
 /**
  * Associating getUniqueId function to MiniAppBridge object
