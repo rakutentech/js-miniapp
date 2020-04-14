@@ -21,7 +21,7 @@ MiniAppBridge.exec = function(action, onSuccess, onError) {
     const callback = {}
     callback.onSuccess = onSuccess;
     callback.onError = onError;
-    callback.id = ++uniqueId;
+    callback.id = String(++uniqueId);
     messageQueue.unshift(callback)
     if(isPlatform.iOS()){
         webkit.messageHandlers.MiniAppiOS.postMessage(JSON.stringify({action: action, id: callback.id}));
