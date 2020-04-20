@@ -7,6 +7,7 @@ import { renderWithRedux, wrapRouter, screen } from "./../../tests/test-utils";
 import ToolBar from "./../ToolBar";
 
 import "@testing-library/jest-dom";
+import { act } from "react-dom/test-utils";
 describe("ToolBar", () => {
   const navItems = [
     {
@@ -74,7 +75,9 @@ describe("ToolBar", () => {
     expect(navList.length).toEqual(1);
     const navLabel = navItems[0].label;
     expect(screen.getAllByText(navLabel).length).toEqual(1);
-    userEvent.click(screen.getByText(navLabel));
+    act(() => {
+      userEvent.click(screen.getByText(navLabel));
+    });
     expect(screen.getAllByText(navLabel).length).toEqual(2);
   });
 

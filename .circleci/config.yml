@@ -46,6 +46,34 @@ jobs: # a collection of steps
           paths:
             - js-miniapp-sdk/build/
 
+  build-sample: # builds  & tests the sample app against latest sdk build.
+    working_directory: ~/js-miniapp-sample
+    docker:
+      - image: circleci/node:12.16.2
+      # TODO get the sdk build from saved workspace
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: #checks for formatting
+          name: check
+          command: yarn sample prettify
+      - run:
+          name: test
+          command: yarn sample test -- --watchAll=false
+      - run:
+          name: build
+          command: yarn sample build
+
   publish-sdk:
     working_directory: ~/mini-js-sdk
     docker:
@@ -56,9 +84,9 @@ jobs: # a collection of steps
           at: ./
       - run:
           name: publish to NPM
-          command: | 
+          command: |
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            yarn sdk publish 
+            yarn sdk publish
       - run:
           name: Publish Documentation
           command: |
@@ -85,6 +113,13 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+            branches:
+              only: /.*/
+      - build-sample:
+          filters:
+            tags:
+              # TODO: confirm
+              only: /.*/
             branches:
               only: /.*/
       - sdk-release-verification:
