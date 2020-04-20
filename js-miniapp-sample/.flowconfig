@@ -1,5 +1,6 @@
 [declarations]
 <PROJECT_ROOT>/../node_modules/.*
+<PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/src/serviceWorker.js
 <PROJECT_ROOT>/src/setupTests.js
 

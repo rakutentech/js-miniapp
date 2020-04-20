@@ -33,44 +33,40 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
 ## Installation
 
 ```
-git clone git@ghe.rakuten-it.com:ssed/miniapp-build-common.git
-cd miniapp-build-common
-npm install
-npm start
+git clone git@github.com:rakutentech/js-miniapp.git
+cd js-miniapp
+yarn install
+yarn sample start
 ```
 
 ## Testing
 
 For test just execute:
 
-`npm test`
+`yarn sample test`
 
 ## Building
 
 To build the app for production:
 
-`npm run build`
+`yarn sample build`
 
-The building will be inside the `build` folder on the root.<br />
+The building will be inside the `build` folder on `js-miniapp-sample` root.<br />
 
 ## Export Dockerized App Image as TAR
 
 to build and package docker image of the production build:
 
-`npm run dockerBuild`
+`yarn sample dockerBuild`
 
-(or)
-
-`make build` inside `ci/` directory on the root.
-
-The `poc.tar` file will be generated inside `ci/` directory on the root.<br/>
+The `poc.tar` file will be generated inside `ci/` directory on `js-miniapp-sample` root.<br/>
 **Prerequisite**: [Docker](https://docs.docker.com/) LTS
 
 ## Import Dockerized App Image from TAR
 
 to unpackage and run a production build on your local computer:
 
-- Copy `ci/Makefile` to the `poc.tar` file directory and run
+- Copy `js-miniapp-sample/ci/Makefile` to the `poc.tar` file directory and run
 
 ```bash
   make run
