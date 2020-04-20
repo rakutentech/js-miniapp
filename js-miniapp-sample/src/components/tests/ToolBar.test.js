@@ -1,13 +1,13 @@
 import React from "react";
 
 import StorageIcon from "@material-ui/icons/Storage";
+import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 
 import { renderWithRedux, wrapRouter, screen } from "./../../tests/test-utils";
 import ToolBar from "./../ToolBar";
 
-import "@testing-library/jest-dom";
-import { act } from "react-dom/test-utils";
 describe("ToolBar", () => {
   const navItems = [
     {

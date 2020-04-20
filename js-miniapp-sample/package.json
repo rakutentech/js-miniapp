@@ -16,6 +16,7 @@
   },
   "scripts": {
     "prettify": "prettier --check src/",
+    "lint": "eslint src/ --fix-dry-run",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "dockerBuild": "cd ci && make build",
