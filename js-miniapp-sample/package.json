@@ -1,7 +1,7 @@
 {
   "name": "js-miniapp-sample",
   "version": "0.1.0",
-  "description": "Mini App Sample for JavaScript",
+  "description": "Mini App Sample for JavaScript SDK",
   "dependencies": {
     "@material-ui/core": "^4.9.8",
     "@material-ui/icons": "^4.9.1",
@@ -23,9 +23,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "flow": "flow"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",

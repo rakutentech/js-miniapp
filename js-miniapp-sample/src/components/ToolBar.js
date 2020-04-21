@@ -36,24 +36,24 @@ type ToolBarProps = {
 
 const ToolBar = (props: ToolBarProps) => {
   const classes = useStyles();
-  const [drawer, setDrawer] = useState({ show: props.showDrawer ?? false });
+  const [showDrawerState, setDrawer] = useState(props.showDrawer ?? false);
 
   useEffect(
     () => {
-      setDrawer({ ...drawer, show: props.showDrawer });
+      setDrawer(props.showDrawer);
     }, // eslint-disable-next-line
     [props.showDrawer]
   );
-  const [shrinkState, setShrink] = useState({ shrink: false });
+  const [shrinkState, setShrink] = useState(false);
   const toggleDrawer = () => {
-    const showFlag = !drawer.show;
+    const showFlag = !showDrawerState;
     props.onDrawerToggle(showFlag);
-    setDrawer({ show: showFlag });
+    setDrawer(showFlag);
   };
   const onDrawerShrink = () => {
-    const shrinkFlag = !shrinkState.shrink;
+    const shrinkFlag = !shrinkState;
     props.onShrinkToggle(shrinkFlag);
-    setShrink({ shrink: shrinkFlag });
+    setShrink(shrinkFlag);
   };
 
   const onOpenClose = (type, event) => {
@@ -78,7 +78,7 @@ const ToolBar = (props: ToolBarProps) => {
             onClick={toggleDrawer}
             data-testid="drawer-toggle-button"
           >
-            {drawer.show ? (
+            {showDrawerState ? (
               <CloseIcon data-testid="close-icon" />
             ) : (
               <MenuIcon data-testid="menu-icon" />
@@ -91,8 +91,8 @@ const ToolBar = (props: ToolBarProps) => {
         </Toolbar>
       </AppBar>
       <Drawer
-        show={drawer.show}
-        shrinked={shrinkState.shrink}
+        show={showDrawerState}
+        shrinked={shrinkState}
         onOpenClose={onOpenClose}
         onShrink={onDrawerShrink}
         navItems={props.navItems}

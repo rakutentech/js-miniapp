@@ -1,6 +1,5 @@
 import React from "react";
 
-import "./App.css";
 import { makeStyles } from "@material-ui/core";
 import { Provider } from "react-redux";
 
@@ -10,6 +9,7 @@ import store from "./services/store";
 const useStyles = makeStyles((theme) => ({
   App: {
     width: "100%",
+    textAlign: "center",
   },
 }));
 

@@ -25,7 +25,7 @@ const chatbotState = {
 
 export default (state: ChatBotState = chatbotState, action: ChatBotAction) => {
   if (action.type === SET_CHATBOTS) {
-    state = { ...state, bots: action.payload };
+    return { ...state, bots: action.payload };
   }
   return state;
 };

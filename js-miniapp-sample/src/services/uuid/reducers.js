@@ -14,10 +14,8 @@ const UUIDReducer = (
   state: UUIDState = defaultState,
   action: UUIDAction = {}
 ): UUIDState => {
-  if (action !== undefined) {
-    if (action.type === SET_UUID) {
-      return { ...defaultState, uuid: action.payload };
-    }
+  if (action !== undefined && action.type === SET_UUID) {
+    return { ...defaultState, uuid: action.payload };
   }
   return state;
 };

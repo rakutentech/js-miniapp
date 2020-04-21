@@ -14,10 +14,8 @@ export default (
   state: HomePageState = homeState,
   action: HomeAction
 ): HomePageState => {
-  if (action !== undefined) {
-    if (action.type === SET_CURRENT_PAGE_TITLE) {
-      state = { ...state, title: action.payload };
-    }
+  if (action !== undefined && action.type === SET_CURRENT_PAGE_TITLE) {
+    return { ...state, title: action.payload };
   }
   return state;
 };

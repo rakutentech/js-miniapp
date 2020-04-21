@@ -1,4 +1,4 @@
-# miniapp-build-common
+# js-miniapp-sample
 
 This is the boilerplate for the MiniAppBuild Team.
 
@@ -6,9 +6,8 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
 
 ## Table of contents
 
-- [miniapp-build-common](#miniapp-build-common)
+- [js-miniapp-sample](#js-miniapp-sample)
   - [Table of contents](#table-of-contents)
-  - [Requirements](#requirements)
   - [Installation](#installation)
   - [Testing](#testing)
   - [Building](#building)
@@ -22,13 +21,6 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
     - [Commits](#commits)
   - [Branching policy](#branching-policy)
   - [Others](#others)
-
-## Requirements
-
-- If you're a new member **[please read the MiniAppBuild guidelines](https://confluence.rakuten-it.com/confluence/display/ONEAPP/MAB+-+On-boarding+Guide+for+Engineers)**
-- Please remember to generate a ssh key pair and upload the public key.
-  See https://ghe.rakuten-it.com/settings/tokens or https://ghe.rakuten-it.com/settings/ssh
-- Right now we're using node v12.16.1 along npm 6.13.4 (current LTS version). We may use [nvm](https://github.com/nvm-sh/nvm) in the future to set a node version within the project.
 
 ## Installation
 
@@ -122,12 +114,6 @@ to unpackage and run a production build on your local computer:
 - Tag the commit of released versions using semantic versioning
 - Before merging a Pull request, be sure to be up to date and solve any conflicts
 
-Also you can check this _work in progress_ document for branching on the MiniAppBuild Team:
-
-- https://confluence.rakuten-it.com/confluence/display/ONEAPP/Branching+strategy
-
 ## Others
 
 - You can have a look at the create-react-app repo [here](https://github.com/facebook/create-react-app)
-- Link to MiniApp Build Confluence page [here](https://confluence.rakuten-it.com/confluence/display/ONEAPP/Mini+App+Build)
-- Link to MiniApp Platform Confluence page [here](https://confluence.rakuten-it.com/confluence/display/ONEAPP/Mini+App+Platform)
