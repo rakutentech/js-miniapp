@@ -5,7 +5,12 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 
-import { renderWithRedux, wrapRouter, screen } from "./../../tests/test-utils";
+import {
+  renderWithRedux,
+  wrapRouter,
+  screen,
+  wrapTheme,
+} from "./../../tests/test-utils";
 import ToolBar from "./../ToolBar";
 
 describe("ToolBar", () => {
@@ -17,7 +22,7 @@ describe("ToolBar", () => {
     },
   ];
   test("should load toolbar with drawer icon & title", () => {
-    renderWithRedux(wrapRouter(<ToolBar showDrawer={false} />));
+    renderWithRedux(wrapRouter(wrapTheme(<ToolBar showDrawer={false} />)));
     expect(screen.getByText("POC")).toBeInTheDocument();
     expect(screen.getByTestId("menu-icon")).toBeInTheDocument();
     expect(screen.queryByTestId("close-icon")).toBeNull();
@@ -27,12 +32,14 @@ describe("ToolBar", () => {
   test("should load toolbar with drawer open", () => {
     renderWithRedux(
       wrapRouter(
-        <ToolBar
-          showDrawer={true}
-          navItems={navItems}
-          onDrawerToggle={() => {}}
-          onShrinkToggle={() => {}}
-        />
+        wrapTheme(
+          <ToolBar
+            showDrawer={true}
+            navItems={navItems}
+            onDrawerToggle={() => {}}
+            onShrinkToggle={() => {}}
+          />
+        )
       )
     );
     expect(screen.getByText("POC")).toBeInTheDocument();
@@ -45,12 +52,14 @@ describe("ToolBar", () => {
   test("should load toolbar with drawer closed", () => {
     renderWithRedux(
       wrapRouter(
-        <ToolBar
-          showDrawer={false}
-          navItems={navItems}
-          onDrawerToggle={() => {}}
-          onShrinkToggle={() => {}}
-        />
+        wrapTheme(
+          <ToolBar
+            showDrawer={false}
+            navItems={navItems}
+            onDrawerToggle={() => {}}
+            onShrinkToggle={() => {}}
+          />
+        )
       )
     );
     expect(screen.getByText("POC")).toBeInTheDocument();
@@ -63,12 +72,14 @@ describe("ToolBar", () => {
   test("should change title when navigation", () => {
     renderWithRedux(
       wrapRouter(
-        <ToolBar
-          showDrawer={true}
-          navItems={navItems}
-          onDrawerToggle={() => {}}
-          onShrinkToggle={() => {}}
-        />
+        wrapTheme(
+          <ToolBar
+            showDrawer={true}
+            navItems={navItems}
+            onDrawerToggle={() => {}}
+            onShrinkToggle={() => {}}
+          />
+        )
       )
     );
     const navList = screen.getByRole("presentation").querySelectorAll("ul a");
@@ -84,22 +95,19 @@ describe("ToolBar", () => {
   test("should shrink drawer", () => {
     renderWithRedux(
       wrapRouter(
-        <ToolBar
-          showDrawer={true}
-          navItems={navItems}
-          onDrawerToggle={() => {}}
-          onShrinkToggle={() => {}}
-        />
+        wrapTheme(
+          <ToolBar
+            showDrawer={true}
+            navItems={navItems}
+            onDrawerToggle={() => {}}
+            onShrinkToggle={() => {}}
+          />
+        )
       )
     );
     const navList = screen.getByRole("presentation").querySelectorAll("ul a");
     expect(navList.length).toEqual(1);
     const navLabel = navItems[0].label;
     expect(screen.getAllByText(navLabel).length).toEqual(1);
-
-    // TODO:
-    /* const shrink = screen.getByText("Shrink");
-    userEvent.click(shrink);
-    screen.debug(); */
   });
 });

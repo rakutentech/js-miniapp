@@ -2,12 +2,19 @@ import React from "react";
 
 import userEvent from "@testing-library/user-event";
 
-import { renderWithRedux, wrapRouter, screen } from "../../tests/test-utils";
+import {
+  renderWithRedux,
+  wrapRouter,
+  screen,
+  wrapTheme,
+} from "../../tests/test-utils";
 import TalkToChatBot from "../chatbot";
 
 describe("chatbot", () => {
+  beforeEach(() => {
+    renderWithRedux(wrapRouter(wrapTheme(<TalkToChatBot />)));
+  });
   test("should load chatbot", () => {
-    renderWithRedux(wrapRouter(<TalkToChatBot />));
     expect(screen.getByText("Chatbot")).toBeInTheDocument();
     expect(screen.getByText("Message")).toBeInTheDocument();
     expect(screen.getByTestId("send-message")).toBeInTheDocument();
@@ -17,7 +24,6 @@ describe("chatbot", () => {
   });
 
   test("should show validation error message when user clicks send button without message", () => {
-    renderWithRedux(wrapRouter(<TalkToChatBot />));
     userEvent.click(screen.getByTestId("send-message"));
     const validationBlk = screen.queryByTestId("validation-error");
     expect(validationBlk).toBeInTheDocument();
@@ -28,7 +34,6 @@ describe("chatbot", () => {
   });
 
   test("should show chatbot response", () => {
-    renderWithRedux(wrapRouter(<TalkToChatBot />));
     const messageField = screen.getByPlaceholderText("Type here...");
     userEvent.type(messageField, "Hello Rajesh");
     userEvent.click(screen.getByTestId("send-message"));

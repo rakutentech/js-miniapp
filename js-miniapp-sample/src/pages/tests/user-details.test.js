@@ -3,6 +3,7 @@ import React from "react";
 import { render, cleanup, screen } from "@testing-library/react";
 
 import "@testing-library/jest-dom/extend-expect";
+import { wrapTheme } from "../../tests/test-utils";
 import UserDetails, { dataFetchReducer, initialState } from "../user-details";
 
 jest.mock("axios");
@@ -10,14 +11,14 @@ jest.mock("axios");
 afterEach(cleanup);
 
 test("renders the elements", () => {
-  const { getByTestId } = render(<UserDetails />);
+  const { getByTestId } = render(wrapTheme(<UserDetails />));
   expect(getByTestId("authSwitch")).toBeInTheDocument();
   expect(getByTestId("dataFormsWrapper")).toBeInTheDocument();
   expect(getByTestId("fetchUserButton")).toBeInTheDocument();
 });
 
 test("On page load all input fields are empty", () => {
-  render(<UserDetails />);
+  render(wrapTheme(<UserDetails />));
   const hosterInput = screen.getByLabelText("App hoster");
   const nameInput = screen.getByLabelText("Name");
   const emailInput = screen.getByLabelText("email");

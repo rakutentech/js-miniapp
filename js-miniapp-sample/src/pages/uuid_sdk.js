@@ -13,13 +13,11 @@ import { connect } from "react-redux";
 import { setUUID } from "../services/uuid/actions";
 import NOT_AVILABLE_GIF from "./../assets/images/not_available.gif";
 
-const PRIMARY_COLOR = "rgb(63, 81, 181)";
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "lightgrey",
+    background: theme.color.secondary,
     height: 300,
-    width: "70%",
+    width: "95%",
   },
   content: {
     height: "50%",
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     fontSize: 18,
-    color: PRIMARY_COLOR,
+    color: theme.color.primary,
     fontWeight: "bold",
   },
   actions: {

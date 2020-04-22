@@ -16,8 +16,6 @@ import { NavLink } from "react-router-dom";
 
 import { setPageTitle } from "../services/home/actions";
 
-const PRIMARY_COLOR_LIGHT = "rgba(63, 81, 181, 0.6)";
-
 const useStyles = makeStyles((theme) => ({
   drawer: {},
   drawerPaper: {
@@ -47,14 +45,24 @@ const useStyles = makeStyles((theme) => ({
   shrinkedListItem: {
     paddingLeft: "24px",
   },
+  NavListRoot: {
+    paddingTop: 1,
+  },
   tooltip: {
-    backgroundColor: PRIMARY_COLOR_LIGHT,
+    backgroundColor: theme.color.primary,
   },
   tooltipArrow: {
-    color: PRIMARY_COLOR_LIGHT,
+    color: theme.color.primary,
+  },
+  navLink: {
+    height: 56,
   },
   activeNavLink: {
-    backgroundColor: PRIMARY_COLOR_LIGHT,
+    backgroundColor: theme.color.primary,
+    color: "white",
+    "& .icon": {
+      color: "white",
+    },
   },
 }));
 
@@ -95,7 +103,10 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
         })}
         role="presentation"
       >
-        <List className={clsx(classes.drawerPaperContentTopList)}>
+        <List
+          className={clsx(classes.drawerPaperContentTopList)}
+          classes={{ root: classes.NavListRoot }}
+        >
           {props.show &&
             props.navItems.map((it) => (
               <Tooltip
@@ -121,11 +132,11 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
                   to={it.navLink}
                   key={it.label}
                   activeClassName={classes.activeNavLink}
-                  className={clsx({
+                  className={clsx(classes.navLink, {
                     [classes.shrinkedListItem]: props.shrinked,
                   })}
                 >
-                  <ListItemIcon>{it.icon}</ListItemIcon>
+                  <ListItemIcon className="icon">{it.icon}</ListItemIcon>
                   <ListItemText primary={props.shrinked ? "  " : it.label} />
                 </ListItem>
               </Tooltip>

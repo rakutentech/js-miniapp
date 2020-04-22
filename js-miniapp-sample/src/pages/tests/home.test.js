@@ -2,12 +2,12 @@ import React from "react";
 
 import "@testing-library/jest-dom";
 
-import { renderWithRedux, screen } from "../../tests/test-utils";
+import { renderWithRedux, screen, wrapTheme } from "../../tests/test-utils";
 import Home from "./../home";
 
 describe("home", () => {
   beforeEach(() => {
-    renderWithRedux(<Home />);
+    renderWithRedux(wrapTheme(<Home />));
   });
 
   test("should load home page without drawer on pc", () => {

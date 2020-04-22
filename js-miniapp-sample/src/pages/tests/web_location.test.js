@@ -4,6 +4,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { wrapTheme } from "../../tests/test-utils";
 import WebLocation from "./../web_location";
 
 describe("web_location", () => {
@@ -23,7 +24,7 @@ describe("web_location", () => {
     ),
   };
   beforeEach(() => {
-    render(<WebLocation />);
+    render(wrapTheme(<WebLocation />));
     navigator.geolocation = mockGeolocation;
   });
 

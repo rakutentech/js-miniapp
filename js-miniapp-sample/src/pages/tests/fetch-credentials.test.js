@@ -2,19 +2,20 @@ import React from "react";
 
 import { render, cleanup } from "@testing-library/react";
 
+import { wrapTheme } from "../../tests/test-utils";
 import AuthToken from "../auth-token";
 import { dataFetchReducer, initialState } from "../fetch-credentials";
 
 afterEach(cleanup);
 
 test("Button is rendered", () => {
-  const { getByTestId } = render(<AuthToken />);
+  const { getByTestId } = render(wrapTheme(<AuthToken />));
   const button = getByTestId("authButton");
   expect(button).toBeInTheDocument();
 });
 
 test("Switch is rendered", () => {
-  const { getByTestId } = render(<AuthToken />);
+  const { getByTestId } = render(wrapTheme(<AuthToken />));
   const authSwitch = getByTestId("authSwitch");
   expect(authSwitch).toBeInTheDocument();
 });

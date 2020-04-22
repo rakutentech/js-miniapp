@@ -13,11 +13,9 @@ import clsx from "clsx";
 
 import useGeoLocation from "../hooks/useGeoLocation";
 
-const PRIMARY_COLOR = "rgb(63, 81, 181)";
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "lightgrey",
+    background: theme.color.secondary,
     height: 300,
     width: "95%",
   },
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     fontSize: 18,
-    color: PRIMARY_COLOR,
+    color: theme.color.primary,
     fontWeight: "bold",
   },
   locationContainer: {
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   disabled: {
     opacity: 0.5,
     color: "#fff !important",
-    backgroundColor: "#3f51b5 !important",
+    backgroundColor: `${theme.color.primary} !important`,
   },
 }));
 

@@ -29,13 +29,13 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "100%",
   },
   fields: {
-    color: "#3f51b5",
+    color: theme.color.primary,
     "& div": {
-      color: "#3f51b5",
+      color: theme.color.primary,
     },
   },
   root: {
-    background: "lightgrey",
+    background: theme.color.secondary,
     height: 300,
     width: "70%",
   },

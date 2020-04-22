@@ -19,9 +19,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import clsx from "clsx";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    background: "lightgrey",
+    background: theme.color.secondary,
     width: "85vw",
     maxWidth: 500,
   },
@@ -206,6 +206,7 @@ function UserDetails() {
         <Grid item>Failure</Grid>
         <Grid item>
           <Switch
+            color="primary"
             checked={switchState}
             onChange={() => setSwitchState(!switchState)}
             name="switchState"

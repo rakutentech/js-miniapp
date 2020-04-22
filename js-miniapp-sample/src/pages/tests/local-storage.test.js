@@ -2,6 +2,7 @@ import React from "react";
 
 import { render, fireEvent, screen } from "@testing-library/react";
 
+import { wrapTheme } from "../../tests/test-utils";
 import LocalStorage from "../local-storage";
 
 beforeEach(() => {
@@ -15,7 +16,7 @@ beforeEach(() => {
 });
 
 test("should save input value to local storage", () => {
-  render(<LocalStorage />);
+  render(wrapTheme(<LocalStorage />));
   const input = screen.getByTestId("input-field");
   fireEvent.change(input, { target: { value: "Hello, World!" } });
   fireEvent.click(screen.getByText("Save text to Local Storage"));
@@ -31,7 +32,7 @@ test("should load value from local storage", () => {
   window.localStorage.getItem.mockImplementationOnce(
     () => '"some stored value"'
   );
-  render(<LocalStorage />);
+  render(wrapTheme(<LocalStorage />));
   fireEvent.click(screen.getByText("Load text from Local Storage"));
   expect(screen.getByTestId("input-field").value).toBe("some stored value");
 });

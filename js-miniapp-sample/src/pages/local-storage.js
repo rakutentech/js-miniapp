@@ -8,6 +8,17 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: "20px",
+    width: "80%",
+    maxWidth: 280,
+  },
+  textfield: {
+    width: "80%",
+    maxWidth: 300,
+    "& input": {
+      color: theme.color.primary,
+      lineHeight: "1.5em",
+      fontSize: "1em",
+    },
   },
 }));
 
@@ -33,14 +44,17 @@ function LocalStorage() {
     <>
       <TextField
         type="text"
+        className={classes.textfield}
         value={inputValue}
         onChange={handleInput}
         variant="outlined"
+        color="primary"
         inputProps={{
           "data-testid": "input-field",
         }}
       />
       <Button
+        color="primary"
         className={classes.button}
         onClick={handleLoad}
         variant="contained"
@@ -48,6 +62,7 @@ function LocalStorage() {
         Load text from Local Storage
       </Button>
       <Button
+        color="primary"
         className={classes.button}
         onClick={handleSave}
         variant="contained"
