@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.color.secondary,
     height: 300,
-    width: "70%",
+    maxWidth: 500,
+    width: "95%",
   },
   content: {
     height: "50%",

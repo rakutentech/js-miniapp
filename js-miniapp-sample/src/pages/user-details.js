@@ -173,8 +173,8 @@ function UserDetails() {
 
   function requestUserDetails() {
     const mockedAPI = switchState
-      ? "http://www.mocky.io/v2/5e95032c31000057bf5e360b"
-      : "http://www.mocky.io/v2/5e9406873100006c005e2d00";
+      ? "http://www.mocky.io/v2/5e9406873100006c005e2d00"
+      : "http://www.mocky.io/v2/5e95032c31000057bf5e360b";
     axios
       .get(mockedAPI)
       .then((response) => {
@@ -203,7 +203,7 @@ function UserDetails() {
         alignItems="center"
         spacing={1}
       >
-        <Grid item>Failure</Grid>
+        <Grid item>Success</Grid>
         <Grid item>
           <Switch
             color="primary"
@@ -213,7 +213,7 @@ function UserDetails() {
             data-testid="authSwitch"
           />
         </Grid>
-        <Grid item>Success</Grid>
+        <Grid item>Failure</Grid>
       </Grid>
     );
   }
