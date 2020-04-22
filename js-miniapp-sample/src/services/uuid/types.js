@@ -1,2 +1,3 @@
 const SET_UUID = "SET_UUID";
-export { SET_UUID };
+const UUID_FETCH_ERROR = "UUID_FETCH_ERROR";
+export { SET_UUID, UUID_FETCH_ERROR };

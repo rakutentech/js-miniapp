@@ -3,7 +3,8 @@ import React from "react";
 import { render as rtlRender } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 import reducers from "./../services/reducers";
 
@@ -11,7 +12,7 @@ function render(
   ui,
   {
     initialState = {},
-    store = createStore(reducers, initialState),
+    store = createStore(reducers, initialState, applyMiddleware(thunk)),
     ...renderOptions
   } = {}
 ) {

@@ -1,6 +1,8 @@
 // @flow
+// import MiniApp from "js-miniapp-sdk";
+
 import { getUUIDFromMobileSdk } from "./../../js_sdk";
-import { SET_UUID } from "./types";
+import { SET_UUID /* , UUID_FETCH_ERROR */ } from "./types";
 
 type GetUUIDAction = { type: String, payload: string };
 
@@ -13,6 +15,15 @@ const setUUID = (): Function => {
       type: SET_UUID,
       payload: uuid,
     });
+    /* MiniApp.getUniqueId()
+      .then((uuid) => {
+        
+      })
+      .catch((_) => {
+        dispatch({
+          type: UUID_FETCH_ERROR,
+        });
+      }); */
   };
 };
 
