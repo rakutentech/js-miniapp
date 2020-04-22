@@ -1,6 +1,6 @@
 // @flow
-import type { ChatBot, ChatBotAction } from "./types";
-import { SET_CHATBOTS } from "./types";
+import type { ChatBot, ChatBotAction } from './types';
+import { SET_CHATBOTS } from './types';
 
 type ChatBotState = {
   bots: Array<ChatBot>,
@@ -10,15 +10,15 @@ const chatbotState = {
   bots: [
     {
       id: 1,
-      name: "R-Chatbot",
+      name: 'R-Chatbot',
     },
     {
       id: 2,
-      name: "M-Chatbot",
+      name: 'M-Chatbot',
     },
     {
       id: 3,
-      name: "K-Chatbot",
+      name: 'K-Chatbot',
     },
   ],
 };

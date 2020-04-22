@@ -1,5 +1,5 @@
 // @flow
-const SET_CHATBOTS = "GET_CHATBOTS";
+const SET_CHATBOTS = 'GET_CHATBOTS';
 
 type ChatBot = {
   id: number,

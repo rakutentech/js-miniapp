@@ -1,6 +1,6 @@
 // @flow
-import { SET_CHATBOTS } from "./types";
-import type { SetChatBotsAction } from "./types";
+import { SET_CHATBOTS } from './types';
+import type { SetChatBotsAction } from './types';
 
 const getBotsList = (): SetChatBotsAction => {
   return {
@@ -8,15 +8,15 @@ const getBotsList = (): SetChatBotsAction => {
     payload: [
       {
         id: 1,
-        name: "R-Chatbot",
+        name: 'R-Chatbot',
       },
       {
         id: 2,
-        name: "M-Chatbot",
+        name: 'M-Chatbot',
       },
       {
         id: 3,
-        name: "K-Chatbot",
+        name: 'K-Chatbot',
       },
     ],
   };

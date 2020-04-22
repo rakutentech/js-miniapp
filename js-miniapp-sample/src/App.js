@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import { makeStyles, ThemeProvider } from "@material-ui/core";
-import { Provider } from "react-redux";
+import { makeStyles, ThemeProvider } from '@material-ui/core';
+import { Provider } from 'react-redux';
 
-import Home from "./pages/home";
-import store from "./services/store";
-import Theme from "./theme";
+import Home from './pages/home';
+import store from './services/store';
+import Theme from './theme';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   App: {
-    width: "100%",
-    textAlign: "center",
+    width: '100%',
+    textAlign: 'center',
   },
 }));
 

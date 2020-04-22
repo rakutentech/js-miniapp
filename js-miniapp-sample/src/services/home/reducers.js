@@ -1,13 +1,13 @@
 // @flow
-import type { HomeAction } from "./actions";
-import { SET_CURRENT_PAGE_TITLE } from "./types";
+import type { HomeAction } from './actions';
+import { SET_CURRENT_PAGE_TITLE } from './types';
 
 type HomePageState = {
   title: string,
 };
 
 const homeState: HomePageState = {
-  title: "POC",
+  title: 'POC',
 };
 
 export default (

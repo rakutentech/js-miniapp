@@ -1,5 +1,5 @@
 // @flow
-import React from "react";
+import React from 'react';
 
 import {
   Button,
@@ -7,31 +7,31 @@ import {
   CardContent,
   CardActions,
   makeStyles,
-} from "@material-ui/core";
-import { connect } from "react-redux";
+} from '@material-ui/core';
+import { connect } from 'react-redux';
 
-import { setUUID } from "../services/uuid/actions";
-import NOT_AVILABLE_GIF from "./../assets/images/not_available.gif";
+import { setUUID } from '../services/uuid/actions';
+import NOT_AVILABLE_GIF from './../assets/images/not_available.gif';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.color.secondary,
     height: 300,
     maxWidth: 500,
-    width: "95%",
+    width: '95%',
   },
   content: {
-    height: "50%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    height: '50%',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     fontSize: 18,
     color: theme.color.primary,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   actions: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   uuidNotFound: {
     width: 200,

@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 import {
   Button,
@@ -8,52 +8,52 @@ import {
   Card,
   CardContent,
   CardActions,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.color.secondary,
     height: 300,
     maxWidth: 500,
-    width: "95%",
+    width: '95%',
   },
   content: {
-    height: "25%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    height: '25%',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     fontSize: 18,
     color: theme.color.primary,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   actions: {
-    justifyContent: "center",
-    flexDirection: "column",
+    justifyContent: 'center',
+    flexDirection: 'column',
   },
   button: {
-    marginTop: "20px",
-    width: "80%",
+    marginTop: '20px',
+    width: '80%',
     maxWidth: 280,
   },
   textfield: {
-    width: "80%",
+    width: '80%',
     maxWidth: 300,
-    "& input": {
+    '& input': {
       color: theme.color.primary,
-      lineHeight: "1.5em",
-      fontSize: "1.2em",
-      background: "white",
+      lineHeight: '1.5em',
+      fontSize: '1.2em',
+      background: 'white',
     },
   },
 }));
 
 function LocalStorage() {
   const classes = useStyles();
-  const [inputValue, setInputValue] = useState("");
-  const [storedValue, setStoredValue] = useLocalStorage("input-value", "");
+  const [inputValue, setInputValue] = useState('');
+  const [storedValue, setStoredValue] = useLocalStorage('input-value', '');
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -79,7 +79,7 @@ function LocalStorage() {
           variant="outlined"
           color="primary"
           inputProps={{
-            "data-testid": "input-field",
+            'data-testid': 'input-field',
           }}
         />
       </CardContent>

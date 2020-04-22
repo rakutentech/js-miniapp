@@ -1,5 +1,5 @@
 // @flow
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState } from 'react';
 
 import {
   Button,
@@ -10,39 +10,39 @@ import {
   Typography,
   CardContent,
   Card,
-} from "@material-ui/core";
-import { red, green } from "@material-ui/core/colors";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
-import clsx from "clsx";
+} from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.color.secondary,
-    width: "85vw",
+    width: '85vw',
     maxWidth: 500,
     marginTop: 15,
   },
   wrapper: {
-    position: "relative",
+    position: 'relative',
     marginTop: 20,
   },
   buttonSuccess: {
     backgroundColor: green[500],
-    "&:hover": {
+    '&:hover': {
       backgroundColor: green[700],
     },
   },
   buttonFailure: {
     backgroundColor: red[500],
-    "&:hover": {
+    '&:hover': {
       backgroundColor: red[700],
     },
   },
   buttonProgress: {
-    position: "absolute",
-    top: "calc(50% - 10px)",
-    left: "calc(50% - 10px)",
+    position: 'absolute',
+    top: 'calc(50% - 10px)',
+    left: 'calc(50% - 10px)',
   },
   error: {
     color: red[500],
@@ -51,11 +51,11 @@ const useStyles = makeStyles((theme) => ({
   success: {
     color: green[500],
     marginTop: 20,
-    wordBreak: "break-all",
-    textAlign: "center",
+    wordBreak: 'break-all',
+    textAlign: 'center',
   },
   rootFormGroup: {
-    alignItems: "center",
+    alignItems: 'center',
   },
 }));
 
@@ -67,21 +67,21 @@ export const initialState = {
 
 export const dataFetchReducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_INIT":
+    case 'FETCH_INIT':
       return {
         ...state,
         isLoading: true,
         isError: false,
         response: null,
       };
-    case "FETCH_SUCCESS":
+    case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
         response: action.payload,
       };
-    case "FETCH_FAILURE":
+    case 'FETCH_FAILURE':
       return {
         ...state,
         isLoading: false,
@@ -106,22 +106,22 @@ function FetchCredentials() {
   function requestToken() {
     // Hardcoded API values to test
     const API = switchState
-      ? "http://www.mocky.io/v2/5e9406873100006c005e2d00"
-      : "http://www.mocky.io/v2/5e9801a93500005000c47d35";
+      ? 'http://www.mocky.io/v2/5e9406873100006c005e2d00'
+      : 'http://www.mocky.io/v2/5e9801a93500005000c47d35';
     axios
       .get(API)
       .then((response) => {
-        dispatch({ type: "FETCH_SUCCESS", payload: response.data });
+        dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
       })
       .catch((error) => {
-        dispatch({ type: "FETCH_FAILURE" });
+        dispatch({ type: 'FETCH_FAILURE' });
       });
   }
 
   function handleClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
-      dispatch({ type: "FETCH_INIT" });
+      dispatch({ type: 'FETCH_INIT' });
       requestToken();
     }
   }
@@ -175,8 +175,8 @@ function FetchCredentials() {
             example (
             <a href="http://www.mocky.io/v2/5e9801a93500005000c47d35">
               Success
-            </a>{" "}
-            &{" "}
+            </a>{' '}
+            &{' '}
             <a href="http://www.mocky.io/v2/5e9406873100006c005e2d00">
               Failure
             </a>

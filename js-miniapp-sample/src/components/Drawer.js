@@ -1,49 +1,49 @@
-import React from "react";
+import React from 'react';
 
-import { Hidden, Tooltip, useTheme, useMediaQuery } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import clsx from "clsx";
-import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Hidden, Tooltip, useTheme, useMediaQuery } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import clsx from 'clsx';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import { setPageTitle } from "../services/home/actions";
+import { setPageTitle } from '../services/home/actions';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {},
   drawerPaper: {
-    [theme.breakpoints.up("sm")]: {
-      height: "calc(100% - 64px)",
-      top: "64px !important",
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 64px)',
+      top: '64px !important',
     },
   },
   drawerPaperContent: {
-    height: "100%",
+    height: '100%',
     width: 250,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   drawerPaperContentTopList: {
-    height: "calc(100% - 70px)",
-    overflowY: "scroll",
-    [theme.breakpoints.down("xs")]: {
-      height: "100%",
+    height: 'calc(100% - 70px)',
+    overflowY: 'scroll',
+    [theme.breakpoints.down('xs')]: {
+      height: '100%',
     },
   },
   drawerPaperShrink: {
-    width: "70px",
-    overflowX: "hidden",
+    width: '70px',
+    overflowX: 'hidden',
   },
   shrinkedListItem: {
-    paddingLeft: "24px",
+    paddingLeft: '24px',
   },
   NavListRoot: {
     paddingTop: 1,
@@ -59,9 +59,9 @@ const useStyles = makeStyles((theme) => ({
   },
   activeNavLink: {
     backgroundColor: theme.color.primary,
-    color: "white",
-    "& .icon": {
-      color: "white",
+    color: 'white',
+    '& .icon': {
+      color: 'white',
     },
   },
 }));
@@ -79,7 +79,7 @@ type ResponsiveDrawerProps = {
 const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   if (isMobile) {
     props = { ...props, shrinked: false };
   }
@@ -92,10 +92,10 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
       className={classes.drawer}
       classes={{ paper: classes.drawerPaper }}
       anchor="left"
-      variant={!isMobile ? "persistent" : "temporary"}
+      variant={!isMobile ? 'persistent' : 'temporary'}
       open={props.show}
-      onClose={(e) => props.onOpenClose("close", e)}
-      onOpen={(e) => props.onOpenClose("open", e)}
+      onClose={(e) => props.onOpenClose('close', e)}
+      onOpen={(e) => props.onOpenClose('open', e)}
     >
       <div
         className={clsx(classes.drawerPaperContent, {
@@ -112,7 +112,7 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
               <Tooltip
                 key={it.label}
                 arrow
-                title={props.shrinked ? it.label : ""}
+                title={props.shrinked ? it.label : ''}
                 placement="right"
                 enterDelay={100}
                 classes={{
@@ -137,17 +137,17 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
                   })}
                 >
                   <ListItemIcon className="icon">{it.icon}</ListItemIcon>
-                  <ListItemText primary={props.shrinked ? "  " : it.label} />
+                  <ListItemText primary={props.shrinked ? '  ' : it.label} />
                 </ListItem>
               </Tooltip>
             ))}
         </List>
-        <Hidden only={["xs"]}>
+        <Hidden only={['xs']}>
           <List>
             <Divider />
             <Tooltip
               arrow
-              title={props.shrinked ? "Expand" : ""}
+              title={props.shrinked ? 'Expand' : ''}
               placement="right"
               enterDelay={1000}
               classes={{
@@ -165,7 +165,7 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
                 <ListItemIcon>
                   {props.shrinked ? <ArrowForwardIcon /> : <ArrowBackIcon />}
                 </ListItemIcon>
-                <ListItemText primary={props.shrinked ? "Expand" : "Shrink"} />
+                <ListItemText primary={props.shrinked ? 'Expand' : 'Shrink'} />
               </ListItem>
             </Tooltip>
           </List>

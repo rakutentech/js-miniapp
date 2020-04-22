@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment } from 'react';
 
 import {
   makeStyles,
@@ -17,20 +17,20 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from "@material-ui/core";
-import { connect } from "react-redux";
+} from '@material-ui/core';
+import { connect } from 'react-redux';
 
-import { getBotsList } from "../services/chatbot/actions";
-import type { ChatBot } from "../services/chatbot/types";
+import { getBotsList } from '../services/chatbot/actions';
+import type { ChatBot } from '../services/chatbot/types';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: "100%",
+    minWidth: '100%',
   },
   fields: {
     color: theme.color.primary,
-    "& div": {
+    '& div': {
       color: theme.color.primary,
     },
   },
@@ -38,23 +38,23 @@ const useStyles = makeStyles((theme) => ({
     background: theme.color.secondary,
     height: 300,
     maxWidth: 500,
-    width: "95%",
+    width: '95%',
   },
   content: {
-    height: "50%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    height: '50%',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   actions: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   errorMessage: {
     fontSize: 12,
-    color: "indianred",
+    color: 'indianred',
   },
 }));
 
@@ -67,27 +67,27 @@ const TalkToChatBot = (props: ChatBotProps) => {
   const chatbots = props.bots;
   const [chatbot, setChatbot] = useState({
     id: chatbots[0] !== undefined ? chatbots[0].id : -1,
-    message: "",
+    message: '',
   });
   const [validation, setValidationState] = useState({
     error: false,
-    message: "",
+    message: '',
   });
   const [chatbotMessage, setChatbotMessage] = useState({ show: false });
   const validate = () => {
     if (
       chatbots.map((it) => it.id).findIndex((it) => it === chatbot.id) === -1
     ) {
-      setValidationState({ error: true, message: "select chatbot" });
+      setValidationState({ error: true, message: 'select chatbot' });
       return false;
     } else if (
       chatbot.message === undefined ||
       chatbot.message.trim().length === 0
     ) {
-      setValidationState({ error: true, message: "enter message to chatbot" });
+      setValidationState({ error: true, message: 'enter message to chatbot' });
       return false;
     } else {
-      setValidationState({ error: false, message: "" });
+      setValidationState({ error: false, message: '' });
     }
     return true;
   };

@@ -1,43 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 import {
   makeStyles,
   Container,
   useTheme,
   useMediaQuery,
-} from "@material-ui/core";
-import clsx from "clsx";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+} from '@material-ui/core';
+import clsx from 'clsx';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import ToolBar from "../components/ToolBar";
-import { navItems } from "./../routes";
+import ToolBar from '../components/ToolBar';
+import { navItems } from './../routes';
 
-const DRAWER_WIDTH = "250px";
-const DRAWER_SHRINKED_WIDTH = "70px";
+const DRAWER_WIDTH = '250px';
+const DRAWER_SHRINKED_WIDTH = '70px';
 
 const useStyles = makeStyles((theme) => ({
   mainContent: {
-    width: "100%",
-    height: "calc(100% - 64px)",
+    width: '100%',
+    height: 'calc(100% - 64px)',
   },
   mainContentMobile: {
-    height: "calc(100% - 56px)",
+    height: 'calc(100% - 56px)',
   },
   wrapperContainer: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   drawerClosed: {
-    width: "100% !important",
-    marginLeft: "0 !important",
+    width: '100% !important',
+    marginLeft: '0 !important',
   },
   drawerOpen: {
     width: `calc(100% - ${DRAWER_WIDTH})`,
     marginLeft: DRAWER_WIDTH,
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   drawerOpenShrink: {
     width: `calc(100% - ${DRAWER_SHRINKED_WIDTH})`,
     marginLeft: DRAWER_SHRINKED_WIDTH,
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [shrink, setShrink] = useState(false);
   const [showDrawer, setShowDrawer] = useState(!isMobile);
   useEffect(() => {
@@ -96,7 +96,7 @@ const Home = (props) => {
                   (() => (
                     <div
                       data-testid="nav-routes"
-                      style={{ fontSize: "32px", textAlign: "center" }}
+                      style={{ fontSize: '32px', textAlign: 'center' }}
                     >
                       {it.label}
                     </div>

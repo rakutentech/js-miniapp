@@ -1,5 +1,5 @@
 // @flow
-import { useState } from "react";
+import { useState } from 'react';
 
 function useLocalStorage(key: string, initialValue: string) {
   const [storedValue, setStoredValue] = useState(() => {

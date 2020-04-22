@@ -1,9 +1,9 @@
-import "@testing-library/jest-dom";
-import { act, renderHook } from "@testing-library/react-hooks";
+import '@testing-library/jest-dom';
+import { act, renderHook } from '@testing-library/react-hooks';
 
-import useGeoLocation from "./useGeoLocation";
+import useGeoLocation from './useGeoLocation';
 
-describe("useGeoLocation", () => {
+describe('useGeoLocation', () => {
   let result;
   const dummyCoOridinates = {
     latitude: 51.1,
@@ -25,13 +25,13 @@ describe("useGeoLocation", () => {
     navigator.geolocation = mockGeolocation;
   });
 
-  test("should initialize location hook", () => {
+  test('should initialize location hook', () => {
     const [state] = result.current;
     expect(state.isWatching).toEqual(false);
     expect(state.location).toBeUndefined();
   });
 
-  test("should watch location coordinates", () => {
+  test('should watch location coordinates', () => {
     let [state, watch] = result.current;
     act(() => watch());
     [state] = result.current;
@@ -39,7 +39,7 @@ describe("useGeoLocation", () => {
     expect(state.location).toEqual(dummyCoOridinates);
   });
 
-  test("should stop watching location coordinates", () => {
+  test('should stop watching location coordinates', () => {
     let [state, watch, unwatch] = result.current;
     act(() => watch());
     [state] = result.current;

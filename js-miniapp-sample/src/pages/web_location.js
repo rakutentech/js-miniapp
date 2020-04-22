@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Button,
@@ -6,54 +6,54 @@ import {
   CardActions,
   CardContent,
   makeStyles,
-} from "@material-ui/core";
-import LocationOffIcon from "@material-ui/icons/LocationOff";
-import LocationSearchingIcon from "@material-ui/icons/LocationSearching";
-import clsx from "clsx";
+} from '@material-ui/core';
+import LocationOffIcon from '@material-ui/icons/LocationOff';
+import LocationSearchingIcon from '@material-ui/icons/LocationSearching';
+import clsx from 'clsx';
 
-import useGeoLocation from "../hooks/useGeoLocation";
+import useGeoLocation from '../hooks/useGeoLocation';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.color.secondary,
     height: 300,
     maxWidth: 500,
-    width: "95%",
+    width: '95%',
   },
   content: {
-    height: "50%",
-    justifyContent: "center",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    height: '50%',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     fontSize: 18,
     color: theme.color.primary,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   locationContainer: {
-    height: "70%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    "& div .label": {
-      display: "inline",
-      padding: ".2em .6em .3em",
-      fontSize: "75%",
+    height: '70%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    '& div .label': {
+      display: 'inline',
+      padding: '.2em .6em .3em',
+      fontSize: '75%',
       fontWeight: 700,
       lineHeight: 1,
-      textAlign: "center",
-      whiteSpace: "nowrap",
-      verticalAlign: "baseline",
-      borderRadius: ".25em",
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      verticalAlign: 'baseline',
+      borderRadius: '.25em',
     },
   },
   actions: {
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   button: {},
   disabled: {
     opacity: 0.5,
-    color: "#fff !important",
+    color: '#fff !important',
     backgroundColor: `${theme.color.primary} !important`,
   },
 }));
