@@ -13,11 +13,12 @@
 [include]
 
 [libs]
+/flow-typed
 
 [lints]
 
 [options]
-# all=true
+all=true
 esproposal.optional_chaining=enable
 
 [strict]

@@ -1,4 +1,3 @@
-// @flow
 import type { ChatBot, ChatBotAction } from './types';
 import { SET_CHATBOTS } from './types';
 

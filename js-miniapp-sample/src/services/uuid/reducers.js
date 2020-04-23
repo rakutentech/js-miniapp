@@ -1,4 +1,3 @@
-// @flow
 import type { UUIDAction } from './actions';
 import { SET_UUID, UUID_FETCH_ERROR } from './types';
 

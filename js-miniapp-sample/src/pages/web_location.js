@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Location = (props) => {
+const Location = (props: any) => {
   const classes = useStyles();
   const [state, watch, unwatch] = useGeoLocation();
 

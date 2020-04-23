@@ -1,4 +1,3 @@
-// @flow
 import type { HomeAction } from './actions';
 import { SET_CURRENT_PAGE_TITLE } from './types';
 

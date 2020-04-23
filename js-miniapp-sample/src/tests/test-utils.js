@@ -11,7 +11,8 @@ import reducers from './../services/reducers';
 import Theme from './../theme';
 
 function render(
-  ui,
+  ui: any,
+  // $FlowFixMe
   {
     initialState = {},
     store = createStore(reducers, initialState, applyMiddleware(thunk)),
@@ -21,14 +22,15 @@ function render(
   function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>;
   }
+  // $FlowFixMe
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-function wrapTheme(ui) {
+function wrapTheme(ui: any) {
   return <ThemeProvider theme={Theme}>{ui}</ThemeProvider>;
 }
 
-function wrapRouter(ui, props) {
+function wrapRouter(ui: any, props: any) {
   return <MemoryRouter {...props}>{ui}</MemoryRouter>;
 }
 

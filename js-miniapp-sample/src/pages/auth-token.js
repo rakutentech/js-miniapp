@@ -1,4 +1,3 @@
-// @flow
 import React, { useReducer, useState } from 'react';
 
 import {

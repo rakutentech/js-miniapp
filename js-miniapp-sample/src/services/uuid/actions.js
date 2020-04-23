@@ -1,4 +1,3 @@
-// @flow
 // import MiniApp from "js-miniapp-sdk";
 
 import { getUUIDFromMobileSdk } from './../../js_sdk';

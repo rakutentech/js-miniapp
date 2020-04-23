@@ -1,4 +1,3 @@
-// @flow
 import React, { useReducer, useState } from 'react';
 
 import {
@@ -59,13 +58,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type CredentialsState = {
+  isLoading: boolean,
+  isError: boolean,
+  response: any,
+};
+
+type DataFetchAction = {
+  type: string,
+  payload?: any,
+};
+
 export const initialState = {
   isLoading: false,
   isError: false,
   response: null,
 };
 
-export const dataFetchReducer = (state, action) => {
+export const dataFetchReducer = (
+  state: CredentialsState,
+  action: DataFetchAction
+) => {
   switch (action.type) {
     case 'FETCH_INIT':
       return {
