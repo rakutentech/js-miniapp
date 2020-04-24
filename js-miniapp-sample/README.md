@@ -71,7 +71,6 @@ to unpackage and run a production build on your local computer:
 ## Flow
 
 - We use [Flow](https://flow.org/) as a static type checker in our App.<br/>
-- Add `// @flow` to any files you want to type check (for example, to [src/App.js](src/App.js)).<br/>
 - To check the files for type errors: `npm run flow`
 - Check Flow integrations for code editors [here](https://flow.org/en/docs/editors/)
 
@@ -105,7 +104,6 @@ to unpackage and run a production build on your local computer:
 
 - Each commit should have a meaningful message. It really helps to figure out where some changes are made, even for adding comments and minor modifications.
 - Try to make the commits as small as possible and avoid several days of work worth big giant commits.
-- _Proposal_: I'd include the JIRA ticket ID on the commit message as well: `git commit -m "MINIBUILD-XXX short description of the commited task"`
 
 ## Branching policy
 

@@ -94,8 +94,8 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
       anchor="left"
       variant={!isMobile ? 'persistent' : 'temporary'}
       open={props.show}
-      onClose={(e) => props.onOpenClose('close', e)}
-      onOpen={(e) => props.onOpenClose('open', e)}
+      onClose={(e) => props.onOpenClose(e)}
+      onOpen={(e) => props.onOpenClose(e)}
     >
       <div
         className={clsx(classes.drawerPaperContent, {
@@ -125,7 +125,7 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
                   onClick={() => {
                     props.changeTitle(it.label);
                     if (isMobile) {
-                      props.onOpenClose(undefined, undefined);
+                      props.onOpenClose(undefined);
                     }
                   }}
                   component={NavLink}

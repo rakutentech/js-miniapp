@@ -55,7 +55,7 @@ const ToolBar = (props: ToolBarProps) => {
     setShrink(shrinkFlag);
   };
 
-  const onOpenClose = (type, event) => {
+  const onOpenClose = (event) => {
     if (
       event &&
       event.type === 'keydown' &&
