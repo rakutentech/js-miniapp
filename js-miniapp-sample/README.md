@@ -16,10 +16,6 @@ The project was bootstrapped with [Create React App](https://github.com/facebook
   - [Flow](#flow)
   - [Custom Environment Variables](#custom-environment-variables)
   - [Code Formatting](#code-formatting)
-  - [Naming Convention](#naming-convention)
-    - [Branches](#branches)
-    - [Commits](#commits)
-  - [Branching policy](#branching-policy)
   - [Others](#others)
 
 ## Installation
@@ -88,29 +84,6 @@ to unpackage and run a production build on your local computer:
 - The following dev-dependencies have been installed for this purpose: `husky, lint-staged, prettier`
 - Whenever we make a commit Prettier will format the changed files automatically.
 - You might want to integrate Prettier in your favorite editor as well. Please check the [Prettier Editor Integration](https://prettier.io/docs/en/editors.html).
-
-## Naming Convention
-
-### Branches
-
-- Feature branches: `feature/MINIBUILD-xxxxx_short_description_of_the_feature`
-- Bugfix branches: `bugfix/MINIBUILD-xxxxx_short_description_of_the_bugfix`
-- Tech branches (mostly for technical tasks): `tech/MINIBUILD-xxxxx_short_description_of_the_task`
-- Releases branches: `release/(each project has its own version naming)`
-
-**It's really important to include the JIRA ticket ID! In case a ticket doesn't exist create one (as a tech ticket)**
-
-### Commits
-
-- Each commit should have a meaningful message. It really helps to figure out where some changes are made, even for adding comments and minor modifications.
-- Try to make the commits as small as possible and avoid several days of work worth big giant commits.
-
-## Branching policy
-
-- Pushing directly to master/develop is FORBIDDEN
-- All changes made to master/develop should be done through a new dedicated branch and a Pull Request. Pull Requests should be approved by the members of your team
-- Tag the commit of released versions using semantic versioning
-- Before merging a Pull request, be sure to be up to date and solve any conflicts
 
 ## Others
 
