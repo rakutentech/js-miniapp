@@ -4,6 +4,6 @@
 
 ## Index
 
-### Modules
+### Interfaces
 
-* ["miniapp"](modules/_miniapp_.md)
+* [MiniApp](interfaces/miniapp.md)

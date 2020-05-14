@@ -1,4 +1,4 @@
-[js-miniapp-sdk - v1.0.0](../README.md) › ["miniapp"](../modules/_miniapp_.md) › [MiniApp](_miniapp_.miniapp.md)
+[js-miniapp-sdk - v1.0.0](../README.md) › [MiniApp](miniapp.md)
 
 # Interface: MiniApp
 
@@ -12,7 +12,7 @@ A module layer for webapps and mobile native interaction.
 
 ### Methods
 
-* [getUniqueId](_miniapp_.miniapp.md#getuniqueid)
+* [getUniqueId](miniapp.md#getuniqueid)
 
 ## Methods
 
