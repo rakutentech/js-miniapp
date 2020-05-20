@@ -47,13 +47,7 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>
-        {props.uuid ?? (
-          <img
-            className={classes.uuidNotFound}
-            src={NOT_AVILABLE_GIF}
-            alt="Not Available"
-          />
-        )}
+        {props.uuid ?? 'Not Available'}
       </CardContent>
       <CardActions className={classes.actions}>
         <Button
