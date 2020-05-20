@@ -10,7 +10,6 @@ import {
 import { connect } from 'react-redux';
 
 import { setUUID } from '../services/uuid/actions';
-import NOT_AVILABLE_GIF from './../assets/images/not_available.gif';
 
 const useStyles = makeStyles((theme) => ({
   root: {
