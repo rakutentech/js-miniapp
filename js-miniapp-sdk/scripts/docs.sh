@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-PACKAGE_VERSION=$(node -p "require('./package.json').version")
+
+# Get SDK version as X.X (remove fix version)
+PACKAGE_VERSION=$(node -p "require('./package.json').version" | sed -e 's/\.[0-9]*$//')
 echo "version: $PACKAGE_VERSION"
 
 DIR_DOCS="publishableDocs/docs/$PACKAGE_VERSION"
@@ -14,6 +16,12 @@ version: "$PACKAGE_VERSION"
 ---"
 cat <<< "$contents" > "$FILE_VERSION_MD"
 
-npx typedoc --includeVersion --out $DIR_DOCS/api src --plugin typedoc-plugin-markdown --stripInternal --readme none
+# Generate docs
+npx typedoc --includeVersion --out $DIR_DOCS/api src --plugin typedoc-plugin-markdown --stripInternal --readme none --mode file
+
+# Move userguide to docs and create correct folder structure
 mv $DIR_DOCS/api/README.md $DIR_DOCS/api/index.md
 cp README.md $DIR_DOCS/index.md
+# The typedoc plugin generates breadcrumbs which point to `README.md` as the parent page
+# So we must create this page and add a redirect to `index`
+cp ./scripts/readme-redirect.md $DIR_DOCS/api/README.md
