@@ -1,5 +1,5 @@
-import React from "react";
-import {Card, CardContent, makeStyles } from "@material-ui/core";
+import React from 'react';
+import { Card, CardContent, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -7,9 +7,9 @@ const useStyles = makeStyles((theme) => ({
     height: 300,
     maxWidth: 500,
     width: '95%',
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   content: {
     height: '25%',
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.color.primary,
     fontWeight: 'bold',
     '& p': {
-      lineHeight: 1.5
-    }
+      lineHeight: 1.5,
+    },
   },
 }));
 
@@ -35,6 +35,6 @@ const Landing = () => {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default Landing;
