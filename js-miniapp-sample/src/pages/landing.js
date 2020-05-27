@@ -1,12 +1,10 @@
 import React from 'react';
-import { Card, CardContent, makeStyles } from '@material-ui/core';
+import { CardContent, makeStyles } from '@material-ui/core';
+
+import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    background: theme.color.secondary,
-    height: 300,
-    maxWidth: 500,
-    width: '95%',
+  card: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -29,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
 const Landing = () => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         <p>This is a Demo App of Mini App JS SDK</p>
       </CardContent>
-    </Card>
+    </GreyCard>
   );
 };
 
