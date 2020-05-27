@@ -20,9 +20,7 @@ type CardType = {
 const GreyCard = (props: CardType) => {
   const classes = useStyles(props);
   return (
-    <Card
-      className={`${classes.root} ${props.className || ''}`}
-    >
+    <Card className={`${classes.root} ${props.className || ''}`}>
       {props.children}
     </Card>
   );
