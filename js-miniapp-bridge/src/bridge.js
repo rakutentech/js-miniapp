@@ -100,13 +100,13 @@ MiniAppBridge.getUniqueId = function() {
 
 /**
  * Associating requestPermission function to MiniAppBridge object
- * @param {String} requestType Type of permission that is requested. For eg., location
+ * @param {String} permissionType Type of permission that is requested. For eg., location
  */
-MiniAppBridge.requestPermission = function(requestType) {
+MiniAppBridge.requestPermission = function(permissionType) {
   return new Promise(function(resolve, reject) {
     return MiniAppBridge.exec(
       "requestPermission",
-      requestType,
+      {permission: permissionType},
       function(success) { return resolve(success) },
       function (error) { return reject(error) }
     );
