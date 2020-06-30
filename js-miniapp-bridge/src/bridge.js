@@ -15,7 +15,8 @@ var isPlatform = {
  * Method to call the native interface methods for respective platforms
  * such as iOS & Android
  * @param  {[String]} action Action command/interface name that native side need to execute
- * @param  {String} param Action command/interface name that native side need to execute
+ * @param  {Object} param Object that contains request parameter values like permissions.
+ * For eg., {permission: 'location'}
  * @param  {[Function]} onSuccess Success callback function
  * @param  {[Function]} onError Error callback function
  */
