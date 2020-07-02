@@ -15,7 +15,6 @@ window.MiniAppBridge = {
 const miniApp = new MiniAppImp();
 
 describe('getUniqueId', () => {
-
   it('should retrieve the unique id from the Mini App Bridge', () => {
     window.MiniAppBridge.getUniqueId.resolves('test_mini_app_id');
 
@@ -26,12 +25,11 @@ describe('getUniqueId', () => {
 });
 
 describe('requestPermission', () => {
-
   it('should retrieve permission result from the Mini App Bridge', () => {
     window.MiniAppBridge.requestPermission.resolves('Denied');
 
-    return expect(miniApp.requestPermission('permissionType')).to.eventually.equal(
-      'Denied'
-    );
+    return expect(
+      miniApp.requestPermission('permissionType')
+    ).to.eventually.equal('Denied');
   });
 });
