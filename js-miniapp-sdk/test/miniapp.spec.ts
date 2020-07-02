@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { MiniAppImp } from '../src/miniapp';
+import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
 const window: any = {};
 (global as any).window = window;
@@ -25,11 +26,19 @@ describe('getUniqueId', () => {
 });
 
 describe('requestPermission', () => {
-  it('should retrieve permission result from the Mini App Bridge', () => {
+  it('should delegate to requestPermission function when request any permission', () => {
+    const spy = sinon.spy(miniApp, 'requestPermission' as any);
+
+    miniApp.requestLocationPermission();
+
+    return expect(spy.callCount).to.equal(1);
+  });
+
+  it('should retrieve location permission result from the Mini App Bridge', () => {
     window.MiniAppBridge.requestPermission.resolves('Denied');
 
-    return expect(
-      miniApp.requestPermission('permissionType')
-    ).to.eventually.equal('Denied');
+    return expect(miniApp.requestLocationPermission()).to.eventually.equal(
+      'Denied'
+    );
   });
 });
