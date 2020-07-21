@@ -110,4 +110,4 @@ function getId() {
 
 ## Changelog
 
-See the full [CHANGELOG](CHANGELOG.md).
+See the full [CHANGELOG](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/CHANGELOG.md).
