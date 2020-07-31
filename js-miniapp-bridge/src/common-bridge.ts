@@ -1,27 +1,17 @@
 /* tslint:disable:no-any */
-let uniqueId = Math.random();
+const mabMessageQueue: Callback[] = [];
+export { mabMessageQueue };
 
-const isPlatform = {
-  Android: () => {
-    return navigator.userAgent.match(/Android/i);
-  },
-  iOS: () => {
-    return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-  },
-};
-
-interface Callback {
+export interface Callback {
   id: string;
 
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
 }
 
-class MiniAppBridge {}
+export class MiniAppBridge {}
 
-interface MiniAppBridge {
-  messageQueue: Callback[];
-
+export interface MiniAppBridge {
   /**
    * Method to call the native interface methods for respective platforms
    * such as iOS & Android
@@ -68,25 +58,8 @@ interface MiniAppBridge {
   requestPermission(permissionType: string): void;
 }
 
-MiniAppBridge.prototype.exec = (action, param, onSuccess, onError) => {
-  const callback = {} as Callback;
-  callback.onSuccess = onSuccess;
-  callback.onError = onError;
-  callback.id = String(++uniqueId);
-  MiniAppBridge.prototype.messageQueue.unshift(callback);
-  if (isPlatform.iOS()) {
-    (window as any).webkit.messageHandlers.MiniAppiOS.postMessage(
-      JSON.stringify({ action, param, id: callback.id })
-    );
-  } else {
-    (window as any).MiniAppAndroid.postMessage(
-      JSON.stringify({ action, param, id: callback.id })
-    );
-  }
-};
-
 MiniAppBridge.prototype.execSuccessCallback = (messageId, value) => {
-  const queueObj = MiniAppBridge.prototype.messageQueue.filter(
+  const queueObj = mabMessageQueue.filter(
     callback => callback.id === messageId
   )[0];
   if (value) {
@@ -98,7 +71,7 @@ MiniAppBridge.prototype.execSuccessCallback = (messageId, value) => {
 };
 
 MiniAppBridge.prototype.execErrorCallback = (messageId, errorMessage) => {
-  const queueObj = MiniAppBridge.prototype.messageQueue.filter(
+  const queueObj = mabMessageQueue.filter(
     callback => callback.id === messageId
   )[0];
   if (!errorMessage) {
@@ -114,11 +87,9 @@ MiniAppBridge.prototype.execErrorCallback = (messageId, errorMessage) => {
  * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
  */
 function removeFromMessageQueue(queueObj) {
-  const messageObjIndex = MiniAppBridge.prototype.messageQueue.indexOf(
-    queueObj
-  );
+  const messageObjIndex = mabMessageQueue.indexOf(queueObj);
   if (messageObjIndex !== -1) {
-    MiniAppBridge.prototype.messageQueue.splice(messageObjIndex, 1);
+    mabMessageQueue.splice(messageObjIndex, 1);
   }
 }
 
@@ -147,22 +118,3 @@ MiniAppBridge.prototype.requestPermission = permissionType => {
     );
   });
 };
-
-/**
- * Below code will override the navigator.geolocation.getCurrentPosition method for only iOS
- */
-if (isPlatform.iOS()) {
-  navigator.geolocation.getCurrentPosition = (success, error, options) => {
-    return MiniAppBridge.prototype.exec(
-      'getCurrentPosition',
-      { locationOptions: options },
-      value => {
-        const parsedData = JSON.parse(value);
-        success(parsedData);
-      },
-      error => console.error(error)
-    );
-  };
-}
-
-(window as any).MiniAppBridge = MiniAppBridge;
