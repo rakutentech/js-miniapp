@@ -2,14 +2,12 @@
   "name": "js-miniapp-bridge",
   "version": "1.1.0",
   "description": "Mini App JavaScript Bridge",
-  "main": "build/src/index.js",
   "dependencies": {},
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "@types/node": "^10.0.3",
-
     "@types/sinon": "^9.0.0",
     "browserify": "^16.5.1",
     "chai": "^4.2.0",
@@ -35,7 +33,7 @@
     "build": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",
     "test": "mocha test/**/*.spec.ts",
-    "coverage": "nyc npm test",
+    "coverage": "nyc npm test"
   },
   "repository": {
     "type": "git",
@@ -44,7 +42,8 @@
   "keywords": [
     "rakuten",
     "mini app",
-    "apps"
+    "bridge",
+    "typescript"
   ],
   "author": "Mini App SDK Team",
   "license": "MIT",
