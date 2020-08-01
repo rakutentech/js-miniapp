@@ -49,7 +49,7 @@ export interface MiniAppBridge {
   /**
    * Associating getUniqueId function to MiniAppBridge object
    */
-  getUniqueId(): void;
+  getUniqueId(): Promise<string>;
 
   /**
    * Associating requestPermission function to MiniAppBridge object

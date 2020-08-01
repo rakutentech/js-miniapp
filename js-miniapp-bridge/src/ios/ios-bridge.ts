@@ -1,6 +1,6 @@
-/* tslint:disable:no-any */
-import * as commonBridge from './common-bridge';
+import * as commonBridge from '../common-bridge';
 
+/* tslint:disable:no-any */
 let uniqueId = Math.random();
 
 commonBridge.MiniAppBridge.prototype.exec = (
