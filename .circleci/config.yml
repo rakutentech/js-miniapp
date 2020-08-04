@@ -82,6 +82,13 @@ jobs: # a collection of steps
       - run:
           name: Compile
           command: yarn bridge compile
+
+  export-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
       - run:
           name: Export
           command: |
@@ -178,6 +185,12 @@ workflows:
             branches:
               only: /.*/
       - build-bridge
+      - export-bridge
+        requires:
+              - build-bridge
+        filters:
+          branches:
+            only: master
       - build-sample
       - sdk-release-verification:
           type: approval
