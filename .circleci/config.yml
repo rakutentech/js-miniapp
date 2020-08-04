@@ -185,12 +185,12 @@ workflows:
             branches:
               only: /.*/
       - build-bridge
-      - export-bridge
-        requires:
-              - build-bridge
-        filters:
-          branches:
-            only: master
+      - export-bridge:
+          requires:
+           - build-bridge
+          filters:
+            branches:
+              only: master
       - build-sample
       - sdk-release-verification:
           type: approval
