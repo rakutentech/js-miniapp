@@ -124,8 +124,15 @@ if (isPlatform.iOS()) {
             "getCurrentPosition",
             {locationOptions: options},
             function(value) {
-                var parsedData = JSON.parse(value)
-                success(parsedData)
+                try {
+                    var parsedData = JSON.parse(value)
+                    success(parsedData)
+                } catch(error) {
+                    error({
+                        code: GeolocationPositionError.POSITION_UNAVAILABLE,
+                        message: "Failed to parse location object from MiniAppBridge: " + error
+                    })
+                }
             },
             error
         );
