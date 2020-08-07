@@ -29,7 +29,7 @@ const WindowActions = () => {
     window.confirm('This is window confirm!');
   };
   const onPrompt = () => {
-    window.prompt('This is window Propmt!');
+    window.prompt('This is window prompt!');
   };
   return (
     <Card className={classes.root}>
