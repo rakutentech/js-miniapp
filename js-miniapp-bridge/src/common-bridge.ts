@@ -9,9 +9,7 @@ export interface Callback {
   onError: (error: string) => void;
 }
 
-export class MiniAppBridge {}
-
-export interface MiniAppBridge {
+export interface PlatformExecutor {
   /**
    * Method to call the native interface methods for respective platforms
    * such as iOS & Android
@@ -27,6 +25,14 @@ export interface MiniAppBridge {
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
+}
+
+export class MiniAppBridge {
+  executor: PlatformExecutor;
+
+  constructor(executor: PlatformExecutor) {
+    this.executor = executor;
+  }
 
   /**
    * Success Callback method that will be called from native side
@@ -35,7 +41,17 @@ export interface MiniAppBridge {
    * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
    * @param  {[String]} value Response value sent from the native on invoking the action command
    */
-  execSuccessCallback(messageId: string, value: string): void;
+  execSuccessCallback(messageId, value) {
+    const queueObj = mabMessageQueue.filter(
+      callback => callback.id === messageId
+    )[0];
+    if (value) {
+      queueObj.onSuccess(value);
+    } else {
+      queueObj.onError('Unknown Error');
+    }
+    removeFromMessageQueue(queueObj);
+  }
 
   /**
    * Error Callback method that will be called from native side
@@ -44,42 +60,46 @@ export interface MiniAppBridge {
    * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
    * @param  {[String]} errorMessage Error message sent from the native on invoking the action command
    */
-  execErrorCallback(messageId: string, errorMessage: string): void;
+  execErrorCallback(messageId, errorMessage) {
+    const queueObj = mabMessageQueue.filter(
+      callback => callback.id === messageId
+    )[0];
+    if (!errorMessage) {
+      errorMessage = 'Unknown Error';
+    }
+    queueObj.onError(errorMessage);
+    removeFromMessageQueue(queueObj);
+  }
 
   /**
    * Associating getUniqueId function to MiniAppBridge object
    */
-  getUniqueId(): Promise<string>;
+  getUniqueId() {
+    return new Promise((resolve, reject) => {
+      return this.executor.exec(
+        'getUniqueId',
+        null,
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
 
   /**
    * Associating requestPermission function to MiniAppBridge object
    * @param {String} permissionType Type of permission that is requested. For eg., location
    */
-  requestPermission(permissionType: string): void;
+  requestPermission(permissionType: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'requestPermission',
+        { permission: permissionType },
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
 }
-
-MiniAppBridge.prototype.execSuccessCallback = (messageId, value) => {
-  const queueObj = mabMessageQueue.filter(
-    callback => callback.id === messageId
-  )[0];
-  if (value) {
-    queueObj.onSuccess(value);
-  } else {
-    queueObj.onError('Unknown Error');
-  }
-  removeFromMessageQueue(queueObj);
-};
-
-MiniAppBridge.prototype.execErrorCallback = (messageId, errorMessage) => {
-  const queueObj = mabMessageQueue.filter(
-    callback => callback.id === messageId
-  )[0];
-  if (!errorMessage) {
-    errorMessage = 'Unknown Error';
-  }
-  queueObj.onError(errorMessage);
-  removeFromMessageQueue(queueObj);
-};
 
 /**
  * Method to remove the callback object from the message queue after successfull/error communication
@@ -92,29 +112,3 @@ function removeFromMessageQueue(queueObj) {
     mabMessageQueue.splice(messageObjIndex, 1);
   }
 }
-
-MiniAppBridge.prototype.getUniqueId = () => {
-  return new Promise((resolve, reject) => {
-    return MiniAppBridge.prototype.exec(
-      'getUniqueId',
-      null,
-      id => resolve(id),
-      error => reject(error)
-    );
-  });
-};
-
-/**
- * Associating requestPermission function to MiniAppBridge object
- * @param {String} permissionType Type of permission that is requested. For eg., location
- */
-MiniAppBridge.prototype.requestPermission = permissionType => {
-  return new Promise((resolve, reject) => {
-    return MiniAppBridge.prototype.exec(
-      'requestPermission',
-      { permission: permissionType },
-      success => resolve(success),
-      error => reject(error)
-    );
-  });
-};
