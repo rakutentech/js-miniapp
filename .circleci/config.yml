@@ -83,9 +83,9 @@ jobs: # a collection of steps
           name: Compile
           command: yarn bridge compile
       - persist_to_workspace:
-        root: ~/mini-js-bridge
-        paths:
-          - js-miniapp-bridge/build/
+          root: ~/mini-js-bridge
+          paths:
+            - js-miniapp-bridge/build/
 
   export-bridge:
     working_directory: ~/mini-js-bridge
