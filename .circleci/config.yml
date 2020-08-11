@@ -82,6 +82,10 @@ jobs: # a collection of steps
       - run:
           name: Compile
           command: yarn bridge compile
+      - persist_to_workspace:
+        root: ~/mini-js-bridge
+        paths:
+          - js-miniapp-bridge/build/
 
   export-bridge:
     working_directory: ~/mini-js-bridge
@@ -89,6 +93,8 @@ jobs: # a collection of steps
       - image: circleci/node:10.16.3
     steps:
       - checkout
+      - attach_workspace:
+          at: ./
       - run:
           name: Export
           command: |
