@@ -8,6 +8,13 @@ import {
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
 
+// tslint:disable-next-line: variable-name
+const GeolocationPositionError = {
+  PERMISSION_DENIED: 1,
+  POSITION_UNAVAILABLE: 2,
+  TIMEOUT: 3,
+};
+
 class IOSExcecutor implements PlatformExecutor {
   exec(action, param, onSuccess, onError) {
     const callback = {} as Callback;
@@ -35,7 +42,7 @@ navigator.geolocation.getCurrentPosition = (success, error, options) => {
         success(parsedData);
       } catch (error) {
         error({
-          code: (window as any).GeolocationPositionError.POSITION_UNAVAILABLE,
+          code: GeolocationPositionError.POSITION_UNAVAILABLE,
           message:
             'Failed to parse location object from MiniAppBridge: ' + error,
         });
