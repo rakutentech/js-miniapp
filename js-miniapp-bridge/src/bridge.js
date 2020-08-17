@@ -2,6 +2,12 @@ var MiniAppBridge = {};
 MiniAppBridge.messageQueue = [];
 var uniqueId = Math.random();
 
+var GeolocationPositionError = {
+  PERMISSION_DENIED: 1,
+  POSITION_UNAVAILABLE: 2,
+  TIMEOUT: 3,
+}
+
 var isPlatform = {
   Android: function() {
     return navigator.userAgent.match(/Android/i);
