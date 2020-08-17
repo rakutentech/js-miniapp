@@ -22,15 +22,24 @@ class IOSExcecutor implements PlatformExecutor {
   }
 }
 
-(window as any).MiniAppBridge = new MiniAppBridge(new IOSExcecutor());
+const iOSExcecutor = new IOSExcecutor();
+(window as any).MiniAppBridge = new MiniAppBridge(iOSExcecutor);
 
 navigator.geolocation.getCurrentPosition = (success, error, options) => {
-  return (window as any).MiniAppBridge.exec(
+  return iOSExcecutor.exec(
     'getCurrentPosition',
     { locationOptions: options },
     value => {
-      const parsedData = JSON.parse(value);
-      success(parsedData);
+      try {
+        const parsedData = JSON.parse(value);
+        success(parsedData);
+      } catch (error) {
+        error({
+          code: (window as any).GeolocationPositionError.POSITION_UNAVAILABLE,
+          message:
+            'Failed to parse location object from MiniAppBridge: ' + error,
+        });
+      }
     },
     error => console.error(error)
   );
