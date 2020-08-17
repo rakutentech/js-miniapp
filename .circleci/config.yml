@@ -101,7 +101,7 @@ jobs: # a collection of steps
             set -e
             cp js-miniapp-bridge/build/src/android/bridge.js js-miniapp-bridge/export/android/
             cp js-miniapp-bridge/build/src/ios/bridge.js js-miniapp-bridge/export/ios/
-            if [[ `git status --porcelain` ]]; then
+            if [[ `git status js-miniapp-bridge/export --porcelain` ]]; then
               git add js-miniapp-bridge/export
               git config user.name "CI Publisher"
               git config user.email "dev-opensource@mail.rakuten.com"
