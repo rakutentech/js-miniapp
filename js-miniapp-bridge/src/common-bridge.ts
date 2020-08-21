@@ -103,6 +103,7 @@ export class MiniAppBridge {
   /**
    * Associating requestCustomPermissions function to MiniAppBridge object
    * @param {string[]} permissionTypes, Array of type of custom permissions that is requested
+   * For eg., user name, profile photo, contact list.
    */
   requestCustomPermissions(permissionTypes: string[]) {
     return new Promise<string>((resolve, reject) => {
