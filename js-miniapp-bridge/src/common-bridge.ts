@@ -87,13 +87,29 @@ export class MiniAppBridge {
 
   /**
    * Associating requestPermission function to MiniAppBridge object
-   * @param {String} permissionType Type of permission that is requested. For eg., location
+   * @param {string} permissionType Type of permission that is requested. For eg., location
    */
   requestPermission(permissionType: string) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestPermission',
         { permission: permissionType },
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating requestCustomPermissions function to MiniAppBridge object
+   * @param {string[]} permissionTypes, Array includes type of custom permissions that is requested. 
+   * For eg., user name, profile photo, contact list
+   */
+  requestCustomPermissions(permissionTypes: string[]) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'requestCustomPermissions',
+        { permissions: permissionTypes },
         success => resolve(success),
         error => reject(error)
       );
