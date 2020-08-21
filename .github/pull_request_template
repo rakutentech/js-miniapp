@@ -7,5 +7,5 @@ Add links to github/jira issues, design documents and other relevant resources (
 
 # Checklist
 - [ ] I wrote/updated tests for new/changed code.
-- [ ] I ran yarn sdk buildSdk` `yarn bridge buildBridge` without issues.
+- [ ] I ran `yarn sdk buildSdk` `yarn bridge buildBridge` without issues.
 - [ ] I ran `yarn sample prettify` `yarn sample build` without issues.
