@@ -3,6 +3,8 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { AdTypes } from '../src/types/adTypes';
+import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import { MiniAppImp } from '../src/miniapp';
 import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
@@ -12,6 +14,7 @@ const window: any = {};
 window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
+  showInterstitialAd: sinon.stub(),
 };
 const miniApp = new MiniAppImp();
 
@@ -40,5 +43,29 @@ describe('requestPermission', () => {
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
     );
+  });
+});
+
+describe('showInterstitialAd', () => {
+  it('should delegate to showInterstitialAd function when request to show interstitial ad in native sdk', () => {
+    const spy = sinon.spy(miniApp, 'showInterstitialAd' as any);
+
+    miniApp.showInterstitialAd();
+
+    return expect(spy.callCount).to.equal(1);
+  });
+
+  it('should retrieve show interstitial ad resolves specific InterstitialAdResponse response result from the Mini App Bridge', () => {
+    const response: InterstitialAdResponse = {
+      miniAppId: '1234-121-12121-21212',
+      adUnitId: 'ca-app-pub-7941117952683310/1302674583',
+      startTime: new Date(),
+      endTime: new Date(),
+      adProvider: 'AdMob',
+      adType: AdTypes.INTERSTITIAL,
+    };
+
+    window.MiniAppBridge.showInterstitialAd.resolves(response);
+    return expect(miniApp.showInterstitialAd()).to.eventually.equal(response);
   });
 });

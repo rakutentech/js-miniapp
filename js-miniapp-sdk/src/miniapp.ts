@@ -1,5 +1,5 @@
+import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 import { MiniAppPermissionType } from './MiniAppPermissionType';
-
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -9,10 +9,17 @@ interface MiniApp {
   /** @returns The Promise of permission result of mini app from injected side. */
   requestLocationPermission(): Promise<string>;
 }
+/**
+ * An iterface layer for webapps and mobile native interaction to display ads.
+ */
+interface Ad {
+  /** @returns The Promise of intertitial ad response result from injected side. */
+  showInterstitialAd(): Promise<InterstitialAdResponse>;
+}
 
 /** @internal */
 /* tslint:disable:no-any */
-export class MiniAppImp implements MiniApp {
+export class MiniAppImp implements MiniApp, Ad {
   private requestPermission(permissionType: string): Promise<string> {
     return (window as any).MiniAppBridge.requestPermission(permissionType);
   }
@@ -23,5 +30,9 @@ export class MiniAppImp implements MiniApp {
 
   requestLocationPermission(): Promise<string> {
     return this.requestPermission(MiniAppPermissionType.LOCATION);
+  }
+
+  showInterstitialAd(): Promise<InterstitialAdResponse> {
+    return (window as any).MiniAppBridge.showInterstitialAd();
   }
 }
