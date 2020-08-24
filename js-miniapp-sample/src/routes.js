@@ -4,6 +4,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import HomeIcon from '@material-ui/icons/Home';
 import LaptopWindowsIcon from '@material-ui/icons/LaptopWindows';
+import LinkIcon from '@material-ui/icons/Link';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PersonIcon from '@material-ui/icons/Person';
@@ -15,10 +16,11 @@ import TalkToChatBot from './pages/chatbot';
 import FetchCredentials from './pages/fetch-credentials';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
+import UriSchemes from './pages/uri-schemes';
 import UserDetails from './pages/user-details';
-import UuidFetcher from './pages/uuid_sdk';
-import WebLocation from './pages/web_location';
-import WindowActions from './pages/window_actions';
+import UuidFetcher from './pages/uuid-sdk';
+import WebLocation from './pages/web-location';
+import WindowActions from './pages/window-actions';
 
 const navItems = [
   {
@@ -74,6 +76,12 @@ const navItems = [
     label: 'Window Actions',
     navLink: '/window_actions',
     component: WindowActions,
+  },
+  {
+    icon: <LinkIcon />,
+    label: 'URI Schemes',
+    navLink: '/uri_schemes',
+    component: UriSchemes,
   },
 ];
 
