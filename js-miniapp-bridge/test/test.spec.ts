@@ -1,3 +1,5 @@
+import { AdTypes } from '../src/types/adTypes';
+import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import * as bridge from '../src/common-bridge';
 import assert from 'chai';
 
@@ -65,5 +67,32 @@ describe('Test Mini App Bridge execErrorCallback is called with no error message
     callback.id = String(Math.random());
     bridge.mabMessageQueue.unshift(callback);
     bridge.MiniAppBridge.prototype.execErrorCallback(callback.id, '');
+  });
+});
+
+describe('Test Mini App Bridge execSuccessCallback is called with valid ad response', () => {
+  it('will return success promise and typecast the response JSON string successfully', () => {
+    const callback = {} as bridge.Callback;
+    const adREsponse: InterstitialAdResponse = {
+      adType: AdTypes.INTERSTITIAL,
+    };
+
+    const jsonAdresponse = '{ "adType": 1 }';
+
+    const onSuccess = value => {
+      assert.expect(value).to.equal(jsonAdresponse);
+      assert
+        .expect(<InterstitialAdResponse>JSON.parse(value))
+        .to.deep.equal(adREsponse);
+    };
+    const onError = () => {};
+    callback.onSuccess = onSuccess;
+    callback.onError = onError;
+    callback.id = String(Math.random());
+    bridge.mabMessageQueue.unshift(callback);
+    bridge.MiniAppBridge.prototype.execSuccessCallback(
+      callback.id,
+      jsonAdresponse
+    );
   });
 });
