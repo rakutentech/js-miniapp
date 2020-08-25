@@ -49,7 +49,6 @@ describe('requestPermission', () => {
 describe('showInterstitialAd', () => {
   it('should retrieve show interstitial ad resolves specific InterstitialAdResponse response result from the Mini App Bridge', () => {
     const response: InterstitialAdResponse = {
-      displayDate: new Date(),
       adType: AdTypes.INTERSTITIAL,
     };
 

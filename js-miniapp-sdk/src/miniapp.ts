@@ -13,7 +13,7 @@ interface MiniApp {
  * An iterface layer for webapps and mobile native interaction to display ads.
  */
 interface Ad {
-  /** @returns The Promise of intertitial ad response result from injected side. */
+  /** @returns The Promise of interstitial ad response result from injected side. */
   showInterstitialAd(): Promise<InterstitialAdResponse>;
 }
 
