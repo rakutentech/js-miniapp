@@ -1,10 +1,11 @@
+import { AdTypes } from './types/adTypes';
+import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 /* tslint:disable:no-any */
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
 
 export interface Callback {
   id: string;
-
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
 }
@@ -95,6 +96,20 @@ export class MiniAppBridge {
         'requestPermission',
         { permission: permissionType },
         success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating showInterstitialAd function to MiniAppBridge object
+   */
+  showInterstitialAd() {
+    return new Promise<InterstitialAdResponse>((resolve, reject) => {
+      return this.executor.exec(
+        'showAd',
+        { adType: AdTypes.INTERSTITIAL },
+        adResponse => resolve(<InterstitialAdResponse>JSON.parse(adResponse)),
         error => reject(error)
       );
     });
