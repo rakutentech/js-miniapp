@@ -82,7 +82,7 @@ describe('Test Mini App Bridge execSuccessCallback is called with valid ad respo
     const onSuccess = value => {
       assert.expect(value).to.equal(jsonAdresponse);
       assert
-        .expect(<InterstitialAdResponse>JSON.parse(value))
+        .expect(JSON.parse(value) as InterstitialAdResponse)
         .to.deep.equal(adREsponse);
     };
     const onError = () => {};

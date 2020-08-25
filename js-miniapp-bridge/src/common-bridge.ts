@@ -109,7 +109,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.INTERSTITIAL },
-        adResponse => resolve(<InterstitialAdResponse>JSON.parse(adResponse)),
+        adResponse => resolve(JSON.parse(adResponse) as InterstitialAdResponse),
         error => reject(error)
       );
     });
