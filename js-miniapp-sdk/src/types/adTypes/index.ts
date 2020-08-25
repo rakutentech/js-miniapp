@@ -4,5 +4,5 @@
 export enum AdTypes {
   BANNER,
   INTERSTITIAL,
-  REWARD,
+  REWARDED,
 }

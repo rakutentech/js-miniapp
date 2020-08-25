@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### v1.2.0 (2020-7-21)
+### v1.2.0 (In progress)
 
 - Added support for requesting show interstitial ad from the host application to allow displaying Interstitial ads [See here](README.MD#4-Show-Interstitial-Ad)
 

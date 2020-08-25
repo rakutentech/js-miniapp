@@ -47,21 +47,9 @@ describe('requestPermission', () => {
 });
 
 describe('showInterstitialAd', () => {
-  it('should delegate to showInterstitialAd function when request to show interstitial ad in native sdk', () => {
-    const spy = sinon.spy(miniApp, 'showInterstitialAd' as any);
-
-    miniApp.showInterstitialAd();
-
-    return expect(spy.callCount).to.equal(1);
-  });
-
   it('should retrieve show interstitial ad resolves specific InterstitialAdResponse response result from the Mini App Bridge', () => {
     const response: InterstitialAdResponse = {
-      miniAppId: '1234-121-12121-21212',
-      adUnitId: 'ca-app-pub-7941117952683310/1302674583',
-      startTime: new Date(),
-      endTime: new Date(),
-      adProvider: 'AdMob',
+      displayDate: new Date(),
       adType: AdTypes.INTERSTITIAL,
     };
 
