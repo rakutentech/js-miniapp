@@ -73,7 +73,7 @@ describe('Test Mini App Bridge execErrorCallback is called with no error message
 describe('Test Mini App Bridge execSuccessCallback is called with valid ad response', () => {
   it('will return success promise and typecast the response JSON string successfully', () => {
     const callback = {} as bridge.Callback;
-    const adREsponse: InterstitialAdResponse = {
+    const adResponse: InterstitialAdResponse = {
       adType: AdTypes.INTERSTITIAL,
     };
 
