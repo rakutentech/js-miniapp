@@ -55,4 +55,14 @@ describe('showInterstitialAd', () => {
     window.MiniAppBridge.showInterstitialAd.resolves(response);
     return expect(miniApp.showInterstitialAd()).to.eventually.equal(response);
   });
+
+  it('should retrive error response from the Mini App Bridge', () => {
+    const error: Error = {
+      message: "Unknown error occured",
+      name: "Bridge error"
+    };
+
+    window.MiniAppBridge.showInterstitialAd.resolves(error);
+    return expect(miniApp.showInterstitialAd()).to.eventually.equal(error);
+  });
 });
