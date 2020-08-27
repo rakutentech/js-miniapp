@@ -58,8 +58,8 @@ describe('showInterstitialAd', () => {
 
   it('should retrive error response from the Mini App Bridge', () => {
     const error: Error = {
-      message: "Unknown error occured",
-      name: "Bridge error"
+      message: 'Unknown error occured',
+      name: 'Bridge error',
     };
 
     window.MiniAppBridge.showInterstitialAd.resolves(error);
