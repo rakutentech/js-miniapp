@@ -9,8 +9,9 @@ interface MiniApp {
   /** @returns The Promise of permission result of mini app from injected side. */
   requestLocationPermission(): Promise<string>;
 }
+
 /**
- * An iterface layer for webapps and mobile native interaction to display ads.
+ * A contract declaring the interaction mechanism between mini-apps and native host app to display ads.
  */
 interface Ad {
   /** @returns The Promise of interstitial ad response result from injected side. */
