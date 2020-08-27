@@ -1,6 +1,7 @@
 import { AdTypes } from '../../adTypes';
+
 /**
- * Intterstitial ad type response from native sdk
+ * Interstitial ad type response from native SDK
  */
 export interface InterstitialAdResponse {
   adType: AdTypes.INTERSTITIAL;
