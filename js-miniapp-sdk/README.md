@@ -88,7 +88,6 @@ Note: This requires the mini-app to have obtained/enrolled the required ad units
 
 There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to `AdTypes.INTERSTITIAL`
 
-
 ```javascript
 miniApp.showInterstitialAd()
 	.then(response => {
