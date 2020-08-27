@@ -1,5 +1,5 @@
 import { MiniAppPermissionType } from './MiniAppPermissionType';
-
+import { RewardedAdResponse } from './types/responseTypes/rewarded';
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -10,9 +10,23 @@ interface MiniApp {
   requestLocationPermission(): Promise<string>;
 }
 
+/**
+ * A contract declaring the interaction mechanism between mini-apps and native host app to display ads.
+ */
+interface Ad {
+  /**
+   * Requests bridge to show a Rewarded Ad.
+   * Promise is resolved with an object after the user closes the Ad.
+   * The object contains the reward earned by the user.
+   * Reward amount will be null if the user did not earn the reward.
+   * Promise is rejected if the Ad failed to load.
+   */
+  showRewardedAd(): Promise<RewardedAdResponse>;
+}
+
 /** @internal */
 /* tslint:disable:no-any */
-export class MiniAppImp implements MiniApp {
+export class MiniAppImp implements MiniApp, Ad {
   private requestPermission(permissionType: string): Promise<string> {
     return (window as any).MiniAppBridge.requestPermission(permissionType);
   }
@@ -23,5 +37,9 @@ export class MiniAppImp implements MiniApp {
 
   requestLocationPermission(): Promise<string> {
     return this.requestPermission(MiniAppPermissionType.LOCATION);
+  }
+
+  showRewardedAd(): Promise<RewardedAdResponse> {
+    return (window as any).MiniAppBridge.showRewardedAd();
   }
 }

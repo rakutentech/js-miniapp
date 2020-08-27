@@ -81,6 +81,19 @@ miniApp.requestLocationPermission()
 	});
 ```
 
+### 5. Show Rewarded Ad
+Mini App JS SDK makes it possible to display Rewarded ads during the execution from a mini-app. MiniApp#showRewardedAd facilitates the display of the Ad while pairing with the Mini App Native SDKs. The results of the display action are captured as RewardedAdResponse. Note: This requires the mini-app to have obtained/enrolled the required ad units with the host app.
+
+There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to AdTypes.REWARDED and the rewand amount is also a part of the response and amount can accept null value.
+
+```javascript
+miniApp.showRewardedAd()
+	.then(response => {
+		console.log(response); // Successful response
+	}).catch(error => {
+		console.error(response); // Error
+	});
+```
 ## Advanced Usage
 
 ### Usage when testing in the browser

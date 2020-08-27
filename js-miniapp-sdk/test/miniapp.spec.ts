@@ -3,6 +3,8 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { AdTypes } from '../src/types/adTypes';
+import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
 import { MiniAppImp } from '../src/miniapp';
 import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
@@ -12,6 +14,7 @@ const window: any = {};
 window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
+  showRewardedAd: sinon.stub(),
 };
 const miniApp = new MiniAppImp();
 
@@ -40,5 +43,36 @@ describe('requestPermission', () => {
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
     );
+  });
+});
+
+describe('showRewardedAd', () => {
+  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge', () => {
+    const response: RewardedAdResponse = {
+      amount: 10,
+      adType: AdTypes.REWARDED,
+    };
+
+    window.MiniAppBridge.showRewardedAd.resolves(response);
+    return expect(miniApp.showRewardedAd()).to.eventually.equal(response);
+  });
+
+  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge and the reward amount is null', () => {
+    const response: RewardedAdResponse = {
+      adType: AdTypes.REWARDED,
+    };
+
+    window.MiniAppBridge.showRewardedAd.resolves(response);
+    return expect(miniApp.showRewardedAd()).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the Mini App Bridge', () => {
+    const error: Error = {
+      message: 'Unknown error occured',
+      name: 'Bridge error',
+    };
+
+    window.MiniAppBridge.showRewardedAd.resolves(error);
+    return expect(miniApp.showRewardedAd()).to.eventually.equal(error);
   });
 });
