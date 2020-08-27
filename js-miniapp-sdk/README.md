@@ -83,7 +83,8 @@ miniApp.requestLocationPermission()
 
 ### 4. Show Interstitial Ad
 
-This is a helper function to make request to js bridge to show Iterstitial ads on the native SDK, The response is captured by a specific response type that is called InterstitialAdResponse and can be found [here](src/types/responseTypes/interstitial/index.ts).
+Mini App JS SDK makes it possible to display Interstitial ads during the execution of a mini-app. MiniApp#showInterstitialAd facilitates the display of the Ad while pairing with the Mini App Native SDKs. The results of the display action are captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
+Note: This requires the mini-app to have obtained/enrolled the required ad units with the host app.
 
 There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to `AdTypes.INTERSTITIAL`
 
