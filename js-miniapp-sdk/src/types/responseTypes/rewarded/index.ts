@@ -1,6 +1,6 @@
 import { AdTypes } from '../../adTypes';
 /**
- * Rewarded ad type response from native SDK
+ * A contract declaring the interaction mechanism between Rewarded ad type response from native SDK
  */
 export interface RewardedAdResponse {
   amount?: number;
