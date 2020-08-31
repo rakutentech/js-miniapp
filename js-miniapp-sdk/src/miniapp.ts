@@ -1,3 +1,4 @@
+import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 import { MiniAppPermissionType } from './MiniAppPermissionType';
 import { RewardedAdResponse } from './types/responseTypes/rewarded';
 /**
@@ -14,6 +15,8 @@ interface MiniApp {
  * A contract declaring the interaction mechanism between mini-apps and native host app to display ads.
  */
 interface Ad {
+  /** @returns The Promise of interstitial ad response result from injected side. */
+  showInterstitialAd(): Promise<InterstitialAdResponse>;
   /**
    * Requests bridge to show a Rewarded Ad.
    * Promise is resolved with an object after the user closes the Ad.
@@ -37,6 +40,10 @@ export class MiniAppImp implements MiniApp, Ad {
 
   requestLocationPermission(): Promise<string> {
     return this.requestPermission(MiniAppPermissionType.LOCATION);
+  }
+
+  showInterstitialAd(): Promise<InterstitialAdResponse> {
+    return (window as any).MiniAppBridge.showInterstitialAd();
   }
 
   showRewardedAd(): Promise<RewardedAdResponse> {
