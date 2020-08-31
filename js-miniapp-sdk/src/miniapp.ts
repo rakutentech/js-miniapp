@@ -19,7 +19,7 @@ interface Ad {
   showInterstitialAd(): Promise<InterstitialAdResponse>;
   /**
    * Requests bridge to show a Rewarded Ad.
-   * Promise is resolved with an object after the user closes the Ad.
+   * @returns The promise is resolved with RewardedAdResponse object after the user closes the Ad.
    * The object contains the reward earned by the user.
    * Reward amount will be null if the user did not earn the reward.
    * Promise is rejected if the Ad failed to load.

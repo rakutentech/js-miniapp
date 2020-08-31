@@ -2,9 +2,7 @@
 
 ### v1.2.0 (In progress)
 
-- Added support for requesting show interstitial ad from the host application to allow displaying Interstitial ads [See here](README.MD#4-Show-Interstitial-Ad)
-
-- Added support for requesting show rewarded ad from the host application to allow displaying Rewarded ads [See here](README.MD#5-Show-Rewarded-Ad)
+- Added support for requesting show ads from the host application to allow displaying Interstitial or Rewarded ads [See here](README.MD#4-Show-Ads)
 
 
 ### v1.1.0 (2020-7-21)

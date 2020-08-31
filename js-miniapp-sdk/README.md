@@ -81,12 +81,17 @@ miniApp.requestLocationPermission()
 	});
 ```
 
-### 4. Show Interstitial Ad
+### 4. Show Ads
 
-Mini App JS SDK makes it possible to display Interstitial ads during the execution of a mini-app. MiniApp#showInterstitialAd facilitates the display of the Ad while pairing with the Mini App Native SDKs. The results of the display action are captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
-Note: This requires the mini-app to have obtained/enrolled the required ad units with the host app.
+Mini App SDK allows to display ads upon requesting from Mini apps.
+This requires the mini-app to have obtained/enrolled the required ad units with the host app.
+Currently two ad types are supported,
+1. Interstitial
+2. Rewarded
 
-There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to `AdTypes.INTERSTITIAL`
+| Interstitial |
+| ------------ |
+The results of the display action are captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
 
 ```javascript
 miniApp.showInterstitialAd()
@@ -96,11 +101,9 @@ miniApp.showInterstitialAd()
 		console.error(response); // Error
 	});
 ```
-
-### 5. Show Rewarded Ad
-Mini App JS SDK makes it possible to display Rewarded ads during the execution from a mini-app. MiniApp#showRewardedAd facilitates the display of the Ad while pairing with the Mini App Native SDKs. The results of the display action are captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts). Note: This requires the mini-app to have obtained/enrolled the required ad units with the host app.
-
-There is an adType key in the response type which is a value from AdTypes enum and the value for this response is set to `AdTypes.REWARDED` and the reward amount is also a part of the response and can accept null value.
+| Rewarded |
+| -------- |
+The results of the display action are captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
 
 ```javascript
 miniApp.showRewardedAd()
