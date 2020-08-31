@@ -91,7 +91,7 @@ Currently two ad types are supported,
 
 | Interstitial |
 | ------------ |
-The results of the display action are captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
+The results of the display interstitial ad action is captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
 
 ```javascript
 miniApp.showInterstitialAd()
@@ -103,7 +103,7 @@ miniApp.showInterstitialAd()
 ```
 | Rewarded |
 | -------- |
-The results of the display action are captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
+The results of the display Reward ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
 
 ```javascript
 miniApp.showRewardedAd()
