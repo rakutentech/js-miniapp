@@ -72,7 +72,7 @@ describe('showInterstitialAd', () => {
 describe('showRewardedAd', () => {
   it('should retrieve RewardedAdResponse type of result from the Mini App Bridge', () => {
     const response: RewardedAdResponse = {
-      reward: {amount: 500, type: 'game bonus'},
+      reward: { amount: 500, type: 'game bonus' },
       adType: AdTypes.REWARDED,
     };
 
