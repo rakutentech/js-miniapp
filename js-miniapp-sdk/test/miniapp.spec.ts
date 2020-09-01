@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import { AdTypes } from '../src/types/adTypes';
 import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
 import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
-import { MiniAppImp } from '../src/miniapp';
+import { MiniApp } from '../src/miniapp';
 import { MiniAppPermissionType } from '../src/MiniAppPermissionType';
 
 const window: any = {};
@@ -18,7 +18,7 @@ window.MiniAppBridge = {
   showInterstitialAd: sinon.stub(),
   showRewardedAd: sinon.stub(),
 };
-const miniApp = new MiniAppImp();
+const miniApp = new MiniApp();
 
 describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
