@@ -72,7 +72,7 @@ describe('showInterstitialAd', () => {
 describe('showRewardedAd', () => {
   it('should retrieve RewardedAdResponse type of result from the Mini App Bridge', () => {
     const response: RewardedAdResponse = {
-      amount: 10,
+      reward: {amount: 500, type: 'game bonus'},
       adType: AdTypes.REWARDED,
     };
 
@@ -80,7 +80,7 @@ describe('showRewardedAd', () => {
     return expect(miniApp.showRewardedAd()).to.eventually.equal(response);
   });
 
-  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge and the reward amount is null', () => {
+  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge and the reward is null', () => {
     const response: RewardedAdResponse = {
       adType: AdTypes.REWARDED,
     };
