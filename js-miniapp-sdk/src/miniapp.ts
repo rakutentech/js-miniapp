@@ -4,7 +4,7 @@ import { RewardedAdResponse } from './types/responseTypes/rewarded';
 /**
  * A module layer for webapps and mobile native interaction.
  */
-interface MiniApp {
+interface MiniAppFeatures {
   /** @returns The Promise of provided id of mini app from injected side. */
   getUniqueId(): Promise<string>;
   /** @returns The Promise of permission result of mini app from injected side. */
@@ -27,9 +27,8 @@ interface Ad {
   showRewardedAd(): Promise<RewardedAdResponse>;
 }
 
-/** @internal */
 /* tslint:disable:no-any */
-export class MiniAppImp implements MiniApp, Ad {
+export class MiniApp implements MiniAppFeatures, Ad {
   private requestPermission(permissionType: string): Promise<string> {
     return (window as any).MiniAppBridge.requestPermission(permissionType);
   }
