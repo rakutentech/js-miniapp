@@ -83,8 +83,8 @@ miniApp.requestLocationPermission()
 
 ### 4. Show Ads
 
-Mini App SDK allows to display ads upon requesting from Mini apps.
-This requires the mini-app to have obtained/enrolled the required ad units with the host app.
+Mini App SDK allows to display ads upon requesting from Mini apps requesting from Mini apps with ad unit id.
+This requires to pass in ad unit id to the host app in order to load the ad associated with the ad unit id.
 Currently two ad types are supported,
 1. Interstitial
 2. Rewarded
@@ -93,7 +93,8 @@ Currently two ad types are supported,
 The results of the display `Interstitial` ad action is captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
 
 ```javascript
-miniApp.showInterstitialAd()
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+miniApp.showInterstitialAd(adUnitID)
 	.then(response => {
 		console.log(response); // Successful response
 	}).catch(error => {
@@ -104,13 +105,55 @@ miniApp.showInterstitialAd()
 The results of the display `Reward` ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
 
 ```javascript
-miniApp.showRewardedAd()
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+miniApp.showRewardedAd(adUnitID)
 .then(response => {
 		console.log(response); // Successful response
 	}).catch(error => {
 		console.error(response); // Error
 	});
 ```
+
+### 5. Load Ads
+
+Mini App SDK allows to load ads upon requesting from Mini apps with ad unit id.
+Load ad functions can be called multiple times to pre-load multiple ads.
+This requires to pass in ad unit id to the host app in order to load the ad associated with the ad unit id.
+Currently two ad types are supported,
+
+1. Interstitial
+2. Rewarded
+
+**Interstitial**
+The results of the `loadInterstitialAd` action is captured as a generic response type if the response is promised successfully.
+
+```javascript
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+miniApp
+  .loadInterstitialAd(adUnitID)
+  .then(response => {
+    console.log(response); // Successful response
+  })
+  .catch(error => {
+    console.error(response); // Error
+  });
+```
+
+**Rewarded**
+The results of the `loadRewardedAd` action is captured as a generic response type if the response is promised successfully.
+
+```javascript
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+miniApp
+  .loadRewardedAd(adUnitID)
+  .then(response => {
+    console.log(response); // Successful response
+  })
+  .catch(error => {
+    console.error(response); // Error
+  });
+```
+
 
 ## Advanced Usage
 

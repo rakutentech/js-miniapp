@@ -15,16 +15,32 @@ interface MiniAppFeatures {
  * A contract declaring the interaction mechanism between mini-apps and native host app to display ads.
  */
 interface Ad {
-  /** @returns The Promise of interstitial ad response result from injected side. */
-  showInterstitialAd(): Promise<InterstitialAdResponse>;
   /**
-   * Requests bridge to show a Rewarded Ad.
-   * @returns The promise is resolved with RewardedAdResponse object after the user closes the Ad.
-   * The object contains the reward earned by the user.
-   * Reward can be null if the user did not earn the reward.
-   * Promise is rejected if the Ad failed to load.
+   * Loads the specified Interstittial Ad Unit ID.
+   * Can be called multiple times to pre-load multiple ads.
+   * Promise is resolved when successfully loaded.
+   * Promise is rejected if failed to load.
    */
-  showRewardedAd(): Promise<RewardedAdResponse>;
+  loadInterstitialAd<T>(id: string): Promise<T>;
+  /**
+   * Loads the specified Rewarded Ad Unit ID.
+   * Can be called multiple times to pre-load multiple ads.
+   * Promise is resolved when successfully loaded.
+   * Promise is rejected if failed to load.
+   */
+  loadRewardedAd<T>(id: string): Promise<T>;
+  /**
+   * Shows the Interstitial Ad for the specified ID.
+   * Promise is resolved after the user closes the Ad.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
+   */
+  showInterstitialAd(id: string): Promise<InterstitialAdResponse>;
+  /**
+   * Shows the Rewarded Ad for the specified ID.
+   * Promise is resolved with an object after the user closes the Ad. The object contains the reward earned by the user. Reward will be null if the user did not earn the reward.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
+   */
+  showRewardedAd(id: string): Promise<RewardedAdResponse>;
 }
 
 /* tslint:disable:no-any */
@@ -41,11 +57,19 @@ export class MiniApp implements MiniAppFeatures, Ad {
     return this.requestPermission(MiniAppPermissionType.LOCATION);
   }
 
-  showInterstitialAd(): Promise<InterstitialAdResponse> {
+  loadInterstitialAd<T>(id: string): Promise<T> {
+    return (window as any).MiniAppBridge.loadInterstitialAd();
+  }
+
+  loadRewardedAd<T>(id: string): Promise<T> {
+    return (window as any).MiniAppBridge.loadRewardedAd();
+  }
+
+  showInterstitialAd(id: string): Promise<InterstitialAdResponse> {
     return (window as any).MiniAppBridge.showInterstitialAd();
   }
 
-  showRewardedAd(): Promise<RewardedAdResponse> {
+  showRewardedAd(id: string): Promise<RewardedAdResponse> {
     return (window as any).MiniAppBridge.showRewardedAd();
   }
 }
