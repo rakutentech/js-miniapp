@@ -1,6 +1,5 @@
 import MiniApp from 'js-miniapp-sdk';
 
-import { isMobile } from '../../js_sdk';
 import { SET_UUID, UUID_FETCH_ERROR } from './types';
 
 type GetUUIDAction = { type: String, payload: string };
