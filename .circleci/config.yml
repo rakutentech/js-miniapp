@@ -123,7 +123,7 @@ jobs: # a collection of steps
           key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install dependencies w/ Yarn
-          command: yarn install
+          command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
@@ -134,7 +134,6 @@ jobs: # a collection of steps
           command: |
             yarn sample prettify
             yarn sample lint
-            yarn sample flow
       - run:
           name: test
           command: yarn sample test -- --watchAll=false
