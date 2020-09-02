@@ -9,25 +9,18 @@ type UUIDAction = GetUUIDAction;
 
 const setUUID = (): Function => {
   return (dispatch) => {
-    if (!isMobile()) {
-      console.error('MiniApp must run inside Mobile to fetch UniqueId');
-      dispatch({
-        type: UUID_FETCH_ERROR,
-      });
-    } else {
-      MiniApp.getUniqueId()
-        .then((uuidFromSDK) => {
-          dispatch({
-            type: SET_UUID,
-            payload: uuidFromSDK,
-          });
-        })
-        .catch((_) => {
-          dispatch({
-            type: UUID_FETCH_ERROR,
-          });
+    MiniApp.getUniqueId()
+      .then((uuidFromSDK) => {
+        dispatch({
+          type: SET_UUID,
+          payload: uuidFromSDK,
         });
-    }
+      })
+      .catch((_) => {
+        dispatch({
+          type: UUID_FETCH_ERROR,
+        });
+      });
   };
 };
 
