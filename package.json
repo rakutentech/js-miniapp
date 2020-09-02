@@ -10,8 +10,5 @@
         "sample": "yarn workspace js-miniapp-sample",
         "bridge": "yarn workspace js-miniapp-bridge",
         "postinstall": "yarn sdk compile"
-    },
-    "dependencies": {
-        "@brightcove/react-player-loader": "^1.4.0"
     }
 }
