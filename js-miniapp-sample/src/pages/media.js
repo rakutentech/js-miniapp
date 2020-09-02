@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactPlayerLoader from '@brightcove/react-player-loader';
 
-const onSuccess = function(success) {
+const onSuccess = function (success) {
   console.log(success.ref);
 };
 
