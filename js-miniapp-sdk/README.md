@@ -96,12 +96,14 @@ The results of the display `Interstitial` ad action is captured as [Interstitial
 
 ```javascript
 const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
-miniApp.showInterstitialAd(adUnitID)
-	.then(response => {
-		console.log(response); // Successful response
-	}).catch(error => {
-		console.error(response); // Error
-	});
+
+miniApp.loadInterstitialAd(adUnitID)
+    .then(response => {
+        miniApp.showInterstitialAd(adUnitID)
+            .then(response => console.log(response) )
+            .catch( error => console.error(response) );
+    })
+    .catch( error => console.error(response) );
 ```
 **Rewarded**
 The results of the display `Reward` ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
