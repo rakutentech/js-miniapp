@@ -84,7 +84,9 @@ miniApp.requestLocationPermission()
 ### 4. Show Ads
 
 Mini App SDK allows to display ads upon requesting from Mini apps requesting from Mini apps with ad unit id.
-This requires to pass in ad unit id to the host app in order to load the ad associated with the ad unit id.
+This requires you to first load an Ad by passing an ID. You can then display that ad by passing the same ID which was loaded.
+
+Note that typically you should load your Ads at some point earlier than you intend to use them, such as at App launch time. You can also pre-load multiple Ads by calling `MiniApp.loadInterstialAd` or `MiniApp.loadRewardedAd multiple times.
 Currently two ad types are supported,
 1. Interstitial
 2. Rewarded
