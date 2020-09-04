@@ -134,6 +134,7 @@ jobs: # a collection of steps
           command: |
             yarn sample prettify
             yarn sample lint
+            yarn sample flow
       - run:
           name: test
           command: yarn sample test -- --watchAll=false
