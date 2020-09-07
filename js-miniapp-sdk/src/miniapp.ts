@@ -7,6 +7,7 @@ import { RewardedAdResponse } from './types/responseTypes/rewarded';
 interface MiniAppFeatures {
   /** @returns The Promise of provided id of mini app from injected side. */
   getUniqueId(): Promise<string>;
+
   /** @returns The Promise of permission result of mini app from injected side. */
   requestLocationPermission(): Promise<string>;
 }
@@ -19,25 +20,33 @@ interface Ad {
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
+   * @returns The Promise of load ad response result from injected side.
    * Promise is rejected if failed to load.
    */
   loadInterstitialAd<T>(id: string): Promise<T>;
+
   /**
    * Loads the specified Rewarded Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
+   * * @returns The Promise of load ad response result from injected side.
    * Promise is rejected if failed to load.
    */
   loadRewardedAd<T>(id: string): Promise<T>;
+
   /**
    * Shows the Interstitial Ad for the specified ID.
    * Promise is resolved after the user closes the Ad.
+   * @returns The Promise of Interstitial ad response result from injected side.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
    */
   showInterstitialAd(id: string): Promise<InterstitialAdResponse>;
+
   /**
    * Shows the Rewarded Ad for the specified ID.
-   * Promise is resolved with an object after the user closes the Ad. The object contains the reward earned by the user. Reward will be null if the user did not earn the reward.
+   * Promise is resolved with an object after the user closes the Ad. The object contains the reward earned by the user.
+   * Reward will be null if the user did not earn the reward.
+   * @returns The Promise of Rewarded ad response result from injected side.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
    */
   showRewardedAd(id: string): Promise<RewardedAdResponse>;
