@@ -102,7 +102,7 @@ export class MiniAppBridge {
 
   /**
    * Associating requestCustomPermissions function to MiniAppBridge object
-   * @param string[] permissionTypes, Type of custom permissions that is requested
+   * @param [string, string] permissionTypes, Type of custom permissions that is requested
    * using an Array including the parameters eg. name, description.
    *
    * Miniapps should use "rakuten.miniapp.user." prefix for a valid name of the custom permissions
