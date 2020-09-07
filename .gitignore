@@ -1,47 +1,5 @@
-# Build
-js-miniapp-sdk/public/
-js-miniapp-bridge/public/
-*.tgz
+# Ignore everything
+*
 
-# Coverage reports
-coverage
-coverage.*
-.nyc_output/
-
-# API keys and secrets
-.env
-
-# Dependency directory
-node_modules/
-
-# Ignore built files
-build/
-dist/
-publishableDocs/
-
-# Tests
-test-results/
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-
-# File System
-*.DS_Store
-Thumbs.db
-
-# Editor
-.vscode
-jsconfig.json
-/typings
-.idea
-*.iml
-
-#Exclude tsc generated files
-js/*.map
-js/ts.js
+# Keep bridge.js file
+!/bridge.js
