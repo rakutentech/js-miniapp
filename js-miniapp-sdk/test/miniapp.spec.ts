@@ -154,11 +154,7 @@ describe('loadRewardedAd', () => {
   it('should retrieve response result from the Mini App Bridge once loadRewardedAd call is successful', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    const response = {
-      adUnit: adUnitId,
-      adType: AdTypes.REWARDED,
-      loaded: true,
-    };
+    const response = null;
 
     window.MiniAppBridge.loadRewardedAd.resolves(response);
     return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(

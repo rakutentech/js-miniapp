@@ -23,7 +23,7 @@ interface Ad {
    * @returns The Promise of load ad response result from injected side.
    * Promise is rejected if failed to load.
    */
-  loadInterstitialAd<T>(id: string): Promise<T>;
+  loadInterstitialAd(id: string): Promise<null | Error>;
 
   /**
    * Loads the specified Rewarded Ad Unit ID.
@@ -32,7 +32,7 @@ interface Ad {
    * * @returns The Promise of load ad response result from injected side.
    * Promise is rejected if failed to load.
    */
-  loadRewardedAd<T>(id: string): Promise<T>;
+  loadRewardedAd(id: string): Promise<null | Error>;
 
   /**
    * Shows the Interstitial Ad for the specified ID.
@@ -66,19 +66,19 @@ export class MiniApp implements MiniAppFeatures, Ad {
     return this.requestPermission(MiniAppPermissionType.LOCATION);
   }
 
-  loadInterstitialAd<T>(id: string): Promise<T> {
-    return (window as any).MiniAppBridge.loadInterstitialAd();
+  loadInterstitialAd(id: string): Promise<null | Error> {
+    return (window as any).MiniAppBridge.loadInterstitialAd(id);
   }
 
-  loadRewardedAd<T>(id: string): Promise<T> {
-    return (window as any).MiniAppBridge.loadRewardedAd();
+  loadRewardedAd(id: string): Promise<null | Error> {
+    return (window as any).MiniAppBridge.loadRewardedAd(id);
   }
 
   showInterstitialAd(id: string): Promise<InterstitialAdResponse> {
-    return (window as any).MiniAppBridge.showInterstitialAd();
+    return (window as any).MiniAppBridge.showInterstitialAd(id);
   }
 
   showRewardedAd(id: string): Promise<RewardedAdResponse> {
-    return (window as any).MiniAppBridge.showRewardedAd();
+    return (window as any).MiniAppBridge.showRewardedAd(id);
   }
 }
