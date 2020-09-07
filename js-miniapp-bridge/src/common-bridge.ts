@@ -118,7 +118,7 @@ export class MiniAppBridge {
    *  {"name":"any unknown name", "description": "Reason to request for the custom permission"}
    * ]
    */
-  requestCustomPermissions(permissionTypes: string[]) {
+  requestCustomPermissions(permissionTypes: [string, string]) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestCustomPermissions',
