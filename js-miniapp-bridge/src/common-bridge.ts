@@ -27,6 +27,11 @@ export interface PlatformExecutor {
   ): void;
 }
 
+export interface CustomPermission {
+  name: string;
+  description: string;
+}
+
 export class MiniAppBridge {
   executor: PlatformExecutor;
 
@@ -102,23 +107,17 @@ export class MiniAppBridge {
 
   /**
    * Associating requestCustomPermissions function to MiniAppBridge object
-   * @param [string, string] permissionTypes, Type of custom permissions that is requested
+   * @param [CustomPermission[] permissionTypes, Types of custom permissions that are requested
    * using an Array including the parameters eg. name, description.
    *
-   * Miniapps should use "rakuten.miniapp.user." prefix for a valid name of the custom permissions
    * For eg., Miniapps can pass the array of valid custom permissions as following
    * [
    *  {"name":"rakuten.miniapp.user.USER_NAME", "description": "Reason to request for the custom permission"},
    *  {"name":"rakuten.miniapp.user.PROFILE_PHOTO", "description": "Reason to request for the custom permission"},
    *  {"name":"rakuten.miniapp.user.CONTACT_LIST", "description": "Reason to request for the custom permission"}
    * ]
-   *
-   * For eg., Miniapps can pass the array of invalid custom permissions as following
-   * [
-   *  {"name":"any unknown name", "description": "Reason to request for the custom permission"}
-   * ]
    */
-  requestCustomPermissions(permissionTypes: [string, string]) {
+  requestCustomPermissions(permissionTypes: CustomPermission[]) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestCustomPermissions',
