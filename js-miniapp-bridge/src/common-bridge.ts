@@ -102,8 +102,21 @@ export class MiniAppBridge {
 
   /**
    * Associating requestCustomPermissions function to MiniAppBridge object
-   * @param {string[]} permissionTypes, Array of type of custom permissions that is requested
-   * For eg., user name, profile photo, contact list.
+   * @param string[] permissionTypes, Type of custom permissions that is requested
+   * using an Array including the parameters eg. name, description.
+   *
+   * Miniapps should use "rakuten.miniapp.user." prefix for a valid name of the custom permissions
+   * For eg., Miniapps can pass the array of valid custom permissions as following
+   * [
+   *  {"name":"rakuten.miniapp.user.USER_NAME", "description": "Reason to request for the custom permission"},
+   *  {"name":"rakuten.miniapp.user.PROFILE_PHOTO", "description": "Reason to request for the custom permission"},
+   *  {"name":"rakuten.miniapp.user.CONTACT_LIST", "description": "Reason to request for the custom permission"}
+   * ]
+   *
+   * For eg., Miniapps can pass the array of invalid custom permissions as following
+   * [
+   *  {"name":"any unknown name", "description": "Reason to request for the custom permission"}
+   * ]
    */
   requestCustomPermissions(permissionTypes: string[]) {
     return new Promise<string>((resolve, reject) => {
