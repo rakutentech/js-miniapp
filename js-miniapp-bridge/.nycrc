@@ -1,6 +1,0 @@
-{
-    "extends": "../.nycrc",
-    "include": [
-      "src/**/*.ts"
-    ]
-}
