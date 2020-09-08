@@ -1,5 +1,5 @@
-import { AdTypes } from '../src/types/adTypes';
-import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
+import { AdTypes } from 'js-miniapp-sdk';
+import { InterstitialAdResponse } from 'js-miniapp-sdk';
 import * as bridge from '../src/common-bridge';
 import assert from 'chai';
 
@@ -77,7 +77,7 @@ describe('Test Mini App Bridge execSuccessCallback is called with valid ad respo
       adType: AdTypes.INTERSTITIAL,
     };
 
-    const jsonAdresponse = '{ "adType": 1 }';
+    const jsonAdresponse = '{ "adType": 0 }';
 
     const onSuccess = value => {
       assert.expect(value).to.equal(jsonAdresponse);
@@ -87,6 +87,47 @@ describe('Test Mini App Bridge execSuccessCallback is called with valid ad respo
     };
     const onError = () => {};
     callback.onSuccess = onSuccess;
+    callback.onError = onError;
+    callback.id = String(Math.random());
+    bridge.mabMessageQueue.unshift(callback);
+    bridge.MiniAppBridge.prototype.execSuccessCallback(
+      callback.id,
+      jsonAdresponse
+    );
+  });
+});
+
+describe('Test Mini App Bridge execSuccessCallback is called with valid load interstitial ad response', () => {
+  it('will resolve successful promise', () => {
+    const callback = {} as bridge.Callback;
+    const adResponse = null;
+
+    const jsonAdresponse = 'null';
+
+    const onSuccess = value => {
+      assert.expect(value).to.equal(jsonAdresponse);
+      assert.expect(JSON.parse(value)).to.deep.equal(adResponse);
+    };
+    const onError = () => {};
+    callback.onSuccess = onSuccess;
+    callback.onError = onError;
+    callback.id = String(Math.random());
+    bridge.mabMessageQueue.unshift(callback);
+    bridge.MiniAppBridge.prototype.execSuccessCallback(
+      callback.id,
+      jsonAdresponse
+    );
+  });
+  it('will reject with an error', () => {
+    const callback = {} as bridge.Callback;
+    const adResponse = new Error('Internal error');
+
+    const jsonAdresponse = 'Internal error';
+
+    const onError = () => {
+      new Error('Internal error');
+    };
+    callback.onSuccess = () => {};
     callback.onError = onError;
     callback.id = String(Math.random());
     bridge.mabMessageQueue.unshift(callback);

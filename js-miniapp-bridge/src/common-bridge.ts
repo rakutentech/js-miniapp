@@ -1,5 +1,5 @@
-import { AdTypes } from './types/adTypes';
-import { InterstitialAdResponse } from './types/responseTypes/interstitial';
+import { AdTypes } from 'js-miniapp-sdk';
+import { InterstitialAdResponse } from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
@@ -108,13 +108,31 @@ export class MiniAppBridge {
 
   /**
    * Associating showInterstitialAd function to MiniAppBridge object
+   * @param {string} id ad unit id of the intertitial ad
    */
-  showInterstitialAd() {
+  showInterstitialAd(id: string) {
     return new Promise<InterstitialAdResponse>((resolve, reject) => {
       return this.executor.exec(
         'showAd',
-        { adType: AdTypes.INTERSTITIAL },
+        { adType: AdTypes.INTERSTITIAL, adUnitId: id },
         adResponse => resolve(JSON.parse(adResponse) as InterstitialAdResponse),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating loadInterstitialAd function to MiniAppBridge object.
+   * This function preloads interstitial ad before they are requested for display.
+   * Can be called multiple times to pre-load multiple ads.
+   * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+   */
+  loadInterstitialAd(id: string) {
+    return new Promise<null | Error>((resolve, reject) => {
+      return this.executor.exec(
+        'loadAd',
+        { adType: AdTypes.INTERSTITIAL, adUnitId: id },
+        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
         error => reject(error)
       );
     });
