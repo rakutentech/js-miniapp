@@ -6,12 +6,10 @@
 
 import { MiniApp } from './miniapp';
 import { AdTypes } from './types/adTypes';
-import {
-  InterstitialAdResponse,
-  RewardedAdResponse,
-} from './types/responseTypes';
+import { InterstitialAdResponse } from './types/responseTypes/interstitial';
+import { RewardedAdResponse } from './types/responseTypes/rewarded';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
 
-export { miniAppInstance, AdTypes, RewardedAdResponse, InterstitialAdResponse };
+export { miniAppInstance, AdTypes, InterstitialAdResponse, RewardedAdResponse };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import MiniApp from 'js-miniapp-sdk';
+import { miniAppInstance as MiniApp } from 'js-miniapp-sdk';
 
 const useGeoLocation = () => {
   const [state, setState] = useState({

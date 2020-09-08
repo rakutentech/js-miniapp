@@ -1,5 +1,4 @@
-import { AdTypes } from 'js-miniapp-sdk';
-import { InterstitialAdResponse } from 'js-miniapp-sdk';
+import { AdTypes, InterstitialAdResponse } from 'js-miniapp-sdk';
 import * as bridge from '../src/common-bridge';
 import assert from 'chai';
 
