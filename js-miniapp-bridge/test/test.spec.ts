@@ -120,20 +120,18 @@ describe('Test Mini App Bridge execSuccessCallback is called with valid load int
   });
   it('will reject with an error', () => {
     const callback = {} as bridge.Callback;
-    const adResponse = new Error('Internal error');
+    const errorResponse = new Error('Internal error');
 
-    const jsonAdresponse = 'Internal error';
-
-    const onError = () => {
-      new Error('Internal error');
+    const onError = error => {
+      assert.expect(error).to.equal(errorResponse);
     };
     callback.onSuccess = () => {};
     callback.onError = onError;
     callback.id = String(Math.random());
     bridge.mabMessageQueue.unshift(callback);
-    bridge.MiniAppBridge.prototype.execSuccessCallback(
+    bridge.MiniAppBridge.prototype.execErrorCallback(
       callback.id,
-      jsonAdresponse
+      errorResponse
     );
   });
 });
