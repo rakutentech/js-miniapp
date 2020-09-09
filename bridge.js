@@ -81,6 +81,28 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Associating showInterstitialAd function to MiniAppBridge object
+     * @param {string} id ad unit id of the intertitial ad
+     */
+    MiniAppBridge.prototype.showInterstitialAd = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('showAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (adResponse) { return resolve(JSON.parse(adResponse)); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating loadInterstitialAd function to MiniAppBridge object.
+     * This function preloads interstitial ad before they are requested for display.
+     * Can be called multiple times to pre-load multiple ads.
+     * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+     */
+    MiniAppBridge.prototype.loadInterstitialAd = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('loadAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (loadResponse) { return resolve(JSON.parse(loadResponse)); }, function (error) { return reject(error); });
+        });
+    };
+    /**
      * Associating requestCustomPermissions function to MiniAppBridge object
      * @param [CustomPermission[] permissionTypes, Types of custom permissions that are requested
      * using an Array including the parameters eg. name, description.
