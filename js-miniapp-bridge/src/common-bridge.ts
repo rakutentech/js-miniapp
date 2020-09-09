@@ -1,3 +1,8 @@
+import {
+  InterstitialAdResponse,
+  AdTypes,
+  RewardedAdResponse,
+} from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
 import { ShareInfoType, CustomPermissionType } from 'js-miniapp-sdk';
 
@@ -6,7 +11,6 @@ export { mabMessageQueue };
 
 export interface Callback {
   id: string;
-
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
 }
@@ -103,6 +107,70 @@ export class MiniAppBridge {
   }
 
   /**
+   * Associating showInterstitialAd function to MiniAppBridge object
+   * @param {string} id ad unit id of the intertitial ad
+   */
+  showInterstitialAd(id: string) {
+    return new Promise<InterstitialAdResponse>((resolve, reject) => {
+      return this.executor.exec(
+        'showAd',
+        { adType: AdTypes.INTERSTITIAL, adUnitId: id },
+        adResponse => resolve(JSON.parse(adResponse) as InterstitialAdResponse),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating loadInterstitialAd function to MiniAppBridge object.
+   * This function preloads interstitial ad before they are requested for display.
+   * Can be called multiple times to pre-load multiple ads.
+   * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+   */
+  loadInterstitialAd(id: string) {
+    return new Promise<null | Error>((resolve, reject) => {
+      return this.executor.exec(
+        'loadAd',
+        { adType: AdTypes.INTERSTITIAL, adUnitId: id },
+        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating loadRewardedAd function to MiniAppBridge object.
+   * This function preloads Rewarded ad before they are requested for display.
+   * Can be called multiple times to pre-load multiple ads.
+   * @param {string} id ad unit id of the Rewarded ad that needs to be loaded.
+   */
+  loadRewardedAd(id: string) {
+    return new Promise<null | Error>((resolve, reject) => {
+      return this.executor.exec(
+        'loadAd',
+        { adType: AdTypes.REWARDED, adUnitId: id },
+        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating showRewardedAd function to MiniAppBridge object
+   * @param {string} id ad unit id of the Rewarded ad
+   */
+  showRewardedAd(id: string) {
+    return new Promise<RewardedAdResponse>((resolve, reject) => {
+      return this.executor.exec(
+        'showAd',
+        { adType: AdTypes.REWARDED, adUnitId: id },
+        adResponse => resolve(JSON.parse(adResponse) as RewardedAdResponse),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
    * Associating requestCustomPermissions function to MiniAppBridge object
    * @param [CustomPermissionType[] permissionTypes, Types of custom permissions that are requested
    * using an Array including the parameters eg. name, description.
@@ -125,6 +193,11 @@ export class MiniAppBridge {
     });
   }
 
+  /**
+   * Associating shareInfo function to MiniAppBridge object.
+   * This function does not return anything back on success.
+   * @param {info} The shared info object.
+   */
   shareInfo(info: ShareInfoType) {
     return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
