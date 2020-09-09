@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { miniAppInstance as MiniApp } from 'js-miniapp-sdk';
+import MiniApp from 'js-miniapp-sdk';
 
 import useGeoLocation from './useGeoLocation';
 

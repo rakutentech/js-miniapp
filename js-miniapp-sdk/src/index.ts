@@ -12,4 +12,5 @@ import { RewardedAdResponse } from './types/responseTypes/rewarded';
 /** @internal */
 const miniAppInstance = new MiniApp();
 
-export { miniAppInstance, AdTypes, InterstitialAdResponse, RewardedAdResponse };
+export default miniAppInstance;
+export { AdTypes, InterstitialAdResponse, RewardedAdResponse };

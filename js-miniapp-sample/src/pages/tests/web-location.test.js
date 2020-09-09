@@ -3,7 +3,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { miniAppInstance as MiniApp } from 'js-miniapp-sdk';
+import MiniApp from 'js-miniapp-sdk';
 
 import { wrapTheme } from '../../tests/test-utils';
 import WebLocation from './../web-location';

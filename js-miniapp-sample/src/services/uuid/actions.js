@@ -1,4 +1,4 @@
-import { miniAppInstance as MiniApp } from 'js-miniapp-sdk';
+import MiniApp from 'js-miniapp-sdk';
 
 import { SET_UUID, UUID_FETCH_ERROR } from './types';
 
