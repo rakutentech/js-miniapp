@@ -126,7 +126,6 @@ export class MiniAppBridge {
   }
 
   shareInfo(info: ShareInfoType) {
-    console.log("shareInfo called");
     return new Promise<null | Error>((resolve, reject) => {
       return this.executor.exec(
         'shareInfo',
