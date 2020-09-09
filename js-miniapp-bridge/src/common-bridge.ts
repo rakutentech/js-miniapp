@@ -1,4 +1,3 @@
-//import { miniAppInstance } from 'js-miniapp-sdk';
 import { InterstitialAdResponse, AdTypes } from 'js-miniapp-sdk';
 /* tslint:disable:no-any */
 const mabMessageQueue: Callback[] = [];
