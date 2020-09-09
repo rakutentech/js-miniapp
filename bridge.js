@@ -103,6 +103,28 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Associating loadRewardedAd function to MiniAppBridge object.
+     * This function preloads Rewarded ad before they are requested for display.
+     * Can be called multiple times to pre-load multiple ads.
+     * @param {string} id ad unit id of the Rewarded ad that needs to be loaded.
+     */
+    MiniAppBridge.prototype.loadRewardedAd = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('loadAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (loadResponse) { return resolve(JSON.parse(loadResponse)); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating showRewardedAd function to MiniAppBridge object
+     * @param {string} id ad unit id of the Rewarded ad
+     */
+    MiniAppBridge.prototype.showRewardedAd = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('showAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (adResponse) { return resolve(JSON.parse(adResponse)); }, function (error) { return reject(error); });
+        });
+    };
+    /**
      * Associating requestCustomPermissions function to MiniAppBridge object
      * @param [CustomPermission[] permissionTypes, Types of custom permissions that are requested
      * using an Array including the parameters eg. name, description.
