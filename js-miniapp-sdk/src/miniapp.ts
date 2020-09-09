@@ -18,7 +18,7 @@ interface MiniAppFeatures {
    * @returns The Promise of load ad response result from injected side.
    * Promise is rejected if failed to load.
    */
-  shareInfo(info: ShareInfoType): Promise<null | Error>;
+  shareInfo(info: ShareInfoType): Promise<undefined>;
 }
 
 /**
@@ -91,7 +91,7 @@ export class MiniApp implements MiniAppFeatures, Ad {
     return (window as any).MiniAppBridge.showRewardedAd(id);
   }
 
-  shareInfo(info: ShareInfoType): Promise<null | Error> {
+  shareInfo(info: ShareInfoType): Promise<undefined> {
     return (window as any).MiniAppBridge.shareInfo(info);
   }
 }

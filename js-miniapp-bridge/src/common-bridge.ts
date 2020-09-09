@@ -126,11 +126,11 @@ export class MiniAppBridge {
   }
 
   shareInfo(info: ShareInfoType) {
-    return new Promise<null | Error>((resolve, reject) => {
+    return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
         'shareInfo',
         info,
-        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        success => resolve(undefined),
         error => reject(error)
       );
     });
