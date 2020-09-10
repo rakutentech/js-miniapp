@@ -190,10 +190,7 @@ describe('shareInfo', () => {
       content: 'test content',
     };
 
-    const error: Error = {
-      message: 'Unknown error occured',
-      name: 'Bridge error',
-    };
+    const error = 'Bridge error';
 
     window.MiniAppBridge.shareInfo.resolves(error);
     return expect(miniApp.shareInfo(sharedInfo)).to.eventually.equal(error);

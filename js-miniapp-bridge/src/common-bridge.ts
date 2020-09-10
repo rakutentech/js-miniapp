@@ -199,11 +199,11 @@ export class MiniAppBridge {
    * @param {info} The shared info object.
    */
   shareInfo(info: ShareInfoType) {
-    return new Promise<undefined>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'shareInfo',
-        info,
-        success => resolve(undefined),
+        { shareInfo: info },
+        success => resolve(success),
         error => reject(error)
       );
     });

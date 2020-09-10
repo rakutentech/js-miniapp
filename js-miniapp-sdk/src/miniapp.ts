@@ -15,10 +15,9 @@ interface MiniAppFeatures {
 
   /**
    * @param info The shared data must match the property in [ShareInfoType].
-   * @returns The Promise of load ad response result from injected side.
-   * Promise is rejected if failed to load.
+   * @returns The Promise of share info action state from injected side.
    */
-  shareInfo(info: ShareInfoType): Promise<undefined>;
+  shareInfo(info: ShareInfoType): Promise<string>;
 }
 
 /**
@@ -91,7 +90,7 @@ export class MiniApp implements MiniAppFeatures, Ad {
     return (window as any).MiniAppBridge.showRewardedAd(id);
   }
 
-  shareInfo(info: ShareInfoType): Promise<undefined> {
+  shareInfo(info: ShareInfoType): Promise<string> {
     return (window as any).MiniAppBridge.shareInfo(info);
   }
 }
