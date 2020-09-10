@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
+  TextField,
   CardContent,
   CardActions,
   makeStyles,
@@ -25,40 +26,32 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: 'center',
   },
+  textfield: {
+    width: '80%',
+    maxWidth: 300,
+    background: 'white',
+    '& input': {
+      color: theme.color.primary,
+      lineHeight: '1.5em',
+      fontSize: '1.2em',
+    },
+  },
 }));
-
-type UUIDProps = {
-  uuid: string,
-  getSdkId: Function,
-};
 
 function Share() {
   const classes = useStyles();
-
-
-}
-const UuidFetcher = (props: UUIDProps) => {
-  const classes = useStyles();
-  const [inputValue, setInputValue] = useState('');
+  let inputValue = '';
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setInputValue(e.currentTarget.value);
+    inputValue = e.currentTarget.value;
   };
 
   const shareContent = () => {
-    MiniApp.getUniqueId()
-      .then((uuidFromSDK) => {
-        dispatch({
-          type: SET_UUID,
-          payload: uuidFromSDK,
-        });
-      })
-      .catch((_) => {
-        dispatch({
-          type: UUID_FETCH_ERROR,
-        });
-      });
+    const info = { content: inputValue } //see js-miniapp-sdk/types/ShareInfoType
+    MiniApp.shareInfo(info)
+      .then((_) => {})
+      .catch((_) => {});
   };
 
   return (
@@ -67,9 +60,12 @@ const UuidFetcher = (props: UUIDProps) => {
       <TextField
         type="text"
         className={classes.textfield}
-        value={inputValue}
-        label="Content"
+        onChange={handleInput}
+        placeholder="Content"
+        variant="outlined"
         color="primary"
+        multiline="true"
+        rowsMax="5"
         inputProps={{
           'data-testid': 'input-field',
         }}
@@ -87,4 +83,6 @@ const UuidFetcher = (props: UUIDProps) => {
     </CardActions>
     </GreyCard>
   );
-};
+}
+
+export default Share;
