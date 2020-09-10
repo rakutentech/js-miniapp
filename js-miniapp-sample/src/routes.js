@@ -11,6 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import MediaIcon from '@material-ui/icons/MusicVideo';
+import Share from '@material-ui/icons/Share';
 
 import AuthToken from './pages/auth-token';
 import TalkToChatBot from './pages/chatbot';
