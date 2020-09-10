@@ -48,7 +48,7 @@ function Share() {
   };
 
   const shareContent = () => {
-    const info = { content: inputValue } //see js-miniapp-sdk/types/ShareInfoType
+    const info = { content: inputValue }; //see js-miniapp-sdk/types/ShareInfoType
     MiniApp.shareInfo(info)
       .then((_) => {})
       .catch((_) => {});
@@ -56,31 +56,31 @@ function Share() {
 
   return (
     <GreyCard>
-    <CardContent className={classes.content}>
-      <TextField
-        type="text"
-        className={classes.textfield}
-        onChange={handleInput}
-        placeholder="Content"
-        variant="outlined"
-        color="primary"
-        multiline="true"
-        rowsMax="5"
-        inputProps={{
-          'data-testid': 'input-field',
-        }}
-      />
-    </CardContent>
-    <CardActions className={classes.actions}>
-      <Button
-        color="primary"
-        className={classes.button}
-        onClick={shareContent}
-        variant="contained"
-      >
-        Share
-      </Button>
-    </CardActions>
+      <CardContent className={classes.content}>
+        <TextField
+          type="text"
+          className={classes.textfield}
+          onChange={handleInput}
+          placeholder="Content"
+          variant="outlined"
+          color="primary"
+          multiline="true"
+          rowsMax="5"
+          inputProps={{
+            'data-testid': 'input-field',
+          }}
+        />
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          color="primary"
+          className={classes.button}
+          onClick={shareContent}
+          variant="contained"
+        >
+          Share
+        </Button>
+      </CardActions>
     </GreyCard>
   );
 }
