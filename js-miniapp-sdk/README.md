@@ -130,7 +130,7 @@ const info = { content: inputValue };
 
 miniApp.shareInfo(info)
     .then(success => console.log(success))
-    .catch(error => console.error(response));
+    .catch(error => console.error(error));
 ```
 
 ## Advanced Usage
