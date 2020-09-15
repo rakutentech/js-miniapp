@@ -138,7 +138,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.requestCustomPermissions = function (permissionTypes) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('requestCustomPermissions', { permissions: permissionTypes }, function (success) { return resolve(success); }, function (error) { return reject(error); });
+            return _this.executor.exec('requestCustomPermissions', { permissions: permissionTypes }, function (success) { return resolve(JSON.parse(success)); }, function (error) { return reject(error); });
         });
     };
     /**
