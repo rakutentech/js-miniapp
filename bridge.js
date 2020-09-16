@@ -21,6 +21,7 @@ window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExcecutor())
 
 },{"../common-bridge":2}],2:[function(require,module,exports){
 "use strict";
+/* tslint:disable:no-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
