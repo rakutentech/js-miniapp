@@ -4,6 +4,13 @@ import ReactPlayerLoader from '@brightcove/react-player-loader';
 
 const onSuccess = function (success) {
   console.log(success.ref);
+
+  success.ref.on("fullscreenchange", event => {
+      if (success.ref.isFullscreen())
+        console.log('fullscreen enter');
+      else
+        console.log('fullscreen exit');
+    });
 };
 
 const Media = () => {
