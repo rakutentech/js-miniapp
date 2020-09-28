@@ -27,6 +27,10 @@ class IOSExcecutor implements PlatformExecutor {
       JSON.stringify({ action, param, id: callback.id })
     );
   }
+
+  getPlatform(): string {
+    return 'iOS';
+  }
 }
 
 const iOSExcecutor = new IOSExcecutor();

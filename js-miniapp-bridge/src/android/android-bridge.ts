@@ -20,6 +20,10 @@ class AndroidExcecutor implements PlatformExecutor {
       JSON.stringify({ action, param, id: callback.id })
     );
   }
+
+  getPlatform(): string {
+    return 'Android';
+  }
 }
 
 (window as any).MiniAppBridge = new MiniAppBridge(new AndroidExcecutor());
