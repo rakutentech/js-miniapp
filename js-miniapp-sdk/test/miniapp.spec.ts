@@ -24,6 +24,7 @@ window.MiniAppBridge = {
   showInterstitialAd: sinon.stub(),
   showRewardedAd: sinon.stub(),
   shareInfo: sinon.stub(),
+  getPlatform: sinon.stub(),
 };
 const miniApp = new MiniApp();
 

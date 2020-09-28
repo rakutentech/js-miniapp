@@ -76,8 +76,12 @@ interface Ad {
   showRewardedAd(id: string): Promise<Reward>;
 }
 
+interface Platform {
+  getPlatform();
+}
+
 /* tslint:disable:no-any */
-export class MiniApp implements MiniAppFeatures, Ad {
+export class MiniApp implements MiniAppFeatures, Ad, Platform {
   private requestPermission(permissionType: string): Promise<string> {
     return (window as any).MiniAppBridge.requestPermission(permissionType);
   }
@@ -116,5 +120,13 @@ export class MiniApp implements MiniAppFeatures, Ad {
 
   shareInfo(info: ShareInfoType): Promise<string> {
     return (window as any).MiniAppBridge.shareInfo(info);
+  }
+
+  getPlatform(): string {
+    let platform = 'Unknown';
+    try {
+      platform = (window as any).MiniAppBridge.platform;
+    } catch (e) {}
+    return platform;
   }
 }
