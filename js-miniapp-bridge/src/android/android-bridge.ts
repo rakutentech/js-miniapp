@@ -4,6 +4,7 @@ import {
   Callback,
   mabMessageQueue,
 } from '../common-bridge';
+import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
@@ -22,7 +23,7 @@ class AndroidExcecutor implements PlatformExecutor {
   }
 
   getPlatform(): string {
-    return 'Android';
+    return Platform.ANDROID;
   }
 }
 

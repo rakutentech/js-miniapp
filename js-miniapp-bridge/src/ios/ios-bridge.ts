@@ -4,6 +4,7 @@ import {
   Callback,
   mabMessageQueue,
 } from '../common-bridge';
+import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
@@ -29,7 +30,7 @@ class IOSExcecutor implements PlatformExecutor {
   }
 
   getPlatform(): string {
-    return 'iOS';
+    return Platform.IOS;
   }
 }
 
