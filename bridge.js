@@ -7,6 +7,7 @@ exports.mabMessageQueue = mabMessageQueue;
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
         this.executor = executor;
+        this.platform = executor.getPlatform();
     }
     /**
      * Success Callback method that will be called from native side
@@ -66,7 +67,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.showInterstitialAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('showAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (adResponse) { return resolve(JSON.parse(adResponse)); }, function (error) { return reject(error); });
+            return _this.executor.exec('showAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (closeSuccess) { return resolve(closeSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -78,7 +79,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.loadInterstitialAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('loadAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (loadResponse) { return resolve(JSON.parse(loadResponse)); }, function (error) { return reject(error); });
+            return _this.executor.exec('loadAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -90,7 +91,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.loadRewardedAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('loadAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (loadResponse) { return resolve(JSON.parse(loadResponse)); }, function (error) { return reject(error); });
+            return _this.executor.exec('loadAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -100,7 +101,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.showRewardedAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('showAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (adResponse) { return resolve(JSON.parse(adResponse)); }, function (error) { return reject(error); });
+            return _this.executor.exec('showAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (rewardResponse) { return resolve(JSON.parse(rewardResponse)); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -151,6 +152,7 @@ function removeFromMessageQueue(queueObj) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
+var platform_1 = require("../types/platform");
 /* tslint:disable:no-any */
 var uniqueId = Math.random();
 // tslint:disable-next-line: variable-name
@@ -169,6 +171,9 @@ var IOSExcecutor = /** @class */ (function () {
         callback.id = String(++uniqueId);
         common_bridge_1.mabMessageQueue.unshift(callback);
         window.webkit.messageHandlers.MiniAppiOS.postMessage(JSON.stringify({ action: action, param: param, id: callback.id }));
+    };
+    IOSExcecutor.prototype.getPlatform = function () {
+        return platform_1.Platform.IOS;
     };
     return IOSExcecutor;
 }());
@@ -189,4 +194,15 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
     }, function (error) { return console.error(error); });
 };
 
-},{"../common-bridge":1}]},{},[2]);
+},{"../common-bridge":1,"../types/platform":3}],3:[function(require,module,exports){
+"use strict";
+/** @internal */
+Object.defineProperty(exports, "__esModule", { value: true });
+/** Device platform. */
+var Platform;
+(function (Platform) {
+    Platform["ANDROID"] = "Android";
+    Platform["IOS"] = "iOS";
+})(Platform = exports.Platform || (exports.Platform = {}));
+
+},{}]},{},[2]);
