@@ -3,12 +3,13 @@ import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
-  CardContent,
   CardActions,
   CircularProgress,
+  Typography,
   makeStyles,
 } from '@material-ui/core';
 
+import { red } from '@material-ui/core/colors';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,14 +26,20 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: 'center',
   },
+  error: {
+    color: red[500],
+    marginTop: 10,
+  },
 }));
 
 type State = {
   isLoading: ?boolean,
+  isError: ?boolean,
 };
 
 export const initialState = {
   isLoading: false,
+  isError: false
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
@@ -41,16 +48,19 @@ export const dataFetchReducer = (state: State, action: Action) => {
       return {
         ...state,
         isLoading: true,
+        isError: false,
       };
     case 'SHOW_SUCCESS':
       return {
         ...state,
         isLoading: false,
+        isError: false,
       };
     case 'SHOW_FAILURE':
       return {
         ...initialState,
         isLoading: false,
+        isError: true,
       };
     default:
       throw Error('Unknown action type');
@@ -59,7 +69,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
 
 function Ads() {
   const [interstitialState, interstitialDispatch] = useReducer(dataFetchReducer, initialState);
-  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
+  const [rewardState, rewardDispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
 
   const displayInterstitialAd = () => {
@@ -79,7 +89,7 @@ function Ads() {
             interstitialDispatch({ type: 'SHOW_FAILURE' })
             console.error(error);
           });
-          
+
       })
       .catch((error) => {
         interstitialDispatch({ type: 'SHOW_FAILURE' })
@@ -88,14 +98,35 @@ function Ads() {
   };
 
   const displayRewardAd = () => {
-    dispatch({ type: 'LOADING' })
+    rewardDispatch({ type: 'LOADING' })
+
+    const adUnitId = "ca-app-pub-3940256099942544/5224354917"// public test adId from Google.
+    MiniApp.loadRewardedAd(adUnitId)
+      .then((loadSuccess) => {
+        console.log(loadSuccess);
+
+        MiniApp.showRewardedAd(adUnitId)
+          .then((reward) => {
+            rewardDispatch({ type: 'SHOW_SUCCESS' })
+            console.log("type: " + reward.type + "amount: " + reward.amount);
+          })
+          .catch((error) => {
+            rewardDispatch({ type: 'SHOW_FAILURE' })
+            console.error(error);
+          });
+
+      })
+      .catch((error) => {
+        rewardDispatch({ type: 'SHOW_FAILURE' })
+        console.error(error);
+      });
   };
 
   return (
     <GreyCard className={classes.content}>
-    {(interstitialState.isLoading || state.isLoading) && (
-      <CircularProgress size={20} className={classes.buttonProgress} />
-    )}
+      {(interstitialState.isLoading || rewardState.isLoading) && (
+        <CircularProgress size={20} className={classes.buttonProgress} />
+      )}
       <CardActions className={classes.actions}>
         <Button
           color="primary"
@@ -112,12 +143,17 @@ function Ads() {
           color="primary"
           className={classes.button}
           onClick={displayRewardAd}
-          disabled={state.isLoading}
+          disabled={rewardState.isLoading}
           variant="contained"
         >
           Show Reward
         </Button>
       </CardActions>
+      {(interstitialState.isLoading || rewardState.isLoading) && (
+        <Typography variant="body1" className={classes.error}>
+          Error display ads
+        </Typography>
+      )}
     </GreyCard>
   );
 }
