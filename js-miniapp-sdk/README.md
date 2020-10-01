@@ -108,47 +108,7 @@ miniApp.requestCustomPermissions([
 });
 ```
 
-### 4. Show Ads
-
-Mini App SDK allows you to display ads upon requesting from a Mini App with an ad unit id.
-This requires you to first load an Ad by passing an ID. You can then display an Ad in the Ad Unit by passing the same ID which was used for loading.
-
-Note that typically you should load your Ads at some point earlier than you intend to use them, such as at App launch time. You can also pre-load multiple Ads by calling `MiniApp.loadInterstialAd` or `MiniApp.loadRewardedAd` multiple times.
-
-Currently two ad types are supported,
-1. Interstitial
-2. Rewarded
-
-**Interstitial**
-The results of the display `Interstitial` ad action is captured as [InterstitialAdResponse](src/types/responseTypes/interstitial/index.ts).
-
-```javascript
-const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
-
-miniApp.loadInterstitialAd(adUnitID)
-    .then(response => {
-        miniApp.showInterstitialAd(adUnitID)
-            .then(response => console.log(response) )
-            .catch( error => console.error(response) );
-    })
-    .catch( error => console.error(response) );
-```
-**Rewarded**
-The results of the display `Reward` ad action is captured as [RewardedAdResponse](src/types/responseTypes/rewarded/index.ts).
-
-```javascript
-const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
-
-miniApp.loadRewardedAd(adUnitID)
-    .then(response => {
-        miniApp.showRewardedAd(adUnitID)
-            .then(response => console.log(response) )
-            .catch( error => console.error(response) );
-    })
-    .catch( error => console.error(response) );
-```
-
-### 5. Share Info
+### 4. Share Info
 
 It is possible for the mini app user to share the mini app data across Android/iOS interface. The data format must match the [ShareInfoType](src/types/ShareInfoType.ts).
 
