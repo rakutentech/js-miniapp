@@ -1,9 +1,11 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
-/* tslint:disable:no-any */
+/** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
+/** @internal */
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
         this.executor = executor;
@@ -52,7 +54,7 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating requestPermission function to MiniAppBridge object
-     * @param {string} permissionType Type of permission that is requested. For eg., location
+     * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
      */
     MiniAppBridge.prototype.requestPermission = function (permissionType) {
         var _this = this;
@@ -140,6 +142,8 @@ exports.MiniAppBridge = MiniAppBridge;
  * Method to remove the callback object from the message queue after successfull/error communication
  * with the native application
  * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ *
+ * @internal
  */
 function removeFromMessageQueue(queueObj) {
     var messageObjIndex = mabMessageQueue.indexOf(queueObj);
