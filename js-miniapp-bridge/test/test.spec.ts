@@ -1,8 +1,4 @@
-import {
-  AdTypes,
-  CustomPermissionName,
-  CustomPermissionStatus,
-} from 'js-miniapp-sdk';
+import { CustomPermissionName, CustomPermissionStatus } from 'js-miniapp-sdk';
 import * as Bridge from '../src/common-bridge';
 import { expect } from 'chai';
 import sinon, { mock } from 'sinon';
@@ -68,28 +64,6 @@ describe('execErrorCallback', () => {
       Bridge.mabMessageQueue.unshift(callback);
       Bridge.MiniAppBridge.prototype.execErrorCallback(callback.id, '');
     });
-  });
-});
-
-describe('showRewardedAd', () => {
-  it('will parse the RewardedAdResponse JSON response', () => {
-    const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(2, '{ "adType": 1 }');
-
-    return expect(bridge.showRewardedAd('test_id')).to.eventually.deep.equal({
-      adType: AdTypes.REWARDED,
-    });
-  });
-});
-
-describe('showInterstitialAd', () => {
-  it('will parse the InterstitialAdResponse JSON response', () => {
-    const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(2, '{ "adType": 0 }');
-
-    return expect(
-      bridge.showInterstitialAd('test_id')
-    ).to.eventually.deep.equal({ adType: AdTypes.INTERSTITIAL });
   });
 });
 
