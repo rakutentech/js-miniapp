@@ -25,10 +25,12 @@ window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExcecutor())
 
 },{"../common-bridge":2,"../types/platform":3}],2:[function(require,module,exports){
 "use strict";
-/* tslint:disable:no-any */
+/** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
+/** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
+/** @internal */
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
         this.executor = executor;
@@ -77,7 +79,7 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating requestPermission function to MiniAppBridge object
-     * @param {string} permissionType Type of permission that is requested. For eg., location
+     * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
      */
     MiniAppBridge.prototype.requestPermission = function (permissionType) {
         var _this = this;
@@ -165,6 +167,8 @@ exports.MiniAppBridge = MiniAppBridge;
  * Method to remove the callback object from the message queue after successfull/error communication
  * with the native application
  * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ *
+ * @internal
  */
 function removeFromMessageQueue(queueObj) {
     var messageObjIndex = mabMessageQueue.indexOf(queueObj);
