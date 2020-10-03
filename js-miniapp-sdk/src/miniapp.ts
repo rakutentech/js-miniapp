@@ -35,6 +35,16 @@ interface MiniAppFeatures {
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
+
+  /**
+   * @returns Username saved in the host app user profile
+   */
+  getUserName(): Promise<string>;
+
+  /**
+   * @returns Profile photo saved in the host app user profile
+   */
+  getProfilePhoto(): Promise<string>;
 }
 
 /**
@@ -131,5 +141,13 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       platform = (window as any).MiniAppBridge.platform;
     } catch (e) {}
     return platform;
+  }
+
+  getUserName(): Promise<string> {
+    return this.bridge.getUserName()
+  }
+
+  getProfilePhoto(): Promise<string> {
+    return this.bridge.getProfilePhoto()
   }
 }

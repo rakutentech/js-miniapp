@@ -227,6 +227,40 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * Associating getUsername function to MiniAppBridge object.
+   * This function returns username from the user profile
+   * (provided the rakuten.miniapp.user.USER_NAME is allowed by the user)
+   * It returns error info if user had denied the custom permission
+   */
+  getUserName() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getUserName',
+        null,
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getProfilePhoto function to MiniAppBridge object.
+   * This function returns username from the user profile
+   * (provided the rakuten.miniapp.user.PROFILE_PHOTO is allowed by the user)
+   * It returns error info if user had denied the custom permission
+   */
+  getProfilePhoto() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getProfilePhoto',
+        null,
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
