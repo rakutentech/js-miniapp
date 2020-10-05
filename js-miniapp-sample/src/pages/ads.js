@@ -36,7 +36,7 @@ type State = {
 
 export const initialState = {
   isLoading: false,
-  isError: false
+  isError: false,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
@@ -66,55 +66,59 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 function Ads() {
-  const [interstitialState, interstitialDispatch] = useReducer(dataFetchReducer, initialState);
-  const [rewardState, rewardDispatch] = useReducer(dataFetchReducer, initialState);
+  const [interstitialState, interstitialDispatch] = useReducer(
+    dataFetchReducer,
+    initialState
+  );
+  const [rewardState, rewardDispatch] = useReducer(
+    dataFetchReducer,
+    initialState
+  );
   const classes = useStyles();
 
   const displayInterstitialAd = () => {
-    interstitialDispatch({ type: 'LOADING' })
+    interstitialDispatch({ type: 'LOADING' });
 
-    const adUnitId = "ca-app-pub-3940256099942544/1033173712"// public test adId from Google.
+    const adUnitId = 'ca-app-pub-3940256099942544/1033173712'; // public test adId from Google.
     MiniApp.loadInterstitialAd(adUnitId)
       .then((loadSuccess) => {
         console.log(loadSuccess);
 
         MiniApp.showInterstitialAd(adUnitId)
           .then((closedSuccess) => {
-            interstitialDispatch({ type: 'SHOW_SUCCESS' })
+            interstitialDispatch({ type: 'SHOW_SUCCESS' });
             console.log(closedSuccess);
           })
           .catch((error) => {
-            interstitialDispatch({ type: 'SHOW_FAILURE' })
+            interstitialDispatch({ type: 'SHOW_FAILURE' });
             console.error(error);
           });
-
       })
       .catch((error) => {
-        interstitialDispatch({ type: 'SHOW_FAILURE' })
+        interstitialDispatch({ type: 'SHOW_FAILURE' });
         console.error(error);
       });
   };
 
   const displayRewardAd = () => {
-    rewardDispatch({ type: 'LOADING' })
+    rewardDispatch({ type: 'LOADING' });
 
-    const adUnitId = "ca-app-pub-3940256099942544/5224354917"// public test adId from Google.
+    const adUnitId = 'ca-app-pub-3940256099942544/5224354917'; // public test adId from Google.
     MiniApp.loadRewardedAd(adUnitId)
       .then((loadSuccess) => {
         console.log(loadSuccess);
 
         MiniApp.showRewardedAd(adUnitId)
           .then((reward) => {
-            rewardDispatch({ type: 'SHOW_SUCCESS', rewardItem: reward })
+            rewardDispatch({ type: 'SHOW_SUCCESS', rewardItem: reward });
           })
           .catch((error) => {
-            rewardDispatch({ type: 'SHOW_FAILURE' })
+            rewardDispatch({ type: 'SHOW_FAILURE' });
             console.error(error);
           });
-
       })
       .catch((error) => {
-        rewardDispatch({ type: 'SHOW_FAILURE' })
+        rewardDispatch({ type: 'SHOW_FAILURE' });
         console.error(error);
       });
   };
@@ -146,15 +150,13 @@ function Ads() {
           Show Reward
         </Button>
       </CardActions>
-      {!rewardState.isError && !rewardState.isLoading && rewardState.reward != null && (
-        <Typography>
-          Rewarded point: {rewardState.reward.amount}
-        </Typography>
-      )}
+      {!rewardState.isError &&
+        !rewardState.isLoading &&
+        rewardState.reward != null && (
+          <Typography>Rewarded point: {rewardState.reward.amount}</Typography>
+        )}
       {(interstitialState.isError || rewardState.isError) && (
-        <Typography className={classes.error}>
-          Error display ads
-        </Typography>
+        <Typography className={classes.error}>Error display ads</Typography>
       )}
     </GreyCard>
   );

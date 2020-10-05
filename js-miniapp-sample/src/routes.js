@@ -34,8 +34,8 @@ const homeItem = [
     label: 'Home',
     navLink: '/landing',
     component: Landing,
-  }
-]
+  },
+];
 
 let navItems = [
   {
@@ -111,6 +111,8 @@ let navItems = [
     component: Ads,
   },
 ];
-navItems = homeItem.concat(navItems.sort((a, b) => a.label.localeCompare(b.label)));
+navItems = homeItem.concat(
+  navItems.sort((a, b) => a.label.localeCompare(b.label))
+);
 
 export { navItems };
