@@ -6,6 +6,7 @@ import {
   CustomPermissionResult,
   ShareInfoType,
 } from '../../js-miniapp-bridge/src';
+import { MiniAppRequestInit } from '../../js-miniapp-bridge/src/types/fetch';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -43,7 +44,7 @@ interface MiniAppFeatures {
    * @param options requestOptions
    * @returns success or failure http response.
    */
-  fetch(url: string, options: RequestInit): Promise<Response>;
+  fetch(url: string, options: MiniAppRequestInit): Promise<Response>;
 }
 
 /**
@@ -142,7 +143,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return platform;
   }
 
-  fetch(url: string, options?: RequestInit): Promise<Response> {
+  fetch(url: string, options?: MiniAppRequestInit): Promise<Response> {
     return this.bridge.fetch(url, options);
   }
 }

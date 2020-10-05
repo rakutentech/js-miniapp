@@ -12,6 +12,7 @@ import {
   CustomPermissionResponse,
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
+import { MiniAppRequestInit } from './types/fetch';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -243,7 +244,7 @@ export class MiniAppBridge {
    * @param url request_url
    * @param options request options
    */
-  fetch(url: string, options?: RequestInit) {
+  fetch(url: string, options?: MiniAppRequestInit) {
     return new Promise<Response>((resolve, reject) => {
       return this.executor.exec(
         'fetch',
