@@ -35,6 +35,15 @@ interface MiniAppFeatures {
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
+
+  /**
+   * makes the http request at Host application layer.
+   *
+   * @param url requestUrl
+   * @param options requestOptions
+   * @returns success or failure http response.
+   */
+  fetch(url: string, options: RequestInit): Promise<Response>;
 }
 
 /**
@@ -131,5 +140,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       platform = (window as any).MiniAppBridge.platform;
     } catch (e) {}
     return platform;
+  }
+
+  fetch(url: string, options?: RequestInit): Promise<Response> {
+    return this.bridge.fetch(url, options);
   }
 }

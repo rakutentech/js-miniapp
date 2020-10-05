@@ -24,6 +24,15 @@ export interface Callback {
   onError: (error: string) => void;
 }
 
+type PlatformExecutorAction =
+  | 'getUniqueId'
+  | 'requestPermission'
+  | 'showAd'
+  | 'loadAd'
+  | 'requestCustomPermissions'
+  | 'fetch'
+  | 'shareInfo';
+
 /** @internal */
 export interface PlatformExecutor {
   /**
@@ -36,7 +45,7 @@ export interface PlatformExecutor {
    * @param  {[Function]} onError Error callback function
    */
   exec(
-    action: string,
+    action: PlatformExecutorAction,
     param: object | null,
     onSuccess: (value: string) => void,
     onError: (error: string) => void
@@ -224,6 +233,23 @@ export class MiniAppBridge {
         { shareInfo: info },
         success => resolve(success),
         error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating fetch function to MiniAppBridge object.
+   *
+   * @param url request_url
+   * @param options request options
+   */
+  fetch(url: string, options?: RequestInit) {
+    return new Promise<Response>((resolve, reject) => {
+      return this.executor.exec(
+        'fetch',
+        { url, options },
+        success => resolve(JSON.parse(success) as Response),
+        error => reject(JSON.parse(error) as Response)
       );
     });
   }
