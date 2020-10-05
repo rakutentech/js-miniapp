@@ -213,6 +213,7 @@ describe('getUserName', () => {
     return expect(miniApp.getUserName()).to.eventually.equal(response);
   });
 });
+
 describe('getProfilePhoto', () => {
   it('should retrieve Profile photo in Base 64 string from the MiniAppBridge if getProfilePhoto is called', () => {
     const response = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg=="
