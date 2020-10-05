@@ -28,13 +28,16 @@ import Media from './pages/media';
 import Share from './pages/share';
 import Ads from './pages/ads';
 
-const navItems = [
+const homeItem = [
   {
     icon: <HomeIcon />,
     label: 'Home',
     navLink: '/landing',
     component: Landing,
-  },
+  }
+]
+
+let navItems = [
   {
     icon: <StorageIcon />,
     label: 'Local Storage',
@@ -108,5 +111,6 @@ const navItems = [
     component: Ads,
   },
 ];
+navItems = homeItem.concat(navItems.sort((a, b) => a.label.localeCompare(b.label)));
 
 export { navItems };
