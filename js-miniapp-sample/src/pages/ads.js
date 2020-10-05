@@ -39,6 +39,7 @@ export const initialState = {
   isError: false,
 };
 
+// $FlowFixMe
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'LOADING':
@@ -153,6 +154,7 @@ function Ads() {
       {!rewardState.isError &&
         !rewardState.isLoading &&
         rewardState.reward != null && (
+          // $FlowFixMe
           <Typography>Rewarded point: {rewardState.reward.amount}</Typography>
         )}
       {(interstitialState.isError || rewardState.isError) && (

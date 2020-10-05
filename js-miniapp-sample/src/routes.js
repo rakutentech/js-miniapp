@@ -37,7 +37,7 @@ const homeItem = [
   },
 ];
 
-let navItems = [
+const appItems = [
   {
     icon: <StorageIcon />,
     label: 'Local Storage',
@@ -111,8 +111,8 @@ let navItems = [
     component: Ads,
   },
 ];
-navItems = homeItem.concat(
-  navItems.sort((a, b) => a.label.localeCompare(b.label))
+const navItems: Object[] = homeItem.concat(
+  appItems.sort((a, b) => a.label.localeCompare(b.label))
 );
 
 export { navItems };
