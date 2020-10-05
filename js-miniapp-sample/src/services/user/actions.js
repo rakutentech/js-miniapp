@@ -1,3 +1,5 @@
+import MiniApp from 'js-miniapp-sdk';
+
 import {
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_USER_NAME_FAILURE,
@@ -6,8 +8,6 @@ import {
   REQUEST_CONTACT_LIST_SUCCESS,
   REQUEST_CONTACT_LIST_FAILURE,
 } from './types';
-
-import MiniApp from 'js-miniapp-sdk';
 
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };

@@ -144,10 +144,10 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   getUserName(): Promise<string> {
-    return this.bridge.getUserName()
+    return this.bridge.getUserName();
   }
 
   getProfilePhoto(): Promise<string> {
-    return this.bridge.getProfilePhoto()
+    return this.bridge.getProfilePhoto();
   }
 }

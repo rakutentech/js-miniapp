@@ -24,7 +24,7 @@ window.MiniAppBridge = {
   shareInfo: sinon.stub(),
   getPlatform: sinon.stub(),
   getUserName: sinon.stub(),
-  getProfilePhoto: sinon.stub()
+  getProfilePhoto: sinon.stub(),
 };
 const miniApp = new MiniApp();
 
@@ -207,7 +207,7 @@ describe('shareInfo', () => {
 
 describe('getUserName', () => {
   it('should retrieve username from the MiniAppBridge if getUserName is called', () => {
-    const response = "Rakuten"
+    const response = 'Rakuten';
 
     window.MiniAppBridge.getUserName.resolves(response);
     return expect(miniApp.getUserName()).to.eventually.equal(response);
@@ -216,7 +216,8 @@ describe('getUserName', () => {
 
 describe('getProfilePhoto', () => {
   it('should retrieve Profile photo in Base 64 string from the MiniAppBridge if getProfilePhoto is called', () => {
-    const response = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg=="
+    const response =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg==';
 
     window.MiniAppBridge.getProfilePhoto.resolves(response);
     return expect(miniApp.getProfilePhoto()).to.eventually.equal(response);
