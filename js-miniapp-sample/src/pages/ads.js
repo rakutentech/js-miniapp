@@ -8,8 +8,6 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-
-import { red } from '@material-ui/core/colors';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   error: {
-    color: red[500],
     marginTop: 10,
   },
 }));
@@ -55,6 +52,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         ...state,
         isLoading: false,
         isError: false,
+        reward: action.rewardItem,
       };
     case 'SHOW_FAILURE':
       return {
@@ -107,8 +105,7 @@ function Ads() {
 
         MiniApp.showRewardedAd(adUnitId)
           .then((reward) => {
-            rewardDispatch({ type: 'SHOW_SUCCESS' })
-            console.log("type: " + reward.type + "amount: " + reward.amount);
+            rewardDispatch({ type: 'SHOW_SUCCESS', rewardItem: reward })
           })
           .catch((error) => {
             rewardDispatch({ type: 'SHOW_FAILURE' })
@@ -149,8 +146,13 @@ function Ads() {
           Show Reward
         </Button>
       </CardActions>
-      {(interstitialState.isLoading || rewardState.isLoading) && (
-        <Typography variant="body1" className={classes.error}>
+      {!rewardState.isError && !rewardState.isLoading && rewardState.reward != null && (
+        <Typography>
+          Rewarded point: {rewardState.reward.amount}
+        </Typography>
+      )}
+      {(interstitialState.isError || rewardState.isError) && (
+        <Typography className={classes.error}>
           Error display ads
         </Typography>
       )}
