@@ -35,16 +35,6 @@ interface MiniAppFeatures {
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
-
-  /**
-   * @returns Username saved in the host app user profile
-   */
-  getUserName(): Promise<string>;
-
-  /**
-   * @returns Profile photo saved in the host app user profile
-   */
-  getProfilePhoto(): Promise<string>;
 }
 
 /**
@@ -91,9 +81,42 @@ interface Platform {
   getPlatform();
 }
 
+/**
+ * Interfaces to retrieve User profile related information
+ */
+export interface UserInfoProvider {
+  /**
+   * @returns Username saved in the host app user profile
+   */
+  getUserName(): Promise<string>;
+
+  /**
+   * @returns Profile photo saved in the host app user profile
+   */
+  getProfilePhoto(): Promise<string>;
+}
+
+/** @internal */
+class UserInfo implements UserInfoProvider {
+  private bridge: MiniAppBridge;
+
+  constructor(miniAppBridge: MiniAppBridge) {
+    this.bridge = miniAppBridge;
+  }
+
+  getUserName(): Promise<string> {
+    return this.bridge.getUserName();
+  }
+
+  getProfilePhoto(): Promise<string> {
+    return this.bridge.getProfilePhoto();
+  }
+}
+
 /* tslint:disable:no-any */
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   private bridge: MiniAppBridge = (window as any).MiniAppBridge;
+  private user: UserInfoProvider = new UserInfo(this.bridge);
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return this.bridge.requestPermission(permissionType);
@@ -144,10 +167,10 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   getUserName(): Promise<string> {
-    return this.bridge.getUserName();
+    return this.user.getUserName();
   }
 
   getProfilePhoto(): Promise<string> {
-    return this.bridge.getProfilePhoto();
+    return this.user.getProfilePhoto();
   }
 }
