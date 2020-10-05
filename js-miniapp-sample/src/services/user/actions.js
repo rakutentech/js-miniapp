@@ -7,47 +7,43 @@ import {
   REQUEST_CONTACT_LIST_FAILURE,
 } from './types';
 
+import MiniApp from 'js-miniapp-sdk';
+
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };
 type ContactListSuccessAction = { type: String, contacts: string[] };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const userName = 'Test User';
-        dispatch({
-          type: REQUEST_USER_NAME_SUCCESS,
-          userName,
-        });
-
-        return Promise.resolve(userName);
-      })
-      .catch((_) => {
-        dispatch({
-          type: REQUEST_USER_NAME_FAILURE,
-        });
+    MiniApp.getUserName()
+    .then((userName) => {
+      dispatch({
+        type: REQUEST_USER_NAME_SUCCESS,
+        userName,
       });
+    })
+    .catch((_) => {
+      dispatch({
+        type: REQUEST_USER_NAME_FAILURE,
+      });
+    });
   };
 };
 
 const requestProfilePhoto = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const url = 'https://cdn2.thecatapi.com/images/4da-GV7Z6.jpg';
-        dispatch({
-          type: REQUEST_PROFILE_PHOTO_SUCCESS,
-          url,
-        });
-
-        return Promise.resolve(url);
-      })
-      .catch((_) => {
-        dispatch({
-          type: REQUEST_PROFILE_PHOTO_FAILURE,
-        });
+    MiniApp.getProfilePhoto()
+    .then((url) => {
+      dispatch({
+        type: REQUEST_PROFILE_PHOTO_SUCCESS,
+        url,
       });
+    })
+    .catch((_) => {
+      dispatch({
+        type: REQUEST_PROFILE_PHOTO_FAILURE,
+      });
+    });
   };
 };
 
