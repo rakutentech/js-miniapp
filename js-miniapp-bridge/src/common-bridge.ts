@@ -229,9 +229,9 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating getUsername function to MiniAppBridge object.
+   * Associating getUserName function to MiniAppBridge object.
    * This function returns username from the user profile
-   * (provided the rakuten.miniapp.user.USER_NAME is allowed by the user)
+   * (provided the rakuten.miniapp.user.USER_NAME custom permission is allowed by the user)
    * It returns error info if user had denied the custom permission
    */
   getUserName() {

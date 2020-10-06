@@ -177,7 +177,7 @@ MiniApp.getUserName()
 	});
 ```
 
-NOTE: getProfilePhoto() -  Returns the Base64 Encoded image string from the Host app.
+NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
 
 ```javascript
 const info = { content: inputValue };
