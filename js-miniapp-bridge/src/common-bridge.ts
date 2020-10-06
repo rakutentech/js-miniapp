@@ -239,7 +239,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUserName',
         null,
-        success => resolve(success),
+        userName => resolve(userName),
         error => reject(error)
       );
     });
@@ -256,7 +256,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getProfilePhoto',
         null,
-        success => resolve(success),
+        profilePhoto => resolve(profilePhoto),
         error => reject(error)
       );
     });
