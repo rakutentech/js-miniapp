@@ -210,7 +210,7 @@ describe('getUserName', () => {
     const response = 'Rakuten';
 
     window.MiniAppBridge.getUserName.resolves(response);
-    return expect(miniApp.getUserName()).to.eventually.equal(response);
+    return expect(miniApp.user.getUserName()).to.eventually.equal(response);
   });
 });
 
@@ -220,6 +220,6 @@ describe('getProfilePhoto', () => {
       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg==';
 
     window.MiniAppBridge.getProfilePhoto.resolves(response);
-    return expect(miniApp.getProfilePhoto()).to.eventually.equal(response);
+    return expect(miniApp.user.getProfilePhoto()).to.eventually.equal(response);
   });
 });
