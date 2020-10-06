@@ -15,7 +15,7 @@ type ContactListSuccessAction = { type: String, contacts: string[] };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
-    return MiniApp.getUserName()
+    return MiniApp.user.getUserName()
     .then((userName) => {
       dispatch({
         type: REQUEST_USER_NAME_SUCCESS,
@@ -32,7 +32,7 @@ const requestUserName = (): Function => {
 
 const requestProfilePhoto = (): Function => {
   return (dispatch) => {
-    return MiniApp.getProfilePhoto()
+    return MiniApp.user.getProfilePhoto()
     .then((url) => {
       dispatch({
         type: REQUEST_PROFILE_PHOTO_SUCCESS,

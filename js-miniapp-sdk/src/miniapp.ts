@@ -116,7 +116,7 @@ class UserInfo implements UserInfoProvider {
 /* tslint:disable:no-any */
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   private bridge: MiniAppBridge = (window as any).MiniAppBridge;
-  private user: UserInfoProvider = new UserInfo(this.bridge);
+  user: UserInfoProvider = new UserInfo(this.bridge);
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return this.bridge.requestPermission(permissionType);
@@ -164,13 +164,5 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       platform = (window as any).MiniAppBridge.platform;
     } catch (e) {}
     return platform;
-  }
-
-  getUserName(): Promise<string> {
-    return this.user.getUserName();
-  }
-
-  getProfilePhoto(): Promise<string> {
-    return this.user.getProfilePhoto();
   }
 }
