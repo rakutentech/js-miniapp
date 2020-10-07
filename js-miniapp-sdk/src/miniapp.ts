@@ -6,7 +6,12 @@ import {
   CustomPermissionResult,
   ShareInfoType,
 } from '../../js-miniapp-bridge/src';
-import { MiniAppRequestInit } from '../../js-miniapp-bridge/src/types/fetch';
+import {
+  FetchResponse,
+  FetchRequest,
+  FetchRequestInit,
+  FetchResponseImpl,
+} from '../../js-miniapp-bridge/src/types/fetch';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -40,11 +45,14 @@ interface MiniAppFeatures {
   /**
    * makes the http request at Host application layer.
    *
-   * @param url requestUrl
-   * @param options requestOptions
+   * @param input request information
+   * @param init request initialization options(will override matching properties of input parameter)
    * @returns success or failure http response.
    */
-  fetch(url: string, options: MiniAppRequestInit): Promise<Response>;
+  fetch(
+    input: FetchRequest | string,
+    init?: FetchRequestInit
+  ): Promise<FetchResponse>;
 }
 
 /**
@@ -143,7 +151,17 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return platform;
   }
 
-  fetch(url: string, options?: MiniAppRequestInit): Promise<Response> {
-    return this.bridge.fetch(url, options);
+  async fetch(
+    input: FetchRequest | string,
+    init?: FetchRequestInit
+  ): Promise<FetchResponse> {
+    let request;
+    if (typeof input === 'string') {
+      request = { url: input as string, ...init };
+    } else {
+      request = { ...input, ...init };
+    }
+    const res = await this.bridge.fetch(request);
+    return new FetchResponseImpl(res);
   }
 }
