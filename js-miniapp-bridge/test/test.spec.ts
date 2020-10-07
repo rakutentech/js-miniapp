@@ -1,4 +1,6 @@
 import { expect } from 'chai';
+import { assert } from 'console';
+import { url } from 'inspector';
 import sinon, { mock } from 'sinon';
 
 import * as Bridge from '../src/common-bridge';
@@ -6,6 +8,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
 } from '../src/types/custom-permissions';
+import { FetchRequest, NativeFetchResponse } from '../src/types/fetch';
 
 /* tslint:disable:no-any */
 const window: any = {};
@@ -137,6 +140,39 @@ describe('requestCustomPermissions', () => {
         },
       ]
     );
+  });
+});
+
+describe('fetch', () => {
+  const req: FetchRequest = { url: 'test-url' };
+  const testSuccessRes: NativeFetchResponse = {
+    url: 'test-url',
+    ok: true,
+    status: 200,
+    statusText: 'ok',
+    body: [1, 2, 3],
+    headers: { 'Content-Type': 'application/json' },
+    type: 'cors',
+  };
+  const testErrorRes: NativeFetchResponse = {
+    url: 'test-url',
+    ok: false,
+    status: 400,
+    statusText: 'error',
+    body: [1, 2, 3],
+    headers: { 'Content-Type': 'application/json' },
+    type: 'cors',
+  };
+  it('should get success response', async () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(testSuccessRes));
+    const res = await bridge.fetch(req);
+    expect(res).deep.equal(testSuccessRes);
+  });
+  it('should get error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, JSON.stringify(testErrorRes));
+    expect(bridge.fetch(req)).be.rejectedWith(JSON.stringify(testErrorRes));
   });
 });
 
