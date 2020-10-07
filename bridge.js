@@ -135,6 +135,30 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('shareInfo', { shareInfo: info }, function (success) { return resolve(success); }, function (error) { return reject(error); });
         });
     };
+    /**
+     * Associating getUserName function to MiniAppBridge object.
+     * This function returns username from the user profile
+     * (provided the rakuten.miniapp.user.USER_NAME custom permission is allowed by the user)
+     * It returns error info if user had denied the custom permission
+     */
+    MiniAppBridge.prototype.getUserName = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getUserName', null, function (userName) { return resolve(userName); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating getProfilePhoto function to MiniAppBridge object.
+     * This function returns username from the user profile
+     * (provided the rakuten.miniapp.user.PROFILE_PHOTO is allowed by the user)
+     * It returns error info if user had denied the custom permission
+     */
+    MiniAppBridge.prototype.getProfilePhoto = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getProfilePhoto', null, function (profilePhoto) { return resolve(profilePhoto); }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
