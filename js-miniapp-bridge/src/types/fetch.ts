@@ -11,7 +11,7 @@ interface ResponseBody {
   /**
    * Decode response as json
    */
-  json(): Promise<any>;
+  json(): Promise<object>;
   /**
    * Decode response as text
    */
@@ -52,7 +52,7 @@ export class FetchResponseImpl implements Response {
       throw new Error('invalid encoded data.');
     }
   }
-  json(): Promise<any> {
+  json(): Promise<object> {
     try {
       const content = new TextDecoder(this.encoding).decode(this.body);
       this.bodyUsed = true;
