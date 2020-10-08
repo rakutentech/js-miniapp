@@ -84,16 +84,11 @@ function Ads() {
     MiniApp.loadInterstitialAd(adUnitId)
       .then((loadSuccess) => {
         console.log(loadSuccess);
-
-        MiniApp.showInterstitialAd(adUnitId)
-          .then((closedSuccess) => {
-            interstitialDispatch({ type: 'SHOW_SUCCESS' });
-            console.log(closedSuccess);
-          })
-          .catch((error) => {
-            interstitialDispatch({ type: 'SHOW_FAILURE' });
-            console.error(error);
-          });
+        return MiniApp.showInterstitialAd(adUnitId);
+      })
+      .then((closedSuccess) => {
+        interstitialDispatch({ type: 'SHOW_SUCCESS' });
+        console.log(closedSuccess);
       })
       .catch((error) => {
         interstitialDispatch({ type: 'SHOW_FAILURE' });
@@ -108,15 +103,10 @@ function Ads() {
     MiniApp.loadRewardedAd(adUnitId)
       .then((loadSuccess) => {
         console.log(loadSuccess);
-
-        MiniApp.showRewardedAd(adUnitId)
-          .then((reward) => {
-            rewardDispatch({ type: 'SHOW_SUCCESS', rewardItem: reward });
-          })
-          .catch((error) => {
-            rewardDispatch({ type: 'SHOW_FAILURE' });
-            console.error(error);
-          });
+        return MiniApp.showRewardedAd(adUnitId);
+      })
+      .then((reward) => {
+        rewardDispatch({ type: 'SHOW_SUCCESS', rewardItem: reward });
       })
       .catch((error) => {
         rewardDispatch({ type: 'SHOW_FAILURE' });
