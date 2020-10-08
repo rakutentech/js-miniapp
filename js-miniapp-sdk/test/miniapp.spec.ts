@@ -266,10 +266,13 @@ describe('fetch', () => {
     window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
     const res = await miniApp.fetch({ url: bridgeSuccessResponse.url });
     const resJson = await res.json();
-    sinon.assert.calledOnceWithExactly(window.MiniAppBridge.fetch, {
-      url: bridgeSuccessResponse.url,
-      method: 'GET',
-    });
+    sinon.assert.calledOnceWithExactly(
+      window.MiniAppBridge.fetch,
+      sinon.match({
+        url: bridgeSuccessResponse.url,
+        method: 'GET',
+      })
+    );
     expect(res.body).be.deep.equal(new Uint8Array(bridgeSuccessResponse.body));
   });
 
@@ -280,10 +283,13 @@ describe('fetch', () => {
       headers: bridgeSuccessResponse.headers,
     };
     await miniApp.fetch(bridgeSuccessResponse.url, initOptions);
-    sinon.assert.calledOnceWithExactly(window.MiniAppBridge.fetch, {
-      url: bridgeSuccessResponse.url,
-      ...initOptions,
-    });
+    sinon.assert.calledOnceWithExactly(
+      window.MiniAppBridge.fetch,
+      sinon.match({
+        url: bridgeSuccessResponse.url,
+        ...initOptions,
+      })
+    );
   });
 
   it('should override request properties with initOptions', async () => {
@@ -299,15 +305,21 @@ describe('fetch', () => {
       },
       initOptions
     );
-    sinon.assert.calledOnceWithExactly(window.MiniAppBridge.fetch, {
-      url: bridgeSuccessResponse.url,
-      ...initOptions,
-    });
+    sinon.assert.calledOnceWithExactly(
+      window.MiniAppBridge.fetch,
+      sinon.match({
+        url: bridgeSuccessResponse.url,
+        ...initOptions,
+      })
+    );
   });
 
   it('should fetch json response', async () => {
     window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
-    const res = await miniApp.fetch(bridgeSuccessResponse.url);
+    const res = await miniApp.fetch(
+      { url: bridgeSuccessResponse.url },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
     const resJson = await res.json();
     expect(resJson).be.deep.equal(resBody);
   });

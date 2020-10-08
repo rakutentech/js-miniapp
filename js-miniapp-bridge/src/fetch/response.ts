@@ -1,4 +1,4 @@
-import { NativeFetchResponse, Response } from './types/fetch';
+import { NativeFetchResponse, Response } from '../types/fetch';
 
 export class DecodedFetchResponse implements Response {
   private encoding = 'utf-8';
@@ -8,6 +8,7 @@ export class DecodedFetchResponse implements Response {
   statusText: string;
   url: string;
   body: Uint8Array;
+
   /**
    * @param body utf-8 encoded array
    */
@@ -22,9 +23,11 @@ export class DecodedFetchResponse implements Response {
       });
     this.body = new Uint8Array(res.body);
   }
+
   private bodyTextDecode(): string {
     return new TextDecoder(this.encoding).decode(this.body);
   }
+
   arrayBuffer(): Promise<ArrayBuffer> {
     if (ArrayBuffer.isView(this.body)) {
       return Promise.resolve(this.body.buffer);
@@ -32,6 +35,7 @@ export class DecodedFetchResponse implements Response {
       throw new Error('invalid encoded data.');
     }
   }
+
   json(): Promise<object> {
     try {
       return Promise.resolve(JSON.parse(this.bodyTextDecode()));

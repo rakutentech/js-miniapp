@@ -11,4 +11,4 @@ export * from './types/device-permission';
 export * from './types/share-info';
 export * from './types/custom-permissions';
 export * from './types/fetch';
-export * from './fetch-responses';
+export * from './fetch';

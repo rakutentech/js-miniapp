@@ -40,7 +40,7 @@ export interface FetchRequestInit {
   /**
    * A string to set request's method.
    */
-  method: RequestMethod;
+  method?: RequestMethod;
 }
 
 export type NativeFetchResponse = Omit<Response, keyof Body> & {

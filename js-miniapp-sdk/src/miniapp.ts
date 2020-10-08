@@ -1,3 +1,4 @@
+import { url } from 'inspector';
 import {
   MiniAppBridge,
   Reward,
@@ -5,6 +6,7 @@ import {
   CustomPermission,
   CustomPermissionResult,
   ShareInfoType,
+  InternalFetchRequest,
 } from '../../js-miniapp-bridge/src';
 import {
   FetchResponse,
@@ -45,12 +47,12 @@ interface MiniAppFeatures {
   /**
    * makes the http request at Host application layer.
    *
-   * @param Mixed url   Absolute url or Request instance
-   * @param opts init custom request options(will override matching properties of input parameter)
+   * @param input Absolute url or Request instance
+   * @param opts custom request options(will override matching properties of input parameter)
    * @returns Promise.
    */
   fetch(
-    url: FetchRequest | string,
+    input: FetchRequest | string,
     opts?: FetchRequestInit
   ): Promise<FetchResponse>;
 }
@@ -185,19 +187,11 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   async fetch(
-    url: FetchRequest | string,
+    input: FetchRequest | string,
     opts?: FetchRequestInit
   ): Promise<FetchResponse> {
-    let request: FetchRequest;
-    if (typeof url === 'string') {
-      request = { url: url as string, ...(opts ? opts : { method: 'GET' }) };
-    } else {
-      request = { ...url, ...opts };
-      if (!url.method && !opts) {
-        request = { ...request, method: 'GET' };
-      }
-    }
-    const res = await this.bridge.fetch(request);
+    const req = new InternalFetchRequest(input, opts);
+    const res = await this.bridge.fetch(req);
     return new DecodedFetchResponse(res);
   }
 }
