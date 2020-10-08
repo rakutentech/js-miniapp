@@ -1,6 +1,6 @@
-import { NativeFetchResponse, Response } from '../types/fetch';
+import { NativeFetchResponse, FetchResponse } from '../types/fetch';
 
-export class DecodedFetchResponse implements Response {
+export class DecodedFetchResponse implements FetchResponse {
   private encoding = 'utf-8';
   headers: Record<string, string>;
   ok: boolean;

@@ -18,7 +18,7 @@ interface ResponseBody {
   text(): Promise<string>;
 }
 
-export interface Response extends ResponseBody {
+interface Response extends ResponseBody {
   readonly headers: Headers;
   readonly ok: boolean;
   readonly status: number;

@@ -12,7 +12,7 @@ describe('DecodedFetchResponse', () => {
     ok: true,
     status: 200,
     statusText: 'ok',
-    body: Array.from(new TextEncoder().encode(JSON.stringify(resBody))),
+    body: Array.from(Buffer.from(JSON.stringify(resBody), 'utf-8')),
     headers: { 'Content-Type': 'application/json' },
   };
 

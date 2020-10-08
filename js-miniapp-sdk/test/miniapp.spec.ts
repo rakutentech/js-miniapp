@@ -233,7 +233,7 @@ describe('fetch', () => {
   const resBody = { message: 'Hello!' };
   const errorResBody = { message: 'no matching data found' };
   const bridgeSuccessResponse: NativeFetchResponse = {
-    body: Array.from(new TextEncoder().encode(JSON.stringify(resBody))),
+    body: Array.from(Buffer.from(JSON.stringify(resBody), 'utf-8')),
     headers: { 'Content-Type': 'application/json' },
     ok: true,
     status: 200,
@@ -241,7 +241,7 @@ describe('fetch', () => {
     url: 'https://test-url.com',
   };
   const bridgeErrorResponse = {
-    body: Array.from(new TextEncoder().encode(JSON.stringify(errorResBody))),
+    body: Array.from(Buffer.from(JSON.stringify(errorResBody), 'utf-8')),
     headers: { 'Content-Type': 'application/json' },
     ok: false,
     status: 400,
