@@ -5,16 +5,11 @@ export class InternalFetchRequest implements FetchRequest {
   method?: 'GET';
   url: string;
 
-  constructor(input: FetchRequest | string, opts?: FetchRequestInit) {
-    if (typeof input === 'string') {
-      this.url = input;
-      Object.assign(this, opts);
-    } else {
-      Object.assign(this, input, opts);
-    }
+  constructor(input: string, opts?: FetchRequestInit) {
+    this.url = input;
+    Object.assign(this, opts);
     if (!this.method) {
-      this.method =
-        (typeof input !== 'string' ? input.method : opts?.method) || 'GET';
+      this.method = opts?.method || 'GET';
     }
   }
 }

@@ -258,14 +258,6 @@ describe('fetch', () => {
     window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
     const res = await miniApp.fetch(bridgeSuccessResponse.url);
     const resJson = await res.json();
-    expect(res.body).be.deep.equal(new Uint8Array(bridgeSuccessResponse.body));
-    expect(resJson).be.deep.equal(resBody);
-  });
-
-  it('should make HTTP GET when request informations passed as object', async () => {
-    window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
-    const res = await miniApp.fetch({ url: bridgeSuccessResponse.url });
-    const resJson = await res.json();
     sinon.assert.calledOnceWithExactly(
       window.MiniAppBridge.fetch,
       sinon.match({
@@ -274,6 +266,7 @@ describe('fetch', () => {
       })
     );
     expect(res.body).be.deep.equal(new Uint8Array(bridgeSuccessResponse.body));
+    expect(resJson).be.deep.equal(resBody);
   });
 
   it('should make HTTP GET with options', async () => {
@@ -292,34 +285,11 @@ describe('fetch', () => {
     );
   });
 
-  it('should override request properties with initOptions', async () => {
-    window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
-    const initOptions: FetchRequestInit = {
-      method: 'GET',
-      headers: bridgeSuccessResponse.headers,
-    };
-    await miniApp.fetch(
-      {
-        url: bridgeSuccessResponse.url,
-        headers: { 'test-header': 'test-value' },
-      },
-      initOptions
-    );
-    sinon.assert.calledOnceWithExactly(
-      window.MiniAppBridge.fetch,
-      sinon.match({
-        url: bridgeSuccessResponse.url,
-        ...initOptions,
-      })
-    );
-  });
-
   it('should fetch json response', async () => {
     window.MiniAppBridge.fetch.resolves(bridgeSuccessResponse);
-    const res = await miniApp.fetch(
-      { url: bridgeSuccessResponse.url },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
+    const res = await miniApp.fetch(bridgeSuccessResponse.url, {
+      headers: { 'Content-Type': 'application/json' },
+    });
     const resJson = await res.json();
     expect(resJson).be.deep.equal(resBody);
   });

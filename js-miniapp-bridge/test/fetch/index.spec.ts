@@ -54,26 +54,4 @@ describe('InternalFetchRequest', () => {
     expect(req.method).be.equal('GET');
     expect(req.headers).be.deep.equal(testItem.init.headers);
   });
-
-  it('should set method to GET & set headers', () => {
-    const req = new InternalFetchRequest({
-      url: testItem.url,
-      headers: testItem.init.headers,
-    });
-    expect(req.method).be.equal('GET');
-    expect(req.headers).be.deep.equal(testItem.init.headers);
-  });
-
-  it('should override headers', () => {
-    const headers = { 'Content-type': 'dummy-text' };
-    const req = new InternalFetchRequest(
-      {
-        url: testItem.url,
-        headers: testItem.init.headers,
-      },
-      { headers }
-    );
-    expect(req.method).be.equal('GET');
-    expect(req.headers).be.deep.equal(headers);
-  });
 });

@@ -46,14 +46,11 @@ interface MiniAppFeatures {
   /**
    * makes the http request at Host application layer.
    *
-   * @param input Absolute url or Request instance
+   * @param url Absolute url
    * @param opts custom request options(will override matching properties of input parameter)
    * @returns Promise.
    */
-  fetch(
-    input: FetchRequest | string,
-    opts?: FetchRequestInit
-  ): Promise<FetchResponse>;
+  fetch(url: string, opts?: FetchRequestInit): Promise<FetchResponse>;
 }
 
 /**
@@ -185,12 +182,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return platform;
   }
 
-  async fetch(
-    input: FetchRequest | string,
-    opts?: FetchRequestInit
-  ): Promise<FetchResponse> {
-    const req = new InternalFetchRequest(input, opts);
-    const res = await this.bridge.fetch(req);
-    return new DecodedFetchResponse(res);
+  async fetch(url: string, opts?: FetchRequestInit): Promise<FetchResponse> {
+    return new DecodedFetchResponse(
+      await this.bridge.fetch(new InternalFetchRequest(url, opts))
+    );
   }
 }
