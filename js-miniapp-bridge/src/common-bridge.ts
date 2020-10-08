@@ -285,7 +285,7 @@ export class MiniAppBridge {
         'fetch',
         request,
         success => resolve(JSON.parse(success) as NativeFetchResponse),
-        error => reject(JSON.parse(error) as NativeFetchResponse)
+        error => reject(error)
       );
     });
   }

@@ -152,27 +152,20 @@ describe('fetch', () => {
     statusText: 'ok',
     body: [1, 2, 3],
     headers: { 'Content-Type': 'application/json' },
-    type: 'cors',
   };
-  const testErrorRes: NativeFetchResponse = {
-    url: 'test-url',
-    ok: false,
-    status: 400,
-    statusText: 'error',
-    body: [1, 2, 3],
-    headers: { 'Content-Type': 'application/json' },
-    type: 'cors',
-  };
+
   it('should get success response', async () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, JSON.stringify(testSuccessRes));
     const res = await bridge.fetch(req);
     expect(res).deep.equal(testSuccessRes);
   });
-  it('should get error response', () => {
+
+  it('should reject promise with error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(3, JSON.stringify(testErrorRes));
-    expect(bridge.fetch(req)).be.rejectedWith(JSON.stringify(testErrorRes));
+    const networkError = 'Network error occured';
+    mockExecutor.exec.callsArgWith(3, networkError);
+    expect(bridge.fetch(req)).be.rejectedWith(networkError);
   });
 });
 

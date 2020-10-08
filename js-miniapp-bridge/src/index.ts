@@ -4,26 +4,11 @@
  * Exports the types for Mini App Bridge
  */
 
-import { MiniAppBridge } from './common-bridge';
-import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types/rewarded';
-import { DevicePermission } from './types/device-permission';
-import {
-  CustomPermission,
-  CustomPermissionName,
-  CustomPermissionStatus,
-  CustomPermissionResult,
-} from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
-
-export {
-  MiniAppBridge,
-  AdTypes,
-  Reward,
-  DevicePermission,
-  CustomPermission,
-  CustomPermissionName,
-  CustomPermissionStatus,
-  CustomPermissionResult,
-  ShareInfoType,
-};
+export { MiniAppBridge } from './common-bridge';
+export * from './types/ad-types';
+export * from './types/response-types/rewarded';
+export * from './types/device-permission';
+export * from './types/share-info';
+export * from './types/custom-permissions';
+export * from './types/fetch';
+export * from './fetch-responses';

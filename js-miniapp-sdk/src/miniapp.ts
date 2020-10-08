@@ -10,8 +10,8 @@ import {
   FetchResponse,
   FetchRequest,
   FetchRequestInit,
-  FetchResponseImpl,
-} from '../../js-miniapp-bridge/src/types/fetch';
+  DecodedFetchResponse,
+} from '../../js-miniapp-bridge/src';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -45,13 +45,13 @@ interface MiniAppFeatures {
   /**
    * makes the http request at Host application layer.
    *
-   * @param input request information
-   * @param init request initialization options(will override matching properties of input parameter)
-   * @returns success or failure http response.
+   * @param Mixed url   Absolute url or Request instance
+   * @param opts init custom request options(will override matching properties of input parameter)
+   * @returns Promise.
    */
   fetch(
-    input: FetchRequest | string,
-    init?: FetchRequestInit
+    url: FetchRequest | string,
+    opts?: FetchRequestInit
   ): Promise<FetchResponse>;
 }
 
@@ -185,16 +185,19 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   async fetch(
-    input: FetchRequest | string,
-    init?: FetchRequestInit
+    url: FetchRequest | string,
+    opts?: FetchRequestInit
   ): Promise<FetchResponse> {
-    let request;
-    if (typeof input === 'string') {
-      request = { url: input as string, ...init };
+    let request: FetchRequest;
+    if (typeof url === 'string') {
+      request = { url: url as string, ...(opts ? opts : { method: 'GET' }) };
     } else {
-      request = { ...input, ...init };
+      request = { ...url, ...opts };
+      if (!url.method && !opts) {
+        request = { ...request, method: 'GET' };
+      }
     }
     const res = await this.bridge.fetch(request);
-    return new FetchResponseImpl(res);
+    return new DecodedFetchResponse(res);
   }
 }
