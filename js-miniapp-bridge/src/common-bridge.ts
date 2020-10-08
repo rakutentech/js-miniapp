@@ -1,27 +1,30 @@
-/* tslint:disable:no-any */
+/** @internal */
 
+/**
+ * Bridge for communicating with Mini App
+ */
+
+import { AdTypes } from './types/ad-types';
+import { Reward } from './types/response-types/rewarded';
+import { DevicePermission } from './types/device-permission';
 import {
-  AdTypes,
-  InterstitialAdResponse,
   CustomPermission,
-  CustomPermissionResult,
-  RewardedAdResponse,
-  ShareInfoType,
-} from 'js-miniapp-sdk';
+  CustomPermissionResponse,
+} from './types/custom-permissions';
+import { ShareInfoType } from './types/share-info';
 
+/** @internal */
 const mabMessageQueue: Callback[] = [];
 export { mabMessageQueue };
 
+/** @internal */
 export interface Callback {
   id: string;
   onSuccess: (value: string) => void;
   onError: (error: string) => void;
 }
 
-export interface CustomPermissionResponse {
-  permissions: CustomPermissionResult[];
-}
-
+/** @internal */
 export interface PlatformExecutor {
   /**
    * Method to call the native interface methods for respective platforms
@@ -34,17 +37,26 @@ export interface PlatformExecutor {
    */
   exec(
     action: string,
-    param: any,
+    param: object | null,
     onSuccess: (value: string) => void,
     onError: (error: string) => void
   ): void;
+
+  /**
+   * Get the platform which injects this bridge.
+   * @returns The platform name. It could be 'Android' or 'iOS'.
+   */
+  getPlatform(): string;
 }
 
+/** @internal */
 export class MiniAppBridge {
   executor: PlatformExecutor;
+  platform: string;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
+    this.platform = executor.getPlatform();
   }
 
   /**
@@ -100,9 +112,9 @@ export class MiniAppBridge {
 
   /**
    * Associating requestPermission function to MiniAppBridge object
-   * @param {string} permissionType Type of permission that is requested. For eg., location
+   * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
    */
-  requestPermission(permissionType: string) {
+  requestPermission(permissionType: DevicePermission) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestPermission',
@@ -118,11 +130,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the intertitial ad
    */
   showInterstitialAd(id: string) {
-    return new Promise<InterstitialAdResponse>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        adResponse => resolve(JSON.parse(adResponse) as InterstitialAdResponse),
+        closeSuccess => resolve(closeSuccess),
         error => reject(error)
       );
     });
@@ -135,11 +147,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
    */
   loadInterstitialAd(id: string) {
-    return new Promise<null | Error>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        loadSuccess => resolve(loadSuccess),
         error => reject(error)
       );
     });
@@ -152,11 +164,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the Rewarded ad that needs to be loaded.
    */
   loadRewardedAd(id: string) {
-    return new Promise<null | Error>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        loadResponse => resolve(JSON.parse(loadResponse) as null | Error),
+        loadSuccess => resolve(loadSuccess),
         error => reject(error)
       );
     });
@@ -167,11 +179,11 @@ export class MiniAppBridge {
    * @param {string} id ad unit id of the Rewarded ad
    */
   showRewardedAd(id: string) {
-    return new Promise<RewardedAdResponse>((resolve, reject) => {
+    return new Promise<Reward>((resolve, reject) => {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        adResponse => resolve(JSON.parse(adResponse) as RewardedAdResponse),
+        rewardResponse => resolve(JSON.parse(rewardResponse) as Reward),
         error => reject(error)
       );
     });
@@ -215,12 +227,48 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * Associating getUserName function to MiniAppBridge object.
+   * This function returns username from the user profile
+   * (provided the rakuten.miniapp.user.USER_NAME custom permission is allowed by the user)
+   * It returns error info if user had denied the custom permission
+   */
+  getUserName() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getUserName',
+        null,
+        userName => resolve(userName),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getProfilePhoto function to MiniAppBridge object.
+   * This function returns username from the user profile
+   * (provided the rakuten.miniapp.user.PROFILE_PHOTO is allowed by the user)
+   * It returns error info if user had denied the custom permission
+   */
+  getProfilePhoto() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getProfilePhoto',
+        null,
+        profilePhoto => resolve(profilePhoto),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
  * Method to remove the callback object from the message queue after successfull/error communication
  * with the native application
  * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ *
+ * @internal
  */
 function removeFromMessageQueue(queueObj) {
   const messageObjIndex = mabMessageQueue.indexOf(queueObj);

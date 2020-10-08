@@ -1,11 +1,11 @@
-import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 import {
+  MiniAppBridge,
+  Reward,
+  DevicePermission,
   CustomPermission,
   CustomPermissionResult,
-} from './types/CustomPermission';
-import { DevicePermission } from './types/DevicePermission';
-import { RewardedAdResponse } from './types/responseTypes/rewarded';
-import { ShareInfoType } from './types/ShareInfoType';
+  ShareInfoType,
+} from '../../js-miniapp-bridge/src';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -45,27 +45,27 @@ interface Ad {
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadInterstitialAd(id: string): Promise<null | Error>;
+  loadInterstitialAd(id: string): Promise<string>;
 
   /**
    * Loads the specified Rewarded Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadRewardedAd(id: string): Promise<null | Error>;
+  loadRewardedAd(id: string): Promise<string>;
 
   /**
    * Shows the Interstitial Ad for the specified ID.
    * Promise is resolved after the user closes the Ad.
-   * @returns The Promise of Interstitial ad response result from injected side.
-   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
+   * @returns The Promise of close success response.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadInterstitialAd.
    */
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse>;
+  showInterstitialAd(id: string): Promise<string>;
 
   /**
    * Shows the Rewarded Ad for the specified ID.
@@ -74,17 +74,56 @@ interface Ad {
    * @returns The Promise of Rewarded ad response result from injected side.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
    */
-  showRewardedAd(id: string): Promise<RewardedAdResponse>;
+  showRewardedAd(id: string): Promise<Reward>;
+}
+
+interface Platform {
+  getPlatform();
+}
+
+/**
+ * Interfaces to retrieve User profile related information
+ */
+export interface UserInfoProvider {
+  /**
+   * @returns Username saved in the host app user profile
+   */
+  getUserName(): Promise<string>;
+
+  /**
+   * @returns Profile photo saved in the host app user profile
+   */
+  getProfilePhoto(): Promise<string>;
+}
+
+/** @internal */
+class UserInfo implements UserInfoProvider {
+  private bridge: MiniAppBridge;
+
+  constructor(miniAppBridge: MiniAppBridge) {
+    this.bridge = miniAppBridge;
+  }
+
+  getUserName(): Promise<string> {
+    return this.bridge.getUserName();
+  }
+
+  getProfilePhoto(): Promise<string> {
+    return this.bridge.getProfilePhoto();
+  }
 }
 
 /* tslint:disable:no-any */
-export class MiniApp implements MiniAppFeatures, Ad {
-  private requestPermission(permissionType: string): Promise<string> {
-    return (window as any).MiniAppBridge.requestPermission(permissionType);
+export class MiniApp implements MiniAppFeatures, Ad, Platform {
+  private bridge: MiniAppBridge = (window as any).MiniAppBridge;
+  user: UserInfoProvider = new UserInfo(this.bridge);
+
+  private requestPermission(permissionType: DevicePermission): Promise<string> {
+    return this.bridge.requestPermission(permissionType);
   }
 
   getUniqueId(): Promise<string> {
-    return (window as any).MiniAppBridge.getUniqueId();
+    return this.bridge.getUniqueId();
   }
 
   requestLocationPermission(): Promise<string> {
@@ -94,28 +133,36 @@ export class MiniApp implements MiniAppFeatures, Ad {
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
-    return (window as any).MiniAppBridge.requestCustomPermissions(
-      permissions
-    ).then(permissionResult => permissionResult.permissions);
+    return this.bridge
+      .requestCustomPermissions(permissions)
+      .then(permissionResult => permissionResult.permissions);
   }
 
-  loadInterstitialAd(id: string): Promise<null | Error> {
-    return (window as any).MiniAppBridge.loadInterstitialAd(id);
+  loadInterstitialAd(id: string): Promise<string> {
+    return this.bridge.loadInterstitialAd(id);
   }
 
-  loadRewardedAd(id: string): Promise<null | Error> {
-    return (window as any).MiniAppBridge.loadRewardedAd(id);
+  loadRewardedAd(id: string): Promise<string> {
+    return this.bridge.loadRewardedAd(id);
   }
 
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse> {
-    return (window as any).MiniAppBridge.showInterstitialAd(id);
+  showInterstitialAd(id: string): Promise<string> {
+    return this.bridge.showInterstitialAd(id);
   }
 
-  showRewardedAd(id: string): Promise<RewardedAdResponse> {
-    return (window as any).MiniAppBridge.showRewardedAd(id);
+  showRewardedAd(id: string): Promise<Reward> {
+    return this.bridge.showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return (window as any).MiniAppBridge.shareInfo(info);
+    return this.bridge.shareInfo(info);
+  }
+
+  getPlatform(): string {
+    let platform = 'Unknown';
+    try {
+      platform = (window as any).MiniAppBridge.platform;
+    } catch (e) {}
+    return platform;
   }
 }

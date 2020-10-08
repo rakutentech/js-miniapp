@@ -39,10 +39,10 @@ First, download the bundled script file from the [releases page](https://github.
 <script src="miniapp.bundle.js"></script>
 ```
 
-Then you can acces the SDK methods via `window.MiniApp`.
+Then you can acces the SDK methods via `window.MiniApp.default`.
 
 ```javascript
-window.MiniApp.getUniqueId()
+window.MiniApp.default.getUniqueId()
     .then(id => {
     // ...
 ```
@@ -79,7 +79,7 @@ Simply call available permission request methods from `miniApp`.
 
 ```javascript
 // Location Permission
-import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
+import miniApp from 'js-miniapp-sdk';
 miniApp.requestLocationPermission()
 	.then(success => {
 		console.log(success); // Allowed.
@@ -150,7 +150,9 @@ miniApp.loadRewardedAd(adUnitID)
 
 ### 5. Share Info
 
-It is possible for the mini app user to share the mini app data across Android/iOS interface. The data format must match the [ShareInfoType](src/types/ShareInfoType.ts).
+It is possible for the mini app user to share data with another App by showing the native content sharing chooser.
+
+The data format must match the [ShareInfoType](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/src/types/ShareInfoType.ts).
 
 ```javascript
 const info = { content: inputValue };
@@ -160,21 +162,60 @@ miniApp.shareInfo(info)
     .catch(error => console.error(error));
 ```
 
+### 5. Requesting User details
+
+You can retrieve the User Name and Profile Photo of the user using the following interfaces. Please make sure that User have allowed respective custom permission before requesting the user detail.
+
+```javascript
+const info = { content: inputValue };
+
+MiniApp.getUserName()
+    .then(userName => {
+		console.log(userName);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
+NOTE: getProfilePhoto() -  Returns the Profile Photo URI from the Host app.
+
+```javascript
+const info = { content: inputValue };
+
+MiniApp.getProfilePhoto()
+    .then(profilePhoto => {
+		console.log(profilePhoto);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
 ## Advanced Usage
+
+### Check Android/iOS device
+You can detect whether your mini app is running on an Android/iOS by using
+
+```javascript
+const platform = miniApp.getPlatform();
+//platform value here can be `Android`, `iOS` or `Unknown`.
+```
+When it is not running by Android/iOS, the return value is `Unknown`.
+
+The mini app can have its own device detection by not using SDK/
+This can be done with [Bowser](https://github.com/lancedikson/bowser).
 
 ### Usage when testing in the browser
 Currently, the SDK does not support testing in the browser. You must test using the [Android Mini App Demo App](https://github.com/rakutentech/android-miniapp) or [iOS Mini App Demo App](https://github.com/rakutentech/ios-miniapp) on an actual Android or iOS device.
 
-If you wish to be able to test in a browser, you can detect whether your web app is running on an Android/iOS device or in the browser. If not running on a device, you can return a mock value instead of calling the SDK method. Device detection can be done using something like [Bowser](https://github.com/lancedikson/bowser).
+If you wish to be able to test in a browser, you can return a mock value instead of calling the SDK method.
 
 ```javascript
 import miniApp from "js-miniapp-sdk";
-import Bowser from "bowser";
 
-const browser = Bowser.parse(window.navigator.userAgent);
+const platform = miniApp.getPlatform();
 
 function getId() {
-    if (browser.is("android") || browser.is("ios")) {
+    if (platform != "Unknown") {
         return miniApp.getUniqueId()
             .then(id => {
                 console.log(id);
