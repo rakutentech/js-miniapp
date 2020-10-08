@@ -45,7 +45,7 @@ export interface FetchRequestInit {
 
 export type NativeFetchResponse = Omit<Response, keyof Body> & {
   /**
-   * utf-8 encoded string
+   * encoded data
    */
   body: number[];
 };

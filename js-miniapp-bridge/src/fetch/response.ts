@@ -24,8 +24,8 @@ export class DecodedFetchResponse implements FetchResponse {
     this.body = new Uint8Array(res.body);
   }
 
-  private bodyTextDecode(): string {
-    return Buffer.from(this.body).toString('utf-8');
+  private decodeBody(): string {
+    return Buffer.from(this.body).toString(this.encoding);
   }
 
   arrayBuffer(): Promise<ArrayBuffer> {
@@ -38,13 +38,13 @@ export class DecodedFetchResponse implements FetchResponse {
 
   json(): Promise<object> {
     try {
-      return Promise.resolve(JSON.parse(this.bodyTextDecode()));
+      return Promise.resolve(JSON.parse(this.decodeBody()));
     } catch (err) {
       return Promise.reject('invalid json response body');
     }
   }
 
   text(): Promise<string> {
-    return Promise.resolve(this.bodyTextDecode());
+    return Promise.resolve(this.decodeBody());
   }
 }

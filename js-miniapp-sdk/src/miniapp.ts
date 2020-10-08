@@ -1,4 +1,3 @@
-import { url } from 'inspector';
 import {
   MiniAppBridge,
   Reward,

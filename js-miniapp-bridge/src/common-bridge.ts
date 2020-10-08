@@ -277,7 +277,7 @@ export class MiniAppBridge {
   /**
    * Associating fetch function to MiniAppBridge object.
    *
-   * @param request request informations
+   * @param request request-instance
    */
   fetch(request: FetchRequest) {
     return new Promise<NativeFetchResponse>((resolve, reject) => {

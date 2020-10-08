@@ -1,14 +1,12 @@
 import { expect } from 'chai';
-import { assert } from 'console';
-import { url } from 'inspector';
-import sinon, { mock } from 'sinon';
+import sinon from 'sinon';
 
 import * as Bridge from '../src/common-bridge';
 import {
   CustomPermissionName,
   CustomPermissionStatus,
 } from '../src/types/custom-permissions';
-import { FetchRequest, NativeFetchResponse } from '../src/types/fetch';
+import { FetchRequest, NativeFetchResponse } from '../src';
 
 /* tslint:disable:no-any */
 const window: any = {};
