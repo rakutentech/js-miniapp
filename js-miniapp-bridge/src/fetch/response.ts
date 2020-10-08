@@ -25,7 +25,7 @@ export class DecodedFetchResponse implements FetchResponse {
   }
 
   private bodyTextDecode(): string {
-    return new TextDecoder(this.encoding).decode(this.body);
+    return Buffer.from(this.body).toString('utf-8');
   }
 
   arrayBuffer(): Promise<ArrayBuffer> {
