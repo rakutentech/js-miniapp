@@ -5,6 +5,7 @@ import {
   CustomPermission,
   CustomPermissionResult,
   ShareInfoType,
+  Screen,
 } from '../../js-miniapp-bridge/src';
 
 /**
@@ -35,6 +36,12 @@ interface MiniAppFeatures {
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
+
+  /**
+   * @param screenState The state that miniapp wants to request on device.
+   * @returns The Promise of screen action state from injected side.
+   */
+  requestScreenOrientation(screenState: Screen): Promise<string>;
 }
 
 /**
@@ -164,5 +171,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       platform = (window as any).MiniAppBridge.platform;
     } catch (e) {}
     return platform;
+  }
+
+  requestScreenOrientation(screenState: Screen): Promise<string> {
+    return this.bridge.requestScreenOrientation(screenState);
   }
 }

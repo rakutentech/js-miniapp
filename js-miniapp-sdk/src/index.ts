@@ -11,6 +11,8 @@ import {
   CustomPermissionStatus,
   CustomPermissionResult,
   ShareInfoType,
+  Screen,
+  ScreenAction,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -26,4 +28,6 @@ export {
   CustomPermissionResult,
   Reward,
   ShareInfoType,
+  Screen,
+  ScreenAction,
 };

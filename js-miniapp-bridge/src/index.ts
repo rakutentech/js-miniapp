@@ -15,6 +15,7 @@ import {
   CustomPermissionResult,
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
+import { Screen, ScreenAction } from './types/screen';
 
 export {
   MiniAppBridge,
@@ -26,4 +27,6 @@ export {
   CustomPermissionStatus,
   CustomPermissionResult,
   ShareInfoType,
+  Screen,
+  ScreenAction,
 };
