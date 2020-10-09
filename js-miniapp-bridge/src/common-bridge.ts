@@ -12,7 +12,7 @@ import {
   CustomPermissionResponse,
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
-import { Screen } from './types/screen';
+import { ScreenAction } from './types/screen';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -265,13 +265,13 @@ export class MiniAppBridge {
 
   /**
    * This function does not return anything back on success.
-   * @param {screen} The screen state that miniapp wants to request on device.
+   * @param {screenAction} The screen state that miniapp wants to request on device.
    */
-  requestScreenOrientation(screen: Screen) {
+  requestScreenOrientation(screenAction: ScreenAction) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'requestScreenOrientation',
-        { screenState: screen },
+        { action: screenAction },
         success => resolve(success),
         error => reject(error)
       );

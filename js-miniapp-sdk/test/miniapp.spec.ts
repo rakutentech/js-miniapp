@@ -228,27 +228,20 @@ describe('getProfilePhoto', () => {
 
 describe('requestScreenOrientation', () => {
   it('should retrieve success from the MiniAppBridge when request is successful', () => {
-    const screenState = {
-      action: ScreenAction.LOCK_LANDSCAPE,
-    };
     const response = 'success';
 
     window.MiniAppBridge.requestScreenOrientation.resolves(response);
     return expect(
-      miniApp.requestScreenOrientation(screenState)
+      miniApp.requestScreenOrientation(ScreenAction.LOCK_LANDSCAPE)
     ).to.eventually.equal(response);
   });
 
   it('should retrive error response from the MiniAppBridge once there is errors', () => {
-    const screenState = {
-      action: ScreenAction.LOCK_LANDSCAPE,
-    };
-
     const error = 'Bridge error';
 
     window.MiniAppBridge.requestScreenOrientation.resolves(error);
     return expect(
-      miniApp.requestScreenOrientation(screenState)
+      miniApp.requestScreenOrientation(ScreenAction.LOCK_PORTRAIT)
     ).to.eventually.equal(error);
   });
 });
