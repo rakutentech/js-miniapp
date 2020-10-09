@@ -15,7 +15,7 @@ import {
   CustomPermissionResult,
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
-import { ScreenAction } from './types/screen';
+import { ScreenOrientation } from './types/screen';
 
 export {
   MiniAppBridge,
@@ -27,5 +27,5 @@ export {
   CustomPermissionStatus,
   CustomPermissionResult,
   ShareInfoType,
-  ScreenAction,
+  ScreenOrientation,
 };
