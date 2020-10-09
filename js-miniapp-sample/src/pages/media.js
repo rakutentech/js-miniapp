@@ -1,15 +1,34 @@
 // @flow
 import React from 'react';
 import ReactPlayerLoader from '@brightcove/react-player-loader';
+import MiniApp from 'js-miniapp-sdk';
+import ScreenAction from 'js-miniapp-sdk';
 
 const onSuccess = function (success) {
   console.log(success.ref);
+  const landscapeLock = { action: ScreenAction.LOCK_LANDSCAPE };
+  const releaseLock = { action: ScreenAction.LOCK_RELEASE };
 
   success.ref.on("fullscreenchange", event => {
-      if (success.ref.isFullscreen())
+      if (success.ref.isFullscreen()) {
         console.log('fullscreen enter');
-      else
+        MiniApp.requestScreenOrientation(landscapeLock)
+          .then((success) => {
+            console.log(success);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else {
         console.log('fullscreen exit');
+        MiniApp.requestScreenOrientation(landscapeLock)
+          .then((success) => {
+            console.log(success);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
     });
 };
 
