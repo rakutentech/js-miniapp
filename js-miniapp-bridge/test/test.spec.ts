@@ -6,7 +6,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
 } from '../src/types/custom-permissions';
-import { FetchRequest, NativeFetchResponse } from '../src';
+import { NativeFetchRequest, NativeFetchResponse } from '../src';
 
 /* tslint:disable:no-any */
 const window: any = {};
@@ -142,7 +142,7 @@ describe('requestCustomPermissions', () => {
 });
 
 describe('fetch', () => {
-  const req: FetchRequest = { url: 'test-url' };
+  const req: NativeFetchRequest = { url: 'test-url' };
   const testSuccessRes: NativeFetchResponse = {
     url: 'test-url',
     ok: true,

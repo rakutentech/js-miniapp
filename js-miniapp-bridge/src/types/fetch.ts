@@ -1,6 +1,4 @@
-type Headers = Record<string, string>;
-// type RequestBody = FormData | string;
-type RequestMethod = 'GET' /*  | 'POST' */;
+export type Headers = Record<string, string>;
 
 interface ResponseBody {
   readonly body: Uint8Array | null;
@@ -18,20 +16,7 @@ interface ResponseBody {
   text(): Promise<string>;
 }
 
-interface Response extends ResponseBody {
-  readonly headers: Headers;
-  readonly ok: boolean;
-  readonly status: number;
-  readonly statusText: string;
-  readonly url: string;
-}
-
 export interface FetchRequestInit {
-  /**
-   * A RequestBody object or null to set request's body.
-   */
-  // body?: RequestBody | null;
-
   /**
    * A Headers object, an object literal, or an array of two-item arrays to set request's headers.
    */
@@ -42,13 +27,23 @@ export interface FetchRequestInit {
    */
   method?: RequestMethod;
 }
+export interface FetchResponse extends ResponseBody {
+  readonly headers: Headers;
+  readonly ok: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly url: string;
+}
 
-export type NativeFetchResponse = Omit<Response, keyof Body> & {
+export type RequestMethod = 'GET';
+
+/** @internal */
+export type NativeFetchResponse = Omit<FetchResponse, keyof ResponseBody> & {
   /**
    * encoded data
    */
   body: number[];
 };
 
-export type FetchRequest = Partial<FetchRequestInit> & { url: string };
-export type FetchResponse = Response;
+/** @internal */
+export type NativeFetchRequest = Partial<FetchRequestInit> & { url: string };

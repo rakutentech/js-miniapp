@@ -12,7 +12,7 @@ import {
   CustomPermissionResponse,
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
-import { FetchRequest, NativeFetchResponse } from './types/fetch';
+import { NativeFetchRequest, NativeFetchResponse } from './types/fetch';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -279,7 +279,7 @@ export class MiniAppBridge {
    *
    * @param request request-instance
    */
-  fetch(request: FetchRequest) {
+  fetch(request: NativeFetchRequest) {
     return new Promise<NativeFetchResponse>((resolve, reject) => {
       return this.executor.exec(
         'fetch',

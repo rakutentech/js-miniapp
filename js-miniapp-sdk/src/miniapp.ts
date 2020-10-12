@@ -9,7 +9,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 import {
   FetchResponse,
-  FetchRequest,
+  NativeFetchRequest,
   FetchRequestInit,
   DecodedFetchResponse,
 } from '../../js-miniapp-bridge/src';
@@ -182,9 +182,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return platform;
   }
 
-  async fetch(url: string, opts?: FetchRequestInit): Promise<FetchResponse> {
-    return new DecodedFetchResponse(
-      await this.bridge.fetch(new InternalFetchRequest(url, opts))
-    );
+  fetch(url: string, opts?: FetchRequestInit): Promise<FetchResponse> {
+    return this.bridge
+      .fetch(new InternalFetchRequest(url, opts))
+      .then(res => new DecodedFetchResponse(res));
   }
 }

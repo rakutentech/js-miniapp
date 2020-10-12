@@ -1,5 +1,6 @@
 import { NativeFetchResponse, FetchResponse } from '../types/fetch';
 
+/** @internal */
 export class DecodedFetchResponse implements FetchResponse {
   private encoding = 'utf-8';
   headers: Record<string, string>;

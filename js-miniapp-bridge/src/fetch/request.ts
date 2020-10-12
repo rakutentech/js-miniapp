@@ -1,8 +1,13 @@
-import { FetchRequest, FetchRequestInit } from '../types/fetch';
+import {
+  NativeFetchRequest,
+  FetchRequestInit,
+  RequestMethod,
+} from '../types/fetch';
 
-export class InternalFetchRequest implements FetchRequest {
+/** @internal */
+export class InternalFetchRequest implements NativeFetchRequest {
   headers?: Record<string, string>;
-  method?: 'GET';
+  method?: RequestMethod;
   url: string;
 
   constructor(input: string, opts?: FetchRequestInit) {
