@@ -265,7 +265,7 @@ export class MiniAppBridge {
 
   /**
    * This function does not return anything back on success.
-   * @param {screenAction} The screen state that miniapp wants to request on device.
+   * @param {screenAction} The screen state that miniapp wants to set on device.
    */
   setScreenOrientation(screenAction: ScreenOrientation) {
     return new Promise<string>((resolve, reject) => {
