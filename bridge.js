@@ -39,7 +39,7 @@ var MiniAppBridge = /** @class */ (function () {
     /**
      * Success Callback method that will be called from native side
      * to this bridge. This method will send back the value to the
-     * mini apps that uses promises
+     * mini apps that uses promises.
      * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
      * @param  {[String]} value Response value sent from the native on invoking the action command
      */
@@ -56,7 +56,7 @@ var MiniAppBridge = /** @class */ (function () {
     /**
      * Error Callback method that will be called from native side
      * to this bridge. This method will send back the error message to the
-     * mini apps that uses promises
+     * mini apps that uses promises.
      * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
      * @param  {[String]} errorMessage Error message sent from the native on invoking the action command
      */
@@ -69,7 +69,7 @@ var MiniAppBridge = /** @class */ (function () {
         removeFromMessageQueue(queueObj);
     };
     /**
-     * Associating getUniqueId function to MiniAppBridge object
+     * Associating getUniqueId function to MiniAppBridge object.
      */
     MiniAppBridge.prototype.getUniqueId = function () {
         var _this = this;
@@ -78,7 +78,7 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * Associating requestPermission function to MiniAppBridge object
+     * Associating requestPermission function to MiniAppBridge object.
      * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
      */
     MiniAppBridge.prototype.requestPermission = function (permissionType) {
@@ -88,7 +88,7 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * Associating showInterstitialAd function to MiniAppBridge object
+     * Associating showInterstitialAd function to MiniAppBridge object.
      * @param {string} id ad unit id of the intertitial ad
      */
     MiniAppBridge.prototype.showInterstitialAd = function (id) {
@@ -122,7 +122,7 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * Associating showRewardedAd function to MiniAppBridge object
+     * Associating showRewardedAd function to MiniAppBridge object.
      * @param {string} id ad unit id of the Rewarded ad
      */
     MiniAppBridge.prototype.showRewardedAd = function (id) {
@@ -151,7 +151,7 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating shareInfo function to MiniAppBridge object.
-     * This function does not return anything back on success.
+     * This function returns the shared info action state.
      * @param {info} The shared info object.
      */
     MiniAppBridge.prototype.shareInfo = function (info) {
@@ -182,6 +182,16 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getProfilePhoto', null, function (profilePhoto) { return resolve(profilePhoto); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * This function does not return anything back on success.
+     * @param {screenAction} The screen state that miniapp wants to set on device.
+     */
+    MiniAppBridge.prototype.setScreenOrientation = function (screenAction) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('setScreenOrientation', { action: screenAction }, function (success) { return resolve(success); }, function (error) { return reject(error); });
         });
     };
     return MiniAppBridge;
