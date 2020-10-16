@@ -7,6 +7,7 @@ import {
   Reward,
   CustomPermissionName,
   CustomPermissionStatus,
+  ScreenOrientation,
 } from '../../js-miniapp-bridge/src';
 import {
   NativeFetchResponse,
@@ -30,6 +31,7 @@ window.MiniAppBridge = {
   getUserName: sinon.stub(),
   getProfilePhoto: sinon.stub(),
   fetch: sinon.stub(),
+  setScreenOrientation: sinon.stub(),
 };
 const miniApp = new MiniApp();
 
@@ -321,5 +323,25 @@ describe('fetch', () => {
     const res = await miniApp.fetch(bridgeSuccessResponse.url);
     expect(res.ok).be.equal(false);
     expect(await res.json()).be.deep.equal(errorResBody);
+  });
+});
+
+describe('requestScreenOrientation', () => {
+  it('should retrieve success from the MiniAppBridge when request is successful', () => {
+    const response = 'success';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(response);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(error);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
+    ).to.eventually.equal(error);
   });
 });

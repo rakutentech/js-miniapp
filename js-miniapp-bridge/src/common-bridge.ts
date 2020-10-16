@@ -13,6 +13,7 @@ import {
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
 import { NativeFetchRequest, NativeFetchResponse } from './types/fetch';
+import { ScreenOrientation } from './types/screen';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -34,13 +35,14 @@ type PlatformExecutorAction =
   | 'fetch'
   | 'getProfilePhoto'
   | 'getUserName'
+  | 'setScreenOrientation'
   | 'shareInfo';
 
 /** @internal */
 export interface PlatformExecutor {
   /**
    * Method to call the native interface methods for respective platforms
-   * such as iOS & Android
+   * such as iOS & Android.
    * @param  {[String]} action Action command/interface name that native side need to execute
    * @param  {Object} param Object that contains request parameter values like permissions.
    * For eg., {permission: 'location'}
@@ -74,7 +76,7 @@ export class MiniAppBridge {
   /**
    * Success Callback method that will be called from native side
    * to this bridge. This method will send back the value to the
-   * mini apps that uses promises
+   * mini apps that uses promises.
    * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
    * @param  {[String]} value Response value sent from the native on invoking the action command
    */
@@ -93,7 +95,7 @@ export class MiniAppBridge {
   /**
    * Error Callback method that will be called from native side
    * to this bridge. This method will send back the error message to the
-   * mini apps that uses promises
+   * mini apps that uses promises.
    * @param  {[String]} messageId Message ID which will be used to get callback object from messageQueue
    * @param  {[String]} errorMessage Error message sent from the native on invoking the action command
    */
@@ -109,7 +111,7 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating getUniqueId function to MiniAppBridge object
+   * Associating getUniqueId function to MiniAppBridge object.
    */
   getUniqueId() {
     return new Promise<string>((resolve, reject) => {
@@ -123,7 +125,7 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating requestPermission function to MiniAppBridge object
+   * Associating requestPermission function to MiniAppBridge object.
    * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
    */
   requestPermission(permissionType: DevicePermission) {
@@ -138,7 +140,7 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating showInterstitialAd function to MiniAppBridge object
+   * Associating showInterstitialAd function to MiniAppBridge object.
    * @param {string} id ad unit id of the intertitial ad
    */
   showInterstitialAd(id: string) {
@@ -187,7 +189,7 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating showRewardedAd function to MiniAppBridge object
+   * Associating showRewardedAd function to MiniAppBridge object.
    * @param {string} id ad unit id of the Rewarded ad
    */
   showRewardedAd(id: string) {
@@ -226,7 +228,7 @@ export class MiniAppBridge {
 
   /**
    * Associating shareInfo function to MiniAppBridge object.
-   * This function does not return anything back on success.
+   * This function returns the shared info action state.
    * @param {info} The shared info object.
    */
   shareInfo(info: ShareInfoType) {
@@ -269,6 +271,21 @@ export class MiniAppBridge {
         'getProfilePhoto',
         null,
         profilePhoto => resolve(profilePhoto),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * This function does not return anything back on success.
+   * @param {screenAction} The screen state that miniapp wants to set on device.
+   */
+  setScreenOrientation(screenAction: ScreenOrientation) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'setScreenOrientation',
+        { action: screenAction },
+        success => resolve(success),
         error => reject(error)
       );
     });

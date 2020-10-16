@@ -12,3 +12,4 @@ export * from './types/share-info';
 export * from './types/custom-permissions';
 export * from './types/fetch';
 export * from './fetch';
+export { ScreenOrientation } from './types/screen';

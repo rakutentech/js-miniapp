@@ -9,9 +9,9 @@ import {
 } from '../../js-miniapp-bridge/src';
 import {
   FetchResponse,
-  NativeFetchRequest,
   FetchRequestInit,
   DecodedFetchResponse,
+  ScreenOrientation,
 } from '../../js-miniapp-bridge/src';
 
 /**
@@ -51,6 +51,14 @@ interface MiniAppFeatures {
    * @returns Promise.
    */
   fetch(url: string, opts?: FetchRequestInit): Promise<FetchResponse>;
+
+  /**
+   * Swap and lock the screen orientation.
+   * There is no guarantee that all hostapps and devices allow the force screen change so MiniApp should not rely on this.
+   * @param screenOrientation The action that miniapp wants to request on device.
+   * @returns The Promise of screen action state from injected side.
+   */
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string>;
 }
 
 /**
@@ -177,7 +185,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getPlatform(): string {
     let platform = 'Unknown';
     try {
-      platform = (window as any).MiniAppBridge.platform;
+      platform = this.bridge.platform;
     } catch (e) {}
     return platform;
   }
@@ -186,5 +194,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return this.bridge
       .fetch(new InternalFetchRequest(url, opts))
       .then(res => new DecodedFetchResponse(res));
+  }
+
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string> {
+    return this.bridge.setScreenOrientation(screenOrientation);
   }
 }
