@@ -185,24 +185,6 @@ miniApp.user.getProfilePhoto()
 	});
 ```
 
-### 6. Set screen orientation
-
-It is possible to change and lock device screen orientation.
-However, there is no guarantee that all hostapps and device OS allow the force screen change so MiniApp should not rely on this.
-
-The support screen change cases are defined as [ScreenOrientation](../js-miniapp-bridge/src/types/screen.ts).
-After finish locking, the miniapp can release the lock and grant back the normal orientation controller to device. Please use ```ScreenOrientation.LOCK_RELEASE```
-
-```javascript
-miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE) // or LOCK_PORTRAIT, LOCK_RELEASE.
-  .then((success) => {
-    console.log(success);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-```
-
 ## Advanced Usage
 
 ### Check Android/iOS device
