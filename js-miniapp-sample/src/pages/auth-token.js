@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import MiniApp from 'js-miniapp-sdk';
+import { displayDate } from '../js_sdk';
 
 import {
   Button,
@@ -150,7 +151,7 @@ function AuthToken() {
           )}
           {state.response && (
             <Typography variant="body1" className={classes.success}>
-              Valid until: {state.response.validUntil}
+              Valid until: {displayDate(state.response.validUntil)}
             </Typography>
           )}
         </FormGroup>
