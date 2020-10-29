@@ -96,7 +96,8 @@ function AuthToken() {
   });
 
   function requestToken() {
-    MiniApp.user.getAccessToken()
+    MiniApp.user
+      .getAccessToken()
       .then((response) => {
         dispatch({ type: 'FETCH_SUCCESS', tokenData: response });
       })

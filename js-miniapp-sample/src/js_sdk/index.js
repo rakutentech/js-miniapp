@@ -5,6 +5,6 @@ export const isMobile = () => {
   return parser.getPlatform().type === 'mobile';
 };
 
-export const displayDate = (time) => {
+export const displayDate = (time: number) => {
   return new Date(time).toLocaleDateString(`ja-JP`);
 };
