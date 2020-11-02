@@ -8,7 +8,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   ScreenOrientation,
-  TokenData,
+  AccessTokenData,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 
@@ -229,7 +229,7 @@ describe('getProfilePhoto', () => {
 });
 
 describe('getAccessToken', () => {
-  it('should retrieve TokenData from the MiniAppBridge when request is successful', () => {
+  it('should retrieve AccessTokenData from the MiniAppBridge when request is successful', () => {
     const response = {
       token: 'test_token',
       validUntil: 0,

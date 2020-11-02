@@ -1,5 +1,5 @@
 /** Token data type. */
-export interface TokenData {
+export interface AccessTokenData {
   token: string;
   validUntil: number;
 }
