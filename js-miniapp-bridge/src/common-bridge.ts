@@ -13,7 +13,7 @@ import {
 } from './types/custom-permissions';
 import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
-import { AccessTokenData } from './types/token-data';
+import { NativeTokenData, AccessTokenData } from './types/token-data';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -272,7 +272,10 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getAccessToken',
         null,
-        tokenData => resolve(JSON.parse(tokenData) as AccessTokenData),
+        tokenData => {
+          const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
+          resolve(new AccessTokenData(nativeTokenData));
+        },
         error => reject(error)
       );
     });
