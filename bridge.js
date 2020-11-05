@@ -2,6 +2,7 @@
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
+var token_data_1 = require("./types/token-data");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
@@ -160,6 +161,18 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Get access token from native hostapp.
+     */
+    MiniAppBridge.prototype.getAccessToken = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getAccessToken', null, function (tokenData) {
+                var nativeTokenData = JSON.parse(tokenData);
+                resolve(new token_data_1.AccessTokenData(nativeTokenData));
+            }, function (error) { return reject(error); });
+        });
+    };
+    /**
      * This function does not return anything back on success.
      * @param {screenAction} The screen state that miniapp wants to set on device.
      */
@@ -186,7 +199,7 @@ function removeFromMessageQueue(queueObj) {
     }
 }
 
-},{}],2:[function(require,module,exports){
+},{"./types/token-data":4}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -242,5 +255,18 @@ var Platform;
     Platform["ANDROID"] = "Android";
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
+
+},{}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/** Token data type. */
+var AccessTokenData = /** @class */ (function () {
+    function AccessTokenData(baseToken) {
+        this.token = baseToken.token;
+        this.validUntil = new Date(baseToken.validUntil);
+    }
+    return AccessTokenData;
+}());
+exports.AccessTokenData = AccessTokenData;
 
 },{}]},{},[2]);
