@@ -57,7 +57,7 @@ const FileUploader = () => {
 
   return (
     <Card className={classes.root}>
-      <CardContent className={[classes.content, classes.uploader]}>
+      <CardContent className={(classes.content, classes.uploader)}>
         <input type="file" onChange={setFile} data-testid="file-input" />
       </CardContent>
       <CardContent className={classes.content}>
