@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const FileUpload = () => {
+const FileUploader = () => {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
 
@@ -58,10 +58,10 @@ const FileUpload = () => {
   return (
     <Card className={classes.root}>
       <CardContent className={[classes.content, classes.uploader]}>
-        <input type="file" onChange={setFile} />
+        <input type="file" onChange={setFile} data-testid="file-input" />
       </CardContent>
       <CardContent className={classes.content}>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} data-testid="file-table">
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -94,4 +94,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default FileUploader;

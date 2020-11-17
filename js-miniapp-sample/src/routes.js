@@ -28,7 +28,7 @@ import WindowActions from './pages/window-actions';
 import Media from './pages/media';
 import Share from './pages/share';
 import Ads from './pages/ads';
-import FileUpload from './pages/file-upload';
+import FileUploader from './pages/file-upload';
 
 const homeItem = [
   {
@@ -116,7 +116,7 @@ const appItems = [
     icon: <AttachFileIcon />,
     label: 'File Upload',
     navLink: '/file_upload',
-    component: FileUpload,
+    component: FileUploader,
   },
 ];
 const navItems: Object[] = homeItem.concat(
