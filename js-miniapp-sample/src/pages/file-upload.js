@@ -55,6 +55,10 @@ const FileUploader = () => {
     setRows(rows.filter((item) => item.name !== name));
   };
 
+  const numberCommaFormatter = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   return (
     <Card className={classes.root}>
       <CardContent className={(classes.content, classes.uploader)}>
@@ -78,7 +82,9 @@ const FileUploader = () => {
                     {row.name}
                   </TableCell>
                   <TableCell align="left">{row.type}</TableCell>
-                  <TableCell align="right">{row.size}</TableCell>
+                  <TableCell align="right">
+                    {numberCommaFormatter(row.size)}
+                  </TableCell>
                   <TableCell align="right">
                     <IconButton onClick={() => removeFile(row.name)}>
                       <DeleteIcon />
