@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 ### In Progress (2020-XX-XX)
-- **Feature:** Added `rakuten.miniapp.device.location` custom permission.
+- **Feature:** Added `rakuten.miniapp.device.LOCATION` custom permission.
 
 ### 1.5.0 (2020-11-13)
 

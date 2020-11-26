@@ -3,7 +3,9 @@ import {
   Reward,
   DevicePermission,
   CustomPermission,
+  CustomPermissionName,
   CustomPermissionResult,
+  CustomPermissionStatus,
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
@@ -146,7 +148,22 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   requestLocationPermission(): Promise<string> {
-    return this.requestPermission(DevicePermission.LOCATION);
+    const locationPermission = [
+      {
+        name: CustomPermissionName.LOCATION,
+        description: 'We would like to display the location of your device.',
+      },
+    ];
+
+    return this.requestCustomPermissions(locationPermission)
+      .then(permission =>
+        permission.find(
+          result => result.status === CustomPermissionStatus.ALLOWED
+        )
+      )
+      .then(hasPermission =>
+        hasPermission ? this.requestPermission(DevicePermission.LOCATION) : null
+      );
   }
 
   requestCustomPermissions(
