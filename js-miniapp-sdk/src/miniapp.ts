@@ -147,11 +147,11 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return this.bridge.getUniqueId();
   }
 
-  requestLocationPermission(): Promise<string> {
+  requestLocationPermission(permissionDescription?: string): Promise<string> {
     const locationPermission = [
       {
         name: CustomPermissionName.LOCATION,
-        description: 'We would like to display the location of your device.',
+        description: permissionDescription,
       },
     ];
 

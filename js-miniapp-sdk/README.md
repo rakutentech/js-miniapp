@@ -80,7 +80,7 @@ Simply call available permission request methods from `miniApp`.
 ```javascript
 // Location Permission
 import miniApp from 'js-miniapp-sdk';
-miniApp.requestLocationPermission()
+miniApp.requestLocationPermission('This description will be shown to the user.')
 	.then(success => {
 		console.log(success); // Allowed.
 	}).catch(error => {

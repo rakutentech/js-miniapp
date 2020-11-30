@@ -1,7 +1,8 @@
 ## CHANGELOG
 
 ### In Progress (2020-XX-XX)
-- **Feature:** Added `CustomPermissionName.LOCATION`. From now `requestLocationPermission` will request both custom and device permission respectively.
+- **Feature:** Added `CustomPermissionName.LOCATION`.
+- **Change:** Updated `requestLocationPermission()`` to `requestLocationPermission(description?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively.
 
 ### 1.5.0 (2020-11-13)
 
