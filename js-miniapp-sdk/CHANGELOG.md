@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 ### In Progress (2020-XX-XX)
-- **Feature:** Added `rakuten.miniapp.device.LOCATION` custom permission.
+- **Feature:** Added `CustomPermissionName.LOCATION`. From now `requestLocationPermission` will request both custom and device permission respectively.
 
 ### 1.5.0 (2020-11-13)
 

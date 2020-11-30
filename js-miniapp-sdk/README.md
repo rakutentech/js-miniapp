@@ -70,7 +70,7 @@ Note that there are two types of permissions:
 
 | Permission | Type | Method | Description |
 | --- | --- | --- | --- |
-| LOCATION | Device | `requestLocationPermission()` | The current location of the device.<br>Data position can be accessible via geolocation request (`navigator.geolocation`). |
+| LOCATION | Device | `requestLocationPermission()` | The current location permission of the device.<br>Data position can be accessible via geolocation request (`navigator.geolocation`). |
 | User Data | Custom | `requestCustomPermission()` | Custom permissions for User Data. Currently supported types are `CustomPermissionName.USER_NAME`, `CustomPermissionName.PROFILE_PHOTO`, and `CustomPermissionName.CONTACT_LIST`. These permisions should be requested before you attempt to access the User's data. |
 
 #### Usage example
@@ -86,6 +86,24 @@ miniApp.requestLocationPermission()
 	}).catch(error => {
 		console.error(error); // Permission is not granted due to many circumstances.
     });
+```
+
+```javascript
+// Location custom permission
+import miniApp, { CustomPermissionResult, CustomPermissionName} from 'js-miniapp-sdk';
+miniApp.requestCustomPermissions([
+    {name: CustomPermissionName.LOCATION, description: 'This text will be shown to the user.'},
+]).then((result) => {
+    const allowed = result
+        .filter(permission => permission.status === CustomPermissionResult.ALLOWED)
+        .map(permission => permisssion.name);
+
+    if (allowed.indexOf(CustomPermissionName.LOCATION) > -1) {
+        // Access and use the location data
+    }
+}).catch(error => {
+    console.error(error); // An error occured
+});
 ```
 
 ```javascript
