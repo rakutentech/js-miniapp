@@ -19,7 +19,7 @@ interface MiniAppFeatures {
   getUniqueId(): Promise<string>;
 
   /** @returns The Promise of permission result of mini app from injected side. */
-  requestLocationPermission(): Promise<string>;
+  requestLocationPermission(permissionDescription: string): Promise<string>;
 
   /**
    *
@@ -147,7 +147,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return this.bridge.getUniqueId();
   }
 
-  requestLocationPermission(permissionDescription?: string): Promise<string> {
+  requestLocationPermission(permissionDescription = ''): Promise<string> {
     const locationPermission = [
       {
         name: CustomPermissionName.LOCATION,
