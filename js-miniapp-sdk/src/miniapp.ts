@@ -18,8 +18,11 @@ interface MiniAppFeatures {
   /** @returns The Promise of provided id of mini app from injected side. */
   getUniqueId(): Promise<string>;
 
-  /** @returns The Promise of permission result of mini app from injected side. */
-  requestLocationPermission(permissionDescription: string): Promise<string>;
+  /**
+   * @param Description of location permission.
+   * @returns The Promise of permission result of mini app from injected side.
+   */
+  requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
    *
