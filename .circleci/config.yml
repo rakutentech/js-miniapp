@@ -23,10 +23,54 @@ commands:
               echo "Nothing to commit"
             fi
 
-jobs: # a collection of steps
-  build-sdk: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/mini-js-sdk # directory where steps will run
-    docker: # run the steps with Docker
+jobs: 
+  build-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Test
+          command: yarn bridge test
+      - run:
+          name: Lint
+          command: yarn bridge lint
+      - run:
+          name: Compile
+          command: yarn bridge compile
+      - persist_to_workspace:
+          root: ~/mini-js-bridge
+          paths:
+            - js-miniapp-bridge/build/
+
+  export-bridge:
+    working_directory: ~/mini-js-bridge
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - export-js-bridge:
+          platform: ios
+      - export-js-bridge:
+          platform: android
+
+  build-sdk:
+    working_directory: ~/mini-js-sdk
+    docker:
       - image: circleci/node:10.16.3
     steps:
       - checkout
@@ -80,84 +124,6 @@ jobs: # a collection of steps
             - js-miniapp-sdk/build/
             - js-miniapp-sdk/publishableDocs/
 
-  build-bridge:
-    working_directory: ~/mini-js-bridge
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies w/ Yarn
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Test
-          command: yarn bridge test
-      - run:
-          name: Lint
-          command: yarn bridge lint
-      - run:
-          name: Compile
-          command: yarn bridge compile
-      - store_artifacts:
-          path: js-miniapp-sample/build
-          prefix: build
-      - persist_to_workspace:
-          root: ~/mini-js-bridge
-          paths:
-            - js-miniapp-bridge/build/
-
-  export-bridge:
-    working_directory: ~/mini-js-bridge
-    docker:
-      - image: circleci/node:10.16.3
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./
-      - export-js-bridge:
-          platform: ios
-      - export-js-bridge:
-          platform: android
-
-  build-sample: # builds  & tests the sample app against latest sdk build.
-    working_directory: ~/js-miniapp-sample
-    docker:
-      - image: circleci/node:12.16.2
-      # TODO get the sdk build from saved workspace
-    steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies w/ Yarn
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run: #checks for formatting
-          name: check
-          command: |
-            yarn sample prettify
-            yarn sample lint
-            yarn sample flow
-      - run:
-          name: test
-          command: yarn sample test -- --watchAll=false
-      - run:
-          name: build
-          command: yarn sample build
-
   publish-sdk:
     working_directory: ~/mini-js-sdk
     docker:
@@ -200,16 +166,70 @@ jobs: # a collection of steps
               ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
             fi
 
+  build-sample: # builds  & tests the sample app against latest sdk build.
+    working_directory: ~/js-miniapp-sample
+    docker:
+      - image: circleci/node:12.16.2
+      # TODO get the sdk build from saved workspace
+    environment:
+      PUBLIC_URL: .
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies w/ Yarn
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: #checks for formatting
+          name: check
+          command: |
+            yarn sample prettify
+            yarn sample lint
+            yarn sample flow
+      - run:
+          name: test
+          command: yarn sample test -- --watchAll=false
+      - run:
+          name: build
+          command: yarn sample build
+      - store_artifacts:
+          path: js-miniapp-sample/build
+          prefix: build
+
+  deploy-sample:
+    working_directory: ~/js-miniapp-sample
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Deploy Sample App to Github Pages
+          command: |
+            set -e
+            git checkout gh-pages
+            cp -r ./js-miniapp-sample/build/ ./sample
+            if [[ `git status sample --porcelain` ]]; then
+              git add sample
+              git config user.name "CI Publisher"
+              git config user.email "dev-opensource@mail.rakuten.com"
+              git commit -m "sample: Deploy JS Sample App [ci skip]"
+              git push origin gh-pages
+            else
+              echo "Nothing to commit"
+            fi
+
 workflows:
   version: 2
   build-and-release:
     jobs:
-      - build-sdk:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              only: /.*/
       - build-bridge
       - export-bridge:
           requires:
@@ -217,7 +237,12 @@ workflows:
           filters:
             branches:
               only: master
-      - build-sample
+      - build-sdk:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              only: /.*/
       - sdk-release-verification:
           type: approval
           requires:
@@ -235,3 +260,10 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+      - build-sample
+      - deploy-sample:
+          requires:
+           - build-sample
+          filters:
+            branches:
+              only: master
