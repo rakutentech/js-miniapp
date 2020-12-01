@@ -55,9 +55,9 @@ describe('requestPermission', () => {
   it('should delegate to requestPermission function when request any permission', () => {
     const spy = sinon.spy(miniApp, 'requestPermission' as any);
 
-    miniApp.requestLocationPermission();
-
-    return expect(spy.callCount).to.equal(0);
+    return miniApp
+      .requestLocationPermission()
+      .then(denied => expect(spy.callCount).to.equal(1));
   });
 
   it('should retrieve location permission result from the Mini App Bridge', () => {
