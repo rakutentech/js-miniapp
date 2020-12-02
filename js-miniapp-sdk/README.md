@@ -147,7 +147,7 @@ miniApp.loadRewardedAd(adUnitID)
 
 It is possible for the mini app user to share data with another App by showing the native content sharing chooser.
 
-The data format must match the [ShareInfoType](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/src/types/ShareInfoType.ts).
+The data format must match the [ShareInfoType](../js-miniapp-bridge/src/types/share-info.ts).
 
 ```javascript
 const info = { content: inputValue };
