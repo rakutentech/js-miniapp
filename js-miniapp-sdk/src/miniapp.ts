@@ -12,6 +12,9 @@ import {
 } from '../../js-miniapp-bridge/src';
 
 /* tslint:disable:no-any */
+function getBridge() {
+  return (window as any).MiniAppBridge as MiniAppBridge;
+}
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -121,15 +124,15 @@ export interface UserInfoProvider {
 /** @internal */
 class UserInfo implements UserInfoProvider {
   getUserName(): Promise<string> {
-    return (window as any).MiniAppBridge.getUserName();
+    return getBridge().getUserName();
   }
 
   getProfilePhoto(): Promise<string> {
-    return (window as any).MiniAppBridge.getProfilePhoto();
+    return getBridge().getProfilePhoto();
   }
 
   getAccessToken(): Promise<AccessTokenData> {
-    return (window as any).MiniAppBridge.getAccessToken();
+    return getBridge().getAccessToken();
   }
 }
 
@@ -137,11 +140,11 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
-    return (window as any).MiniAppBridge.requestPermission(permissionType);
+    return getBridge().requestPermission(permissionType);
   }
 
   getUniqueId(): Promise<string> {
-    return (window as any).MiniAppBridge.getUniqueId();
+    return getBridge().getUniqueId();
   }
 
   requestLocationPermission(permissionDescription = ''): Promise<string> {
@@ -166,42 +169,40 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
-    return (window as any).MiniAppBridge.requestCustomPermissions(
-      permissions
-    ).then(permissionResult => permissionResult.permissions);
+    return getBridge()
+      .requestCustomPermissions(permissions)
+      .then(permissionResult => permissionResult.permissions);
   }
 
   loadInterstitialAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.loadInterstitialAd(id);
+    return getBridge().loadInterstitialAd(id);
   }
 
   loadRewardedAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.loadRewardedAd(id);
+    return getBridge().loadRewardedAd(id);
   }
 
   showInterstitialAd(id: string): Promise<string> {
-    return (window as any).MiniAppBridge.showInterstitialAd(id);
+    return getBridge().showInterstitialAd(id);
   }
 
   showRewardedAd(id: string): Promise<Reward> {
-    return (window as any).MiniAppBridge.showRewardedAd(id);
+    return getBridge().showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return (window as any).MiniAppBridge.shareInfo(info);
+    return getBridge().shareInfo(info);
   }
 
   getPlatform(): string {
     let platform = 'Unknown';
     try {
-      platform = (window as any).MiniAppBridge.platform;
+      platform = getBridge().platform;
     } catch (e) {}
     return platform;
   }
 
   setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string> {
-    return (window as any).MiniAppBridge.setScreenOrientation(
-      screenOrientation
-    );
+    return getBridge().setScreenOrientation(screenOrientation);
   }
 }
