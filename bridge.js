@@ -150,7 +150,7 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating getProfilePhoto function to MiniAppBridge object.
-     * This function returns username from the user profile
+     * This function returns username from the user profile.
      * (provided the rakuten.miniapp.user.PROFILE_PHOTO is allowed by the user)
      * It returns error info if user had denied the custom permission
      */
@@ -158,6 +158,18 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getProfilePhoto', null, function (profilePhoto) { return resolve(profilePhoto); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating getContacts function to MiniAppBridge object.
+     * This function returns contact list from the user profile.
+     * (provided the rakuten.miniapp.user.CONTACT_LIST is allowed by the user)
+     * It returns error info if user had denied the custom permission
+     */
+    MiniAppBridge.prototype.getContacts = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getContacts', null, function (contacts) { return resolve(JSON.parse(contacts)); }, function (error) { return reject(error); });
         });
     };
     /**
