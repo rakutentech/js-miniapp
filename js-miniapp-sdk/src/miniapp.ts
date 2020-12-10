@@ -9,6 +9,7 @@ import {
   ShareInfoType,
   ScreenOrientation,
   AccessTokenData,
+  Contact,
 } from '../../js-miniapp-bridge/src';
 
 /* tslint:disable:no-any */
@@ -115,6 +116,9 @@ export interface UserInfoProvider {
    */
   getProfilePhoto(): Promise<string>;
 
+  /** @returns Contact list in the host app user profile. */
+  getContacts(): Promise<Contact[]>;
+
   /**
    * @returns Access token from native hostapp.
    */
@@ -129,6 +133,10 @@ class UserInfo implements UserInfoProvider {
 
   getProfilePhoto(): Promise<string> {
     return getBridge().getProfilePhoto();
+  }
+
+  getContacts(): Promise<Contact[]> {
+    return this.bridge.getContacts();
   }
 
   getAccessToken(): Promise<AccessTokenData> {
