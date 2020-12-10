@@ -136,7 +136,7 @@ class UserInfo implements UserInfoProvider {
   }
 
   getContacts(): Promise<Contact[]> {
-    return this.bridge.getContacts();
+    return getBridge().getContacts();
   }
 
   getAccessToken(): Promise<AccessTokenData> {
