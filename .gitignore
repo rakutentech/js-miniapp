@@ -47,3 +47,6 @@ yarn.lock
 #Exclude tsc generated files
 js/*.map
 js/ts.js
+
+# Jekyll
+/_site/
