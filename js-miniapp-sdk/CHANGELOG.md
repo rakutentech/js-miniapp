@@ -1,8 +1,8 @@
 ## CHANGELOG
 
-### In Progress (2020-XX-XX)
+### 1.6.0 (2020-12-18)
 - **Feature:** Added `CustomPermissionName.LOCATION`.
-- **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively.
+- **Change:** Updated `requestLocationPermission()` to `requestLocationPermission(permissionDescription?: string)`. From now `requestLocationPermission` will request both custom and device permission respectively. [See here](README.md#Request-Permissions).
 - **Feature:** Added support for requesting Contact list from Host app. [See here](README.md#5-Requesting-User-details).
 
 ### 1.5.0 (2020-11-13)
