@@ -18,8 +18,10 @@ window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
   requestCustomPermissions: sinon.stub(),
+  loadBannerAd: sinon.stub(),
   loadInterstitialAd: sinon.stub(),
   loadRewardedAd: sinon.stub(),
+  showBannerAd: sinon.stub(),
   showInterstitialAd: sinon.stub(),
   showRewardedAd: sinon.stub(),
   shareInfo: sinon.stub(),
@@ -93,6 +95,26 @@ describe('requestCustomPermissions', () => {
         status: CustomPermissionStatus.ALLOWED,
       },
     ]);
+  });
+});
+
+describe('showBannerAd', () => {
+  it('should retrieve appeared succcess response for banner ad from the Mini App Bridge', () => {
+    const response = 'appeared';
+
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    window.MiniAppBridge.showBannerAd.resolves(response);
+    return expect(miniApp.showBannerAd(adUnitId)).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the Mini App Bridge', () => {
+    const error = 'error';
+
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    window.MiniAppBridge.showBannerAd.resolves(error);
+    return expect(miniApp.showBannerAd(adUnitId)).to.eventually.equal(error);
   });
 });
 
@@ -172,6 +194,25 @@ describe('loadInterstitialAd', () => {
     return expect(miniApp.loadInterstitialAd(adUnitId)).to.eventually.equal(
       error
     );
+  });
+});
+
+describe('loadBannerAd', () => {
+  it('should retrieve the load banner ad result from the Mini App Bridge', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const response = 'success';
+
+    window.MiniAppBridge.loadBannerAd.resolves(response);
+    return expect(miniApp.loadBannerAd(adUnitId)).to.eventually.equal(response);
+  });
+  it('should retrive error response from the Mini App Bridge once loadBannerAd rejects with error', () => {
+    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
+
+    const error = 'error';
+
+    window.MiniAppBridge.loadBannerAd.resolves(error);
+    return expect(miniApp.loadBannerAd(adUnitId)).to.eventually.equal(error);
   });
 });
 

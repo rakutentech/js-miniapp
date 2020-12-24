@@ -193,6 +193,38 @@ export class MiniAppBridge {
   }
 
   /**
+   * Associating loadBannerAd function to MiniAppBridge object.
+   * This function preloads Banner ad before they are requested for display.
+   * Can be called multiple times to pre-load multiple ads.
+   * @param {string} id ad unit id of the Banner ad that needs to be loaded.
+   */
+  loadBannerAd(id: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'loadAd',
+        { adType: AdTypes.BANNER, adUnitId: id },
+        loadSuccess => resolve(loadSuccess),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating showBannerAd function to MiniAppBridge object.
+   * @param {string} id ad unit id of the Banner ad that will be shown.
+   */
+  showBannerAd(id: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'showAd',
+        { adType: AdTypes.BANNER, adUnitId: id },
+        showSuccess => resolve(showSuccess),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
    * Associating requestCustomPermissions function to MiniAppBridge object
    * @param [CustomPermissionType[] permissionTypes, Types of custom permissions that are requested
    * using an Array including the parameters eg. name, description.

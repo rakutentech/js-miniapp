@@ -128,16 +128,19 @@ miniApp.requestCustomPermissions([
 [Ad.loadRewardedAd](api/interfaces/ad.md#loadrewardedad), 
 [Ad.showInterstitialAd](api/interfaces/ad.md#showinterstitialad), 
 [Ad.showRewardedAd](api/interfaces/ad.md#showrewardedad),
-[Reward](api/interfaces/reward.md) 
+[Reward](api/interfaces/reward.md),
+[Ad.loadBannerAd](api/interfaces/ad.md#loadBannerAd),
+[Ad.showBannerAd](api/interfaces/ad.md#showBannerAd)
 
 Mini App SDK allows you to display ads upon requesting from a Mini App with an ad unit id.
 This requires you to first load an Ad by passing an ID. You can then display an Ad in the Ad Unit by passing the same ID which was used for loading.
 
-Note that typically you should load your Ads at some point earlier than you intend to use them, such as at App launch time. You can also pre-load multiple Ads by calling `MiniApp.loadInterstialAd` or `MiniApp.loadRewardedAd` multiple times.
+Note that typically you should load your Ads at some point earlier than you intend to use them, such as at App launch time. You can also pre-load multiple Ads by calling `MiniApp.loadInterstialAd`, `MiniApp.loadRewardedAd` or `MiniApp.loadBannerAd` multiple times.
 
-Currently two ad types are supported,
+Currently three ad types are supported,
 1. Interstitial
 2. Rewarded
+3. Banner
 
 ```javascript
 const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
@@ -157,6 +160,18 @@ const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
 miniApp.loadRewardedAd(adUnitID)
     .then(response => {
         miniApp.showRewardedAd(adUnitID)
+            .then(response => console.log(response) )
+            .catch( error => console.error(response) );
+    })
+    .catch( error => console.error(response) );
+```
+
+```javascript
+const adUnitID = 'xxx-xxx-xxxxxxxxxxxxx';
+
+miniApp.loadBannerAd(adUnitID)
+    .then(response => {
+        miniApp.showBannerAd(adUnitID)
             .then(response => console.log(response) )
             .catch( error => console.error(response) );
     })

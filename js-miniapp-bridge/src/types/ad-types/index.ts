@@ -3,6 +3,7 @@
  * These ad formats replicate formats supported by Google
  */
 export const enum AdTypes {
+  BANNER,
   INTERSTITIAL,
   REWARDED,
 }

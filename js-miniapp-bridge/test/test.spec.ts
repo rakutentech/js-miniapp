@@ -101,6 +101,18 @@ describe('showInterstitialAd', () => {
   });
 });
 
+describe('showBannerAd', () => {
+  it('will return the successfully shown status string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'appeared';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(bridge.showBannerAd('test_id')).to.eventually.deep.equal(
+      response
+    );
+  });
+});
+
 describe('requestCustomPermissions', () => {
   const requestPermissions = [
     { name: CustomPermissionName.USER_NAME, description: 'test_description' },

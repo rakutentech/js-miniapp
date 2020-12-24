@@ -72,6 +72,15 @@ interface MiniAppFeatures {
  */
 interface Ad {
   /**
+   * Loads the specified Banner Ad with Unit ID.
+   * Can be called multiple times to pre-load multiple ads.
+   * Promise is resolved when successfully loaded.
+   * @returns The Promise of load success response.
+   * Promise is rejected if failed to load.
+   */
+  loadBannerAd(id: string): Promise<string>;
+
+  /**
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
@@ -88,6 +97,14 @@ interface Ad {
    * Promise is rejected if failed to load.
    */
   loadRewardedAd(id: string): Promise<string>;
+
+  /**
+   * Shows the Banner Ad for the specified ID.
+   * Promise is resolved after the user closes the Ad.
+   * @returns The Promise of successfully appeared response.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadBannerAd.
+   */
+  showBannerAd(id: string): Promise<string>;
 
   /**
    * Shows the Interstitial Ad for the specified ID.
@@ -204,12 +221,20 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       .then(permissionResult => permissionResult.permissions);
   }
 
+  loadBannerAd(id: string): Promise<string> {
+    return getBridge().loadBannerAd(id);
+  }
+
   loadInterstitialAd(id: string): Promise<string> {
     return getBridge().loadInterstitialAd(id);
   }
 
   loadRewardedAd(id: string): Promise<string> {
     return getBridge().loadRewardedAd(id);
+  }
+
+  showBannerAd(id: string): Promise<string> {
+    return getBridge().showBannerAd(id);
   }
 
   showInterstitialAd(id: string): Promise<string> {
