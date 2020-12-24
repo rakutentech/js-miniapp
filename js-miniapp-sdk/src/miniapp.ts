@@ -100,7 +100,7 @@ interface Ad {
 
   /**
    * Shows the Banner Ad for the specified ID.
-   * Promise is resolved after the user closes the Ad.
+   * Promise is resolved after the banner ad is shown.
    * @returns The Promise of successfully appeared response.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadBannerAd.
    */
