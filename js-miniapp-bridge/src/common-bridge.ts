@@ -218,7 +218,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.BANNER, adUnitId: id },
-        showSuccess => resolve(showSuccess),
+        appearSuccess => resolve(appearSuccess),
         error => reject(error)
       );
     });
