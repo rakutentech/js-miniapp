@@ -99,11 +99,18 @@ function Ads() {
     dataFetchReducer,
     initialState
   );
+  const [bannerState, bannerDispatch] = useReducer(
+    dataFetchReducer,
+    initialState
+  );
   const [interstitialAdId, setInterstitialAdId] = useState(
     'ca-app-pub-3940256099942544/1033173712'
   );
   const [rewardAdId, setRewardAdId] = useState(
     'ca-app-pub-3940256099942544/5224354917'
+  );
+  const [bannerAdId, setBannerAdId] = useState(
+    'ca-app-pub-3940256099942544/6300978111'
   );
   const classes = useStyles();
 
@@ -113,6 +120,14 @@ function Ads() {
   };
   const handleInterstitialFailure = (error) => {
     interstitialDispatch({ type: 'FAILURE', error });
+    console.error(error);
+  };
+  const handleBannerSuccess = (loadSuccess) => {
+    bannerDispatch({ type: 'SUCCESS' });
+    console.log(loadSuccess);
+  };
+  const handleBannerFailure = (error) => {
+    bannerDispatch({ type: 'FAILURE', error });
     console.error(error);
   };
   const loadInterstitialAd = () => {
@@ -148,6 +163,19 @@ function Ads() {
         rewardDispatch({ type: 'SUCCESS', rewardItem: reward });
       })
       .catch(handleRewardFailure);
+  };
+
+  const loadBannerlAd = () => {
+    bannerDispatch({ type: 'LOADING' });
+    MiniApp.loadBannerAd(bannerAdId)
+      .then(handleBannerSuccess)
+      .catch(handleBannerFailure);
+  };
+  const displayBannerAd = () => {
+    bannerDispatch({ type: 'LOADING' });
+    MiniApp.showBannerAd(bannerAdId)
+      .then(handleBannerSuccess)
+      .catch(handleBannerFailure);
   };
 
   const renderLoading = () => (
@@ -245,6 +273,26 @@ function Ads() {
             text: 'Show Reward',
             disabled: rewardState.isLoading,
             onClick: displayRewardAd,
+          })}
+        </Paper>
+        <Paper className={classes.paper}>
+          {bannerState.isLoading && renderLoading()}
+          {bannerState.error && renderError(bannerState.error)}
+
+          {renderInput({
+            label: 'Banner Ad Id',
+            value: bannerAdId,
+            onChange: setBannerAdId,
+          })}
+          {renderButton({
+            text: 'Load Banner',
+            disabled: bannerState.isLoading,
+            onClick: loadBannerlAd,
+          })}
+          {renderButton({
+            text: 'Show Interstitial',
+            disabled: bannerState.isLoading,
+            onClick: displayBannerAd,
           })}
         </Paper>
       </GreyCard>
