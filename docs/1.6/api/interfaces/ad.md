@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [Ad](ad.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / Ad
 
 # Interface: Ad
 
@@ -23,91 +25,91 @@ A contract declaring the interaction mechanism between mini-apps and native host
 
 ## Methods
 
-###  loadInterstitialAd
+### loadInterstitialAd
 
-▸ **loadInterstitialAd**(`id`: string): *Promise‹string›*
+▸ **loadInterstitialAd**(`id`: string): Promise\<string>
 
-Defined in js-miniapp-sdk/src/miniapp.ts:81
+*Defined in [js-miniapp-sdk/src/miniapp.ts:82](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-sdk/src/miniapp.ts#L82)*
 
 Loads the specified Interstittial Ad Unit ID.
 Can be called multiple times to pre-load multiple ads.
 Promise is resolved when successfully loaded.
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `id` | string |
 
-**Returns:** *Promise‹string›*
+**Returns:** Promise\<string>
 
 The Promise of load success response.
 Promise is rejected if failed to load.
 
 ___
 
-###  loadRewardedAd
+### loadRewardedAd
 
-▸ **loadRewardedAd**(`id`: string): *Promise‹string›*
+▸ **loadRewardedAd**(`id`: string): Promise\<string>
 
-Defined in js-miniapp-sdk/src/miniapp.ts:90
+*Defined in [js-miniapp-sdk/src/miniapp.ts:91](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-sdk/src/miniapp.ts#L91)*
 
 Loads the specified Rewarded Ad Unit ID.
 Can be called multiple times to pre-load multiple ads.
 Promise is resolved when successfully loaded.
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `id` | string |
 
-**Returns:** *Promise‹string›*
+**Returns:** Promise\<string>
 
 The Promise of load success response.
 Promise is rejected if failed to load.
 
 ___
 
-###  showInterstitialAd
+### showInterstitialAd
 
-▸ **showInterstitialAd**(`id`: string): *Promise‹string›*
+▸ **showInterstitialAd**(`id`: string): Promise\<string>
 
-Defined in js-miniapp-sdk/src/miniapp.ts:98
+*Defined in [js-miniapp-sdk/src/miniapp.ts:99](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-sdk/src/miniapp.ts#L99)*
 
 Shows the Interstitial Ad for the specified ID.
 Promise is resolved after the user closes the Ad.
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `id` | string |
 
-**Returns:** *Promise‹string›*
+**Returns:** Promise\<string>
 
 The Promise of close success response.
 Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadInterstitialAd.
 
 ___
 
-###  showRewardedAd
+### showRewardedAd
 
-▸ **showRewardedAd**(`id`: string): *Promise‹[Reward](reward.md)›*
+▸ **showRewardedAd**(`id`: string): Promise\<[Reward](reward.md)>
 
-Defined in js-miniapp-sdk/src/miniapp.ts:107
+*Defined in [js-miniapp-sdk/src/miniapp.ts:108](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-sdk/src/miniapp.ts#L108)*
 
 Shows the Rewarded Ad for the specified ID.
 Promise is resolved with an object after the user closes the Ad. The object contains the reward earned by the user.
 Reward will be null if the user did not earn the reward.
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `id` | string |
 
-**Returns:** *Promise‹[Reward](reward.md)›*
+**Returns:** Promise\<[Reward](reward.md)>
 
 The Promise of Rewarded ad response result from injected side.
 Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.

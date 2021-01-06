@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [ShareInfoType](shareinfotype.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / ShareInfoType
 
 # Interface: ShareInfoType
 
@@ -16,8 +18,8 @@ Shared info type.
 
 ## Properties
 
-###  content
+### content
 
-• **content**: *string*
+•  **content**: string
 
-Defined in js-miniapp-bridge/src/types/share-info.ts:3
+*Defined in [js-miniapp-bridge/src/types/share-info.ts:3](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/share-info.ts#L3)*

@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [CustomPermissionName](custompermissionname.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / CustomPermissionName
 
 # Enumeration: CustomPermissionName
 
@@ -6,39 +8,39 @@
 
 ### Enumeration members
 
-* [CONTACT_LIST](custompermissionname.md#contact_list)
+* [CONTACT\_LIST](custompermissionname.md#contact_list)
 * [LOCATION](custompermissionname.md#location)
-* [PROFILE_PHOTO](custompermissionname.md#profile_photo)
-* [USER_NAME](custompermissionname.md#user_name)
+* [PROFILE\_PHOTO](custompermissionname.md#profile_photo)
+* [USER\_NAME](custompermissionname.md#user_name)
 
 ## Enumeration members
 
-###  CONTACT_LIST
+### CONTACT\_LIST
 
-• **CONTACT_LIST**: = "rakuten.miniapp.user.CONTACT_LIST"
+•  **CONTACT\_LIST**:  = "rakuten.miniapp.user.CONTACT\_LIST"
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:4
-
-___
-
-###  LOCATION
-
-• **LOCATION**: = "rakuten.miniapp.device.LOCATION"
-
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:5
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:4](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L4)*
 
 ___
 
-###  PROFILE_PHOTO
+### LOCATION
 
-• **PROFILE_PHOTO**: = "rakuten.miniapp.user.PROFILE_PHOTO"
+•  **LOCATION**:  = "rakuten.miniapp.device.LOCATION"
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:3
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:5](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L5)*
 
 ___
 
-###  USER_NAME
+### PROFILE\_PHOTO
 
-• **USER_NAME**: = "rakuten.miniapp.user.USER_NAME"
+•  **PROFILE\_PHOTO**:  = "rakuten.miniapp.user.PROFILE\_PHOTO"
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:2
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:3](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L3)*
+
+___
+
+### USER\_NAME
+
+•  **USER\_NAME**:  = "rakuten.miniapp.user.USER\_NAME"
+
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:2](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L2)*

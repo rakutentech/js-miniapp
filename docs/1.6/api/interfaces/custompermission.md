@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [CustomPermission](custompermission.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / CustomPermission
 
 # Interface: CustomPermission
 
@@ -15,16 +17,16 @@
 
 ## Properties
 
-###  description
+### description
 
-• **description**: *string*
+•  **description**: string
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:16
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:16](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L16)*
 
 ___
 
-###  name
+### name
 
-• **name**: *[CustomPermissionName](../enums/custompermissionname.md)*
+•  **name**: [CustomPermissionName](../enums/custompermissionname.md)
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:15
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:15](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L15)*

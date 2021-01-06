@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [Reward](reward.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / Reward
 
 # Interface: Reward
 
@@ -12,21 +14,21 @@ A contract declaring the reward response, consists of amount and type of the rew
 
 ### Properties
 
-* [amount](reward.md#optional-amount)
-* [type](reward.md#optional-type)
+* [amount](reward.md#amount)
+* [type](reward.md#type)
 
 ## Properties
 
-### `Optional` amount
+### amount
 
-• **amount**? : *number*
+• `Optional` **amount**: number
 
-Defined in js-miniapp-bridge/src/types/response-types/rewarded/index.ts:5
+*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L5)*
 
 ___
 
-### `Optional` type
+### type
 
-• **type**? : *string*
+• `Optional` **type**: string
 
-Defined in js-miniapp-bridge/src/types/response-types/rewarded/index.ts:6
+*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L6)*

@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [ScreenOrientation](screenorientation.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / ScreenOrientation
 
 # Enumeration: ScreenOrientation
 
@@ -8,30 +10,30 @@ Screen orientation with lock action type.
 
 ### Enumeration members
 
-* [LOCK_LANDSCAPE](screenorientation.md#lock_landscape)
-* [LOCK_PORTRAIT](screenorientation.md#lock_portrait)
-* [LOCK_RELEASE](screenorientation.md#lock_release)
+* [LOCK\_LANDSCAPE](screenorientation.md#lock_landscape)
+* [LOCK\_PORTRAIT](screenorientation.md#lock_portrait)
+* [LOCK\_RELEASE](screenorientation.md#lock_release)
 
 ## Enumeration members
 
-###  LOCK_LANDSCAPE
+### LOCK\_LANDSCAPE
 
-• **LOCK_LANDSCAPE**: = "rakuten.miniapp.screen.LOCK_LANDSCAPE"
+•  **LOCK\_LANDSCAPE**:  = "rakuten.miniapp.screen.LOCK\_LANDSCAPE"
 
-Defined in js-miniapp-bridge/src/types/screen.ts:8
-
-___
-
-###  LOCK_PORTRAIT
-
-• **LOCK_PORTRAIT**: = "rakuten.miniapp.screen.LOCK_PORTRAIT"
-
-Defined in js-miniapp-bridge/src/types/screen.ts:7
+*Defined in [js-miniapp-bridge/src/types/screen.ts:8](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/screen.ts#L8)*
 
 ___
 
-###  LOCK_RELEASE
+### LOCK\_PORTRAIT
 
-• **LOCK_RELEASE**: = "rakuten.miniapp.screen.LOCK_RELEASE"
+•  **LOCK\_PORTRAIT**:  = "rakuten.miniapp.screen.LOCK\_PORTRAIT"
 
-Defined in js-miniapp-bridge/src/types/screen.ts:9
+*Defined in [js-miniapp-bridge/src/types/screen.ts:7](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/screen.ts#L7)*
+
+___
+
+### LOCK\_RELEASE
+
+•  **LOCK\_RELEASE**:  = "rakuten.miniapp.screen.LOCK\_RELEASE"
+
+*Defined in [js-miniapp-bridge/src/types/screen.ts:9](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/screen.ts#L9)*

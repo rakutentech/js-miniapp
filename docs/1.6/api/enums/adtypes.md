@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [AdTypes](adtypes.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / AdTypes
 
 # Enumeration: AdTypes
 
@@ -14,16 +16,16 @@ These ad formats replicate formats supported by Google
 
 ## Enumeration members
 
-###  INTERSTITIAL
+### INTERSTITIAL
 
-• **INTERSTITIAL**:
+•  **INTERSTITIAL**: 
 
-Defined in js-miniapp-bridge/src/types/ad-types/index.ts:6
+*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/ad-types/index.ts#L6)*
 
 ___
 
-###  REWARDED
+### REWARDED
 
-• **REWARDED**:
+•  **REWARDED**: 
 
-Defined in js-miniapp-bridge/src/types/ad-types/index.ts:7
+*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:7](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/ad-types/index.ts#L7)*

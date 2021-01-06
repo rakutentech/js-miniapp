@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [Contact](contact.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / Contact
 
 # Interface: Contact
 
@@ -16,8 +18,8 @@ Contact type.
 
 ## Properties
 
-###  id
+### id
 
-• **id**: *string*
+•  **id**: string
 
-Defined in js-miniapp-bridge/src/types/contact.ts:3
+*Defined in [js-miniapp-bridge/src/types/contact.ts:3](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/contact.ts#L3)*

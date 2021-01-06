@@ -1,4 +1,6 @@
-[js-miniapp-sdk](README.md)
+**[js-miniapp-sdk](README.md)**
+
+> Globals
 
 # js-miniapp-sdk
 

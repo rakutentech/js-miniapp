@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [DevicePermission](devicepermission.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / DevicePermission
 
 # Enumeration: DevicePermission
 
@@ -12,8 +14,8 @@ Permission type resource.
 
 ## Enumeration members
 
-###  LOCATION
+### LOCATION
 
-• **LOCATION**: = "location"
+•  **LOCATION**:  = "location"
 
-Defined in js-miniapp-bridge/src/types/device-permission.ts:8
+*Defined in [js-miniapp-bridge/src/types/device-permission.ts:8](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/device-permission.ts#L8)*

@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [CustomPermissionStatus](custompermissionstatus.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / CustomPermissionStatus
 
 # Enumeration: CustomPermissionStatus
 
@@ -8,28 +10,28 @@
 
 * [ALLOWED](custompermissionstatus.md#allowed)
 * [DENIED](custompermissionstatus.md#denied)
-* [PERMISSION_NOT_AVAILABLE](custompermissionstatus.md#permission_not_available)
+* [PERMISSION\_NOT\_AVAILABLE](custompermissionstatus.md#permission_not_available)
 
 ## Enumeration members
 
-###  ALLOWED
+### ALLOWED
 
-• **ALLOWED**: = "ALLOWED"
+•  **ALLOWED**:  = "ALLOWED"
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:9
-
-___
-
-###  DENIED
-
-• **DENIED**: = "DENIED"
-
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:10
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:9](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L9)*
 
 ___
 
-###  PERMISSION_NOT_AVAILABLE
+### DENIED
 
-• **PERMISSION_NOT_AVAILABLE**: = "PERMISSION_NOT_AVAILABLE"
+•  **DENIED**:  = "DENIED"
 
-Defined in js-miniapp-bridge/src/types/custom-permissions.ts:11
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:10](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L10)*
+
+___
+
+### PERMISSION\_NOT\_AVAILABLE
+
+•  **PERMISSION\_NOT\_AVAILABLE**:  = "PERMISSION\_NOT\_AVAILABLE"
+
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:11](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/custom-permissions.ts#L11)*

@@ -1,4 +1,6 @@
-[js-miniapp-sdk](../README.md) › [AccessTokenData](accesstokendata.md)
+**[js-miniapp-sdk](../README.md)**
+
+> [Globals](../README.md) / AccessTokenData
 
 # Class: AccessTokenData
 
@@ -21,32 +23,32 @@ Token data type.
 
 ## Constructors
 
-###  constructor
+### constructor
 
-\+ **new AccessTokenData**(`baseToken`: NativeTokenData): *[AccessTokenData](accesstokendata.md)*
+\+ **new AccessTokenData**(`baseToken`: NativeTokenData): [AccessTokenData](accesstokendata.md)
 
-Defined in js-miniapp-bridge/src/types/token-data.ts:10
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:10](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/token-data.ts#L10)*
 
-**Parameters:**
+#### Parameters:
 
 Name | Type |
 ------ | ------ |
 `baseToken` | NativeTokenData |
 
-**Returns:** *[AccessTokenData](accesstokendata.md)*
+**Returns:** [AccessTokenData](accesstokendata.md)
 
 ## Properties
 
-###  token
+### token
 
-• **token**: *string*
+• `Readonly` **token**: string
 
-Defined in js-miniapp-bridge/src/types/token-data.ts:9
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:9](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/token-data.ts#L9)*
 
 ___
 
-###  validUntil
+### validUntil
 
-• **validUntil**: *Date*
+• `Readonly` **validUntil**: Date
 
-Defined in js-miniapp-bridge/src/types/token-data.ts:10
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:10](https://github.com/rakutentech/js-miniapp/blob/ac43cde/js-miniapp-bridge/src/types/token-data.ts#L10)*
