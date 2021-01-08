@@ -11,6 +11,12 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 
+const sandbox = sinon.createSandbox();
+beforeEach(() => {
+  sandbox.restore();
+  sandbox.reset();
+});
+
 const window: any = {};
 (global as any).window = window;
 
@@ -44,17 +50,20 @@ describe('getUniqueId', () => {
   });
 });
 
-describe('requestPermission', () => {
-  window.MiniAppBridge.requestCustomPermissions.resolves({
-    permissions: [
-      {
-        name: CustomPermissionName.LOCATION,
-        status: CustomPermissionStatus.ALLOWED,
-      },
-    ],
+describe('requestLocationPermission', () => {
+  beforeEach(() => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.ALLOWED,
+        },
+      ],
+    });
+    window.MiniAppBridge.requestPermission.resolves('Accept');
   });
 
-  it('should delegate to requestPermission function when request any permission', () => {
+  it('should delegate to requestPermission function when request location permission', () => {
     const spy = sinon.spy(miniApp, 'requestPermission' as any);
 
     return miniApp
@@ -67,6 +76,56 @@ describe('requestPermission', () => {
 
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
+    );
+  });
+
+  it('should request location custom permission', () => {
+    return miniApp.requestLocationPermission('test_description').then(() => {
+      sinon.assert.calledWith(window.MiniAppBridge.requestCustomPermissions, [
+        {
+          name: CustomPermissionName.LOCATION,
+          description: 'test_description',
+        },
+      ]);
+    });
+  });
+
+  it('should reject when user denies location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.DENIED,
+        },
+      ],
+    });
+
+    return expect(miniApp.requestLocationPermission('test_description')).to.be
+      .rejected;
+  });
+
+  it('should handle case where Android SDK does not support location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.PERMISSION_NOT_AVAILABLE,
+        },
+      ],
+    });
+
+    return expect(miniApp.requestLocationPermission()).to.eventually.equal(
+      'Accept'
+    );
+  });
+
+  it('should handle case where iOS SDK does not support location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.returns(
+      Promise.reject('invalidCustomPermissionsList: test description')
+    );
+
+    return expect(miniApp.requestLocationPermission()).to.eventually.equal(
+      'Accept'
     );
   });
 });
