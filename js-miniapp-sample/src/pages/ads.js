@@ -165,7 +165,7 @@ function Ads() {
       .catch(handleRewardFailure);
   };
 
-  const loadBannerlAd = () => {
+  const loadBannerAd = () => {
     bannerDispatch({ type: 'LOADING' });
     MiniApp.loadBannerAd(bannerAdId)
       .then(handleBannerSuccess)
@@ -287,7 +287,7 @@ function Ads() {
           {renderButton({
             text: 'Load Banner',
             disabled: bannerState.isLoading,
-            onClick: loadBannerlAd,
+            onClick: loadBannerAd,
           })}
           {renderButton({
             text: 'Show Banner',
