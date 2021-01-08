@@ -290,7 +290,7 @@ function Ads() {
             onClick: loadBannerlAd,
           })}
           {renderButton({
-            text: 'Show Interstitial',
+            text: 'Show Banner',
             disabled: bannerState.isLoading,
             onClick: displayBannerAd,
           })}
