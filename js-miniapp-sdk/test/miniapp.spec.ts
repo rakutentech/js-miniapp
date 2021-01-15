@@ -355,13 +355,17 @@ describe('sendMessage', () => {
     const response = '';
 
     window.MiniAppBridge.sendMessageToContact.resolves(response);
-    return expect(miniApp.chatService.sendMessageToContact(messageToContact)).to.eventually.equal(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
   });
 
   it('possible to retrieve undefined result from the MiniAppBridge when request is successful', () => {
     const response = undefined;
 
     window.MiniAppBridge.sendMessageToContact.resolves(response);
-    return expect(miniApp.chatService.sendMessageToContact(messageToContact)).to.eventually.equal(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
   });
 });
