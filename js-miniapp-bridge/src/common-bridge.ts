@@ -326,7 +326,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendMessageToContact',
         { message },
-        success => resolve(success),
+        messageId => resolve(messageId),
         error => reject(error)
       );
     });
