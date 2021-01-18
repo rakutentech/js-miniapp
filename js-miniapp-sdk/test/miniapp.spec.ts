@@ -255,7 +255,6 @@ describe('loadInterstitialAd', () => {
   });
 });
 
-
 describe('loadRewardedAd', () => {
   it('should retrieve the load result from the Mini App Bridge', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
