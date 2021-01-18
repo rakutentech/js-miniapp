@@ -73,15 +73,6 @@ interface MiniAppFeatures {
  */
 interface Ad {
   /**
-   * Loads the specified Banner Ad with Unit ID.
-   * Can be called multiple times to pre-load multiple ads.
-   * Promise is resolved when successfully loaded.
-   * @returns The Promise of load success response.
-   * Promise is rejected if failed to load.
-   */
-  loadBannerAd(id: string): Promise<string>;
-
-  /**
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
@@ -103,7 +94,7 @@ interface Ad {
    * Shows the Banner Ad for the specified ID.
    * Promise is resolved after the banner ad is shown.
    * @returns The Promise of successfully appeared response.
-   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadBannerAd.
+   * Promise is rejected if the Ad failed to display MiniApp.showBannerAd.
    */
   showBannerAd(id: string): Promise<string>;
 
@@ -204,22 +195,22 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     ];
 
     return this.requestCustomPermissions(locationPermission)
-      .then(permission =>
+      .then((permission) =>
         permission.find(
-          result =>
+          (result) =>
             result.status === CustomPermissionStatus.ALLOWED ||
             // Case where older Android SDK doesn't support the Location custom permission
             result.status === CustomPermissionStatus.PERMISSION_NOT_AVAILABLE
         )
       )
-      .catch(error =>
+      .catch((error) =>
         // Case where older iOS SDK doesn't support the Location custom permission
         typeof error === 'string' &&
         error.startsWith('invalidCustomPermissionsList')
           ? Promise.resolve(true)
           : Promise.reject(error)
       )
-      .then(hasPermission =>
+      .then((hasPermission) =>
         hasPermission
           ? this.requestPermission(DevicePermission.LOCATION)
           : Promise.reject('User denied location permission to this mini app.')
@@ -231,12 +222,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   ): Promise<CustomPermissionResult[]> {
     return getBridge()
       .requestCustomPermissions(permissions)
-      .then(permissionResult => permissionResult.permissions);
+      .then((permissionResult) => permissionResult.permissions);
   }
 
-  loadBannerAd(id: string): Promise<string> {
-    return getBridge().loadBannerAd(id);
-  }
 
   loadInterstitialAd(id: string): Promise<string> {
     return getBridge().loadInterstitialAd(id);

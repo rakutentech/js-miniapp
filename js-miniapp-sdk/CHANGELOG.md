@@ -2,7 +2,7 @@
 
 ### 1.7.0 (In PRogress)
 
-- **Feature:** Added support for requesting the load and display of Banner Ads in Host app. [See here](README.md#Show-Ads).
+- **Feature:** Added support for requesting the display of Banner Ads in Host app. [See here](README.md#Show-Ads).
 
 ### 1.6.1 (2021-01-06)
 

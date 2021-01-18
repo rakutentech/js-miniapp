@@ -95,47 +95,58 @@ function Ads() {
     dataFetchReducer,
     initialState
   );
+
   const [rewardState, rewardDispatch] = useReducer(
     dataFetchReducer,
     initialState
   );
+
   const [bannerState, bannerDispatch] = useReducer(
     dataFetchReducer,
     initialState
   );
+
   const [interstitialAdId, setInterstitialAdId] = useState(
     'ca-app-pub-3940256099942544/1033173712'
   );
+
   const [rewardAdId, setRewardAdId] = useState(
     'ca-app-pub-3940256099942544/5224354917'
   );
+
   const [bannerAdId, setBannerAdId] = useState(
     'ca-app-pub-3940256099942544/6300978111'
   );
+
   const classes = useStyles();
 
   const handleInterstitialSuccess = (loadSuccess) => {
     console.log(loadSuccess);
     interstitialDispatch({ type: 'SUCCESS' });
   };
+
   const handleInterstitialFailure = (error) => {
     interstitialDispatch({ type: 'FAILURE', error });
     console.error(error);
   };
+
   const handleBannerSuccess = (loadSuccess) => {
     bannerDispatch({ type: 'SUCCESS' });
     console.log(loadSuccess);
   };
+
   const handleBannerFailure = (error) => {
     bannerDispatch({ type: 'FAILURE', error });
     console.error(error);
   };
+
   const loadInterstitialAd = () => {
     interstitialDispatch({ type: 'LOADING' });
     MiniApp.loadInterstitialAd(interstitialAdId)
       .then(handleInterstitialSuccess)
       .catch(handleInterstitialFailure);
   };
+
   const displayInterstitialAd = () => {
     interstitialDispatch({ type: 'LOADING' });
     MiniApp.showInterstitialAd(interstitialAdId)
@@ -156,6 +167,7 @@ function Ads() {
       })
       .catch(handleRewardFailure);
   };
+
   const displayRewardAd = () => {
     rewardDispatch({ type: 'LOADING' });
     MiniApp.showRewardedAd(rewardAdId)
@@ -165,12 +177,6 @@ function Ads() {
       .catch(handleRewardFailure);
   };
 
-  const loadBannerAd = () => {
-    bannerDispatch({ type: 'LOADING' });
-    MiniApp.loadBannerAd(bannerAdId)
-      .then(handleBannerSuccess)
-      .catch(handleBannerFailure);
-  };
   const displayBannerAd = () => {
     bannerDispatch({ type: 'LOADING' });
     MiniApp.showBannerAd(bannerAdId)
@@ -258,7 +264,6 @@ function Ads() {
                 </Typography>
               </CardContent>
             )}
-
           {renderInput({
             label: 'Rewarded Ad Id',
             value: rewardAdId,
@@ -278,19 +283,13 @@ function Ads() {
         <Paper className={classes.paper}>
           {bannerState.isLoading && renderLoading()}
           {bannerState.error && renderError(bannerState.error)}
-
           {renderInput({
             label: 'Banner Ad Id',
             value: bannerAdId,
             onChange: setBannerAdId,
           })}
           {renderButton({
-            text: 'Load Banner',
-            disabled: bannerState.isLoading,
-            onClick: loadBannerAd,
-          })}
-          {renderButton({
-            text: 'Show Banner',
+            text: 'Show Banner Ad',
             disabled: bannerState.isLoading,
             onClick: displayBannerAd,
           })}

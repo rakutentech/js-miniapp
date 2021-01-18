@@ -24,7 +24,6 @@ window.MiniAppBridge = {
   getUniqueId: sinon.stub(),
   requestPermission: sinon.stub(),
   requestCustomPermissions: sinon.stub(),
-  loadBannerAd: sinon.stub(),
   loadInterstitialAd: sinon.stub(),
   loadRewardedAd: sinon.stub(),
   showBannerAd: sinon.stub(),
@@ -256,24 +255,6 @@ describe('loadInterstitialAd', () => {
   });
 });
 
-describe('loadBannerAd', () => {
-  it('should retrieve the load banner ad result from the Mini App Bridge', () => {
-    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
-
-    const response = 'success';
-
-    window.MiniAppBridge.loadBannerAd.resolves(response);
-    return expect(miniApp.loadBannerAd(adUnitId)).to.eventually.equal(response);
-  });
-  it('should retrive error response from the Mini App Bridge once loadBannerAd rejects with error', () => {
-    const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
-
-    const error = 'error';
-
-    window.MiniAppBridge.loadBannerAd.resolves(error);
-    return expect(miniApp.loadBannerAd(adUnitId)).to.eventually.equal(error);
-  });
-});
 
 describe('loadRewardedAd', () => {
   it('should retrieve the load result from the Mini App Bridge', () => {

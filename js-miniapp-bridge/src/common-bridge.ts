@@ -193,23 +193,6 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating loadBannerAd function to MiniAppBridge object.
-   * This function preloads Banner ad before they are requested for display.
-   * Can be called multiple times to pre-load multiple ads.
-   * @param {string} id ad unit id of the Banner ad that needs to be loaded.
-   */
-  loadBannerAd(id: string) {
-    return new Promise<string>((resolve, reject) => {
-      return this.executor.exec(
-        'loadAd',
-        { adType: AdTypes.BANNER, adUnitId: id },
-        loadSuccess => resolve(loadSuccess),
-        error => reject(error)
-      );
-    });
-  }
-
-  /**
    * Associating showBannerAd function to MiniAppBridge object.
    * @param {string} id ad unit id of the Banner ad that will be shown.
    */
