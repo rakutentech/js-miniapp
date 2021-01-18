@@ -325,7 +325,7 @@ export class MiniAppBridge {
     return new Promise<string | undefined>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContact',
-        { message },
+        { messageToContact: message },
         messageId => resolve(messageId),
         error => reject(error)
       );
