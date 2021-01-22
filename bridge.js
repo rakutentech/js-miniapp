@@ -219,6 +219,18 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('setScreenOrientation', { action: screenAction }, function (success) { return resolve(success); }, function (error) { return reject(error); });
         });
     };
+    /**
+     * @param message The message to send to contact.
+     * @returns Promise resolves with the Unique ID which was sent the message.
+     * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
+     * Promise rejects in the case that there was an error.
+     */
+    MiniAppBridge.prototype.sendMessageToContact = function (message) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (messageId) { return resolve(messageId); }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
