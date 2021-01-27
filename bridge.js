@@ -5,10 +5,10 @@ var common_bridge_1 = require("../common-bridge");
 var platform_1 = require("../types/platform");
 /* tslint:disable:no-any */
 var uniqueId = Math.random();
-var AndroidExcecutor = /** @class */ (function () {
-    function AndroidExcecutor() {
+var AndroidExecutor = /** @class */ (function () {
+    function AndroidExecutor() {
     }
-    AndroidExcecutor.prototype.exec = function (action, param, onSuccess, onError) {
+    AndroidExecutor.prototype.exec = function (action, param, onSuccess, onError) {
         var callback = {};
         callback.onSuccess = onSuccess;
         callback.onError = onError;
@@ -16,12 +16,12 @@ var AndroidExcecutor = /** @class */ (function () {
         common_bridge_1.mabMessageQueue.unshift(callback);
         window.MiniAppAndroid.postMessage(JSON.stringify({ action: action, param: param, id: callback.id }));
     };
-    AndroidExcecutor.prototype.getPlatform = function () {
+    AndroidExecutor.prototype.getPlatform = function () {
         return platform_1.Platform.ANDROID;
     };
-    return AndroidExcecutor;
+    return AndroidExecutor;
 }());
-window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExcecutor());
+window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExecutor());
 
 },{"../common-bridge":2,"../types/platform":3}],2:[function(require,module,exports){
 "use strict";
@@ -80,7 +80,7 @@ var MiniAppBridge = /** @class */ (function () {
     };
     /**
      * Associating requestPermission function to MiniAppBridge object.
-     * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
+     * @param {DevicePermission} permissionType Type of permission that is requested e.g. location
      */
     MiniAppBridge.prototype.requestPermission = function (permissionType) {
         var _this = this;
@@ -102,7 +102,7 @@ var MiniAppBridge = /** @class */ (function () {
      * Associating loadInterstitialAd function to MiniAppBridge object.
      * This function preloads interstitial ad before they are requested for display.
      * Can be called multiple times to pre-load multiple ads.
-     * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+     * @param {string} id ad unit id of the interstitial ad that needs to be loaded.
      */
     MiniAppBridge.prototype.loadInterstitialAd = function (id) {
         var _this = this;
@@ -235,9 +235,9 @@ var MiniAppBridge = /** @class */ (function () {
 }());
 exports.MiniAppBridge = MiniAppBridge;
 /**
- * Method to remove the callback object from the message queue after successfull/error communication
+ * Method to remove the callback object from the message queue after successful/error communication
  * with the native application
- * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ * @param  {[Object]} queueObj Queue Object that holds the references of callback information
  *
  * @internal
  */
