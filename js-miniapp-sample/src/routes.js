@@ -72,7 +72,7 @@ const appItems = [
   },
   {
     icon: <ChatIcon />,
-    label: 'Message to Chatbot',
+    label: 'Message',
     navLink: '/chatbot',
     component: TalkToChatBot,
   },

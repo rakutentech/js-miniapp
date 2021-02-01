@@ -9,15 +9,7 @@ const chatbotState = {
   bots: [
     {
       id: 1,
-      name: 'R-Chatbot',
-    },
-    {
-      id: 2,
-      name: 'M-Chatbot',
-    },
-    {
-      id: 3,
-      name: 'K-Chatbot',
+      name: 'Send a message to a single contact',
     },
   ],
 };
