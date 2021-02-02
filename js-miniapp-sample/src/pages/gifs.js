@@ -7,7 +7,11 @@ import GreyCard from '../components/GreyCard';
 const useStyles = makeStyles((theme) => ({
   grid: {
     position: 'relative',
-    top: '25%',
+    top: '28%',
+    paddingBottom: 15,
+  },
+  greyCard: {
+    marginTop: '1rem',
   },
   typography: {
     marginTop: '1rem',
@@ -39,12 +43,12 @@ function GIFComponent() {
       container
       direction="column"
       justify="flex-start"
-      alignItems="flex-start"
+      alignItems="center"
       className={classes.grid}
     >
       {images.map((it, i) => (
-        <Grid item key={i}>
-          <GreyCard height="auto">
+        <React.Fragment item key={i}>
+          <GreyCard height="auto" className={`${classes.greyCard}`}>
             <Typography className={`app-typography ${classes.typography}`}>
               {it.label}
             </Typography>
@@ -57,7 +61,7 @@ function GIFComponent() {
               />
             </CardContent>
           </GreyCard>
-        </Grid>
+        </React.Fragment>
       ))}
     </Grid>
   );
