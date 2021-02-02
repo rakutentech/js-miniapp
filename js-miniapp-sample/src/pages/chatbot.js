@@ -44,11 +44,11 @@ const useStyles = makeStyles((theme) => ({
 type ChatBotProps = {
   bots: Array<ChatBot>,
   sendMessageToContact: (
-    image: String,
-    text: String,
-    caption: String,
-    title: String,
-    action: String
+    image: string,
+    text: string,
+    caption: string,
+    title: string,
+    action: string
   ) => Promise<string>,
 };
 
@@ -57,7 +57,11 @@ const TalkToChatBot = (props: ChatBotProps) => {
   const chatbots = props.bots;
   const [chatbot, setChatbot] = useState({
     id: chatbots[0] !== undefined ? chatbots[0].id : -1,
-    message: '',
+    image: '',
+    text: '',
+    caption: '',
+    action: '',
+    title: '',
   });
   const [validation, setValidationState] = useState({
     error: false,
@@ -67,46 +71,19 @@ const TalkToChatBot = (props: ChatBotProps) => {
     show: false,
     response: '',
   });
+  //set default value
+  chatbot.image = '';
+  chatbot.caption = '';
+  chatbot.action = '';
+  chatbot.title = '';
   const validate = () => {
     if (
       chatbots.map((it) => it.id).findIndex((it) => it === chatbot.id) === -1
     ) {
       setValidationState({ error: true, message: 'select chatbot' });
       return false;
-    } else if (
-      //$FlowFixMe
-      chatbot.image === undefined ||
-      chatbot.image.trim().length === 0
-    ) {
-      setValidationState({ error: true, message: 'image cannot be empty' });
-      return false;
-    } else if (
-      //$FlowFixMe
-      chatbot.text === undefined ||
-      chatbot.text.trim().length === 0
-    ) {
+    } else if (chatbot.text === undefined || chatbot.text.trim().length === 0) {
       setValidationState({ error: true, message: 'text cannot be empty' });
-      return false;
-    } else if (
-      //$FlowFixMe
-      chatbot.caption === undefined ||
-      chatbot.caption.trim().length === 0
-    ) {
-      setValidationState({ error: true, message: 'caption cannot be empty' });
-      return false;
-    } else if (
-      //$FlowFixMe
-      chatbot.action === undefined ||
-      chatbot.action.trim().length === 0
-    ) {
-      setValidationState({ error: true, message: 'action cannot be empty' });
-      return false;
-    } else if (
-      //$FlowFixMe
-      chatbot.title === undefined ||
-      chatbot.title.trim().length === 0
-    ) {
-      setValidationState({ error: true, message: 'title cannot be empty' });
       return false;
     } else {
       setValidationState({ error: false, message: '' });
@@ -114,22 +91,16 @@ const TalkToChatBot = (props: ChatBotProps) => {
     return true;
   };
   const handleChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, id: event.target.value });
   };
   const talkToChatbot = () => {
     if (validate()) {
       props
         .sendMessageToContact(
-          //$FlowFixMe
           chatbot.image.trim(),
-          //$FlowFixMe
           chatbot.text.trim(),
-          //$FlowFixMe
           chatbot.caption.trim(),
-          //$FlowFixMe
           chatbot.action.trim(),
-          //$FlowFixMe
           chatbot.title.trim()
         )
         .then((messageId) =>
@@ -142,23 +113,18 @@ const TalkToChatBot = (props: ChatBotProps) => {
   };
 
   const onImageChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, image: event.target.value });
   };
   const onTextChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, text: event.target.value });
   };
   const onCaptionChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, caption: event.target.value });
   };
   const onActionChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, action: event.target.value });
   };
   const onTitleChange = (event) => {
-    //$FlowFixMe
     setChatbot({ ...chatbot, title: event.target.value });
   };
 
@@ -190,7 +156,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Image"
           className={classes.fields}
           onChange={onImageChange}
-          //$FlowFixMe
+          placeholder="Image url or Base64 string"
           value={chatbot.image}
         />
       </FormControl>
@@ -200,7 +166,6 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Text"
           className={classes.fields}
           onChange={onTextChange}
-          //$FlowFixMe
           value={chatbot.text}
           multiline
         />
@@ -211,7 +176,6 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Caption"
           className={classes.fields}
           onChange={onCaptionChange}
-          //$FlowFixMe
           value={chatbot.caption}
         />
       </FormControl>
@@ -221,7 +185,6 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Action"
           className={classes.fields}
           onChange={onActionChange}
-          //$FlowFixMe
           value={chatbot.action}
         />
       </FormControl>
@@ -231,7 +194,6 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Title"
           className={classes.fields}
           onChange={onTitleChange}
-          //$FlowFixMe
           value={chatbot.title}
         />
       </FormControl>

@@ -28,7 +28,7 @@ describe('chatbot', () => {
     userEvent.click(screen.getByTestId('send-message'));
     const validationBlk = screen.queryByTestId('validation-error');
     expect(validationBlk).toBeInTheDocument();
-    expect(validationBlk).toHaveTextContent('image cannot be empty');
+    expect(validationBlk).toHaveTextContent('text cannot be empty');
     expect(
       screen.queryByTestId('chatbot-response-dialog')
     ).not.toBeInTheDocument();
