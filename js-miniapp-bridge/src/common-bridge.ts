@@ -15,6 +15,7 @@ import { ShareInfoType } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
+import { MessageToContact } from './types/message-to-contact';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -115,7 +116,7 @@ export class MiniAppBridge {
 
   /**
    * Associating requestPermission function to MiniAppBridge object.
-   * @param {DevicePermission} permissionType Type of permission that is requested. For eg., location
+   * @param {DevicePermission} permissionType Type of permission that is requested e.g. location
    */
   requestPermission(permissionType: DevicePermission) {
     return new Promise<string>((resolve, reject) => {
@@ -147,7 +148,7 @@ export class MiniAppBridge {
    * Associating loadInterstitialAd function to MiniAppBridge object.
    * This function preloads interstitial ad before they are requested for display.
    * Can be called multiple times to pre-load multiple ads.
-   * @param {string} id ad unit id of the intertitial ad that needs to be loaded.
+   * @param {string} id ad unit id of the interstitial ad that needs to be loaded.
    */
   loadInterstitialAd(id: string) {
     return new Promise<string>((resolve, reject) => {
@@ -313,12 +314,29 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * @param message The message to send to contact.
+   * @returns Promise resolves with the Unique ID which was sent the message.
+   * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
+   * Promise rejects in the case that there was an error.
+   */
+  sendMessageToContact(message: MessageToContact) {
+    return new Promise<string | undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'sendMessageToContact',
+        { messageToContact: message },
+        messageId => resolve(messageId),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
- * Method to remove the callback object from the message queue after successfull/error communication
+ * Method to remove the callback object from the message queue after successful/error communication
  * with the native application
- * @param  {[Object]} queueObj Queue Object that holds the references of callback informations
+ * @param  {[Object]} queueObj Queue Object that holds the references of callback information
  *
  * @internal
  */
