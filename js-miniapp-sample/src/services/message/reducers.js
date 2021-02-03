@@ -15,11 +15,11 @@ const messageTypeState = {
 };
 
 export default (
-  state: MessageTypeState = messageTypeState,
+  state: MessageTypeState,
   action: SetMessageTypeAction
 ) => {
   if (action.type === SET_MESSAGE_TYPES) {
     return { ...state, messageTypes: action.payload };
   }
-  return state;
+  return messageTypeState;
 };
