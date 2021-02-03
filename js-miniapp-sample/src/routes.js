@@ -127,8 +127,8 @@ const appItems = [
     component: GifPage,
   },
 ];
-// $FlowFixMe
-const navItems = homeItem.concat(
+
+const navItems: Object[] = homeItem.concat(
   appItems.sort((a, b) => a.label.localeCompare(b.label))
 );
 
