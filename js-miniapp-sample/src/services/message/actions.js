@@ -1,11 +1,11 @@
-import { SET_CHATBOTS } from './types';
-import type { SetChatBotsAction } from './types';
+import { SET_MESSAGE_TYPES } from './types';
+import type { SetMessageTypeAction } from './types';
 import MiniApp from 'js-miniapp-sdk';
 import { MessageToContact } from 'js-miniapp-sdk';
 
-const getBotsList = (): SetChatBotsAction => {
+const getMessageTypeList = (): SetMessageTypeAction => {
   return {
-    type: SET_CHATBOTS,
+    type: SET_MESSAGE_TYPES,
     payload: [
       {
         id: 1,
@@ -34,4 +34,4 @@ const sendMessageToContact = (
   };
 };
 
-export { getBotsList, sendMessageToContact };
+export { getMessageTypeList, sendMessageToContact };

@@ -16,10 +16,10 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { sendMessageToContact } from '../services/chatbot/actions';
+import { sendMessageToContact } from '../services/message/actions';
 
-import { getBotsList } from '../services/chatbot/actions';
-import type { ChatBot } from '../services/chatbot/types';
+import { getMessageTypeList } from '../services/message/actions';
+import type { MessageType } from '../services/message/types';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -41,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type ChatBotProps = {
-  bots: Array<ChatBot>,
+type MessageTypeProps = {
+  messageTypes: Array<MessageType>,
   sendMessageToContact: (
     image: string,
     text: string,
@@ -52,11 +52,11 @@ type ChatBotProps = {
   ) => Promise<string>,
 };
 
-const TalkToChatBot = (props: ChatBotProps) => {
+const Message = (props: MessageTypeProps) => {
   const classes = useStyles();
-  const chatbots = props.bots;
-  const [chatbot, setChatbot] = useState({
-    id: chatbots[0] !== undefined ? chatbots[0].id : -1,
+  const messageTypes = props.messageTypes;
+  const [message, setMessage] = useState({
+    id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
     image: '',
     text: '',
     caption: '',
@@ -67,22 +67,18 @@ const TalkToChatBot = (props: ChatBotProps) => {
     error: false,
     message: '',
   });
-  const [chatbotMessage, setChatbotMessage] = useState({
+  const [messageResponse, setMessageResponse] = useState({
     show: false,
     response: '',
   });
-  //set default value
-  chatbot.image = '';
-  chatbot.caption = '';
-  chatbot.action = '';
-  chatbot.title = '';
   const validate = () => {
     if (
-      chatbots.map((it) => it.id).findIndex((it) => it === chatbot.id) === -1
+      messageTypes.map((it) => it.id).findIndex((it) => it === message.id) ===
+      -1
     ) {
-      setValidationState({ error: true, message: 'select chatbot' });
+      setValidationState({ error: true, message: 'select message' });
       return false;
-    } else if (chatbot.text === undefined || chatbot.text.trim().length === 0) {
+    } else if (message.text === undefined || message.text.trim().length === 0) {
       setValidationState({ error: true, message: 'text cannot be empty' });
       return false;
     } else {
@@ -91,20 +87,20 @@ const TalkToChatBot = (props: ChatBotProps) => {
     return true;
   };
   const handleChange = (event) => {
-    setChatbot({ ...chatbot, id: event.target.value });
+    setMessage({ ...message, id: event.target.value });
   };
   const talkToChatbot = () => {
     if (validate()) {
       props
         .sendMessageToContact(
-          chatbot.image.trim(),
-          chatbot.text.trim(),
-          chatbot.caption.trim(),
-          chatbot.action.trim(),
-          chatbot.title.trim()
+          message.image.trim() ?? '',
+          message.text.trim(),
+          message.caption.trim() ?? '',
+          message.action.trim() ?? '',
+          message.title.trim() ?? ''
         )
         .then((messageId) =>
-          setChatbotMessage({
+          setMessageResponse({
             show: true,
             response: 'Message Id: ' + messageId,
           })
@@ -113,23 +109,23 @@ const TalkToChatBot = (props: ChatBotProps) => {
   };
 
   const onImageChange = (event) => {
-    setChatbot({ ...chatbot, image: event.target.value });
+    setMessage({ ...message, image: event.target.value });
   };
   const onTextChange = (event) => {
-    setChatbot({ ...chatbot, text: event.target.value });
+    setMessage({ ...message, text: event.target.value });
   };
   const onCaptionChange = (event) => {
-    setChatbot({ ...chatbot, caption: event.target.value });
+    setMessage({ ...message, caption: event.target.value });
   };
   const onActionChange = (event) => {
-    setChatbot({ ...chatbot, action: event.target.value });
+    setMessage({ ...message, action: event.target.value });
   };
   const onTitleChange = (event) => {
-    setChatbot({ ...chatbot, title: event.target.value });
+    setMessage({ ...message, title: event.target.value });
   };
 
   const onChatbotClose = () => {
-    setChatbotMessage({ show: false, response: '' });
+    setMessageResponse({ show: false, response: '' });
   };
   return (
     <Fragment>
@@ -137,13 +133,13 @@ const TalkToChatBot = (props: ChatBotProps) => {
         <InputLabel id="chatbotLabel">Send Message Type</InputLabel>
         <Select
           labelId="chatbotLabel"
-          id="chatbot"
+          id="message"
           placeholder="Select Chatbot"
-          value={chatbot.id}
+          value={message.id}
           className={classes.fields}
           onChange={handleChange}
         >
-          {chatbots.map((c) => (
+          {messageTypes.map((c) => (
             <MenuItem key={c.id} value={c.id}>
               {c.name}
             </MenuItem>
@@ -157,7 +153,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           className={classes.fields}
           onChange={onImageChange}
           placeholder="Image url or Base64 string"
-          value={chatbot.image}
+          value={message.image}
         />
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -166,7 +162,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Text"
           className={classes.fields}
           onChange={onTextChange}
-          value={chatbot.text}
+          value={message.text}
           multiline
         />
       </FormControl>
@@ -176,7 +172,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Caption"
           className={classes.fields}
           onChange={onCaptionChange}
-          value={chatbot.caption}
+          value={message.caption}
         />
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -185,7 +181,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Action"
           className={classes.fields}
           onChange={onActionChange}
-          value={chatbot.action}
+          value={message.action}
         />
       </FormControl>
       <FormControl className={classes.formControl}>
@@ -194,7 +190,7 @@ const TalkToChatBot = (props: ChatBotProps) => {
           label="Title"
           className={classes.fields}
           onChange={onTitleChange}
-          value={chatbot.title}
+          value={message.title}
         />
       </FormControl>
       {validation.error && (
@@ -214,14 +210,14 @@ const TalkToChatBot = (props: ChatBotProps) => {
         </Button>
       </CardActions>
       <Dialog
-        data-testid="chatbot-response-dialog"
-        open={chatbotMessage.show}
+        data-testid="message-response-dialog"
+        open={messageResponse.show}
         onClose={onChatbotClose}
         aria-labelledby="max-width-dialog-title"
       >
         <DialogTitle id="max-width-dialog-title">Response</DialogTitle>
         <DialogContent>
-          <DialogContentText>{chatbotMessage.response}</DialogContentText>
+          <DialogContentText>{messageResponse.response}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={onChatbotClose} color="primary">
@@ -236,15 +232,15 @@ const TalkToChatBot = (props: ChatBotProps) => {
 const mapStatetoProps = (state, props) => {
   return {
     ...props,
-    bots: state.chatbot.bots,
+    messageTypes: state.message.messageTypes,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBots: () => dispatch(getBotsList()),
+    getBots: () => dispatch(getMessageTypeList()),
     sendMessageToContact: (image, text, caption, title, action) =>
       dispatch(sendMessageToContact(image, text, caption, title, action)),
   };
 };
 
-export default connect(mapStatetoProps, mapDispatchToProps)(TalkToChatBot);
+export default connect(mapStatetoProps, mapDispatchToProps)(Message);

@@ -16,7 +16,7 @@ import AdsIcon from '@material-ui/icons/LocalPlay';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 import AuthToken from './pages/auth-token';
-import TalkToChatBot from './pages/chatbot';
+import TalkToChatBot from './pages/message';
 import FetchCredentials from './pages/fetch-credentials';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';

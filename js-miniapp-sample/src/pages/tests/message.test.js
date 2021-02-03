@@ -8,11 +8,11 @@ import {
   screen,
   wrapTheme,
 } from '../../tests/test-utils';
-import TalkToChatBot from '../chatbot';
+import Message from '../message';
 
 describe('chatbot', () => {
   beforeEach(() => {
-    renderWithRedux(wrapRouter(wrapTheme(<TalkToChatBot />)));
+    renderWithRedux(wrapRouter(wrapTheme(<Message />)));
   });
   test('should load chatbot', () => {
     expect(screen.getByText('Image')).toBeInTheDocument();
