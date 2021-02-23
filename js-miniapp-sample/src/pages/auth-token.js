@@ -8,12 +8,25 @@ import {
   FormGroup,
   Typography,
   CardContent,
+  ListItemText,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import {
+  CustomPermission,
+  CustomPermissionResult,
+  CustomPermissionName,
+  CustomPermissionStatus,
+  AccessTokenData
+} from 'js-miniapp-sdk';
+import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { requestCustomPermissions } from '../services/permissions/actions';
+import {
+  requestAccessToken
+} from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -50,12 +63,16 @@ const useStyles = makeStyles((theme) => ({
   rootFormGroup: {
     alignItems: 'center',
   },
+  red: {
+    color: red[500],
+  },
 }));
 
 const initialState = {
   isLoading: false,
   isError: false,
   response: null,
+  hasRequestedPermissions: false
 };
 
 const dataFetchReducer = (state, action) => {
@@ -66,6 +83,7 @@ const dataFetchReducer = (state, action) => {
         isLoading: true,
         isError: false,
         response: null,
+        hasRequestedPermissions: false
       };
     case 'FETCH_SUCCESS':
       return {
@@ -73,6 +91,7 @@ const dataFetchReducer = (state, action) => {
         isLoading: false,
         isError: false,
         response: action.tokenData,
+        hasRequestedPermissions: true
       };
     case 'FETCH_FAILURE':
       return {
@@ -86,7 +105,16 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
-function AuthToken() {
+type AuthTokenProps = {
+  permissions: CustomPermissionName[],
+  accessToken: AccessTokenData,
+  getAccessToken: () => Promise<string>,
+  requestPermissions: (
+    permissions: CustomPermission[]
+  ) => Promise<CustomPermissionResult[]>,
+};
+
+function AuthToken(props: AuthTokenProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
 
@@ -95,23 +123,48 @@ function AuthToken() {
     [classes.buttonSuccess]: state.response,
   });
 
-  function requestToken() {
-    MiniApp.user
-      .getAccessToken()
-      .then((response) => {
-        dispatch({ type: 'FETCH_SUCCESS', tokenData: response });
-      })
-      .catch((error) => {
-        console.error(error);
-        dispatch({ type: 'FETCH_FAILURE', errorMessage: error });
+  function requestAccessTokenPermission() {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.ACCESS_TOKEN,
+        description:
+          'We would like to get the Access token details to share with this Mini app',
+      }
+    ];
+
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) =>
+        permissions
+          .filter(
+            (permission) => permission.status === CustomPermissionStatus.ALLOWED
+          )
+          .map((permission) => permission.name)
+      )
+      .then((permissions) =>
+        Promise.all([
+          hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
+            ? props.getAccessToken()
+            : null,
+        ])
+      )
+      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
+        dispatch({ type: 'FETCH_FAILURE' });
       });
+  }
+
+  function hasPermission(permission, permissionList: ?(string[])) {
+    permissionList = permissionList || props.permissions || [];
+    return permissionList.indexOf(permission) > -1;
   }
 
   function handleClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
       dispatch({ type: 'FETCH_INIT' });
-      requestToken();
+      requestAccessTokenPermission();
     }
   }
 
@@ -135,6 +188,21 @@ function AuthToken() {
     );
   }
 
+  function AccessToken() {
+    
+    const hasDeniedPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.ACCESS_TOKEN);
+
+    return (
+      hasDeniedPermission ? (
+        <ListItemText
+          primary='Access Token permission is denied by the user.'
+          className={classes.red}
+        />) : null
+    )
+  }
+
   return (
     <GreyCard height="auto">
       <CardContent>
@@ -145,20 +213,40 @@ function AuthToken() {
               {state.errorMessage}
             </Typography>
           )}
-          {state.response && (
+          {props.accessToken && (
             <Typography variant="body1" className={classes.success}>
-              Token: {state.response.token}
+              Token: {props.accessToken.token}
             </Typography>
           )}
-          {state.response && (
+          {props.accessToken && (
             <Typography variant="body1" className={classes.success}>
-              Valid until: {displayDate(state.response.validUntil)}
+              Valid until: {displayDate(props.accessToken.validUntil)}
             </Typography>
           )}
+          <div>
+            {AccessToken()}
+          </div>
         </FormGroup>
       </CardContent>
     </GreyCard>
   );
 }
 
-export default AuthToken;
+
+const mapStateToProps = (state) => {
+  return {
+    permissions: state.permissions,
+    accessToken: state.user.accessToken,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAccessToken: () => dispatch(requestAccessToken()),
+    requestPermissions: (permissions) =>
+      dispatch(requestCustomPermissions(permissions)),
+  };
+};
+
+export { AuthToken };
+export default connect(mapStateToProps, mapDispatchToProps)(AuthToken);
