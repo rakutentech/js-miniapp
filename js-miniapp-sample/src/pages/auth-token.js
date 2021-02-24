@@ -69,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
 const initialState = {
   isLoading: false,
   isError: false,
-  response: null,
   hasRequestedPermissions: false,
 };
 
@@ -80,7 +79,6 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: true,
         isError: false,
-        response: null,
         hasRequestedPermissions: false,
       };
     case 'FETCH_SUCCESS':
@@ -88,7 +86,6 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        response: action.tokenData,
         hasRequestedPermissions: true,
       };
     case 'FETCH_FAILURE':
@@ -96,7 +93,6 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.errorMessage,
       };
     default:
       throw new Error();
@@ -118,7 +114,7 @@ function AuthToken(props: AuthTokenProps) {
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
-    [classes.buttonSuccess]: state.response,
+    [classes.buttonSuccess]: !state.isError,
   });
 
   function requestAccessTokenPermission() {
@@ -204,11 +200,6 @@ function AuthToken(props: AuthTokenProps) {
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
           {ButtonWrapper()}
-          {state.isError && (
-            <Typography variant="body1" className={classes.error}>
-              {state.errorMessage}
-            </Typography>
-          )}
           {props.accessToken && (
             <Typography variant="body1" className={classes.success}>
               Token: {props.accessToken.token}

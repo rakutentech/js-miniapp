@@ -94,10 +94,15 @@ const requestAccessToken = (): Function => {
   };
 };
 
-export { requestUserName, requestProfilePhoto, requestContactList, requestAccessToken };
+export {
+  requestUserName,
+  requestProfilePhoto,
+  requestContactList,
+  requestAccessToken,
+};
 export type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
-  AccessTokenSuccessAction
+  AccessTokenSuccessAction,
 };

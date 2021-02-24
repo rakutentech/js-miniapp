@@ -10,7 +10,7 @@ import {
   REQUEST_CONTACT_LIST_SUCCESS,
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_PROFILE_PHOTO_SUCCESS,
-  REQUEST_ACCESS_TOKEN_SUCCESS
+  REQUEST_ACCESS_TOKEN_SUCCESS,
 } from './types';
 
 const defaultUserName = null;
@@ -54,12 +54,12 @@ const contactListReducer = (
 
 const defaultAccessToken = null;
 const accessTokenReducer = (
-  state: ?(string) = defaultAccessToken,
+  state: ?string = defaultAccessToken,
   action: AccessTokenSuccessAction
-): ?(string) => {
+): ?string => {
   switch (action.type) {
     case REQUEST_ACCESS_TOKEN_SUCCESS:
-      return action.token;
+      return action.accessToken;
     default:
       return state;
   }
@@ -69,5 +69,5 @@ export default combineReducers({
   userName: userNameReducer,
   profilePhoto: profilePhotoReducer,
   contactList: contactListReducer,
-  accessToken: accessTokenReducer
+  accessToken: accessTokenReducer,
 });
