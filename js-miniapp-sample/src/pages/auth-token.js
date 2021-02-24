@@ -189,7 +189,7 @@ function AuthToken(props: AuthTokenProps) {
   }
 
   function AccessToken() {
-    
+
     const hasDeniedPermission =
       state.hasRequestedPermissions &&
       !hasPermission(CustomPermissionName.ACCESS_TOKEN);
