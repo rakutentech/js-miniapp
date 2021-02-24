@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import MiniApp from 'js-miniapp-sdk';
 import { displayDate } from '../js_sdk';
 
 import {
