@@ -16,7 +16,7 @@ import { Contact } from 'js-miniapp-sdk';
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };
 type ContactListSuccessAction = { type: String, contacts: Contact[] };
-type AccessTokenSuccessAction = { type: String, accessToken: AccessTokenData };
+type AccessTokenSuccessAction = { type: String, token: AccessTokenData };
 
 const requestUserName = (): Function => {
   return (dispatch) => {

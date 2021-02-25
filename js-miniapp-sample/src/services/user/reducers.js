@@ -59,7 +59,7 @@ const accessTokenReducer = (
 ): ?string => {
   switch (action.type) {
     case REQUEST_ACCESS_TOKEN_SUCCESS:
-      return action.accessToken;
+      return action.token;
     default:
       return state;
   }
