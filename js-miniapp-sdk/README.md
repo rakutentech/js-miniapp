@@ -239,7 +239,7 @@ miniApp.user.getContacts()
 #### Access Token
 
 **API:** [UserInfoProvider.getAccessToken](api/interfaces/userinfoprovider.md#getaccesstoken),
-[AccessTokenData](api/classes/accesstokendata.md)
+[AccessTokenData](api/classes/accesstokendata.md), 
 [CustomPermissionName.ACCESS_TOKEN](api/enums/custompermissionname.html#access_token)
 
 You can get an access token provided by the Host App. The Host App will be able to deny your request if your mini app ID is not approved to access the token.
