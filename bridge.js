@@ -173,7 +173,10 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * Get access token from native hostapp.
+     * Associating getAccessToken function to MiniAppBridge object.
+     * This function returns access token details from the host app.
+     * (provided the rakuten.miniapp.user.ACCESS_TOKEN is allowed by the user)
+     * It returns error info if user had denied the custom permission
      */
     MiniAppBridge.prototype.getAccessToken = function () {
         var _this = this;
