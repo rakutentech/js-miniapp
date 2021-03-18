@@ -318,13 +318,15 @@ function UserDetails(props: UserDetailsProps) {
                   primary={contact.id}
                   secondary={
                     <React.Fragment>
-                      <Typography>{contact.name !== "" ? (
-                        <span>{"Name: " + contact.name}</span>
-                      ) : null}
+                      <Typography>
+                        {contact.name !== '' ? (
+                          <span>{'Name: ' + contact.name}</span>
+                        ) : null}
                       </Typography>
-                      <Typography>{contact.email !== "" ? (
-                        <span>{"Email: " + contact.email}</span>
-                      ) : null}
+                      <Typography>
+                        {contact.email !== '' ? (
+                          <span>{'Email: ' + contact.email}</span>
+                        ) : null}
                       </Typography>
                     </React.Fragment>
                   }
