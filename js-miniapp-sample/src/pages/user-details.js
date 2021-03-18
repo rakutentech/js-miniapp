@@ -310,11 +310,25 @@ function UserDetails(props: UserDetailsProps) {
           )}
           {props.contactList &&
             props.contactList.map((contact) => (
-              <ListItem>
+              <ListItem divider>
                 <ListItemAvatar>
                   <Avatar className={classes.contactIcon} />
                 </ListItemAvatar>
-                <ListItemText primary={contact.id} />
+                <ListItemText
+                  primary={contact.id}
+                  secondary={
+                    <React.Fragment>
+                      <Typography>{contact.name !== "" ? (
+                        <span>{"Name: " + contact.name}</span>
+                      ) : null}
+                      </Typography>
+                      <Typography>{contact.email !== "" ? (
+                        <span>{"Email: " + contact.email}</span>
+                      ) : null}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
               </ListItem>
             ))}
         </List>
