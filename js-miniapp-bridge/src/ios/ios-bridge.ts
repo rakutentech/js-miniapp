@@ -4,6 +4,7 @@ import {
   Callback,
   mabMessageQueue,
 } from '../common-bridge';
+import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
 let uniqueId = Math.random();
@@ -15,7 +16,7 @@ const GeolocationPositionError = {
   TIMEOUT: 3,
 };
 
-class IOSExcecutor implements PlatformExecutor {
+class IOSExecutor implements PlatformExecutor {
   exec(action, param, onSuccess, onError) {
     const callback = {} as Callback;
     callback.onSuccess = onSuccess;
@@ -27,13 +28,17 @@ class IOSExcecutor implements PlatformExecutor {
       JSON.stringify({ action, param, id: callback.id })
     );
   }
+
+  getPlatform(): string {
+    return Platform.IOS;
+  }
 }
 
-const iOSExcecutor = new IOSExcecutor();
-(window as any).MiniAppBridge = new MiniAppBridge(iOSExcecutor);
+const iOSExecutor = new IOSExecutor();
+(window as any).MiniAppBridge = new MiniAppBridge(iOSExecutor);
 
 navigator.geolocation.getCurrentPosition = (success, error, options) => {
-  return iOSExcecutor.exec(
+  return iOSExecutor.exec(
     'getCurrentPosition',
     { locationOptions: options },
     value => {

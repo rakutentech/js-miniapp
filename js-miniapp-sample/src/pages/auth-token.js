@@ -1,20 +1,29 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer } from 'react';
+import { displayDate } from '../js_sdk';
 
 import {
   Button,
-  Switch,
   CircularProgress,
   FormGroup,
-  Grid,
   Typography,
   CardContent,
+  ListItemText,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
 import clsx from 'clsx';
+import {
+  CustomPermission,
+  CustomPermissionResult,
+  CustomPermissionName,
+  CustomPermissionStatus,
+  AccessTokenData,
+} from 'js-miniapp-sdk';
+import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { requestCustomPermissions } from '../services/permissions/actions';
+import { requestAccessToken } from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -51,12 +60,15 @@ const useStyles = makeStyles((theme) => ({
   rootFormGroup: {
     alignItems: 'center',
   },
+  red: {
+    color: red[500],
+  },
 }));
 
 const initialState = {
   isLoading: false,
   isError: false,
-  response: null,
+  hasRequestedPermissions: false,
 };
 
 const dataFetchReducer = (state, action) => {
@@ -66,14 +78,14 @@ const dataFetchReducer = (state, action) => {
         ...state,
         isLoading: true,
         isError: false,
-        response: null,
+        hasRequestedPermissions: false,
       };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        response: action.payload,
+        hasRequestedPermissions: true,
       };
     case 'FETCH_FAILURE':
       return {
@@ -86,58 +98,67 @@ const dataFetchReducer = (state, action) => {
   }
 };
 
-function AuthToken() {
+type AuthTokenProps = {
+  permissions: CustomPermissionName[],
+  accessToken: AccessTokenData,
+  getAccessToken: () => Promise<string>,
+  requestPermissions: (
+    permissions: CustomPermission[]
+  ) => Promise<CustomPermissionResult[]>,
+};
+
+function AuthToken(props: AuthTokenProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
-    [classes.buttonSuccess]: state.response,
+    [classes.buttonSuccess]: !state.isError,
   });
 
-  const [switchState, setSwitchState] = useState(true);
+  function requestAccessTokenPermission() {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.ACCESS_TOKEN,
+        description:
+          'We would like to get the Access token details to share with this Mini app',
+      },
+    ];
 
-  function requestToken() {
-    // Hardcoded API values to test
-    const API = switchState
-      ? 'http://www.mocky.io/v2/5e9406873100006c005e2d00'
-      : 'http://www.mocky.io/v2/5e9806e43500006a00c47d6f';
-    axios
-      .get(API)
-      .then((response) => {
-        dispatch({ type: 'FETCH_SUCCESS', payload: response.data });
-      })
-      .catch((error) => {
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) =>
+        permissions
+          .filter(
+            (permission) => permission.status === CustomPermissionStatus.ALLOWED
+          )
+          .map((permission) => permission.name)
+      )
+      .then((permissions) =>
+        Promise.all([
+          hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
+            ? props.getAccessToken()
+            : null,
+        ])
+      )
+      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
         dispatch({ type: 'FETCH_FAILURE' });
       });
+  }
+
+  function hasPermission(permission, permissionList: ?(string[])) {
+    permissionList = permissionList || props.permissions || [];
+    return permissionList.indexOf(permission) > -1;
   }
 
   function handleClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
       dispatch({ type: 'FETCH_INIT' });
-      requestToken();
+      requestAccessTokenPermission();
     }
-  }
-
-  function SwitchToggle() {
-    return (
-      <Typography component="div">
-        <Grid component="label" container alignItems="center" spacing={1}>
-          <Grid item>Success</Grid>
-          <Grid item>
-            <Switch
-              color="primary"
-              checked={switchState}
-              onChange={() => setSwitchState(!switchState)}
-              name="switchState"
-              data-testid="authSwitch"
-            />
-          </Grid>
-          <Grid item>Failure</Grid>
-        </Grid>
-      </Typography>
-    );
   }
 
   function ButtonWrapper() {
@@ -160,38 +181,55 @@ function AuthToken() {
     );
   }
 
+  function AccessToken() {
+    const hasDeniedPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.ACCESS_TOKEN);
+
+    return hasDeniedPermission ? (
+      <ListItemText
+        primary="Access Token permission is denied by the user."
+        className={classes.red}
+      />
+    ) : null;
+  }
+
   return (
     <GreyCard height="auto">
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
-          <Typography variant="body2" align="center">
-            Please note that we use a <strong>mocked API</strong> in this
-            example (
-            <a href="http://www.mocky.io/v2/5e9806e43500006a00c47d6f">
-              Success
-            </a>{' '}
-            &{' '}
-            <a href="http://www.mocky.io/v2/5e9406873100006c005e2d00">
-              Failure
-            </a>
-            )
-          </Typography>
-          {SwitchToggle()}
           {ButtonWrapper()}
-          {state.isError && (
-            <Typography variant="body1" className={classes.error}>
-              Error fetching the Token
-            </Typography>
-          )}
-          {state.response && (
+          {props.accessToken && (
             <Typography variant="body1" className={classes.success}>
-              {JSON.stringify(state.response.data)}
+              Token: {props.accessToken.token}
             </Typography>
           )}
+          {props.accessToken && (
+            <Typography variant="body1" className={classes.success}>
+              Valid until: {displayDate(props.accessToken.validUntil)}
+            </Typography>
+          )}
+          <div>{AccessToken()}</div>
         </FormGroup>
       </CardContent>
     </GreyCard>
   );
 }
 
-export default AuthToken;
+const mapStateToProps = (state) => {
+  return {
+    permissions: state.permissions,
+    accessToken: state.user.accessToken,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAccessToken: () => dispatch(requestAccessToken()),
+    requestPermissions: (permissions) =>
+      dispatch(requestCustomPermissions(permissions)),
+  };
+};
+
+export { AuthToken };
+export default connect(mapStateToProps, mapDispatchToProps)(AuthToken);

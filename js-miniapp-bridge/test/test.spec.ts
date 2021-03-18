@@ -1,11 +1,11 @@
-import {
-  AdTypes,
-  CustomPermissionName,
-  CustomPermissionStatus,
-} from 'js-miniapp-sdk';
-import * as Bridge from '../src/common-bridge';
 import { expect } from 'chai';
 import sinon, { mock } from 'sinon';
+
+import * as Bridge from '../src/common-bridge';
+import {
+  CustomPermissionName,
+  CustomPermissionStatus,
+} from '../src/types/custom-permissions';
 
 /* tslint:disable:no-any */
 const window: any = {};
@@ -14,7 +14,10 @@ const window: any = {};
 const sandbox = sinon.createSandbox();
 const mockExecutor = {
   exec: sinon.stub(),
+  getPlatform: sinon.stub(),
 };
+
+const handleError = error => {};
 
 beforeEach(() => {
   sandbox.restore();
@@ -72,24 +75,29 @@ describe('execErrorCallback', () => {
 });
 
 describe('showRewardedAd', () => {
-  it('will parse the RewardedAdResponse JSON response', () => {
+  it('will parse the Reward JSON response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(2, '{ "adType": 1 }');
+    mockExecutor.exec.callsArgWith(
+      2,
+      '{ "amount": 500, "type": "game bonus" }'
+    );
 
     return expect(bridge.showRewardedAd('test_id')).to.eventually.deep.equal({
-      adType: AdTypes.REWARDED,
+      amount: 500,
+      type: 'game bonus',
     });
   });
 });
 
 describe('showInterstitialAd', () => {
-  it('will parse the InterstitialAdResponse JSON response', () => {
+  it('will return the close status string response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(2, '{ "adType": 0 }');
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
 
     return expect(
       bridge.showInterstitialAd('test_id')
-    ).to.eventually.deep.equal({ adType: AdTypes.INTERSTITIAL });
+    ).to.eventually.deep.equal(response);
   });
 });
 
@@ -101,7 +109,7 @@ describe('requestCustomPermissions', () => {
   it('will call the platform executor', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.requestCustomPermissions(requestPermissions);
+    bridge.requestCustomPermissions(requestPermissions).catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, 'requestCustomPermissions');
   });
@@ -109,7 +117,7 @@ describe('requestCustomPermissions', () => {
   it('will attach the permissions to the `permissions` key', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.requestCustomPermissions(requestPermissions);
+    bridge.requestCustomPermissions(requestPermissions).catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, sinon.match.any, {
       permissions: requestPermissions,

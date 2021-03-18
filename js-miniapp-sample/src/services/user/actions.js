@@ -1,3 +1,5 @@
+import MiniApp, { AccessTokenData } from 'js-miniapp-sdk';
+
 import {
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_USER_NAME_FAILURE,
@@ -5,23 +7,26 @@ import {
   REQUEST_PROFILE_PHOTO_FAILURE,
   REQUEST_CONTACT_LIST_SUCCESS,
   REQUEST_CONTACT_LIST_FAILURE,
+  REQUEST_ACCESS_TOKEN_SUCCESS,
+  REQUEST_ACCESS_TOKEN_FAILURE,
 } from './types';
+
+import { Contact } from 'js-miniapp-sdk';
 
 type UserNameSuccessAction = { type: String, userName: string };
 type ProfilePhotoSuccessAction = { type: String, url: string };
-type ContactListSuccessAction = { type: String, contacts: string[] };
+type ContactListSuccessAction = { type: String, contacts: Contact[] };
+type AccessTokenSuccessAction = { type: String, token: AccessTokenData };
 
 const requestUserName = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const userName = 'Test User';
+    return MiniApp.user
+      .getUserName()
+      .then((userName) => {
         dispatch({
           type: REQUEST_USER_NAME_SUCCESS,
           userName,
         });
-
-        return Promise.resolve(userName);
       })
       .catch((_) => {
         dispatch({
@@ -33,15 +38,13 @@ const requestUserName = (): Function => {
 
 const requestProfilePhoto = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const url = 'https://cdn2.thecatapi.com/images/4da-GV7Z6.jpg';
+    return MiniApp.user
+      .getProfilePhoto()
+      .then((url) => {
         dispatch({
           type: REQUEST_PROFILE_PHOTO_SUCCESS,
           url,
         });
-
-        return Promise.resolve(url);
       })
       .catch((_) => {
         dispatch({
@@ -53,16 +56,9 @@ const requestProfilePhoto = (): Function => {
 
 const requestContactList = (): Function => {
   return (dispatch) => {
-    return Promise.resolve()
-      .then(() => {
-        const contacts = [
-          'Test Contact 1',
-          'Test Contact 2',
-          'Test Contact 3',
-          'Test Contact 4',
-          'Test Contact 5',
-          'Test Contact 6',
-        ];
+    return MiniApp.user
+      .getContacts()
+      .then((contacts) => {
         dispatch({
           type: REQUEST_CONTACT_LIST_SUCCESS,
           contacts,
@@ -78,9 +74,35 @@ const requestContactList = (): Function => {
   };
 };
 
-export { requestUserName, requestProfilePhoto, requestContactList };
+const requestAccessToken = (): Function => {
+  return (dispatch) => {
+    return MiniApp.user
+      .getAccessToken()
+      .then((token) => {
+        dispatch({
+          type: REQUEST_ACCESS_TOKEN_SUCCESS,
+          token,
+        });
+
+        return Promise.resolve(token);
+      })
+      .catch((_) => {
+        dispatch({
+          type: REQUEST_ACCESS_TOKEN_FAILURE,
+        });
+      });
+  };
+};
+
+export {
+  requestUserName,
+  requestProfilePhoto,
+  requestContactList,
+  requestAccessToken,
+};
 export type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
+  AccessTokenSuccessAction,
 };

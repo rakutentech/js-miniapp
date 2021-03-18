@@ -3,30 +3,49 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { AdTypes } from '../src/types/adTypes';
-import { InterstitialAdResponse } from '../src/types/responseTypes/interstitial';
-import { RewardedAdResponse } from '../src/types/responseTypes/rewarded';
-import { MiniApp } from '../src/miniapp';
-import { DevicePermission } from '../src/types/DevicePermission';
 import {
+  Reward,
   CustomPermissionName,
   CustomPermissionStatus,
-} from '../src/types/CustomPermission';
+  ScreenOrientation,
+  MessageToContact,
+} from '../../js-miniapp-bridge/src';
+import { MiniApp } from '../src/miniapp';
+
+const sandbox = sinon.createSandbox();
+beforeEach(() => {
+  sandbox.restore();
+  sandbox.reset();
+});
 
 const window: any = {};
 (global as any).window = window;
 
 window.MiniAppBridge = {
-  getUniqueId: sinon.stub(),
-  requestPermission: sinon.stub(),
-  requestCustomPermissions: sinon.stub(),
-  loadInterstitialAd: sinon.stub(),
-  loadRewardedAd: sinon.stub(),
-  showInterstitialAd: sinon.stub(),
-  showRewardedAd: sinon.stub(),
-  shareInfo: sinon.stub(),
+  getUniqueId: sandbox.stub(),
+  requestPermission: sandbox.stub(),
+  requestCustomPermissions: sandbox.stub(),
+  loadInterstitialAd: sandbox.stub(),
+  loadRewardedAd: sandbox.stub(),
+  showInterstitialAd: sandbox.stub(),
+  showRewardedAd: sandbox.stub(),
+  shareInfo: sandbox.stub(),
+  getPlatform: sandbox.stub(),
+  getUserName: sandbox.stub(),
+  getProfilePhoto: sandbox.stub(),
+  getContacts: sandbox.stub(),
+  getAccessToken: sandbox.stub(),
+  setScreenOrientation: sandbox.stub(),
+  sendMessageToContact: sandbox.stub(),
 };
 const miniApp = new MiniApp();
+const messageToContact: MessageToContact = {
+  text: 'test',
+  image: 'test',
+  caption: 'test',
+  title: 'test',
+  action: 'test',
+};
 
 describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
@@ -38,13 +57,25 @@ describe('getUniqueId', () => {
   });
 });
 
-describe('requestPermission', () => {
-  it('should delegate to requestPermission function when request any permission', () => {
+describe('requestLocationPermission', () => {
+  beforeEach(() => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.ALLOWED,
+        },
+      ],
+    });
+    window.MiniAppBridge.requestPermission.resolves('Accept');
+  });
+
+  it('should delegate to requestPermission function when request location permission', () => {
     const spy = sinon.spy(miniApp, 'requestPermission' as any);
 
-    miniApp.requestLocationPermission();
-
-    return expect(spy.callCount).to.equal(1);
+    return miniApp
+      .requestLocationPermission()
+      .then(denied => expect(spy.callCount).to.equal(1));
   });
 
   it('should retrieve location permission result from the Mini App Bridge', () => {
@@ -52,6 +83,56 @@ describe('requestPermission', () => {
 
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
       'Denied'
+    );
+  });
+
+  it('should request location custom permission', () => {
+    return miniApp.requestLocationPermission('test_description').then(() => {
+      sinon.assert.calledWith(window.MiniAppBridge.requestCustomPermissions, [
+        {
+          name: CustomPermissionName.LOCATION,
+          description: 'test_description',
+        },
+      ]);
+    });
+  });
+
+  it('should reject when user denies location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.DENIED,
+        },
+      ],
+    });
+
+    return expect(miniApp.requestLocationPermission('test_description')).to.be
+      .rejected;
+  });
+
+  it('should handle case where Android SDK does not support location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.resolves({
+      permissions: [
+        {
+          name: CustomPermissionName.LOCATION,
+          status: CustomPermissionStatus.PERMISSION_NOT_AVAILABLE,
+        },
+      ],
+    });
+
+    return expect(miniApp.requestLocationPermission()).to.eventually.equal(
+      'Accept'
+    );
+  });
+
+  it('should handle case where iOS SDK does not support location custom permission', () => {
+    window.MiniAppBridge.requestCustomPermissions.returns(
+      Promise.reject('invalidCustomPermissionsList: test description')
+    );
+
+    return expect(miniApp.requestLocationPermission()).to.eventually.equal(
+      'Accept'
     );
   });
 });
@@ -84,10 +165,8 @@ describe('requestCustomPermissions', () => {
 });
 
 describe('showInterstitialAd', () => {
-  it('should retrieve InterstitialAdResponse type of result from the Mini App Bridge', () => {
-    const response: InterstitialAdResponse = {
-      adType: AdTypes.INTERSTITIAL,
-    };
+  it('should retrieve close response from the Mini App Bridge', () => {
+    const response = 'closed';
 
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
@@ -98,10 +177,7 @@ describe('showInterstitialAd', () => {
   });
 
   it('should retrive error response from the Mini App Bridge', () => {
-    const error: Error = {
-      message: 'Unknown error occured',
-      name: 'Bridge error',
-    };
+    const error = 'error';
 
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
@@ -113,10 +189,10 @@ describe('showInterstitialAd', () => {
 });
 
 describe('showRewardedAd', () => {
-  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge', () => {
-    const response: RewardedAdResponse = {
-      reward: { amount: 500, type: 'game bonus' },
-      adType: AdTypes.REWARDED,
+  it('should retrieve Reward type of result from the Mini App Bridge', () => {
+    const response: Reward = {
+      amount: 500,
+      type: 'game bonus',
     };
 
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
@@ -127,24 +203,15 @@ describe('showRewardedAd', () => {
     );
   });
 
-  it('should retrieve RewardedAdResponse type of result from the Mini App Bridge and the reward is null', () => {
-    const response: RewardedAdResponse = {
-      adType: AdTypes.REWARDED,
-    };
-
+  it('should retrieve null when the user does not earn reward', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    window.MiniAppBridge.showRewardedAd.resolves(response);
-    return expect(miniApp.showRewardedAd(adUnitId)).to.eventually.equal(
-      response
-    );
+    window.MiniAppBridge.showRewardedAd.resolves(null);
+    return expect(miniApp.showRewardedAd(adUnitId)).to.eventually.equal(null);
   });
 
   it('should retrive error response from the Mini App Bridge', () => {
-    const error: Error = {
-      message: 'Unknown error occured',
-      name: 'Bridge error',
-    };
+    const error = 'error';
 
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
@@ -154,14 +221,10 @@ describe('showRewardedAd', () => {
 });
 
 describe('loadInterstitialAd', () => {
-  it('should retrieve response result from the Mini App Bridge once loadInterstitialAd call is successful', () => {
+  it('should retrieve the load result from the Mini App Bridge', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    const response = {
-      adUnit: adUnitId,
-      adType: AdTypes.INTERSTITIAL,
-      loaded: true,
-    };
+    const response = 'success';
 
     window.MiniAppBridge.loadInterstitialAd.resolves(response);
     return expect(miniApp.loadInterstitialAd(adUnitId)).to.eventually.equal(
@@ -171,10 +234,7 @@ describe('loadInterstitialAd', () => {
   it('should retrive error response from the Mini App Bridge once loadInterstitialAd rejects with error', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    const error: Error = {
-      message: 'Unknown error occured',
-      name: 'Bridge error',
-    };
+    const error = 'error';
 
     window.MiniAppBridge.loadInterstitialAd.resolves(error);
     return expect(miniApp.loadInterstitialAd(adUnitId)).to.eventually.equal(
@@ -184,10 +244,10 @@ describe('loadInterstitialAd', () => {
 });
 
 describe('loadRewardedAd', () => {
-  it('should retrieve response result from the Mini App Bridge once loadRewardedAd call is successful', () => {
+  it('should retrieve the load result from the Mini App Bridge', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    const response = null;
+    const response = 'success';
 
     window.MiniAppBridge.loadRewardedAd.resolves(response);
     return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(
@@ -197,10 +257,7 @@ describe('loadRewardedAd', () => {
   it('should retrive error response from the Mini App Bridge once loadRewardedAd rejects with error', () => {
     const adUnitId = 'xxx-xxx-xxxxxxxxxxxxx';
 
-    const error: Error = {
-      message: 'Unknown error occured',
-      name: 'Bridge error',
-    };
+    const error = 'error';
 
     window.MiniAppBridge.loadRewardedAd.resolves(error);
     return expect(miniApp.loadRewardedAd(adUnitId)).to.eventually.equal(error);
@@ -226,5 +283,89 @@ describe('shareInfo', () => {
 
     window.MiniAppBridge.shareInfo.resolves(error);
     return expect(miniApp.shareInfo(sharedInfo)).to.eventually.equal(error);
+  });
+});
+
+describe('getUserName', () => {
+  it('should retrieve username from the MiniAppBridge if getUserName is called', () => {
+    const response = 'Rakuten';
+
+    window.MiniAppBridge.getUserName.resolves(response);
+    return expect(miniApp.user.getUserName()).to.eventually.equal(response);
+  });
+});
+
+describe('getProfilePhoto', () => {
+  it('should retrieve Profile photo in Base 64 string from the MiniAppBridge if getProfilePhoto is called', () => {
+    const response =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8wmD0HwAFPQInf/fUWQAAAABJRU5ErkJggg==';
+
+    window.MiniAppBridge.getProfilePhoto.resolves(response);
+    return expect(miniApp.user.getProfilePhoto()).to.eventually.equal(response);
+  });
+});
+
+describe('getContacts', () => {
+  it('should retrieve contact list from the MiniAppBridge when request is successful', () => {
+    const response = [
+      {
+        id: 'test_contact_id',
+      },
+    ];
+
+    window.MiniAppBridge.getContacts.resolves(response);
+    return expect(miniApp.user.getContacts()).to.eventually.equal(response);
+  });
+});
+
+describe('getAccessToken', () => {
+  it('should retrieve AccessTokenData from the MiniAppBridge when request is successful', () => {
+    const response = {
+      token: 'test_token',
+      validUntil: 0,
+    };
+
+    window.MiniAppBridge.getAccessToken.resolves(response);
+    return expect(miniApp.user.getAccessToken()).to.eventually.equal(response);
+  });
+});
+
+describe('requestScreenOrientation', () => {
+  it('should retrieve success from the MiniAppBridge when request is successful', () => {
+    const response = 'success';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(response);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_LANDSCAPE)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.setScreenOrientation.resolves(error);
+    return expect(
+      miniApp.setScreenOrientation(ScreenOrientation.LOCK_PORTRAIT)
+    ).to.eventually.equal(error);
+  });
+});
+
+describe('sendMessage', () => {
+  it('possible to retrieve empty result from the MiniAppBridge when request is successful', () => {
+    const response = '';
+
+    window.MiniAppBridge.sendMessageToContact.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
+  });
+
+  it('possible to retrieve undefined result from the MiniAppBridge when request is successful', () => {
+    const response = undefined;
+
+    window.MiniAppBridge.sendMessageToContact.resolves(response);
+    return expect(
+      miniApp.chatService.sendMessageToContact(messageToContact)
+    ).to.eventually.equal(response);
   });
 });

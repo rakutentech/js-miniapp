@@ -1,21 +1,37 @@
-import { InterstitialAdResponse } from './types/responseTypes/interstitial';
 import {
+  Reward,
+  DevicePermission,
   CustomPermission,
+  CustomPermissionName,
   CustomPermissionResult,
-} from './types/CustomPermission';
-import { DevicePermission } from './types/DevicePermission';
-import { RewardedAdResponse } from './types/responseTypes/rewarded';
-import { ShareInfoType } from './types/ShareInfoType';
+  CustomPermissionStatus,
+  ShareInfoType,
+  ScreenOrientation,
+} from '../../js-miniapp-bridge/src';
+import { UserInfoProvider, UserInfo } from './modules/user-info';
+import { ChatService } from './modules/chat-service';
+import { getBridge } from './utils';
 
 /**
  * A module layer for webapps and mobile native interaction.
  */
 interface MiniAppFeatures {
-  /** @returns The Promise of provided id of mini app from injected side. */
+  /**
+   * Request the mini app's unique id from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
   getUniqueId(): Promise<string>;
 
-  /** @returns The Promise of permission result of mini app from injected side. */
-  requestLocationPermission(): Promise<string>;
+  /**
+   * Request the location permission from the host app.
+   * You must call this before using `navigator.geolocation`.
+   * This will request both the Android/iOS device permission for location (if not yet granted to the host app),
+   * and the custom permission for location {@link CustomPermissionName.LOCATION}.
+   * @param permissionDescription Description of location permission.
+   * @returns The Promise of permission result of mini app from injected side.
+   * Rejects the promise if the user denied the location permission (either the device permission or custom permission).
+   */
+  requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
    *
@@ -31,10 +47,19 @@ interface MiniAppFeatures {
   ): Promise<CustomPermissionResult[]>;
 
   /**
+   * Share text data with another App or with the host app.
    * @param info The shared data must match the property in [ShareInfoType].
    * @returns The Promise of share info action state from injected side.
    */
   shareInfo(info: ShareInfoType): Promise<string>;
+
+  /**
+   * Swap and lock the screen orientation.
+   * There is no guarantee that all hostapps and devices allow the force screen change so MiniApp should not rely on this.
+   * @param screenOrientation The action that miniapp wants to request on device.
+   * @returns The Promise of screen action state from injected side.
+   */
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string>;
 }
 
 /**
@@ -45,27 +70,27 @@ interface Ad {
    * Loads the specified Interstittial Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadInterstitialAd(id: string): Promise<null | Error>;
+  loadInterstitialAd(id: string): Promise<string>;
 
   /**
    * Loads the specified Rewarded Ad Unit ID.
    * Can be called multiple times to pre-load multiple ads.
    * Promise is resolved when successfully loaded.
-   * * @returns The Promise of load ad response result from injected side.
+   * @returns The Promise of load success response.
    * Promise is rejected if failed to load.
    */
-  loadRewardedAd(id: string): Promise<null | Error>;
+  loadRewardedAd(id: string): Promise<string>;
 
   /**
    * Shows the Interstitial Ad for the specified ID.
    * Promise is resolved after the user closes the Ad.
-   * @returns The Promise of Interstitial ad response result from injected side.
-   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
+   * @returns The Promise of close success response.
+   * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadInterstitialAd.
    */
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse>;
+  showInterstitialAd(id: string): Promise<string>;
 
   /**
    * Shows the Rewarded Ad for the specified ID.
@@ -74,48 +99,97 @@ interface Ad {
    * @returns The Promise of Rewarded ad response result from injected side.
    * Promise is rejected if the Ad failed to display wasn't loaded first using MiniApp.loadRewardedAds.
    */
-  showRewardedAd(id: string): Promise<RewardedAdResponse>;
+  showRewardedAd(id: string): Promise<Reward>;
 }
 
-/* tslint:disable:no-any */
-export class MiniApp implements MiniAppFeatures, Ad {
-  private requestPermission(permissionType: string): Promise<string> {
-    return (window as any).MiniAppBridge.requestPermission(permissionType);
+interface Platform {
+  /**
+   * Detect which platform your mini app is running on.
+   * @returns `Android`, `iOS`, or `Unknown`
+   */
+  getPlatform(): string;
+}
+
+export class MiniApp implements MiniAppFeatures, Ad, Platform {
+  user: UserInfoProvider = new UserInfo();
+  chatService = new ChatService();
+
+  private requestPermission(permissionType: DevicePermission): Promise<string> {
+    return getBridge().requestPermission(permissionType);
   }
 
   getUniqueId(): Promise<string> {
-    return (window as any).MiniAppBridge.getUniqueId();
+    return getBridge().getUniqueId();
   }
 
-  requestLocationPermission(): Promise<string> {
-    return this.requestPermission(DevicePermission.LOCATION);
+  requestLocationPermission(permissionDescription = ''): Promise<string> {
+    const locationPermission = [
+      {
+        name: CustomPermissionName.LOCATION,
+        description: permissionDescription,
+      },
+    ];
+
+    return this.requestCustomPermissions(locationPermission)
+      .then(permission =>
+        permission.find(
+          result =>
+            result.status === CustomPermissionStatus.ALLOWED ||
+            // Case where older Android SDK doesn't support the Location custom permission
+            result.status === CustomPermissionStatus.PERMISSION_NOT_AVAILABLE
+        )
+      )
+      .catch(error =>
+        // Case where older iOS SDK doesn't support the Location custom permission
+        typeof error === 'string' &&
+        error.startsWith('invalidCustomPermissionsList')
+          ? Promise.resolve(true)
+          : Promise.reject(error)
+      )
+      .then(hasPermission =>
+        hasPermission
+          ? this.requestPermission(DevicePermission.LOCATION)
+          : Promise.reject('User denied location permission to this mini app.')
+      );
   }
 
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
-    return (window as any).MiniAppBridge.requestCustomPermissions(
-      permissions
-    ).then(permissionResult => permissionResult.permissions);
+    return getBridge()
+      .requestCustomPermissions(permissions)
+      .then(permissionResult => permissionResult.permissions);
   }
 
-  loadInterstitialAd(id: string): Promise<null | Error> {
-    return (window as any).MiniAppBridge.loadInterstitialAd(id);
+  loadInterstitialAd(id: string): Promise<string> {
+    return getBridge().loadInterstitialAd(id);
   }
 
-  loadRewardedAd(id: string): Promise<null | Error> {
-    return (window as any).MiniAppBridge.loadRewardedAd(id);
+  loadRewardedAd(id: string): Promise<string> {
+    return getBridge().loadRewardedAd(id);
   }
 
-  showInterstitialAd(id: string): Promise<InterstitialAdResponse> {
-    return (window as any).MiniAppBridge.showInterstitialAd(id);
+  showInterstitialAd(id: string): Promise<string> {
+    return getBridge().showInterstitialAd(id);
   }
 
-  showRewardedAd(id: string): Promise<RewardedAdResponse> {
-    return (window as any).MiniAppBridge.showRewardedAd(id);
+  showRewardedAd(id: string): Promise<Reward> {
+    return getBridge().showRewardedAd(id);
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return (window as any).MiniAppBridge.shareInfo(info);
+    return getBridge().shareInfo(info);
+  }
+
+  getPlatform(): string {
+    let platform = 'Unknown';
+    try {
+      platform = getBridge().platform;
+    } catch (e) {}
+    return platform;
+  }
+
+  setScreenOrientation(screenOrientation: ScreenOrientation): Promise<string> {
+    return getBridge().setScreenOrientation(screenOrientation);
   }
 }

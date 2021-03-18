@@ -39,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Share() {
   const classes = useStyles();
-  let inputValue = '';
+  const defaultInputValue = 'This is JS-SDK-Sample.';
+  let inputValue = defaultInputValue;
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ function Share() {
   };
 
   const shareContent = () => {
-    const info = { content: inputValue }; //see js-miniapp-sdk/types/ShareInfoType
+    const info = { content: inputValue }; //see js-miniapp-bridge/types/share-info
     MiniApp.shareInfo(info)
       .then((success) => {
         console.log(success);
@@ -65,7 +66,7 @@ function Share() {
           className={classes.textfield}
           onChange={handleInput}
           placeholder="Content"
-          defaultValue="This is JS-SDK-Sample."
+          defaultValue={defaultInputValue}
           variant="outlined"
           color="primary"
           multiline="true"
