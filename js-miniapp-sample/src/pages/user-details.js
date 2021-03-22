@@ -294,7 +294,6 @@ function UserDetails(props: UserDetailsProps) {
       state.hasRequestedPermissions &&
       !hasPermission(CustomPermissionName.CONTACT_LIST);
 
-
     return (
       <Paper className={classes.paper}>
         <CardHeader subheader="Contact List" />
@@ -309,7 +308,7 @@ function UserDetails(props: UserDetailsProps) {
           )}
           {props.contactList &&
             props.contactList.map((contact) => (
-              < ListItem divider >
+              <ListItem divider>
                 <ListItemAvatar>
                   <Avatar className={classes.contactIcon} />
                 </ListItemAvatar>
@@ -318,12 +317,16 @@ function UserDetails(props: UserDetailsProps) {
                   secondary={
                     <React.Fragment>
                       <Typography>
-                        {contact.name !== '' && contact.name !== undefined && contact.name !== null ? (
+                        {contact.name !== '' &&
+                        contact.name !== undefined &&
+                        contact.name !== null ? (
                           <span>{'Name: ' + contact.name}</span>
                         ) : null}
                       </Typography>
                       <Typography>
-                        {contact.email !== '' && contact.email !== undefined && contact.email !== null ? (
+                        {contact.email !== '' &&
+                        contact.email !== undefined &&
+                        contact.email !== null ? (
                           <span>{'Email: ' + contact.email}</span>
                         ) : null}
                       </Typography>
@@ -333,7 +336,7 @@ function UserDetails(props: UserDetailsProps) {
               </ListItem>
             ))}
         </List>
-      </Paper >
+      </Paper>
     );
   }
 
