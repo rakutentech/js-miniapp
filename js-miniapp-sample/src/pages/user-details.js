@@ -317,11 +317,9 @@ function UserDetails(props: UserDetailsProps) {
                   secondary={
                     <React.Fragment>
                       <Typography>
-                        {contact.name !== '' &&
-                        contact.name !== undefined &&
-                        contact.name !== null ? (
+                        {contact.name && contact.name !== '' && (
                           <span>{'Name: ' + contact.name}</span>
-                        ) : null}
+                        )}
                       </Typography>
                       <Typography>
                         {contact.email !== '' &&
