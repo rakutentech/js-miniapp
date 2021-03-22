@@ -322,11 +322,9 @@ function UserDetails(props: UserDetailsProps) {
                         )}
                       </Typography>
                       <Typography>
-                        {contact.email !== '' &&
-                        contact.email !== undefined &&
-                        contact.email !== null ? (
+                        {contact.email && contact.email !== '' && (
                           <span>{'Email: ' + contact.email}</span>
-                        ) : null}
+                        )}
                       </Typography>
                     </React.Fragment>
                   }
