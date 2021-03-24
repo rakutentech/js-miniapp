@@ -2,7 +2,7 @@
 export interface NativeTokenData {
   token: string;
   validUntil: number;
-  permission?: NativeTokenPermission;
+  scopes?: NativeTokenPermission;
 }
 
 /** @internal */
@@ -15,12 +15,12 @@ export interface NativeTokenPermission {
 export class AccessTokenData {
   readonly token: string;
   readonly validUntil: Date;
-  readonly permission: AccessTokenPermission;
+  readonly scopes: AccessTokenPermission;
 
   constructor(baseToken: NativeTokenData) {
     this.token = baseToken.token;
     this.validUntil = new Date(baseToken.validUntil);
-    this.permission = new AccessTokenPermission(baseToken.permission);
+    this.scopes = new AccessTokenPermission(baseToken.scopes);
   }
 }
 

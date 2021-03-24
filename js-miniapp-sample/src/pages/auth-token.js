@@ -230,15 +230,20 @@ function AuthToken(props: AuthTokenProps) {
             </FormControl>
           </Fragment>
           {ButtonWrapper()}
-          {props.accessToken && (
+          {!state.isLoading && !state.isError && props.accessToken && (
             <Typography variant="body1" className={classes.success}>
               Token: {props.accessToken.token}
             </Typography>
           )}
-          {props.accessToken && (
+          {!state.isLoading && !state.isError && props.accessToken && (
             <Typography variant="body1" className={classes.success}>
               Valid until: {displayDate(props.accessToken.validUntil)}
             </Typography>
+          )}
+          {!state.isLoading && state.isError && (
+              <Typography variant="body1" className={classes.red}>
+                Acces token permission scopes error
+              </Typography>
           )}
           <div>{AccessToken()}</div>
         </FormGroup>
@@ -256,7 +261,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAccessToken: () => dispatch(requestAccessToken()),
+    getAccessToken: (audience: string, scopes: [string]) =>
+      dispatch(requestAccessToken(audience, scopes)),
     requestPermissions: (permissions) =>
       dispatch(requestCustomPermissions(permissions)),
   };
