@@ -1,4 +1,4 @@
-import React, {Fragment, useReducer, useState} from 'react';
+import React, { Fragment, useReducer, useState } from 'react';
 
 import {
   Button,
@@ -114,7 +114,7 @@ function AuthToken(props: AuthTokenProps) {
   const classes = useStyles();
   const [scope, setScope] = useState({
     audience: 'rae',
-    scopes: ["idinfo_read_openid", "memberinfo_read_point"],
+    scopes: ['idinfo_read_openid', 'memberinfo_read_point'],
   });
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
@@ -212,20 +212,20 @@ function AuthToken(props: AuthTokenProps) {
           <Fragment>
             <FormControl className={classes.formControl}>
               <TextField
-                  id="audience"
-                  label="Audience"
-                  className={classes.fields}
-                  onChange={onAudienceChange}
-                  value={scope.audience}
+                id="audience"
+                label="Audience"
+                className={classes.fields}
+                onChange={onAudienceChange}
+                value={scope.audience}
               />
             </FormControl>
             <FormControl className={classes.formControl}>
               <TextField
-                  id="scopes"
-                  label="Scopes"
-                  className={classes.fields}
-                  onChange={onScopesChange}
-                  value={scope.scopes.join(", ")}
+                id="scopes"
+                label="Scopes"
+                className={classes.fields}
+                onChange={onScopesChange}
+                value={scope.scopes.join(', ')}
               />
             </FormControl>
           </Fragment>
@@ -241,9 +241,9 @@ function AuthToken(props: AuthTokenProps) {
             </Typography>
           )}
           {!state.isLoading && state.isError && (
-              <Typography variant="body1" className={classes.red}>
-                Acces token permission scopes error
-              </Typography>
+            <Typography variant="body1" className={classes.red}>
+              Acces token permission scopes error
+            </Typography>
           )}
           <div>{AccessToken()}</div>
         </FormGroup>
