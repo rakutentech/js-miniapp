@@ -114,7 +114,7 @@ function AuthToken(props: AuthTokenProps) {
   const classes = useStyles();
   const [scope, setScope] = useState({
     audience: 'rae',
-    scopes: ['idinfo_read_openid', 'memberinfo_read_point', 'omg'],
+    scopes: ['idinfo_read_openid', 'memberinfo_read_point'],
   });
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
