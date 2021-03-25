@@ -177,11 +177,13 @@ var MiniAppBridge = /** @class */ (function () {
      * This function returns access token details from the host app.
      * (provided the rakuten.miniapp.user.ACCESS_TOKEN is allowed by the user)
      * It returns error info if user had denied the custom permission
+     * @param {string} audience the audience the MiniApp requests for the token
+     * @param {string[]} scopes the associated scopes with the requested audience
      */
-    MiniAppBridge.prototype.getAccessToken = function () {
+    MiniAppBridge.prototype.getAccessToken = function (audience, scopes) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getAccessToken', null, function (tokenData) {
+            return _this.executor.exec('getAccessToken', { audience: audience, scopes: scopes }, function (tokenData) {
                 var nativeTokenData = JSON.parse(tokenData);
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
             }, function (error) { return reject(error); });
@@ -291,9 +293,19 @@ var AccessTokenData = /** @class */ (function () {
     function AccessTokenData(baseToken) {
         this.token = baseToken.token;
         this.validUntil = new Date(baseToken.validUntil);
+        this.scopes = new AccessTokenScopes(baseToken.scopes);
     }
     return AccessTokenData;
 }());
 exports.AccessTokenData = AccessTokenData;
+/** Token permission type. */
+var AccessTokenScopes = /** @class */ (function () {
+    function AccessTokenScopes(basePermission) {
+        this.audience = basePermission.audience;
+        this.scopes = basePermission.scopes;
+    }
+    return AccessTokenScopes;
+}());
+exports.AccessTokenScopes = AccessTokenScopes;
 
 },{}]},{},[2]);
