@@ -103,7 +103,7 @@ const dataFetchReducer = (state, action) => {
 type AuthTokenProps = {
   permissions: CustomPermissionName[],
   accessToken: AccessTokenData,
-  getAccessToken: (audience: string, scopes: [string]) => Promise<string>,
+  getAccessToken: (audience: string, scopes: string[]) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -114,7 +114,7 @@ function AuthToken(props: AuthTokenProps) {
   const classes = useStyles();
   const [scope, setScope] = useState({
     audience: 'rae',
-    scopes: ['idinfo_read_openid', 'memberinfo_read_point'],
+    scopes: ['idinfo_read_openid', 'memberinfo_read_point', 'omg'],
   });
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
@@ -261,7 +261,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAccessToken: (audience: string, scopes: [string]) =>
+    getAccessToken: (audience: string, scopes: string[]) =>
       dispatch(requestAccessToken(audience, scopes)),
     requestPermissions: (permissions) =>
       dispatch(requestCustomPermissions(permissions)),

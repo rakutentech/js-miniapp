@@ -8,7 +8,7 @@ export interface NativeTokenData {
 /** @internal */
 export interface NativeTokenPermission {
   audience?: string;
-  scopes?: [string];
+  scopes?: string[];
 }
 
 /** Token data type. */
@@ -27,7 +27,7 @@ export class AccessTokenData {
 /** Token permission type. */
 export class AccessTokenPermission {
   readonly audience?: string;
-  readonly scopes?: [string];
+  readonly scopes?: string[];
 
   constructor(basePermission: NativeTokenPermission) {
     this.audience = basePermission.audience;

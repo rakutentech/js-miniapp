@@ -74,7 +74,7 @@ const requestContactList = (): Function => {
   };
 };
 
-const requestAccessToken = (audience: string, scopes: [string]): Function => {
+const requestAccessToken = (audience: string, scopes: string[]): Function => {
   return (dispatch) => {
     return MiniApp.user
       .getAccessToken(audience, scopes)

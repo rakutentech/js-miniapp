@@ -34,7 +34,7 @@ export interface UserInfoProvider {
    */
   getAccessToken(
     audience?: string,
-    scopes?: [string]
+    scopes?: string[]
   ): Promise<AccessTokenData>;
 }
 
@@ -54,7 +54,7 @@ export class UserInfo implements UserInfoProvider {
 
   getAccessToken(
     audience?: string,
-    scopes?: [string]
+    scopes?: string[]
   ): Promise<AccessTokenData> {
     return getBridge().getAccessToken(audience, scopes);
   }

@@ -289,9 +289,9 @@ export class MiniAppBridge {
    * (provided the rakuten.miniapp.user.ACCESS_TOKEN is allowed by the user)
    * It returns error info if user had denied the custom permission
    * @param {string} audienceRequested the audience the MiniApp requests for the token
-   * @param {[string]} scopesForAudience the associated scopes with the requested audience
+   * @param {string[]} scopesForAudience the associated scopes with the requested audience
    */
-  getAccessToken(audienceRequested?: string, scopesForAudience?: [string]) {
+  getAccessToken(audienceRequested?: string, scopesForAudience?: string[]) {
     return new Promise<AccessTokenData>((resolve, reject) => {
       return this.executor.exec(
         'getAccessToken',
