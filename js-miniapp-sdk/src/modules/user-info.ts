@@ -32,10 +32,7 @@ export interface UserInfoProvider {
    * @param scopes scopes array associated to the audience
    * @returns Access token from native host app.
    */
-  getAccessToken(
-    audience?: string,
-    scopes?: string[]
-  ): Promise<AccessTokenData>;
+  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData>;
 }
 
 /** @internal */
@@ -52,10 +49,7 @@ export class UserInfo implements UserInfoProvider {
     return getBridge().getContacts();
   }
 
-  getAccessToken(
-    audience?: string,
-    scopes?: string[]
-  ): Promise<AccessTokenData> {
+  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {
     return getBridge().getAccessToken(audience, scopes);
   }
 }
