@@ -321,16 +321,22 @@ export class MiniAppBridge {
   }
 
   /**
+   * @param id The id of the contact receiving a message. It is possible to put null value when there is no specific contact to send.
    * @param message The message to send to contact.
    * @returns Promise resolves with the Unique ID which was sent the message.
    * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
    * Promise rejects in the case that there was an error.
    */
-  sendMessageToContact(message: MessageToContact) {
+  sendMessageToContact(id: string, message: MessageToContact) {
+    let customParam = { contactId: id, messageToContact: message } as {};
+    if (id === null || id === undefined) {
+      customParam = { messageToContact: message };
+    }
+
     return new Promise<string | undefined>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContact',
-        { messageToContact: message },
+        customParam,
         messageId => resolve(messageId),
         error => reject(error)
       );
