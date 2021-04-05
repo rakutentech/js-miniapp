@@ -364,7 +364,10 @@ describe('sendMessage', () => {
 
     window.MiniAppBridge.sendMessageToContactId.resolves(response);
     return expect(
-      miniApp.chatService.sendMessageToContactId('test_contact_id', messageToContact)
+      miniApp.chatService.sendMessageToContactId(
+        'test_contact_id',
+        messageToContact
+      )
     ).to.eventually.equal(response);
   });
 
@@ -378,7 +381,10 @@ describe('sendMessage', () => {
 
     window.MiniAppBridge.sendMessageToContactId.resolves(null);
     return expect(
-      miniApp.chatService.sendMessageToContactId('test_contact_id', messageToContact)
+      miniApp.chatService.sendMessageToContactId(
+        'test_contact_id',
+        messageToContact
+      )
     ).to.eventually.equal(null);
   });
 });
