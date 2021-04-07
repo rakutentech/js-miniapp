@@ -97,7 +97,6 @@ const Message = (props: MessageTypeProps) => {
           message.text.trim(),
           message.caption.trim() ?? '',
           message.action.trim() ?? '',
-          message.title.trim() ?? ''
         )
         .then((contactId) =>
           setMessageResponse({

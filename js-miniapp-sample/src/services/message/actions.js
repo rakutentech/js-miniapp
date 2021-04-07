@@ -27,7 +27,6 @@ const sendMessageToContact = (
       text: text,
       image: image,
       caption: caption,
-      title: title,
       action: action,
     };
     return MiniApp.chatService.sendMessageToContact(messageToContact);
