@@ -11,6 +11,10 @@ const getMessageTypeList = (): SetMessageTypeAction => {
         id: 1,
         name: 'Send a message to a single contact',
       },
+      {
+        id: 2,
+        name: 'Send a message to a specific contact',
+      },
     ],
   };
 };
@@ -19,7 +23,6 @@ const sendMessageToContact = (
   image: String,
   text: String,
   caption: String,
-  title: String,
   action: String
 ): Function => {
   return (dispatch) => {
@@ -33,4 +36,25 @@ const sendMessageToContact = (
   };
 };
 
-export { getMessageTypeList, sendMessageToContact };
+const sendMessageToContactId = (
+  contactId: String,
+  image: String,
+  text: String,
+  caption: String,
+  action: String
+): Function => {
+  return (dispatch) => {
+    const messageToContact: MessageToContact = {
+      text: text,
+      image: image,
+      caption: caption,
+      action: action,
+    };
+    return MiniApp.chatService.sendMessageToContactId(
+      contactId,
+      messageToContact
+    );
+  };
+};
+
+export { getMessageTypeList, sendMessageToContact, sendMessageToContactId };
