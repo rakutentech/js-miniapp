@@ -202,13 +202,13 @@ var MiniAppBridge = /** @class */ (function () {
     /**
      * @param message The message to send to contact.
      * @returns Promise resolves with the contact id received a message.
-     * Can also resolve with empty (undefined) response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
+     * Can also resolve with null response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
      * Promise rejects in the case that there was an error.
      */
     MiniAppBridge.prototype.sendMessageToContact = function (message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (messageId) { return resolve(messageId); }, function (error) { return reject(error); });
+            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (contactId) { return resolve(contactId); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -220,7 +220,22 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToContactId = function (id, message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContactId', { contactId: id, messageToContact: message }, function (messageId) { return resolve(messageId); }, function (error) { return reject(error); });
+            return _this.executor.exec('sendMessageToContactId', { contactId: id, messageToContact: message }, function (contactId) { return resolve(contactId); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * @param message The message to send to contact.
+     * @returns Promise resolves with an array of contact id which were sent the message.
+     * Can also resolve with null array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
+     * Promise rejects in the case that there was an error.
+     */
+    MiniAppBridge.prototype.sendMessageToMultipleContacts = function (message) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('sendMessageToMultipleContacts', { messageToContact: message }, function (contactIds) {
+                var list = JSON.parse(contactIds);
+                resolve(list);
+            }, function (error) { return reject(error); });
         });
     };
     return MiniAppBridge;
