@@ -126,7 +126,8 @@ const Message = (props: MessageTypeProps) => {
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
-            if (contactId !== null) respMsg = 'Message is sent to contact Id: ' + contactId;
+            if (contactId !== null)
+              respMsg = 'Message is sent to contact Id: ' + contactId;
             setMessageResponse({
               show: true,
               response: respMsg,
@@ -143,7 +144,8 @@ const Message = (props: MessageTypeProps) => {
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
-            if (contactId !== null) respMsg = 'Message is sent to contact Id: ' + contactId;
+            if (contactId !== null)
+              respMsg = 'Message is sent to contact Id: ' + contactId;
             setMessageResponse({
               show: true,
               response: respMsg,
@@ -310,7 +312,7 @@ const mapDispatchToProps = (dispatch) => {
     sendMessageToContactId: (contactId, image, text, caption, action) =>
       dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
     sendMessageToMultipleContacts: (image, text, caption, action) =>
-        dispatch(sendMessageToMultipleContacts(image, text, caption, action)),
+      dispatch(sendMessageToMultipleContacts(image, text, caption, action)),
   };
 };
 
