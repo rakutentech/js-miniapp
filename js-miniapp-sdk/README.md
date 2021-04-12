@@ -394,6 +394,17 @@ miniApp.chatService.sendMessageToContactId(id, messageToContact)
 	});
 ```
 
+#### Send message to multiple contacts
+
+```javascript
+miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
+    .then(contactId => {
+		console.log(contactId);
+	}).catch(error => {
+		console.error(error);
+	});
+```
+
 ## Advanced Usage
 
 ### Check Android/iOS device
