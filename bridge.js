@@ -233,7 +233,14 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToContact = function (message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (contactId) { return resolve(contactId); }, function (error) { return reject(error); });
+            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (contactId) {
+                if (contactId !== 'null' && contactId !== null) {
+                    resolve(contactId);
+                }
+                else {
+                    resolve(null);
+                }
+            }, function (error) { return reject(error); });
         });
     };
     /**
@@ -245,7 +252,14 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToContactId = function (id, message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContactId', { contactId: id, messageToContact: message }, function (contactId) { return resolve(contactId); }, function (error) { return reject(error); });
+            return _this.executor.exec('sendMessageToContactId', { contactId: id, messageToContact: message }, function (contactId) {
+                if (contactId !== 'null' && contactId !== null) {
+                    resolve(contactId);
+                }
+                else {
+                    resolve(null);
+                }
+            }, function (error) { return reject(error); });
         });
     };
     /**
@@ -258,8 +272,12 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('sendMessageToMultipleContacts', { messageToContact: message }, function (contactIds) {
-                var list = JSON.parse(contactIds);
-                resolve(list);
+                if (contactIds !== 'null' && contactIds !== null) {
+                    resolve(JSON.parse(contactIds));
+                }
+                else {
+                    resolve(null);
+                }
             }, function (error) { return reject(error); });
         });
     };
