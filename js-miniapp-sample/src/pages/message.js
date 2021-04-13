@@ -21,9 +21,9 @@ import {
   sendMessageToContactId,
   sendMessageToMultipleContacts,
 } from '../services/message/actions';
-
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
+import { pandaLogo } from '../assets/images/base64';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -74,10 +74,10 @@ const Message = (props: MessageTypeProps) => {
   const [message, setMessage] = useState({
     id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
     contactId: '',
-    image: '',
-    text: '',
-    caption: '',
-    action: '',
+    image: pandaLogo,
+    text: 'Sample text',
+    caption: 'Sample caption',
+    action: 'https://www.example.com/',
   });
   const [validation, setValidationState] = useState({
     error: false,
