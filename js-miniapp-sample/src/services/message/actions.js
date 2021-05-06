@@ -1,6 +1,9 @@
 import { SET_MESSAGE_TYPES } from './types';
 import type { SetMessageTypeAction } from './types';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, {
+  CustomPermissionStatus,
+  CustomPermissionName,
+} from 'js-miniapp-sdk';
 import { MessageToContact } from 'js-miniapp-sdk';
 
 const getMessageTypeList = (): SetMessageTypeAction => {
@@ -23,6 +26,13 @@ const getMessageTypeList = (): SetMessageTypeAction => {
   };
 };
 
+const permissionsList = [
+  {
+    name: CustomPermissionName.SEND_MESSAGE,
+    description: 'We would like to send message from this mini app.',
+  },
+];
+
 const sendMessageToContact = (
   image: String,
   text: String,
@@ -30,13 +40,17 @@ const sendMessageToContact = (
   action: String
 ): Function => {
   return (dispatch) => {
-    const messageToContact: MessageToContact = {
-      text: text,
-      image: image,
-      caption: caption,
-      action: action,
-    };
-    return MiniApp.chatService.sendMessageToContact(messageToContact);
+    MiniApp.requestCustomPermissions(permissionsList).then((permissions) => {
+      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
+        const messageToContact: MessageToContact = {
+          text: text,
+          image: image,
+          caption: caption,
+          action: action,
+        };
+        return MiniApp.chatService.sendMessageToContact(messageToContact);
+      }
+    });
   };
 };
 
@@ -48,16 +62,20 @@ const sendMessageToContactId = (
   action: String
 ): Function => {
   return (dispatch) => {
-    const messageToContact: MessageToContact = {
-      text: text,
-      image: image,
-      caption: caption,
-      action: action,
-    };
-    return MiniApp.chatService.sendMessageToContactId(
-      contactId,
-      messageToContact
-    );
+    MiniApp.requestPermissions(permissionsList).then((permissions) => {
+      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
+        const messageToContact: MessageToContact = {
+          text: text,
+          image: image,
+          caption: caption,
+          action: action,
+        };
+        return MiniApp.chatService.sendMessageToContactId(
+          contactId,
+          messageToContact
+        );
+      }
+    });
   };
 };
 
@@ -68,13 +86,19 @@ const sendMessageToMultipleContacts = (
   action: String
 ): Function => {
   return (dispatch) => {
-    const messageToContact: MessageToContact = {
-      text: text,
-      image: image,
-      caption: caption,
-      action: action,
-    };
-    return MiniApp.chatService.sendMessageToMultipleContacts(messageToContact);
+    MiniApp.requestPermissions(permissionsList).then((permissions) => {
+      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
+        const messageToContact: MessageToContact = {
+          text: text,
+          image: image,
+          caption: caption,
+          action: action,
+        };
+        return MiniApp.chatService.sendMessageToMultipleContacts(
+          messageToContact
+        );
+      }
+    });
   };
 };
 
