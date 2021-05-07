@@ -40,17 +40,13 @@ const sendMessageToContact = (
   action: String
 ): Function => {
   return (dispatch) => {
-    MiniApp.requestCustomPermissions(permissionsList).then((permissions) => {
-      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
-        const messageToContact: MessageToContact = {
-          text: text,
-          image: image,
-          caption: caption,
-          action: action,
-        };
-        return MiniApp.chatService.sendMessageToContact(messageToContact);
-      }
-    });
+    const messageToContact: MessageToContact = {
+      text: text,
+      image: image,
+      caption: caption,
+      action: action,
+    };
+    return MiniApp.chatService.sendMessageToContact(messageToContact);
   };
 };
 
@@ -86,19 +82,15 @@ const sendMessageToMultipleContacts = (
   action: String
 ): Function => {
   return (dispatch) => {
-    MiniApp.requestPermissions(permissionsList).then((permissions) => {
-      if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
-        const messageToContact: MessageToContact = {
-          text: text,
-          image: image,
-          caption: caption,
-          action: action,
-        };
-        return MiniApp.chatService.sendMessageToMultipleContacts(
-          messageToContact
-        );
-      }
-    });
+    const messageToContact: MessageToContact = {
+      text: text,
+      image: image,
+      caption: caption,
+      action: action,
+    };
+    return MiniApp.chatService.sendMessageToMultipleContacts(
+      messageToContact
+    );
   };
 };
 
