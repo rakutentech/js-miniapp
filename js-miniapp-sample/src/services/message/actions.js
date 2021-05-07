@@ -58,7 +58,7 @@ const sendMessageToContactId = (
   action: String
 ): Function => {
   return (dispatch) => {
-    MiniApp.requestPermissions(permissionsList).then((permissions) => {
+    MiniApp.requestCustomPermissions(permissionsList).then((permissions) => {
       if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
         const messageToContact: MessageToContact = {
           text: text,
