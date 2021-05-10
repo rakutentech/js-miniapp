@@ -204,6 +204,7 @@ var MiniAppBridge = /** @class */ (function () {
      * @returns Promise resolves with the contact id received a message.
      * Can also resolve with null response in the case that the message was not sent to a contact, such as if the user cancelled sending the message.
      * Promise rejects in the case that there was an error.
+     * It returns error info if user had denied the custom permission for sending message.
      */
     MiniAppBridge.prototype.sendMessageToContact = function (message) {
         var _this = this;
@@ -242,6 +243,7 @@ var MiniAppBridge = /** @class */ (function () {
      * @returns Promise resolves with an array of contact id which were sent the message.
      * Can also resolve with null array in the case that the message was not sent to any contacts, such as if the user cancelled sending the message.
      * Promise rejects in the case that there was an error.
+     * It returns error info if user had denied the custom permission for sending message.
      */
     MiniAppBridge.prototype.sendMessageToMultipleContacts = function (message) {
         var _this = this;
@@ -262,8 +264,7 @@ exports.MiniAppBridge = MiniAppBridge;
 /**
  * Method to remove the callback object from the message queue after successful/error communication
  * with the native application
- * @param  {[Object]} queueObj Queue Object that holds the references of callback information
- *
+ * @param  {[Object]} queueObj Queue Object that holds the references of callback information.
  * @internal
  */
 function removeFromMessageQueue(queueObj) {
