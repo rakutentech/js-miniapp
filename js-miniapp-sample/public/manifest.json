@@ -38,7 +38,7 @@
       "reason": "Describe your reason here (optional)."
     },
     {
-      "name": "rakuten.miniapp.action.SEND_MESSAGE",
+      "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
       "reason": "Describe your reason here (optional)."
     }
   ],
