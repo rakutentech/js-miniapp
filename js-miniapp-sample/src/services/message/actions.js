@@ -60,11 +60,7 @@ const sendMessageToContactId = (
   return async (dispatch) => {
     const promise = MiniApp.requestCustomPermissions(permissionsList).then(
       (permissions) => {
-        if (permissions[0].status === CustomPermissionStatus.ALLOWED) {
-          return true;
-        } else {
-          return false;
-        }
+        return permissions[0].status === CustomPermissionStatus.ALLOWED;
       }
     );
     const promiseResult = await promise;
