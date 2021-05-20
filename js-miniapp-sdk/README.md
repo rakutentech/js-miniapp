@@ -411,6 +411,54 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 
 ## Advanced Usage
 
+### Errors management
+
+Error messages sent to the bridge should always be of the format: `"error_type_key: error_message"` or `"error_key"`.
+The SDK will throw a `MiniAppError` extracting the `error_type_key` from this message and check if an error message exists locally. 
+If no error message exists, it will then construct one base on `error_message` if available.
+If the error type key is not supported, `MiniAppError.type` will automatically be set to `Other`
+Here are the currently supported type keys:
+
+| Error Type | Message |
+| ---- | ---- |
+| `AudienceNotSupportedError` | `The value passed for 'audience' is not supported.` |
+| `ScopesNotSupportedError` | `The value passed for 'scopes' is not supported.` |
+| `AuthorizationFailureError` | _a message should be provided_ |
+| `Other` |  _a message should be provided_ |
+
+
+Here is an example of how `MiniAppError` is populated if the bridge receives a valid key `AudienceNotSupportedError`:
+
+```javascript
+miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
+  .then(data => {
+      ...
+  })
+  .catch(error => {
+      console.error(error.name);     // AudienceNotSupportedError
+      console.error(error.message); //  The value passed for 'audience' is not supported.
+      console.error(error.type);   //   AudienceNotSupportedError
+      console.error(error.raw);   //    AudienceNotSupportedError
+
+  })
+```
+
+Here is an example of how `MiniAppError` is populated if the bridge receives the following custom error message `AudienceCustomError: The custom audience is not supported.`:
+
+```javascript
+miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
+  .then(data => {
+      ...
+  })
+  .catch(error => {
+      console.error(error.name);     // AudienceCustomError
+      console.error(error.message); //  The custom audience is not supported.
+      console.error(error.type);   //   Other
+      console.error(error.raw);   //    AudienceCustomError: The custom audience is not supported.
+
+  })
+```
+
 ### Check Android/iOS device
 
 **API:** [Platform.getPlatform](api/interfaces/platform.html#getplatform)

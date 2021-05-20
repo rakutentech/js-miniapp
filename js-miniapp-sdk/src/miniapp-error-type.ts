@@ -1,22 +1,49 @@
+/**
+ * This class is a representation of an error sent from MiniApp mobile SDK
+ */
 export class MiniAppError extends Error {
+  /**
+   * the MiniAppErrorType defining this error.
+   * If no type con be extracted from the input then the MiniAppError will be considered of type `Other`
+   */
   type: MiniAppErrorType;
-  constructor(public name: string) {
+
+  /**
+   * the raw input received from the SDK used to construct the MiniAppError
+   */
+  raw: string;
+
+  /**
+   * Takes the error input string sent from mobile SDK.
+   * Should be formatted as follow: "error_key: error message"
+   *
+   * @param errorInput error input string sent from mobile SDK
+   */
+  constructor(public errorInput: string) {
     super();
+    this.raw = errorInput;
+    const messageArray = errorInput.split(': ');
     const error: MiniAppErrorType =
-      MiniAppErrorType[name as keyof typeof MiniAppErrorType];
-    let errorMessage: string;
+      MiniAppErrorType[messageArray[0] as keyof typeof MiniAppErrorType];
+    let errorMessage: string | undefined;
     if (error) {
-      errorMessage = errorTypesDescriptions[error];
+      errorMessage = errorTypesDescriptions.get(error);
       this.type = error;
     } else {
       this.type = MiniAppErrorType.Other;
     }
     if (errorMessage) {
-      this.name = name;
+      this.name = error;
       this.message = errorMessage;
     } else {
-      this.name = error ? error : MiniAppErrorType.Other;
-      this.message = name;
+      this.name = error
+        ? error
+        : messageArray.length > 1
+        ? messageArray[0]
+        : MiniAppErrorType.Other;
+      messageArray.splice(0, 1);
+      this.message =
+        messageArray.length > 0 ? messageArray.join(': ') : errorInput;
     }
   }
 }
