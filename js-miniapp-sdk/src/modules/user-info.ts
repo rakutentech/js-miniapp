@@ -1,5 +1,6 @@
 import { Contact, AccessTokenData } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
+import { MiniAppError } from '../miniapp-error-type';
 
 /**
  * Interfaces to retrieve User profile related information.
@@ -32,7 +33,10 @@ export interface UserInfoProvider {
    * @param scopes scopes array associated to the audience
    * @returns Access token from native host app.
    */
-  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData>;
+  getAccessToken(
+    audience: string,
+    scopes: string[]
+  ): Promise<AccessTokenData | MiniAppError>;
 }
 
 /** @internal */
@@ -49,7 +53,14 @@ export class UserInfo implements UserInfoProvider {
     return getBridge().getContacts();
   }
 
-  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {
-    return getBridge().getAccessToken(audience, scopes);
+  getAccessToken(
+    audience: string,
+    scopes: string[]
+  ): Promise<AccessTokenData | MiniAppError> {
+    return getBridge()
+      .getAccessToken(audience, scopes)
+      .catch(error => {
+        return Promise.reject(new MiniAppError(error));
+      });
   }
 }
