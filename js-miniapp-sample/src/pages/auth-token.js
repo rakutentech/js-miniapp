@@ -158,8 +158,8 @@ function AuthToken(props: AuthTokenProps) {
       )
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
       .catch((miniAppError) => {
-        console.error(miniAppError)
-        dispatch({type: 'FETCH_FAILURE', miniAppError});
+        console.error(miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError });
       });
   }
 
@@ -208,6 +208,7 @@ function AuthToken(props: AuthTokenProps) {
       />
     ) : null;
   }
+
   return (
     <GreyCard height="auto">
       <CardContent>
@@ -259,7 +260,7 @@ const mapStateToProps = (state) => {
   return {
     permissions: state.permissions,
     accessToken: state.user.accessToken,
-    error: state.error
+    error: state.error,
   };
 };
 
