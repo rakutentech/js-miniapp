@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.9.0 (in progress)
+### 1.9.0 (2021-05-27)
 - **Feature:** Added `Send Messsage` custom permission for sending message to specific contact. [See here](README.md#Request-Permissions).
 - **Feature:** Added `MiniAppError` class for a better bridge errors management [See here](README.md#Errors-management).
 
