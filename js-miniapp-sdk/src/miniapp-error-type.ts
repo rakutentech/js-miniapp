@@ -1,17 +1,33 @@
+interface MiniAppJson {
+  message: string;
+  type: string;
+}
+
+export function parseMiniAppError(jsonString: string): MiniAppJson {
+  return JSON.parse(jsonString);
+}
+
 /**
  * This class is a representation of an error sent from MiniApp mobile SDK
  */
 export class MiniAppError extends Error {
   /**
-   * the MiniAppErrorType defining this error.
-   * If no type con be extracted from the input then the MiniAppError will be considered of type `Other`
-   */
-  type: MiniAppErrorType;
-
-  /**
    * the raw input received from the SDK used to construct the MiniAppError
    */
   raw: string;
+  customMessage: string;
+
+  constructor(public errorInput: MiniAppJson) {
+    super();
+    this.raw = JSON.stringify(errorInput);
+    this.name = errorInput.type;
+    this.setMessage(errorInput.message);
+  }
+
+  setMessage(newMessage: string) {
+    this.message = newMessage;
+    this.customMessage = newMessage;
+  }
 
   /**
    * Takes the error input string sent from mobile SDK.
@@ -19,32 +35,45 @@ export class MiniAppError extends Error {
    *
    * @param errorInput error input string sent from mobile SDK
    */
-  constructor(public errorInput: string) {
-    super();
-    this.raw = errorInput;
+  static fromCustomString(errorInput: string): MiniAppError {
+    const error = new MiniAppError(parseMiniAppError('{}'));
+    error.raw = errorInput;
     const messageArray = errorInput.split(': ');
-    const error: MiniAppErrorType =
-      MiniAppErrorType[messageArray[0] as keyof typeof MiniAppErrorType];
-    let errorMessage: string | undefined;
-    if (error) {
-      errorMessage = errorTypesDescriptions.get(error);
-      this.type = error;
-    } else {
-      this.type = MiniAppErrorType.Other;
-    }
-    if (errorMessage) {
-      this.name = error;
-      this.message = errorMessage;
-    } else {
-      this.name = error
-        ? error
-        : messageArray.length > 1
-        ? messageArray[0]
-        : MiniAppErrorType.Other;
-      messageArray.splice(0, 1);
-      this.message =
-        messageArray.length > 0 ? messageArray.join(': ') : errorInput;
-    }
+
+    error.name =
+      messageArray.length > 1 ? messageArray[0] : MiniAppErrorType.Other;
+    messageArray.splice(0, 1);
+    error.setMessage(
+      messageArray.length > 0 ? messageArray.join(': ') : errorInput
+    );
+    return error;
+  }
+}
+
+export class AudienceNotSupportedError extends MiniAppError {
+  setMessage(newMessage: string) {
+    super.setMessage(newMessage);
+    this.message = errorTypesDescriptions.get(
+      MiniAppErrorType.AudienceNotSupportedError
+    );
+  }
+}
+
+export class ScopesNotSupportedError extends MiniAppError {
+  setMessage(newMessage: string) {
+    super.setMessage(newMessage);
+    this.message = errorTypesDescriptions.get(
+      MiniAppErrorType.ScopesNotSupportedError
+    );
+  }
+}
+
+export class AuthorizationFailureError extends MiniAppError {
+  setMessage(newMessage: string) {
+    super.setMessage(newMessage);
+    this.message = errorTypesDescriptions.get(
+      MiniAppErrorType.AuthorizationFailureError
+    );
   }
 }
 

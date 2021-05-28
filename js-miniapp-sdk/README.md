@@ -413,11 +413,21 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 
 ### Errors management
 
-Error messages sent to the bridge should always be of the format: `"error_type_key: error_message"` or `"error_key"`.
-The SDK will throw a `MiniAppError` extracting the `error_type_key` from this message and check if an error message exists locally. 
+Error messages sent to the bridge when a `getAccessToken` call is failing should always be in the following JSON format:
+
+````json
+{
+  "message": "error_message",
+  "type": "error_type_key"
+}
+````
+For other methods calls the string pattern `"error_type_key: error_message"` is still recommended.
+
+At the moment, the SDK will throw a `MiniAppError` (and subclasses) only on `getAccessToken` failures, extracting the `error_type_key`.
+If the JSON format is not recognized, the recommended string pattern will be parsed.
 If no error message exists, it will then construct one base on `error_message` if available.
-If the error type key is not supported, `MiniAppError.type` will automatically be set to `Other`
-Here are the currently supported type keys:
+If the error type key is not supported, `MiniAppError.name` will automatically be set to `Other`
+Here are the type keys currently supported and their default message:
 
 | Error Type | Message |
 | ---- | ---- |
@@ -427,35 +437,33 @@ Here are the currently supported type keys:
 | `Other` |  _a message should be provided_ |
 
 
-Here is an example of how `MiniAppError` is populated if the bridge receives a valid key `AudienceNotSupportedError`:
-
+Here is an example of how `MiniAppError` is populated if the bridge receives a valid key `AudienceNotSupportedError` JSON:
+````json
+{
+  "message": "AudienceNotSupportedError custom message",
+  "type": "AudienceNotSupportedError"
+}
+````
 ```javascript
 miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
   .then(data => {
       ...
   })
-  .catch(error => {
-      console.error(error.name);     // AudienceNotSupportedError
-      console.error(error.message); //  The value passed for 'audience' is not supported.
-      console.error(error.type);   //   AudienceNotSupportedError
-      console.error(error.raw);   //    AudienceNotSupportedError
+  .catch(error => {                            //Example of values :
+      console.error(error.name);              // AudienceNotSupportedError
+      console.error(error.message);          //  The value passed for 'audience' is not supported.
+      console.error(error.customMessage);   //   AudienceNotSupportedError custom message
+      console.error(error.raw);            //    { "message": "AudienceNotSupportedError custom message", "type": "AudienceNotSupportedError" }
 
-  })
-```
-
-Here is an example of how `MiniAppError` is populated if the bridge receives the following custom error message `AudienceCustomError: The custom audience is not supported.`:
-
-```javascript
-miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
-  .then(data => {
-      ...
-  })
-  .catch(error => {
-      console.error(error.name);     // AudienceCustomError
-      console.error(error.message); //  The custom audience is not supported.
-      console.error(error.type);   //   Other
-      console.error(error.raw);   //    AudienceCustomError: The custom audience is not supported.
-
+      if (error instanceof AuthorizationFailureError) {
+          // handle error
+      } else if (error instanceof AudienceNotSupportedError) {
+          // handle error
+      } else if (error instanceof ScopesNotSupportedError) {
+          // handle error
+      } else if (error instanceof MiniAppError) {
+          // handle error
+      }
   })
 ```
 

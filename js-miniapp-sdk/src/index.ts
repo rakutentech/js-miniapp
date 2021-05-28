@@ -18,6 +18,12 @@ import {
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
+import {
+  MiniAppError,
+  AuthorizationFailureError,
+  ScopesNotSupportedError,
+  AudienceNotSupportedError,
+} from './miniapp-error-type';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
@@ -34,4 +40,8 @@ export {
   AccessTokenData,
   Contact,
   MessageToContact,
+  MiniAppError,
+  AudienceNotSupportedError,
+  AuthorizationFailureError,
+  ScopesNotSupportedError,
 };
