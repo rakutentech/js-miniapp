@@ -413,6 +413,8 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 
 ### Errors management
 
+#### Access Token error
+
 Error messages sent to the bridge when a `getAccessToken` call is failing should always be in the following JSON format:
 
 ````json
@@ -421,13 +423,10 @@ Error messages sent to the bridge when a `getAccessToken` call is failing should
   "type": "error_type_key"
 }
 ````
-For other methods calls the string pattern `"error_type_key: error_message"` is still recommended.
+At the moment, the SDK will throw a `MiniAppError` (and subclasses), subclassing `Error` type, only on `getAccessToken` failures, based on `type` value.
+If the error `type` value is not supported, `Error.name` field will automatically be set to `Other`.
 
-At the moment, the SDK will throw a `MiniAppError` (and subclasses) only on `getAccessToken` failures, extracting the `error_type_key`.
-If the JSON format is not recognized, the recommended string pattern will be parsed.
-If no error message exists, it will then construct one base on `error_message` if available.
-If the error type key is not supported, `MiniAppError.name` will automatically be set to `Other`
-Here are the type keys currently supported and their default message:
+Here are the `type` values currently supported and their default message:
 
 | Error Type | Message |
 | ---- | ---- |
@@ -436,8 +435,10 @@ Here are the type keys currently supported and their default message:
 | `AuthorizationFailureError` | _a message should be provided_ |
 | `Other` |  _a message should be provided_ |
 
+You can retrieve the default message of a `MiniAppError` in the `Error.message` field. If a `message` value is provided, you can retrieve it in the `MiniAppError.customMessage` field
 
-Here is an example of how `MiniAppError` is populated if the bridge receives a valid key `AudienceNotSupportedError` JSON:
+
+Here is an example of how `AudienceNotSupportedError`, subclass of `MiniAppError`, is populated if the bridge receives a valid key `AudienceNotSupportedError` JSON:
 ````json
 {
   "message": "AudienceNotSupportedError custom message",

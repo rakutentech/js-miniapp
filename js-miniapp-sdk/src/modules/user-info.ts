@@ -1,13 +1,13 @@
-import { AccessTokenData, Contact } from '../../../js-miniapp-bridge/src';
-import { getBridge } from '../utils';
 import {
+  AccessTokenData,
   AudienceNotSupportedError,
   AuthorizationFailureError,
+  Contact,
   MiniAppError,
-  MiniAppErrorType,
-  parseMiniAppError,
   ScopesNotSupportedError,
-} from '../miniapp-error-type';
+} from '../../../js-miniapp-bridge/src';
+import { getBridge } from '../utils';
+import { MiniAppErrorType } from '../../build/js-miniapp-sdk/src/miniapp-error-type';
 
 /**
  * Interfaces to retrieve User profile related information.
@@ -60,36 +60,7 @@ export class UserInfo implements UserInfoProvider {
     return getBridge().getContacts();
   }
 
-  getAccessToken(
-    audience: string,
-    scopes: string[]
-  ): Promise<AccessTokenData | MiniAppError> {
-    return getBridge()
-      .getAccessToken(audience, scopes)
-      .catch(error => {
-        try {
-          const miniAppError = parseMiniAppError(error);
-          const errorType: MiniAppErrorType =
-            MiniAppErrorType[
-              miniAppError.type as keyof typeof MiniAppErrorType
-            ];
-          switch (errorType) {
-            case MiniAppErrorType.AuthorizationFailureError:
-              return Promise.reject(
-                new AuthorizationFailureError(miniAppError)
-              );
-            case MiniAppErrorType.AudienceNotSupportedError:
-              return Promise.reject(
-                new AudienceNotSupportedError(miniAppError)
-              );
-            case MiniAppErrorType.ScopesNotSupportedError:
-              return Promise.reject(new ScopesNotSupportedError(miniAppError));
-            default:
-              return Promise.reject(new MiniAppError(miniAppError));
-          }
-        } catch (e) {
-          return Promise.reject(MiniAppError.fromCustomString(error));
-        }
-      });
+  getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {
+    return getBridge().getAccessToken(audience, scopes);
   }
 }
