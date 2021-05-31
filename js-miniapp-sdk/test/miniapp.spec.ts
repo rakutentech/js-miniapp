@@ -343,17 +343,15 @@ describe('getAccessToken', () => {
     const json = parseMiniAppError('{"type": "AudienceNotSupportedError"}');
     const error = new AudienceNotSupportedError(json);
 
-    expect(
-        error.message
-    ).to.equal(errorTypesDescriptions.get(MiniAppErrorType.AudienceNotSupportedError));
+    expect(error.message).to.equal(
+      errorTypesDescriptions.get(MiniAppErrorType.AudienceNotSupportedError)
+    );
 
-    expect(
-        error.name
-    ).to.equal(MiniAppErrorType.AudienceNotSupportedError);
+    expect(error.name).to.equal(MiniAppErrorType.AudienceNotSupportedError);
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 
@@ -361,35 +359,31 @@ describe('getAccessToken', () => {
     const json = parseMiniAppError('{"type": "ScopesNotSupportedError"}');
     const error = new ScopesNotSupportedError(json);
 
-    expect(
-        error.message
-    ).to.equal(errorTypesDescriptions.get(MiniAppErrorType.ScopesNotSupportedError));
+    expect(error.message).to.equal(
+      errorTypesDescriptions.get(MiniAppErrorType.ScopesNotSupportedError)
+    );
 
-    expect(
-        error.name
-    ).to.equal(MiniAppErrorType.ScopesNotSupportedError);
+    expect(error.name).to.equal(MiniAppErrorType.ScopesNotSupportedError);
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 
   it('should retrieve AuthorizationFailureError response from the MiniAppBridge once there is an authorization error', () => {
-    const json = parseMiniAppError('{"type": "AuthorizationFailureError", "message": "authorization failed"}');
+    const json = parseMiniAppError(
+      '{"type": "AuthorizationFailureError", "message": "authorization failed"}'
+    );
     const error = new AuthorizationFailureError(json);
 
-    expect(
-        error.message
-    ).to.equal("authorization failed");
+    expect(error.message).to.equal('authorization failed');
 
-    expect(
-        error.name
-    ).to.equal(MiniAppErrorType.AuthorizationFailureError);
+    expect(error.name).to.equal(MiniAppErrorType.AuthorizationFailureError);
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 
@@ -397,35 +391,29 @@ describe('getAccessToken', () => {
     const json = parseMiniAppError('{"message": "authorization failed"}');
     const error = new MiniAppError(json);
 
-    expect(
-        error.message
-    ).to.equal("authorization failed");
+    expect(error.message).to.equal('authorization failed');
 
-    expect(
-        error.name
-    ).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 
   it('should retrieve MiniAppError response from the MiniAppBridge once there is an error with an unknown type', () => {
-    const json = parseMiniAppError('{"type": "Other", "message": "authorization failed"}');
+    const json = parseMiniAppError(
+      '{"type": "Other", "message": "authorization failed"}'
+    );
     const error = new MiniAppError(json);
 
-    expect(
-        error.message
-    ).to.equal("authorization failed");
+    expect(error.message).to.equal('authorization failed');
 
-    expect(
-        error.name
-    ).to.equal("Other");
+    expect(error.name).to.equal('Other');
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 
@@ -433,17 +421,13 @@ describe('getAccessToken', () => {
     const json = parseMiniAppError('{}');
     const error = new MiniAppError(json);
 
-    expect(
-        error.message
-    ).to.equal(undefined);
+    expect(error.message).to.equal(undefined);
 
-    expect(
-        error.name
-    ).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
 
     window.MiniAppBridge.getAccessToken.resolves(error);
     return expect(
-        miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
     ).to.eventually.equal(error);
   });
 });
