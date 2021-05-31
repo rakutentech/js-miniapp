@@ -24,6 +24,9 @@ import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   ScopesNotSupportedError,
+  parseMiniAppError,
+  errorTypesDescriptions,
+  MiniAppErrorType,
 } from './types/error-types';
 
 export {
@@ -44,4 +47,7 @@ export {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   ScopesNotSupportedError,
+  parseMiniAppError,
+  errorTypesDescriptions,
+  MiniAppErrorType,
 };
