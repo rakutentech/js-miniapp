@@ -5,7 +5,7 @@
  */
 
 import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types/rewarded';
+import { Reward } from './types/response-types';
 import { DevicePermission } from './types/device-permission';
 import {
   CustomPermission,
@@ -16,7 +16,7 @@ import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
-import { MiniAppErrorType } from 'js-miniapp-sdk/build/js-miniapp-sdk/src/miniapp-error-type';
+import { MiniAppErrorType } from './types/error-types';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,

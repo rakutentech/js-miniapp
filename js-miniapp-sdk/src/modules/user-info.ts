@@ -7,7 +7,6 @@ import {
   ScopesNotSupportedError,
 } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
-import { MiniAppErrorType } from '../../build/js-miniapp-sdk/src/miniapp-error-type';
 
 /**
  * Interfaces to retrieve User profile related information.
