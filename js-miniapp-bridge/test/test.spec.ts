@@ -107,7 +107,7 @@ describe('getToken', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(
       3,
-      '{ "type": "AudienceNotSupportedError" }'
+      '{ "type": "AudienceNotSupportedError", "message": null }'
     );
 
     return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
@@ -162,6 +162,15 @@ describe('getToken', () => {
       .to.eventually.be.rejected.and.be.an.instanceof(MiniAppError)
       .and.to.include({ message: 'test message' });
   });
+
+  it('will still send an error if JSON error parsing fails', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'an error occurred');
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+        .to.eventually.be.rejected.and.to.equal('an error occurred');
+  });
+
 });
 
 describe('showRewardedAd', () => {
