@@ -167,10 +167,10 @@ describe('getToken', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, 'an error occurred');
 
-    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
-        .to.eventually.be.rejected.and.to.equal('an error occurred');
+    return expect(
+      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.be.rejected.and.to.equal('an error occurred');
   });
-
 });
 
 describe('showRewardedAd', () => {
