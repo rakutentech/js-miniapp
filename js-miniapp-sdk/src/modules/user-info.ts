@@ -1,10 +1,7 @@
 import {
   AccessTokenData,
-  AudienceNotSupportedError,
-  AuthorizationFailureError,
   Contact,
   MiniAppError,
-  ScopesNotSupportedError,
 } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
 

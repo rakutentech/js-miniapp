@@ -441,7 +441,6 @@ You can retrieve the default message of a `MiniAppError` in the `Error.message` 
 Here is an example of how `AudienceNotSupportedError`, subclass of `MiniAppError`, is populated if the bridge receives a valid key `AudienceNotSupportedError` JSON:
 ````json
 {
-  "message": "AudienceNotSupportedError custom message",
   "type": "AudienceNotSupportedError"
 }
 ````
@@ -453,8 +452,6 @@ miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
   .catch(error => {                            //Example of values :
       console.error(error.name);              // AudienceNotSupportedError
       console.error(error.message);          //  The value passed for 'audience' is not supported.
-      console.error(error.customMessage);   //   AudienceNotSupportedError custom message
-      console.error(error.raw);            //    { "message": "AudienceNotSupportedError custom message", "type": "AudienceNotSupportedError" }
 
       if (error instanceof AuthorizationFailureError) {
           // handle error

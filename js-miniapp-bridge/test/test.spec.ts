@@ -74,6 +74,26 @@ describe('execErrorCallback', () => {
   });
 });
 
+describe('getToken', () => {
+  it('will parse the AccessToken JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
+    );
+
+    return expect(
+      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.deep.equal({
+      token: 'test',
+      validUntil: new Date(0),
+      scopes: {
+        audience: 'AUD',
+        scopes: ['SCO1', 'SCO2'],
+      },
+    });
+  });
+
 describe('showRewardedAd', () => {
   it('will parse the Reward JSON response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);

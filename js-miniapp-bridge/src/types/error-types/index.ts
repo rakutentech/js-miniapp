@@ -21,13 +21,10 @@ export function parseMiniAppError(jsonString: string): MiniAppJson {
  * This class is a representation of an error sent from MiniApp mobile SDK
  */
 export class MiniAppError extends Error {
-  customMessage: string;
-
   constructor(public errorInput: MiniAppJson) {
     super();
     Object.setPrototypeOf(this, MiniAppError.prototype);
     this.name = errorInput.type;
-    this.customMessage = errorInput.message;
     this.setMessage(errorInput.message);
   }
 
