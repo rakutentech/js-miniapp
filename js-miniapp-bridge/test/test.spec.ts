@@ -6,6 +6,15 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
 } from '../src/types/custom-permissions';
+import {
+  errorTypesDescriptions,
+  MiniAppErrorType,
+  parseMiniAppError,
+  AudienceNotSupportedError,
+  ScopesNotSupportedError,
+  AuthorizationFailureError,
+  MiniAppError,
+} from '../src';
 
 /* tslint:disable:no-any */
 const window: any = {};
@@ -83,7 +92,7 @@ describe('getToken', () => {
     );
 
     return expect(
-      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+      bridge.getAccessToken('AUD', ['SCO1', 'SCO2'])
     ).to.eventually.deep.equal({
       token: 'test',
       validUntil: new Date(0),
@@ -93,6 +102,67 @@ describe('getToken', () => {
       },
     });
   });
+
+  it('will parse the AccessToken AudienceNotSupportedError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "AudienceNotSupportedError" }'
+    );
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+      .to.eventually.be.rejected.and.be.an.instanceof(AudienceNotSupportedError)
+      .and.have.property(
+        'message',
+        errorTypesDescriptions.get(MiniAppErrorType.AudienceNotSupportedError)
+      );
+  });
+
+  it('will parse the AccessToken ScopesNotSupportedError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "type": "ScopesNotSupportedError" }');
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+      .to.eventually.be.rejected.and.be.an.instanceof(ScopesNotSupportedError)
+      .and.have.property(
+        'message',
+        errorTypesDescriptions.get(MiniAppErrorType.ScopesNotSupportedError)
+      );
+  });
+
+  it('will parse the AccessToken AuthorizationFailureError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "AuthorizationFailureError", "message": "test message" }'
+    );
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+      .to.eventually.be.rejected.and.be.an.instanceof(AuthorizationFailureError)
+      .and.have.property('message', 'test message');
+  });
+
+  it('will parse the AccessToken error JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "test", "message": "test message" }'
+    );
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+      .to.eventually.be.rejected.and.be.an.instanceof(MiniAppError)
+      .and.to.include({ name: 'test', message: 'test message' });
+  });
+
+  it('will parse the AccessToken error JSON with no type response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
+
+    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
+      .to.eventually.be.rejected.and.be.an.instanceof(MiniAppError)
+      .and.to.include({ message: 'test message' });
+  });
+});
 
 describe('showRewardedAd', () => {
   it('will parse the Reward JSON response', () => {
