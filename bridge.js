@@ -3,6 +3,8 @@
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
 var token_data_1 = require("./types/token-data");
+var error_types_1 = require("./types/error-types");
+var error_types_2 = require("./types/error-types");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
@@ -186,7 +188,26 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('getAccessToken', { audience: audience, scopes: scopes }, function (tokenData) {
                 var nativeTokenData = JSON.parse(tokenData);
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
-            }, function (error) { return reject(error); });
+            }, function (error) {
+                try {
+                    var miniAppError = error_types_2.parseMiniAppError(error);
+                    var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
+                    switch (errorType) {
+                        case error_types_1.MiniAppErrorType.AuthorizationFailureError:
+                            return reject(new error_types_2.AuthorizationFailureError(miniAppError));
+                        case error_types_1.MiniAppErrorType.AudienceNotSupportedError:
+                            return reject(new error_types_2.AudienceNotSupportedError(miniAppError));
+                        case error_types_1.MiniAppErrorType.ScopesNotSupportedError:
+                            return reject(new error_types_2.ScopesNotSupportedError(miniAppError));
+                        default:
+                            return reject(new error_types_2.MiniAppError(miniAppError));
+                    }
+                }
+                catch (e) {
+                    console.error(e);
+                    return reject(error);
+                }
+            });
         });
     };
     /**
@@ -274,7 +295,7 @@ function removeFromMessageQueue(queueObj) {
     }
 }
 
-},{"./types/token-data":4}],2:[function(require,module,exports){
+},{"./types/error-types":3,"./types/token-data":5}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -320,7 +341,109 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
     }, function (error) { return console.error(error); });
 };
 
-},{"../common-bridge":1,"../types/platform":3}],3:[function(require,module,exports){
+},{"../common-bridge":1,"../types/platform":4}],3:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Enum for supported SDK error types
+ */
+var MiniAppErrorType;
+(function (MiniAppErrorType) {
+    MiniAppErrorType["AudienceNotSupportedError"] = "AudienceNotSupportedError";
+    MiniAppErrorType["ScopesNotSupportedError"] = "ScopesNotSupportedError";
+    MiniAppErrorType["AuthorizationFailureError"] = "AuthorizationFailureError";
+})(MiniAppErrorType = exports.MiniAppErrorType || (exports.MiniAppErrorType = {}));
+function parseMiniAppError(jsonString) {
+    return JSON.parse(jsonString);
+}
+exports.parseMiniAppError = parseMiniAppError;
+/**
+ * This class is a representation of an error sent from MiniApp mobile SDK
+ */
+var MiniAppError = /** @class */ (function (_super) {
+    __extends(MiniAppError, _super);
+    function MiniAppError(errorInput) {
+        var _this = _super.call(this) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, MiniAppError.prototype);
+        _this.name = errorInput.type;
+        _this.setMessage(errorInput.message);
+        return _this;
+    }
+    MiniAppError.prototype.setMessage = function (newMessage) {
+        if (newMessage !== undefined) {
+            var enumKey = MiniAppErrorType[newMessage];
+            if (enumKey !== undefined) {
+                this.message = exports.errorTypesDescriptions.get(enumKey);
+            }
+        }
+        if (!this.message || /^\s*$/.test(this.message)) {
+            this.message = newMessage;
+        }
+    };
+    return MiniAppError;
+}(Error));
+exports.MiniAppError = MiniAppError;
+var AudienceNotSupportedError = /** @class */ (function (_super) {
+    __extends(AudienceNotSupportedError, _super);
+    function AudienceNotSupportedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, AudienceNotSupportedError.prototype);
+        _super.prototype.setMessage.call(_this, MiniAppErrorType.AudienceNotSupportedError);
+        return _this;
+    }
+    return AudienceNotSupportedError;
+}(MiniAppError));
+exports.AudienceNotSupportedError = AudienceNotSupportedError;
+var ScopesNotSupportedError = /** @class */ (function (_super) {
+    __extends(ScopesNotSupportedError, _super);
+    function ScopesNotSupportedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, ScopesNotSupportedError.prototype);
+        _super.prototype.setMessage.call(_this, MiniAppErrorType.ScopesNotSupportedError);
+        return _this;
+    }
+    return ScopesNotSupportedError;
+}(MiniAppError));
+exports.ScopesNotSupportedError = ScopesNotSupportedError;
+var AuthorizationFailureError = /** @class */ (function (_super) {
+    __extends(AuthorizationFailureError, _super);
+    function AuthorizationFailureError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, AuthorizationFailureError.prototype);
+        return _this;
+    }
+    return AuthorizationFailureError;
+}(MiniAppError));
+exports.AuthorizationFailureError = AuthorizationFailureError;
+exports.errorTypesDescriptions = new Map([
+    [
+        MiniAppErrorType.AudienceNotSupportedError,
+        "The value passed for 'audience' is not supported.",
+    ],
+    [
+        MiniAppErrorType.ScopesNotSupportedError,
+        "The value passed for 'scopes' is not supported.",
+    ],
+]);
+
+},{}],4:[function(require,module,exports){
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -331,7 +454,7 @@ var Platform;
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Token data type. */
