@@ -415,35 +415,9 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 
 #### Access Token error
 
-Error messages sent to the bridge when a `getAccessToken` call is failing should always be in the following JSON format:
+When an access token is requested, different `Error` subtypes can be thrown to the MiniApp:
 
-````json
-{
-  "message": "error_message",
-  "type": "error_type_key"
-}
-````
-At the moment, the SDK will throw a `MiniAppError` (and subclasses), subclassing `Error` type, only on `getAccessToken` failures, based on `type` value.
-If the error `type` value is not supported, `Error.name` field will automatically be set to `Other`.
-
-Here are the `type` values currently supported and their default message:
-
-| Error Type | Message |
-| ---- | ---- |
-| `AudienceNotSupportedError` | `The value passed for 'audience' is not supported.` |
-| `ScopesNotSupportedError` | `The value passed for 'scopes' is not supported.` |
-| `AuthorizationFailureError` | _a message should be provided_ |
-| `Other` |  _a message should be provided_ |
-
-You can retrieve the default message of a `MiniAppError` in the `Error.message` field. If a `message` value is provided, you can retrieve it in the `MiniAppError.customMessage` field
-
-
-Here is an example of how `AudienceNotSupportedError`, subclass of `MiniAppError`, is populated if the bridge receives a valid key `AudienceNotSupportedError` JSON:
-````json
-{
-  "type": "AudienceNotSupportedError"
-}
-````
+Here is a complete example of you can manage Access Token errors:
 ```javascript
 miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
   .then(data => {
@@ -461,6 +435,8 @@ miniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
           // handle error
       } else if (error instanceof MiniAppError) {
           // handle error
+      } else {
+          // unexepected error caused by SDK
       }
   })
 ```

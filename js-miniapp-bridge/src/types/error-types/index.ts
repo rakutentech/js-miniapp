@@ -5,7 +5,6 @@ export enum MiniAppErrorType {
   AudienceNotSupportedError = 'AudienceNotSupportedError',
   ScopesNotSupportedError = 'ScopesNotSupportedError',
   AuthorizationFailureError = 'AuthorizationFailureError',
-  Other = 'Other',
 }
 
 interface MiniAppJson {
