@@ -419,6 +419,21 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * Associating get point balance function to MiniAppBridge object.
+   * (provided rakuten.miniapp.user.POINT_BALANCE is allowed by the user)
+   */
+  getPointBalance() {
+    return new Promise<number>((resolve, reject) => {
+      return this.executor.exec(
+        'getPointBalance',
+        null,
+        balance => resolve(Number(balance)),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
