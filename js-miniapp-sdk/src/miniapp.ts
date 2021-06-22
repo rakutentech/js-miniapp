@@ -7,6 +7,7 @@ import {
   CustomPermissionStatus,
   ShareInfoType,
   ScreenOrientation,
+  Points,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -65,7 +66,7 @@ interface MiniAppFeatures {
    * Request the point balance from the host app.
    * @returns Promise of the provided point balance from mini app.
    */
-  getPointBalance(): Promise<number>;
+  getPoints(): Promise<Points>;
 }
 
 /**
@@ -199,7 +200,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge().setScreenOrientation(screenOrientation);
   }
 
-  getPointBalance(): Promise<number> {
-    return getBridge().getPointBalance();
+  getPoints(): Promise<Points> {
+    return getBridge().getPoints();
   }
 }

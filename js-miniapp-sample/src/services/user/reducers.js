@@ -5,6 +5,7 @@ import type {
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
   AccessTokenSuccessAction,
+  PointsSuccessAction,
 } from './actions';
 import {
   REQUEST_CONTACT_LIST_SUCCESS,
@@ -65,9 +66,23 @@ const accessTokenReducer = (
   }
 };
 
+const defaultPoints = {};
+const pointsReducer = (
+  state: ?Points = defaultPoints,
+  action: PointsSuccessAction
+): ?Points => {
+  switch (action.type) {
+    case REQUEST_ACCESS_TOKEN_SUCCESS:
+      return action.points;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   userName: userNameReducer,
   profilePhoto: profilePhotoReducer,
   contactList: contactListReducer,
   accessToken: accessTokenReducer,
+  points: pointsReducer,
 });

@@ -16,6 +16,7 @@ import { ScreenOrientation } from './types/screen';
 import { NativeTokenData, AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
+import { Points } from './types/points';
 import { MiniAppErrorType } from './types/error-types';
 import {
   AudienceNotSupportedError,
@@ -422,14 +423,14 @@ export class MiniAppBridge {
 
   /**
    * Associating get point balance function to MiniAppBridge object.
-   * (provided rakuten.miniapp.user.POINT_BALANCE is allowed by the user)
+   * (provided rakuten.miniapp.user.POINTS is allowed by the user)
    */
-  getPointBalance() {
-    return new Promise<number>((resolve, reject) => {
+  getPoints() {
+    return new Promise<Points>((resolve, reject) => {
       return this.executor.exec(
         'getPointBalance',
         null,
-        balance => resolve(Number(balance)),
+        points => resolve(JSON.parse(points) as Points),
         error => reject(error)
       );
     });
