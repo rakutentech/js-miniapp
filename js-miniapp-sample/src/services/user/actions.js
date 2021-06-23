@@ -1,5 +1,5 @@
 import MiniApp, { AccessTokenData } from 'js-miniapp-sdk';
-import { Contact } from 'js-miniapp-sdk';
+import { Contact, Points } from 'js-miniapp-sdk';
 
 import {
   REQUEST_USER_NAME_SUCCESS,

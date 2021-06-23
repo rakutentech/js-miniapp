@@ -346,7 +346,7 @@ describe('getAccessToken', () => {
         {
           pointsStandard: 10,
           pointsTerm: 20,
-          pointsCash: 30
+          pointsCash: 30,
         },
       ];
   
