@@ -341,7 +341,7 @@ describe('getAccessToken', () => {
   });
 
   describe('getPoints', () => {
-    it('should retrieve points from the MiniAppBridge when request is successful', () => {
+    it('should retrieve Points from the MiniAppBridge when request is successful', () => {
       const response = [
         {
           pointsStandard: 10,
@@ -349,7 +349,6 @@ describe('getAccessToken', () => {
           pointsCash: 30,
         },
       ];
-  
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.user.getPoints()).to.eventually.equal(response);
     });
