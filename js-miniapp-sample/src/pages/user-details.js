@@ -426,7 +426,8 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points !== undefined && props.points.pointsStandard !== undefined
+              : props.points !== undefined &&
+                props.points.pointsStandard !== undefined
               ? props.points.pointsStandard.toString()
               : '-'
           }
@@ -441,7 +442,8 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points !== undefined && props.points.pointsTerm !== undefined
+              : props.points !== undefined &&
+                props.points.pointsTerm !== undefined
               ? props.points.pointsTerm.toString()
               : '-'
           }
@@ -456,7 +458,8 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points !== undefined && props.points.pointsCash !== undefined
+              : props.points !== undefined &&
+                props.points.pointsCash !== undefined
               ? props.points.pointsCash.toString()
               : '-'
           }
