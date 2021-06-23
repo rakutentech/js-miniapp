@@ -131,12 +131,14 @@ export const initialState = {
   isLoading: false,
   isError: false,
   hasRequestedPermissions: false,
+  hasRequestedPointPermissions: false,
 };
 
 type State = {
   isLoading: ?boolean,
   isError: ?boolean,
   hasRequestedPermissions: boolean,
+  hasRequestedPointPermissions: boolean,
 };
 
 type Action = {
@@ -145,12 +147,14 @@ type Action = {
 
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
+
     case 'FETCH_INIT':
       return {
         ...state,
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
+        hasRequestedPointPermissions: false
       };
     case 'FETCH_SUCCESS':
       return {
@@ -158,6 +162,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
+        hasRequestedPointPermissions: false
       };
     case 'FETCH_FAILURE':
       return {
@@ -165,6 +170,30 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: true,
       };
+
+    case 'POINTS_FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        hasRequestedPermissions: false,
+        hasRequestedPointPermissions: false
+      };
+    case 'POINTS_FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        hasRequestedPermissions: false,
+        hasRequestedPointPermissions: true
+      };
+    case 'POINTS_FETCH_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+      };
+
     default:
       throw Error('Unknown action type');
   }
@@ -264,10 +293,10 @@ function UserDetails(props: UserDetailsProps) {
             : null
         ])
       )
-      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .then(() => dispatch({ type: 'POINTS_FETCH_SUCCESS' }))
       .catch((e) => {
         console.error(e);
-        dispatch({ type: 'FETCH_FAILURE' });
+        dispatch({ type: 'POINTS_FETCH_FAILURE' });
       });
   }
 
@@ -282,7 +311,7 @@ function UserDetails(props: UserDetailsProps) {
   function handlePointsClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
-      dispatch({ type: 'FETCH_INIT' });
+      dispatch({ type: 'POINTS_FETCH_INIT' });
       requestPoints();
     }
   }
@@ -382,7 +411,7 @@ function UserDetails(props: UserDetailsProps) {
 
   function PointBalance() {
     const hasDeniedPermission =
-      state.hasRequestedPermissions &&
+      state.hasRequestedPointPermissions &&
       !hasPermission(CustomPermissionName.POINTS);
 
     return (
