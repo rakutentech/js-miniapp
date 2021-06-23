@@ -87,7 +87,7 @@
             function getParam(name) {
                 const params = window.location.search;
                 if (params) {
-                    const param = params.substr(1).split("&")
+                    const param = params.replaceAll("&", "?").split("?")
                         .map(param => param.split("="))
                         .find(pair => pair[0] === name);
                     return param && param[1];
