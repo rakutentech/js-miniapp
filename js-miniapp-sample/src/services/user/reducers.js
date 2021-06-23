@@ -12,6 +12,7 @@ import {
   REQUEST_USER_NAME_SUCCESS,
   REQUEST_PROFILE_PHOTO_SUCCESS,
   REQUEST_ACCESS_TOKEN_SUCCESS,
+  REQUEST_POINTS_SUCCESS,
 } from './types';
 
 const defaultUserName = null;
@@ -72,7 +73,7 @@ const pointsReducer = (
   action: PointsSuccessAction
 ): ?Points => {
   switch (action.type) {
-    case REQUEST_ACCESS_TOKEN_SUCCESS:
+    case REQUEST_POINTS_SUCCESS:
       return action.points;
     default:
       return state;

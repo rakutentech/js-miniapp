@@ -244,8 +244,8 @@ function UserDetails(props: UserDetailsProps) {
       {
         name: CustomPermissionName.POINTS,
         description:
-          'We would like to fetch your Rakuten Point Balance.',
-      }
+          'We would like to display your Points on your profile page.',
+      },
     ];
 
     props
@@ -259,7 +259,7 @@ function UserDetails(props: UserDetailsProps) {
       )
       .then((permissions) =>
         Promise.all([
-          hasPermission(CustomPermissionName.PointBalance, permissions)
+          hasPermission(CustomPermissionName.POINTS, permissions)
             ? props.getPoints()
             : null
         ])
@@ -387,8 +387,9 @@ function UserDetails(props: UserDetailsProps) {
 
     return (
       <Paper className={classes.paper}>
-        <CardHeader subheader="Point Balance" />
+        <CardHeader subheader="Points" />
         <TextField
+          variant="outlined"
           disabled={true}
           className={classes.formInput}
           id="input-points-standard"
@@ -396,11 +397,12 @@ function UserDetails(props: UserDetailsProps) {
           label={'Points (Standard)'}
           value={
             hasDeniedPermission
-              ? '"PointBalance" permission not granted.'
-              : props.points !== undefined ? props.points.pointsStandard : '' || ' '
+              ? '"Points" permission not granted.'
+              : (props.points.pointsStandard !== undefined ? props.points.pointsStandard.toString() : '-')
           }
         />
         <TextField
+          variant="outlined"
           disabled={true}
           className={classes.formInput}
           id="input-points-term"
@@ -408,11 +410,12 @@ function UserDetails(props: UserDetailsProps) {
           label={'Points (Time-Limited)'}
           value={
             hasDeniedPermission
-              ? '"PointBalance" permission not granted.'
-              : props.points !== undefined ? props.points.pointsTerm : '' || ' '
+              ? '"Points" permission not granted.'
+              : props.points.pointsTerm !== undefined ? props.points.pointsTerm.toString() : '-' || ' '
           }
         />
         <TextField
+          variant="outlined"
           disabled={true}
           className={classes.formInput}
           id="input-points-cash"
@@ -420,8 +423,8 @@ function UserDetails(props: UserDetailsProps) {
           label={'Points (Rakuten Cash)'}
           value={
             hasDeniedPermission
-              ? '"PointBalance" permission not granted.'
-              : props.points !== undefined ? props.points.pointsCash : '' || ' '
+              ? '"Points" permission not granted.'
+              : props.points.pointsCash !== undefined ? props.points.pointsCash.toString() : '-' || ' '
           }
         />
       </Paper>
@@ -528,6 +531,7 @@ const mapStateToProps = (state) => {
     userName: state.user.userName,
     profilePhoto: state.user.profilePhoto,
     contactList: state.user.contactList,
+    points: state.user.points,
   };
 };
 

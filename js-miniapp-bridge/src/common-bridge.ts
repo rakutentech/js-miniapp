@@ -428,7 +428,7 @@ export class MiniAppBridge {
   getPoints() {
     return new Promise<Points>((resolve, reject) => {
       return this.executor.exec(
-        'getPointBalance',
+        'getPoints',
         null,
         points => resolve(JSON.parse(points) as Points),
         error => reject(error)
