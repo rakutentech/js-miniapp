@@ -11,7 +11,7 @@ import {
   REQUEST_ACCESS_TOKEN_SUCCESS,
   REQUEST_ACCESS_TOKEN_FAILURE,
   REQUEST_POINTS_SUCCESS,
-  REQUEST_POINTS_FAILURE
+  REQUEST_POINTS_FAILURE,
 } from './types';
 
 type UserNameSuccessAction = { type: String, userName: string };
@@ -121,12 +121,12 @@ export {
   requestProfilePhoto,
   requestContactList,
   requestAccessToken,
-  requestPoints
+  requestPoints,
 };
 export type {
   UserNameSuccessAction,
   ProfilePhotoSuccessAction,
   ContactListSuccessAction,
   AccessTokenSuccessAction,
-  PointsSuccessAction
+  PointsSuccessAction,
 };

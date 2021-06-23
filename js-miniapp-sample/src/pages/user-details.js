@@ -25,7 +25,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   Contact,
-  Points
+  Points,
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
@@ -35,7 +35,7 @@ import {
   requestContactList,
   requestProfilePhoto,
   requestUserName,
-  requestPoints
+  requestPoints,
 } from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -147,14 +147,13 @@ type Action = {
 
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
-
     case 'FETCH_INIT':
       return {
         ...state,
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
-        hasRequestedPointPermissions: false
+        hasRequestedPointPermissions: false,
       };
     case 'FETCH_SUCCESS':
       return {
@@ -162,7 +161,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
-        hasRequestedPointPermissions: false
+        hasRequestedPointPermissions: false,
       };
     case 'FETCH_FAILURE':
       return {
@@ -177,7 +176,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
-        hasRequestedPointPermissions: false
+        hasRequestedPointPermissions: false,
       };
     case 'POINTS_FETCH_SUCCESS':
       return {
@@ -185,7 +184,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: false,
-        hasRequestedPointPermissions: true
+        hasRequestedPointPermissions: true,
       };
     case 'POINTS_FETCH_FAILURE':
       return {
@@ -290,7 +289,7 @@ function UserDetails(props: UserDetailsProps) {
         Promise.all([
           hasPermission(CustomPermissionName.POINTS, permissions)
             ? props.getPoints()
-            : null
+            : null,
         ])
       )
       .then(() => dispatch({ type: 'POINTS_FETCH_SUCCESS' }))
@@ -427,7 +426,9 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : (props.points.pointsStandard !== undefined ? props.points.pointsStandard.toString() : '-')
+              : props.points.pointsStandard !== undefined
+              ? props.points.pointsStandard.toString()
+              : '-'
           }
         />
         <TextField
@@ -440,7 +441,9 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points.pointsTerm !== undefined ? props.points.pointsTerm.toString() : '-' || ' '
+              : props.points.pointsTerm !== undefined
+              ? props.points.pointsTerm.toString()
+              : '-'
           }
         />
         <TextField
@@ -453,7 +456,9 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points.pointsCash !== undefined ? props.points.pointsCash.toString() : '-' || ' '
+              : props.points.pointsCash !== undefined
+              ? props.points.pointsCash.toString()
+              : '-'
           }
         />
       </Paper>
