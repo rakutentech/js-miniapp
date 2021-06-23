@@ -14,6 +14,7 @@ test('renders the elements', () => {
   const { getByTestId } = render(wrapTheme(<UserDetails />));
   expect(getByTestId('dataFormsWrapper')).toBeInTheDocument();
   expect(getByTestId('fetchUserButton')).toBeInTheDocument();
+  expect(getByTestId('fetchPointsButton')).toBeInTheDocument();
 });
 
 describe('Test Reducer', () => {
@@ -24,6 +25,16 @@ describe('Test Reducer', () => {
 
   test('The failure action updates state properly', () => {
     const newState = dataFetchReducer(initialState, { type: 'FETCH_FAILURE' });
+    expect(newState.isError).toBe(true);
+  });
+
+  test('The points init action updates state properly', () => {
+    const newState = dataFetchReducer(initialState, { type: 'POINTS_FETCH_INIT' });
+    expect(newState.isLoading).toBe(true);
+  });
+
+  test('The points failure action updates state properly', () => {
+    const newState = dataFetchReducer(initialState, { type: 'POINTS_FETCH_FAILURE' });
     expect(newState.isError).toBe(true);
   });
 });
