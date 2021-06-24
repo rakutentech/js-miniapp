@@ -242,9 +242,7 @@ function UserDetails(props: UserDetailsProps) {
 
     props
       .requestPermissions(permissionsList)
-      .then((permissions) =>
-        filterAllowedPermissions(permissions)
-      )
+      .then((permissions) => filterAllowedPermissions(permissions))
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.USER_NAME, permissions)
@@ -274,9 +272,7 @@ function UserDetails(props: UserDetailsProps) {
 
     props
       .requestPermissions(permissionsList)
-      .then((permissions) =>
-        filterAllowedPermissions(permissions)
-      )
+      .then((permissions) => filterAllowedPermissions(permissions))
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.POINTS, permissions)
@@ -293,10 +289,10 @@ function UserDetails(props: UserDetailsProps) {
 
   function filterAllowedPermissions(permissions) {
     return permissions
-    .filter(
-      (permission) => permission.status === CustomPermissionStatus.ALLOWED
-    )
-    .map((permission) => permission.name)
+      .filter(
+        (permission) => permission.status === CustomPermissionStatus.ALLOWED
+      )
+      .map((permission) => permission.name);
   }
 
   function handleClick(e) {
@@ -442,8 +438,7 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points !== undefined &&
-                props.points.term !== undefined
+              : props.points !== undefined && props.points.term !== undefined
               ? props.points.term.toString()
               : '-'
           }
@@ -458,8 +453,7 @@ function UserDetails(props: UserDetailsProps) {
           value={
             hasDeniedPermission
               ? '"Points" permission not granted.'
-              : props.points !== undefined &&
-                props.points.cash !== undefined
+              : props.points !== undefined && props.points.cash !== undefined
               ? props.points.cash.toString()
               : '-'
           }
