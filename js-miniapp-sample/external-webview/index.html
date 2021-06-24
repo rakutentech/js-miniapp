@@ -85,15 +85,8 @@
 
         <script>
             function getParam(name) {
-                const params = window.location.search;
-                if (params) {
-                    const param = params.replaceAll("&", "?").split("?")
-                        .map(param => param.split("="))
-                        .find(pair => pair[0] === name);
-                    return param && param[1];
-                } else {
-                    return null;
-                }
+                const params = new URL(window.location.search).searchParams;
+                return params.get(name);
             }
 
             function validateParams(params) {
