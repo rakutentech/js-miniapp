@@ -246,13 +246,13 @@ describe('getPoints', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(
       2,
-      '{ "pointsStandard": 10, "pointsTerm": 20, "pointsCash": 30 }'
+      '{ "standard": 10, "term": 20, "cash": 30 }'
     );
 
     return expect(bridge.getPoints()).to.eventually.deep.equal({
-      pointsStandard: 10,
-      pointsTerm: 20,
-      pointsCash: 30,
+      standard: 10,
+      term: 20,
+      cash: 30,
     });
   });
 });

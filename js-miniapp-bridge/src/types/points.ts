@@ -1,6 +1,6 @@
 /** Points type. */
 export interface Points {
-  pointsStandard?: number;
-  pointsTerm?: number;
-  pointsCash?: number;
+  standard?: number;
+  term?: number;
+  cash?: number;
 }

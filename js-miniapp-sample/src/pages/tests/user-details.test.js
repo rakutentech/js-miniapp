@@ -28,14 +28,4 @@ describe('Test Reducer', () => {
     const newState = dataFetchReducer(initialState, { type: 'FETCH_FAILURE' });
     expect(newState.isError).toBe(true);
   });
-
-  test('The points init action updates state properly', () => {
-    const newState = dataFetchReducer(initialState, { type: 'POINTS_FETCH_INIT' });
-    expect(newState.isLoading).toBe(true);
-  });
-
-  test('The points failure action updates state properly', () => {
-    const newState = dataFetchReducer(initialState, { type: 'POINTS_FETCH_FAILURE' });
-    expect(newState.isError).toBe(true);
-  });
 });

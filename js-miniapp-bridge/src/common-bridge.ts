@@ -431,7 +431,22 @@ export class MiniAppBridge {
         'getPoints',
         null,
         points => resolve(JSON.parse(points) as Points),
-        error => reject(error)
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            const errorType: MiniAppErrorType =
+              MiniAppErrorType[
+                miniAppError.type as keyof typeof MiniAppErrorType
+              ];
+            switch (errorType) {
+              default:
+                return reject(new MiniAppError(miniAppError));
+            }
+          } catch (e) {
+            console.error(e);
+            return reject(error);
+          }
+        }
       );
     });
   }

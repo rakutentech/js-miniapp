@@ -131,6 +131,8 @@ export const initialState = {
   isLoading: false,
   isError: false,
   hasRequestedPermissions: false,
+  isPointsLoading: false,
+  isPointsError: false,
   hasRequestedPointPermissions: false,
 };
 
@@ -138,6 +140,8 @@ type State = {
   isLoading: ?boolean,
   isError: ?boolean,
   hasRequestedPermissions: boolean,
+  isPointsLoading: ?boolean,
+  isPointsError: ?boolean,
   hasRequestedPointPermissions: boolean,
 };
 
@@ -153,7 +157,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
-        hasRequestedPointPermissions: false,
       };
     case 'FETCH_SUCCESS':
       return {
@@ -161,7 +164,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
-        hasRequestedPointPermissions: false,
       };
     case 'FETCH_FAILURE':
       return {
@@ -173,23 +175,21 @@ export const dataFetchReducer = (state: State, action: Action) => {
     case 'POINTS_FETCH_INIT':
       return {
         ...state,
-        isLoading: true,
-        isError: false,
-        hasRequestedPermissions: false,
+        isPointsLoading: true,
+        isPointsError: false,
         hasRequestedPointPermissions: false,
       };
     case 'POINTS_FETCH_SUCCESS':
       return {
         ...state,
-        isLoading: false,
-        isError: false,
-        hasRequestedPermissions: false,
+        isPointsLoading: false,
+        isPointsError: false,
         hasRequestedPointPermissions: true,
       };
     case 'POINTS_FETCH_FAILURE':
       return {
         ...initialState,
-        isLoading: false,
+        isPointsLoading: false,
         isError: true,
       };
 
@@ -243,11 +243,7 @@ function UserDetails(props: UserDetailsProps) {
     props
       .requestPermissions(permissionsList)
       .then((permissions) =>
-        permissions
-          .filter(
-            (permission) => permission.status === CustomPermissionStatus.ALLOWED
-          )
-          .map((permission) => permission.name)
+        filterAllowedPermissions(permissions)
       )
       .then((permissions) =>
         Promise.all([
@@ -279,11 +275,7 @@ function UserDetails(props: UserDetailsProps) {
     props
       .requestPermissions(permissionsList)
       .then((permissions) =>
-        permissions
-          .filter(
-            (permission) => permission.status === CustomPermissionStatus.ALLOWED
-          )
-          .map((permission) => permission.name)
+        filterAllowedPermissions(permissions)
       )
       .then((permissions) =>
         Promise.all([
@@ -297,6 +289,14 @@ function UserDetails(props: UserDetailsProps) {
         console.error(e);
         dispatch({ type: 'POINTS_FETCH_FAILURE' });
       });
+  }
+
+  function filterAllowedPermissions(permissions) {
+    return permissions
+    .filter(
+      (permission) => permission.status === CustomPermissionStatus.ALLOWED
+    )
+    .map((permission) => permission.name)
   }
 
   function handleClick(e) {
@@ -427,8 +427,8 @@ function UserDetails(props: UserDetailsProps) {
             hasDeniedPermission
               ? '"Points" permission not granted.'
               : props.points !== undefined &&
-                props.points.pointsStandard !== undefined
-              ? props.points.pointsStandard.toString()
+                props.points.standard !== undefined
+              ? props.points.standard.toString()
               : '-'
           }
         />
@@ -443,8 +443,8 @@ function UserDetails(props: UserDetailsProps) {
             hasDeniedPermission
               ? '"Points" permission not granted.'
               : props.points !== undefined &&
-                props.points.pointsTerm !== undefined
-              ? props.points.pointsTerm.toString()
+                props.points.term !== undefined
+              ? props.points.term.toString()
               : '-'
           }
         />
@@ -459,8 +459,8 @@ function UserDetails(props: UserDetailsProps) {
             hasDeniedPermission
               ? '"Points" permission not granted.'
               : props.points !== undefined &&
-                props.points.pointsCash !== undefined
-              ? props.points.pointsCash.toString()
+                props.points.cash !== undefined
+              ? props.points.cash.toString()
               : '-'
           }
         />
@@ -506,16 +506,16 @@ function UserDetails(props: UserDetailsProps) {
             color="primary"
             classes={{ root: classes.button }}
             className={buttonClassname}
-            disabled={state.isLoading}
+            disabled={state.isPointsLoading}
             data-testid="fetchPointsButton"
           >
             Fetch Points
           </Button>
-          {state.isLoading && (
+          {state.isPointsLoading && (
             <CircularProgress size={20} className={classes.buttonProgress} />
           )}
         </div>
-        {state.isError && (
+        {state.isPointsError && (
           <Typography variant="body1" className={classes.error}>
             Error fetching the points
           </Typography>

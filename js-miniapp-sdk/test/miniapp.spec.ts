@@ -344,9 +344,9 @@ describe('getAccessToken', () => {
     it('should retrieve Points from the MiniAppBridge when request is successful', () => {
       const response = [
         {
-          pointsStandard: 10,
-          pointsTerm: 20,
-          pointsCash: 30,
+          standard: 10,
+          term: 20,
+          cash: 30,
         },
       ];
       window.MiniAppBridge.getPoints.resolves(response);
