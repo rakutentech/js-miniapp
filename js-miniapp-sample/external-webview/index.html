@@ -2,135 +2,130 @@
 <!-- This page is used on the "URI Schemes" page as an example for opening the external webview -->
 <!-- It is accessed directly via the raw link to this file on Github -->
 <html>
-
-<head>
-    <title>External Webview</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-        body {
-            margin: 2em;
-        }
-
-        h3 {
-            margin-bottom: 0;
-        }
-
-        ul {
-            margin-bottom: 3em;
-        }
-
-        li {
-            margin: 0.5em 0;
-        }
-
-        a.button {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 6px 10px;
-            text-decoration: none;
-            background: #eee;
-            color: #111;
-        }
-    </style>
-</head>
-
-<body>
-    <h2>External Webview</h2>
-
-    <h3>tel: Links</h3>
-    <ul>
-        <li>
-            <b>tel: </b>
-            <a href="tel:+1-123-456-7890" id="tel-1">+1-123-456-7890</a>
-        </li>
-        <li>
-            <b>tel:// </b>
-            <a href="tel://+1-123-456-7890" id="tel-2">+1-123-456-7890</a>
-        </li>
-    </ul>
-
-    <h3>mailto: </h3>
-    <ul>
-        <li>
-            <a href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body."
-                id="mail-1">Address / cc / bcc / subject / body</a>
-        </li>
-    </ul>
-
-    <h3>New Window Links</h3>
-    <ul>
-        <li>
-            <b>_blank: </b>
-            <a href="https://www.google.com" target="_blank" id="new-window">Google</a>
-        </li>
-        <li>
-            <b>JS window.open: </b>
-            <a href="#" onclick="window.open('https://www.google.com')" id="new-window-js">Google</a>
-        </li>
-    </ul>
-
-    <h3>Received Parameters</h3>
-    <ul>
-        <li id="PassedParams" style="line-break: anywhere"></li>
-    </ul>
-
-    <h3>Return To Mini App</h3>
-    <br />
-    <div>
-        <label>Params to send to mini app:</label>
-        <br />
-        <input id="ReturnInput" placeholder="Enter params to send to Mini App"
-            value="?testParam=someValue&test2=anotherValue" style="width: 250px;" />
-        <br />
-        <br />
-        <a class="button" id="ReturnButton">Return to Mini App</a>
-    </div>
-
-    <script>
-        function getParam(name) {
-            const url = window.location.search;
-            if (url) {
-                const params = new URL(url).searchParams;
-                return params.get(name);
-            } else {
-                return null;
+    <head>
+        <title>External Webview</title>
+        <meta name="viewport" content="initial-scale=1.0">
+        <meta charset="utf-8">
+        <style>
+            body {
+                margin: 2em;
             }
-        }
-
-        function validateParams(params) {
-            if (!params.startsWith('?') || params.indexOf('=') <= -1) {
-                return false;
+            h3 {
+                margin-bottom: 0;
             }
-            return true;
-        }
 
-        (function () {
-            // Set Params field
-            const passedParams = window.location.search
-                // This page is loaded via a query parameter so we must remove the section which isn't relevant
-                .replace(/^[?](.*?)[?]/, '?');
-            const text = document.createElement('span');
-            text.innerText = passedParams || 'None';
-            document.getElementById('PassedParams').appendChild(text);
+            ul {
+                margin-bottom: 3em;
+            }
+            li {
+                margin: 0.5em 0;
+            }
+            a.button {
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 6px 10px;
+                text-decoration: none;
+                background: #eee;
+                color: #111;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>External Webview</h2>
 
-            // Set return URL and params
-            const returnInput = document.getElementById('ReturnInput');
-            const returnButton = document.getElementById('ReturnButton');
-            const callbackUrl = decodeURIComponent(getParam('callbackUrl'));
-            const setReturnHref = () => returnButton.href = callbackUrl + returnInput.value;
-            setReturnHref();
-            returnInput.onchange = setReturnHref;
+        <h3>tel: Links</h3>
+        <ul>
+            <li>
+                <b>tel: </b>
+                <a href="tel:+1-123-456-7890" id="tel-1">+1-123-456-7890</a>
+            </li>
+            <li>
+                <b>tel:// </b>
+                <a href="tel://+1-123-456-7890" id="tel-2">+1-123-456-7890</a>
+            </li>
+        </ul>
 
-            // Validate params on button click
-            returnButton.onclick = (e) => {
-                if (!validateParams(returnInput.value)) {
-                    e.preventDefault();
-                    alert("Invalid params were defined!");
+        <h3>mailto: </h3>
+        <ul>
+            <li>
+                <a href="mailto:mail@example.com?cc=ccmail@example.com, ccmail2@example.com, &bcc=bccmail@example.com&subject=Sample subject&body=Sample body." id="mail-1">Address / cc / bcc / subject / body</a>
+            </li>
+        </ul>
+
+        <h3>New Window Links</h3>
+        <ul>
+            <li>
+                <b>_blank: </b>
+                <a href="https://www.google.com" target="_blank" id="new-window">Google</a>
+            </li>
+            <li>
+                <b>JS window.open: </b>
+                <a href ="#" onclick="window.open('https://www.google.com')" id="new-window-js">Google</a>
+            </li>
+        </ul>
+
+        <h3>Received Parameters</h3>
+        <ul>
+            <li id="PassedParams" style="line-break: anywhere"></li>
+        </ul>
+
+        <h3>Return To Mini App</h3>
+        <br />
+        <div>
+            <label>Params to send to mini app:</label>
+            <br />
+            <input id="ReturnInput" 
+                placeholder="Enter params to send to Mini App"
+                value="?testParam=someValue&test2=anotherValue" 
+                style="width: 250px;" />
+            <br />
+            <br />
+            <a class="button" id="ReturnButton">Return to Mini App</a>
+        </div>
+
+        <script>
+            function getParam(name) {
+                const url = window.location.search;
+                if (url) {
+                    const params = new URL(url).searchParams;
+                    return params.get(name);
+                } else {
+                    return null;
                 }
             }
-        })();
-    </script>
-</body>
 
+            function validateParams(params) {
+                if (!params.startsWith('?') || params.indexOf('=') <= -1) {
+                    return false;
+                }
+                return true;
+            }
+
+            (function() {
+                // Set Params field
+                const passedParams = window.location.search
+                    // This page is loaded via a query parameter so we must remove the section which isn't relevant
+                    .replace(/^[?](.*?)[?]/, '?'); 
+                const text = document.createElement('span');
+                text.innerText = passedParams || 'None';
+                document.getElementById('PassedParams').appendChild(text);
+
+                // Set return URL and params
+                const returnInput = document.getElementById('ReturnInput');
+                const returnButton = document.getElementById('ReturnButton');
+                const callbackUrl = decodeURIComponent( getParam('callbackUrl') );
+                const setReturnHref = () => returnButton.href = callbackUrl + returnInput.value;
+                setReturnHref();
+                returnInput.onchange = setReturnHref;
+
+                // Validate params on button click
+                returnButton.onclick = (e) => {
+                    if (!validateParams(returnInput.value)) {
+                        e.preventDefault();
+                        alert("Invalid params were defined!");
+                    }
+                }
+            })();
+        </script>
+    </body> 
 </html>
