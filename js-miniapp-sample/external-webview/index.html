@@ -85,8 +85,13 @@
 
         <script>
             function getParam(name) {
-                const params = new URL(window.location.search).searchParams;
-                return params.get(name);
+                const url = window.location.search;
+                if(url){
+                    const params = new URL(url).searchParams;
+                    return params.get(name);
+                }else{
+                    return null;
+                }
             }
 
             function validateParams(params) {
