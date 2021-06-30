@@ -304,6 +304,29 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject(error); });
         });
     };
+    /**
+     * Associating get point balance function to MiniAppBridge object.
+     * (provided rakuten.miniapp.user.POINTS is allowed by the user)
+     */
+    MiniAppBridge.prototype.getPoints = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) {
+                try {
+                    var miniAppError = error_types_2.parseMiniAppError(error);
+                    var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
+                    switch (errorType) {
+                        default:
+                            return reject(new error_types_2.MiniAppError(miniAppError));
+                    }
+                }
+                catch (e) {
+                    console.error(e);
+                    return reject(error);
+                }
+            });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
