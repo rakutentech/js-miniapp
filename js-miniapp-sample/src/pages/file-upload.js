@@ -82,7 +82,7 @@ const FileUploader = () => {
           <input
             type="file"
             onChange={setFiles}
-            data-testid="file-input"
+            data-testid="file-input-general"
             multiple
           />
         </div>
@@ -94,7 +94,7 @@ const FileUploader = () => {
             type="file"
             accept=".jpg,.jpeg,.png,.svg,.gif"
             onChange={setFiles}
-            data-testid="file-input"
+            data-testid="file-input-image"
             multiple
           />
         </div>
@@ -106,7 +106,7 @@ const FileUploader = () => {
             type="file"
             accept=".pdf"
             onChange={setFiles}
-            data-testid="file-input"
+            data-testid="file-input-pdf"
             multiple
           />
         </div>

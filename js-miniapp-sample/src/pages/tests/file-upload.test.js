@@ -11,7 +11,9 @@ describe('home', () => {
   });
 
   test('should load home page without drawer on pc', () => {
-    expect(screen.getByTestId('file-input')).toBeInTheDocument();
+    expect(screen.getByTestId('file-input-general')).toBeInTheDocument();
+    expect(screen.getByTestId('file-input-image')).toBeInTheDocument();
+    expect(screen.getByTestId('file-input-pdf')).toBeInTheDocument();
     expect(screen.getByTestId('file-table')).toBeInTheDocument();
   });
 });
