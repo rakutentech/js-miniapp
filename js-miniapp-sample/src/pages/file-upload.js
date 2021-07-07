@@ -40,10 +40,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   uploader: {
-    height: '25%',
+    height: '30%',
   },
   label: {
     fontSize: 15,
+    width: '100%',
     color: theme.color.primary,
   },
 }));
@@ -76,8 +77,7 @@ const FileUploader = () => {
       <Grid className={classes.grid} align="center" justify="center">
         <div className={classes.uploader}>
           <label className={classes.label} for="files">
-            {' '}
-            (general){' '}
+            (general)
           </label>
           <input
             type="file"
@@ -88,8 +88,7 @@ const FileUploader = () => {
         </div>
         <div className={classes.uploader}>
           <label className={classes.label} for="files">
-            {' '}
-            (.jpg,.jpeg,.png,.svg,.gif){' '}
+            (images)
           </label>
           <input
             type="file"
@@ -101,8 +100,7 @@ const FileUploader = () => {
         </div>
         <div className={classes.uploader}>
           <label className={classes.label} for="files">
-            {' '}
-            (.pdf){' '}
+            (pdf)
           </label>
           <input
             type="file"
