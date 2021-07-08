@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     height: '30%',
   },
   label: {
-    fontSize: 15,
+    fontSize: 12,
     width: '100%',
     color: theme.color.primary,
   },
