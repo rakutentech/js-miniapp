@@ -466,7 +466,7 @@ function removeFromMessageQueue(queueObj) {
 }
 
 function messageTrimmingBannerText(message: MessageToContact, maxLength = 128) {
-  const hintString = message.bannerMessage.trim();
+  const hintString = message.bannerMessage?.trim() ?? '';
   message.bannerMessage =
     hintString.length > maxLength
       ? hintString.substring(0, maxLength - 1) + '…'
