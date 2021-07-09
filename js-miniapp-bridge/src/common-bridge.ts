@@ -361,7 +361,12 @@ export class MiniAppBridge {
     return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContact',
-        { messageToContact: messageTrimmingBannerText(message) },
+        {
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactId => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
@@ -384,7 +389,13 @@ export class MiniAppBridge {
     return new Promise<string | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToContactId',
-        { contactId: id, messageToContact: messageTrimmingBannerText(message) },
+        {
+          contactId: id,
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactId => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
@@ -408,7 +419,12 @@ export class MiniAppBridge {
     return new Promise<string[] | null>((resolve, reject) => {
       return this.executor.exec(
         'sendMessageToMultipleContacts',
-        { messageToContact: messageTrimmingBannerText(message) },
+        {
+          messageToContact: {
+            ...message,
+            bannerMessage: trimBannerText(message.bannerMessage),
+          },
+        },
         contactIds => {
           if (contactIds !== 'null' && contactIds !== null) {
             resolve(JSON.parse(contactIds) as string[]);
@@ -465,11 +481,8 @@ function removeFromMessageQueue(queueObj) {
   }
 }
 
-function messageTrimmingBannerText(message: MessageToContact, maxLength = 128) {
-  const hintString = message.bannerMessage?.trim() ?? '';
-  message.bannerMessage =
-    hintString.length > maxLength
-      ? hintString.substring(0, maxLength - 1) + '…'
-      : hintString;
-  return message;
+function trimBannerText(message: string = undefined, maxLength = 128) {
+  return message?.length > maxLength
+    ? message?.substring(0, maxLength - 1) + '…'
+    : message;
 }
