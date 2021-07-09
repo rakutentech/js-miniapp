@@ -347,11 +347,43 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getBots: () => dispatch(getMessageTypeList()),
     sendMessageToContact: (image, text, caption, action, bannerMessage) =>
-      dispatch(sendMessageToContact(image, text, caption, action, bannerMessage)),
-    sendMessageToContactId: (contactId, image, text, caption, action, bannerMessage) =>
-      dispatch(sendMessageToContactId(contactId, image, text, caption, action, bannerMessage)),
-    sendMessageToMultipleContacts: (image, text, caption, action, bannerMessage) =>
-      dispatch(sendMessageToMultipleContacts(image, text, caption, action, bannerMessage)),
+      dispatch(
+        sendMessageToContact(image, text, caption, action, bannerMessage)
+      ),
+    sendMessageToContactId: (
+      contactId,
+      image,
+      text,
+      caption,
+      action,
+      bannerMessage
+    ) =>
+      dispatch(
+        sendMessageToContactId(
+          contactId,
+          image,
+          text,
+          caption,
+          action,
+          bannerMessage
+        )
+      ),
+    sendMessageToMultipleContacts: (
+      image,
+      text,
+      caption,
+      action,
+      bannerMessage
+    ) =>
+      dispatch(
+        sendMessageToMultipleContacts(
+          image,
+          text,
+          caption,
+          action,
+          bannerMessage
+        )
+      ),
   };
 };
 
