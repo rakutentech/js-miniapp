@@ -1,10 +1,20 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 /** @internal */
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var token_data_1 = require("./types/token-data");
 var error_types_1 = require("./types/error-types");
-var error_types_2 = require("./types/error-types");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
@@ -190,17 +200,17 @@ var MiniAppBridge = /** @class */ (function () {
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
             }, function (error) {
                 try {
-                    var miniAppError = error_types_2.parseMiniAppError(error);
+                    var miniAppError = error_types_1.parseMiniAppError(error);
                     var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
                     switch (errorType) {
                         case error_types_1.MiniAppErrorType.AuthorizationFailureError:
-                            return reject(new error_types_2.AuthorizationFailureError(miniAppError));
+                            return reject(new error_types_1.AuthorizationFailureError(miniAppError));
                         case error_types_1.MiniAppErrorType.AudienceNotSupportedError:
-                            return reject(new error_types_2.AudienceNotSupportedError(miniAppError));
+                            return reject(new error_types_1.AudienceNotSupportedError(miniAppError));
                         case error_types_1.MiniAppErrorType.ScopesNotSupportedError:
-                            return reject(new error_types_2.ScopesNotSupportedError(miniAppError));
+                            return reject(new error_types_1.ScopesNotSupportedError(miniAppError));
                         default:
-                            return reject(new error_types_2.MiniAppError(miniAppError));
+                            return reject(new error_types_1.MiniAppError(miniAppError));
                     }
                 }
                 catch (e) {
@@ -230,7 +240,9 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToContact = function (message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContact', { messageToContact: message }, function (contactId) {
+            return _this.executor.exec('sendMessageToContact', {
+                messageToContact: __assign(__assign({}, message), { bannerMessage: trimBannerText(message.bannerMessage) }),
+            }, function (contactId) {
                 if (contactId !== 'null' && contactId !== null) {
                     resolve(contactId);
                 }
@@ -249,7 +261,10 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToContactId = function (id, message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToContactId', { contactId: id, messageToContact: message }, function (contactId) {
+            return _this.executor.exec('sendMessageToContactId', {
+                contactId: id,
+                messageToContact: __assign(__assign({}, message), { bannerMessage: trimBannerText(message.bannerMessage) }),
+            }, function (contactId) {
                 if (contactId !== 'null' && contactId !== null) {
                     resolve(contactId);
                 }
@@ -269,7 +284,9 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendMessageToMultipleContacts = function (message) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendMessageToMultipleContacts', { messageToContact: message }, function (contactIds) {
+            return _this.executor.exec('sendMessageToMultipleContacts', {
+                messageToContact: __assign(__assign({}, message), { bannerMessage: trimBannerText(message.bannerMessage) }),
+            }, function (contactIds) {
                 if (contactIds !== 'null' && contactIds !== null) {
                     resolve(JSON.parse(contactIds));
                 }
@@ -288,11 +305,11 @@ var MiniAppBridge = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) {
                 try {
-                    var miniAppError = error_types_2.parseMiniAppError(error);
+                    var miniAppError = error_types_1.parseMiniAppError(error);
                     var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
                     switch (errorType) {
                         default:
-                            return reject(new error_types_2.MiniAppError(miniAppError));
+                            return reject(new error_types_1.MiniAppError(miniAppError));
                     }
                 }
                 catch (e) {
@@ -316,6 +333,13 @@ function removeFromMessageQueue(queueObj) {
     if (messageObjIndex !== -1) {
         mabMessageQueue.splice(messageObjIndex, 1);
     }
+}
+function trimBannerText(message, maxLength) {
+    if (message === void 0) { message = null; }
+    if (maxLength === void 0) { maxLength = 128; }
+    return (message === null || message === void 0 ? void 0 : message.length) > maxLength
+        ? (message === null || message === void 0 ? void 0 : message.substring(0, maxLength - 1)) + '…'
+        : message;
 }
 
 },{"./types/error-types":3,"./types/token-data":5}],2:[function(require,module,exports){
