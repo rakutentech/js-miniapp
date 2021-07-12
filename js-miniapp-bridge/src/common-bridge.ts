@@ -481,7 +481,7 @@ function removeFromMessageQueue(queueObj) {
   }
 }
 
-function trimBannerText(message: string = undefined, maxLength = 128) {
+function trimBannerText(message: string = null, maxLength = 128) {
   return message?.length > maxLength
     ? message?.substring(0, maxLength - 1) + '…'
     : message;
