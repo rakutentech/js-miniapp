@@ -61,8 +61,7 @@ type MessageTypeProps = {
     image: string,
     text: string,
     caption: string,
-    action: string,
-    bannerMessage: string
+    action: string
   ) => Promise<string>,
   sendMessageToMultipleContacts: (
     image: string,
@@ -353,24 +352,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         sendMessageToContact(image, text, caption, action, bannerMessage)
       ),
-    sendMessageToContactId: (
-      contactId,
-      image,
-      text,
-      caption,
-      action,
-      bannerMessage
-    ) =>
-      dispatch(
-        sendMessageToContactId(
-          contactId,
-          image,
-          text,
-          caption,
-          action,
-          bannerMessage
-        )
-      ),
+    sendMessageToContactId: (contactId, image, text, caption, action) =>
+      dispatch(sendMessageToContactId(contactId, image, text, caption, action)),
     sendMessageToMultipleContacts: (
       image,
       text,
