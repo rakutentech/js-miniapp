@@ -25,12 +25,7 @@ import {
 } from '../services/message/actions';
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
-
-const MessageTypeId = {
-  SINGLE_CONTACT: 1,
-  SINGLE_CONTACT_ID: 2,
-  MULTIPLE_CONTACTS: 3,
-};
+import { MessageTypeId } from '../services/message/types';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
