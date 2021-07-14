@@ -152,8 +152,7 @@ const Message = (props: MessageTypeProps) => {
             message.image.trim() ?? '',
             message.text.trim(),
             message.caption.trim() ?? '',
-            message.action.trim() ?? '',
-            message.bannerMessage.trim() ?? ''
+            message.action.trim() ?? ''
           )
           .then((contactId) => {
             let respMsg = 'Message not sent';
@@ -274,15 +273,17 @@ const Message = (props: MessageTypeProps) => {
           rowsMax="4"
         />
       </FormControl>
-      <FormControl className={classes.formControl}>
-        <TextField
-          id="bannerMessage"
-          label="Banner message"
-          className={classes.fields}
-          onChange={onBannerMessageChange}
-          value={message.bannerMessage}
-        />
-      </FormControl>
+      {message.id !== 2 && (
+        <FormControl className={classes.formControl}>
+          <TextField
+            id="bannerMessage"
+            label="Banner message"
+            className={classes.fields}
+            onChange={onBannerMessageChange}
+            value={message.bannerMessage}
+          />
+        </FormControl>
+      )}
       <FormControl className={classes.formControl}>
         <TextField
           id="caption"
