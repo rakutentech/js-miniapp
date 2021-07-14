@@ -26,6 +26,12 @@ import {
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
 
+const MessageTypeId = {
+  SINGLE_CONTACT: 1,
+  SINGLE_CONTACT_ID: 2,
+  MULTIPLE_CONTACTS: 3,
+};
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -121,7 +127,7 @@ const Message = (props: MessageTypeProps) => {
   };
   const talkToChatbot = () => {
     if (validate()) {
-      if (message.id === 1) {
+      if (message.id === MessageTypeId.SINGLE_CONTACT) {
         props
           .sendMessageToContact(
             message.image.trim() ?? '',
@@ -145,7 +151,7 @@ const Message = (props: MessageTypeProps) => {
               response: e,
             });
           });
-      } else if (message.id === 2) {
+      } else if (message.id === MessageTypeId.SINGLE_CONTACT_ID) {
         props
           .sendMessageToContactId(
             message.contactId.trim(),
@@ -169,7 +175,7 @@ const Message = (props: MessageTypeProps) => {
               response: e,
             });
           });
-      } else if (message.id === 3) {
+      } else if (message.id === MessageTypeId.MULTIPLE_CONTACTS) {
         props
           .sendMessageToMultipleContacts(
             message.image.trim() ?? '',
@@ -219,6 +225,7 @@ const Message = (props: MessageTypeProps) => {
   const onChatbotClose = () => {
     setMessageResponse({ show: false, response: '' });
   };
+
   return (
     <Fragment>
       <FormControl className={classes.formControl}>
@@ -239,7 +246,7 @@ const Message = (props: MessageTypeProps) => {
         </Select>
       </FormControl>
 
-      {message.id === 2 && (
+      {message.id === MessageTypeId.SINGLE_CONTACT_ID && (
         <FormControl className={classes.formControl}>
           <TextField
             id="contactId"
@@ -273,7 +280,7 @@ const Message = (props: MessageTypeProps) => {
           rowsMax="4"
         />
       </FormControl>
-      {message.id !== 2 && (
+      {message.id !== MessageTypeId.SINGLE_CONTACT_ID && (
         <FormControl className={classes.formControl}>
           <TextField
             id="bannerMessage"
