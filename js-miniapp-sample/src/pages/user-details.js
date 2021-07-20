@@ -157,6 +157,9 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
+        isPointsLoading: false,
+        isPointsError: false,
+        hasRequestedPointPermissions: false,
       };
     case 'FETCH_SUCCESS':
       return {
@@ -164,17 +167,25 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
+        isPointsLoading: false,
+        isPointsError: false,
+        hasRequestedPointPermissions: false,
       };
     case 'FETCH_FAILURE':
       return {
         ...initialState,
         isLoading: false,
         isError: true,
+        isPointsLoading: false,
+        isPointsError: false,
       };
 
     case 'POINTS_FETCH_INIT':
       return {
         ...state,
+        isLoading: false,
+        isError: false,
+        hasRequestedPermissions: false,
         isPointsLoading: true,
         isPointsError: false,
         hasRequestedPointPermissions: false,
@@ -182,6 +193,9 @@ export const dataFetchReducer = (state: State, action: Action) => {
     case 'POINTS_FETCH_SUCCESS':
       return {
         ...state,
+        isLoading: false,
+        isError: false,
+        hasRequestedPermissions: false,
         isPointsLoading: false,
         isPointsError: false,
         hasRequestedPointPermissions: true,
@@ -189,8 +203,10 @@ export const dataFetchReducer = (state: State, action: Action) => {
     case 'POINTS_FETCH_FAILURE':
       return {
         ...initialState,
+        isLoading: false,
+        isError: false,
         isPointsLoading: false,
-        isError: true,
+        isPointsError: true,
       };
 
     default:
@@ -417,7 +433,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-standard"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Standard)'}
           value={
             hasDeniedPermission
@@ -433,7 +449,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-term"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Time-Limited)'}
           value={
             hasDeniedPermission
@@ -448,7 +464,7 @@ function UserDetails(props: UserDetailsProps) {
           disabled={true}
           className={classes.formInput}
           id="input-points-cash"
-          error={state.isError || hasDeniedPermission}
+          error={state.isPointsError || hasDeniedPermission}
           label={'Points (Rakuten Cash)'}
           value={
             hasDeniedPermission
