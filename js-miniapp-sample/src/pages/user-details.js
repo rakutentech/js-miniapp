@@ -157,8 +157,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: true,
         isError: false,
         hasRequestedPermissions: false,
-        isPointsLoading: false,
-        isPointsError: false,
         hasRequestedPointPermissions: false,
       };
     case 'FETCH_SUCCESS':
@@ -167,8 +165,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         hasRequestedPermissions: true,
-        isPointsLoading: false,
-        isPointsError: false,
         hasRequestedPointPermissions: false,
       };
     case 'FETCH_FAILURE':
@@ -176,35 +172,27 @@ export const dataFetchReducer = (state: State, action: Action) => {
         ...initialState,
         isLoading: false,
         isError: true,
-        isPointsLoading: false,
-        isPointsError: false,
       };
 
     case 'POINTS_FETCH_INIT':
       return {
         ...state,
-        isLoading: false,
-        isError: false,
-        hasRequestedPermissions: false,
         isPointsLoading: true,
         isPointsError: false,
+        hasRequestedPermissions: false,
         hasRequestedPointPermissions: false,
       };
     case 'POINTS_FETCH_SUCCESS':
       return {
         ...state,
-        isLoading: false,
-        isError: false,
-        hasRequestedPermissions: false,
         isPointsLoading: false,
         isPointsError: false,
+        hasRequestedPermissions: false,
         hasRequestedPointPermissions: true,
       };
     case 'POINTS_FETCH_FAILURE':
       return {
         ...initialState,
-        isLoading: false,
-        isError: false,
         isPointsLoading: false,
         isPointsError: true,
       };
