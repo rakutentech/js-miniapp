@@ -1,11 +1,7 @@
 ## CHANGELOG
 ### 1.11.0 (2021-08-05)
 - **Feature:** Added interface to get user points
-- **Fix:** fixed the parsing conditions in sample app
-- **Fix:** added checking for auth token error
-- **Sample:** Added Buttons to select different file types
 - **Feature:** Added an optional banner message field in messaging feature
-- **Sample:** Added callback url field to URI screen so it can be changed if the mini app is being used in a different Host App
 
 ---
 
