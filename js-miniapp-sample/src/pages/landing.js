@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MiniApp from 'js-miniapp-sdk';
-import { CardContent, makeStyles } from '@material-ui/core';
+import { CardContent, makeStyles, Button } from '@material-ui/core';
 import GreyCard from '../components/GreyCard';
+import { setHostEnvironmentInfo } from '../services/landing/actions';
+import { connect } from 'react-redux';
+
+type LandingProps = {
+  platform: ?string,
+  platformVersion: ?string,
+  hostVersion: ?string,
+  sdkVersion: ?string,
+  infoError: string,
+  getHostInfo: Function,
+};
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -29,15 +40,33 @@ const useStyles = makeStyles((theme) => ({
     wordBreak: 'break-all',
     marginTop: 0,
   },
+  button: {
+    minHeight: 40,
+    margin: 0
+  },
 }));
 
-const Landing = () => {
+const Landing = (props: LandingProps) => {
   const classes = useStyles();
+
+  useEffect(()=>{
+    try {
+      props.getHostInfo()
+    } catch(e) {
+      console.log(e)
+    }
+  }, []);
+
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
-        <p className={classes.info}>Platform: {MiniApp.getPlatform()}</p>
+        <p className={classes.info}>
+          Platform: {props.info.platform ?? props.infoError ?? 'Not Available'}<br/>
+          Platform Version: {props.info.platformVersion ?? '-'}<br/>
+          Host Version: {props.info.hostVersion ?? '-'}<br/>
+          SDK Version: {props.info.sdkVersion ?? '-'}
+        </p>
         <p className={classes.info}>
           Query Parameters: {window.location.search || 'None'}
         </p>
@@ -49,4 +78,18 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+const mapStateToProps = (state, props) => {
+  return {
+    ...props,
+    info: state.info,
+    infoError: state.info.infoError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getHostInfo: () => dispatch(setHostEnvironmentInfo()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
