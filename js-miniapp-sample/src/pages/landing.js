@@ -61,13 +61,13 @@ const Landing = (props: LandingProps) => {
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>
-          Platform: {props.info.platform ?? props.infoError ?? 'Not Available'}
+          Platform: {props.platform ?? props.infoError ?? 'Not Available'}
           <br />
-          Platform Version: {props.info.platformVersion ?? '-'}
+          Platform Version: {props.platformVersion ?? '-'}
           <br />
-          Host Version: {props.info.hostVersion ?? '-'}
+          Host Version: {props.hostVersion ?? '-'}
           <br />
-          SDK Version: {props.info.sdkVersion ?? '-'}
+          SDK Version: {props.sdkVersion ?? '-'}
         </p>
         <p className={classes.info}>
           Query Parameters: {window.location.search || 'None'}
@@ -83,7 +83,10 @@ const Landing = (props: LandingProps) => {
 const mapStateToProps = (state, props) => {
   return {
     ...props,
-    info: state.info,
+    platform: state.info.platform,
+    platformVersion: state.info.platformVersion,
+    hostVersion: state.info.hostVersion,
+    sdkVersion: state.info.sdkVersion,
     infoError: state.info.infoError,
   };
 };

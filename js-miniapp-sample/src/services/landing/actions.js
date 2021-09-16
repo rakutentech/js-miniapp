@@ -1,7 +1,7 @@
 import { HOST_ENVIRONMENT_INFO_FETCH_ERROR, SET_HOST_ENVIRONMENT_INFO } from './types';
 import MiniApp from 'js-miniapp-sdk';
 
-type GetHostEnvironmentInfoAction = { platform: ?string, platformVersion: ?string, hostVersion: ?string, sdkVersion: ?string };
+type GetHostEnvironmentInfoAction = { platform: ?string, platformVersion: ?string, hostVersion: ?string, sdkVersion: ?string, error: ?Error };
 type HostEnvironmentInfoAction = GetHostEnvironmentInfoAction;
 
 const setHostEnvironmentInfo = (): Function => {
