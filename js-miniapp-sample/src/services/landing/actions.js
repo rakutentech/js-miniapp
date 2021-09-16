@@ -1,21 +1,21 @@
-import { HOST_ENVIRONMENT_INFO_FETCH_ERROR, SET_HOST_ENVIRONMENT_INFO } from './types';
+import { REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS, REQUEST_HOST_ENVIRONMENT_INFO_ERROR } from './types';
 import MiniApp from 'js-miniapp-sdk';
+import { HostEnvironmentInfo } from 'js-miniapp-sdk';
 
-type GetHostEnvironmentInfoAction = { platform: ?string, platformVersion: ?string, hostVersion: ?string, sdkVersion: ?string, error: ?Error };
-type HostEnvironmentInfoAction = GetHostEnvironmentInfoAction;
+type RequestHostInfoSuccessAction = { type: String, info: HostEnvironmentInfo };
 
 const setHostEnvironmentInfo = (): Function => {
   return (dispatch) => {
     MiniApp.getHostEnvironmentInfo()
       .then((info) => {
         dispatch({
-          type: SET_HOST_ENVIRONMENT_INFO,
-          payload: info,
+          type: REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,
+          info: info,
         });
       })
       .catch((error) => {
         dispatch({
-          type: HOST_ENVIRONMENT_INFO_FETCH_ERROR,
+          type: REQUEST_HOST_ENVIRONMENT_INFO_ERROR,
           error,
         });
       });
@@ -23,4 +23,4 @@ const setHostEnvironmentInfo = (): Function => {
 };
 
 export { setHostEnvironmentInfo };
-export type { HostEnvironmentInfoAction };
+export type { RequestHostInfoSuccessAction };
