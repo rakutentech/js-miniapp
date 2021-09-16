@@ -41,18 +41,18 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     minHeight: 40,
-    margin: 0
+    margin: 0,
   },
 }));
 
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
 
-  useEffect(()=>{
+  useEffect(() => {
     try {
-      props.getHostInfo()
-    } catch(e) {
-      console.log(e)
+      props.getHostInfo();
+    } catch (e) {
+      console.log(e);
     }
   }, []);
 
@@ -61,9 +61,12 @@ const Landing = (props: LandingProps) => {
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>
-          Platform: {props.info.platform ?? props.infoError ?? 'Not Available'}<br/>
-          Platform Version: {props.info.platformVersion ?? '-'}<br/>
-          Host Version: {props.info.hostVersion ?? '-'}<br/>
+          Platform: {props.info.platform ?? props.infoError ?? 'Not Available'}
+          <br />
+          Platform Version: {props.info.platformVersion ?? '-'}
+          <br />
+          Host Version: {props.info.hostVersion ?? '-'}
+          <br />
           SDK Version: {props.info.sdkVersion ?? '-'}
         </p>
         <p className={classes.info}>
