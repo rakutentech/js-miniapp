@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import MiniApp from 'js-miniapp-sdk';
-import { CardContent, makeStyles, Button } from '@material-ui/core';
+import { CardContent, makeStyles } from '@material-ui/core';
 import GreyCard from '../components/GreyCard';
 import { setHostEnvironmentInfo } from '../services/landing/actions';
 import { connect } from 'react-redux';
