@@ -61,7 +61,7 @@ const Landing = (props: LandingProps) => {
       <CardContent className={classes.content}>
         <p>Demo Mini App JS SDK</p>
         <p className={classes.info}>
-          Platform: {props.platform ?? props.infoError ?? 'Not Available'}
+          Platform: {props.platform ?? props.infoError ?? 'Unknown'}
           <br />
           Platform Version: {props.platformVersion ?? '-'}
           <br />
