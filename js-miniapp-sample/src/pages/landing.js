@@ -54,7 +54,7 @@ const Landing = (props: LandingProps) => {
     } catch (e) {
       console.log(e);
     }
-  }, []);
+  }, [props]);
 
   return (
     <GreyCard className={classes.card}>
