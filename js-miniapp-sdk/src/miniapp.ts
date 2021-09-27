@@ -216,7 +216,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge()
       .getHostEnvironmentInfo()
       .then(info => {
-        info.platform = HostPlatform[getBridge().platform.toUpperCase()];
+        info.platform = getBridge().platform as HostPlatform;
         return info;
       });
   }
