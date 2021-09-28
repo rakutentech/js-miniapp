@@ -344,6 +344,14 @@ var MiniAppBridge = /** @class */ (function () {
             });
         });
     };
+    MiniAppBridge.prototype.getHostEnvironmentInfo = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getHostEnvironmentInfo', null, function (info) {
+                return resolve(__assign(__assign({}, JSON.parse(info)), { platform: _this.platform }));
+            }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
