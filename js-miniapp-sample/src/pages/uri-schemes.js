@@ -158,7 +158,6 @@ const UriSchemes = () => {
           >
             Open
           </Button>
-          {requestSecondaryWebviewClose}
         </CardActions>
       </GreyCard>
     </div>
