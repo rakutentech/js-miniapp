@@ -482,6 +482,17 @@ export class MiniAppBridge {
       );
     });
   }
+
+  setSecondaryWebviewClose(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'setSecondaryWebviewClose',
+        null,
+        info => resolve(info),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**

@@ -75,6 +75,12 @@ interface MiniAppFeatures {
    * @returns Promise of the provided environment info from mini app.
    */
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
+
+  /**
+   * Request the secondary webview close event.
+   * @returns The Promise of secondary webview is closed.
+   */
+  setSecondaryWebviewClose(): Promise<string>;
 }
 
 /**
@@ -219,5 +225,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
+  }
+
+  setSecondaryWebviewClose(): Promise<string> {
+    return getBridge().setSecondaryWebviewClose();
   }
 }
