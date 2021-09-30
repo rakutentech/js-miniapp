@@ -78,7 +78,7 @@ interface MiniAppFeatures {
 
   /**
    * Request the secondary webview close event.
-   * @returns The Promise of secondary webview is closed.
+   * @returns The Promise of any message from injected side during the event.
    */
   setSecondaryWebviewClose(): Promise<string>;
 }

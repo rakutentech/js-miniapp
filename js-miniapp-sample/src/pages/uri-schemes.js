@@ -44,8 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const requestSecondaryWebviewClose = () => {
   MiniApp.setSecondaryWebviewClose()
-    .then((success) => {
-      console.log(success);
+    .then((message) => {
+      console.log(message);
     })
     .catch((error) => {
       console.error(error);

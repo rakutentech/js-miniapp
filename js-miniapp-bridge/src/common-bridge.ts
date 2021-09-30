@@ -488,7 +488,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'setSecondaryWebviewClose',
         null,
-        info => resolve(info),
+        message => resolve(message),
         error => reject(error)
       );
     });
