@@ -42,16 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const requestSecondaryWebviewClose = () => {
-  MiniApp.setSecondaryWebviewClose()
-    .then((message) => {
-      console.log(message);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-};
-
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
@@ -84,7 +74,6 @@ const UriSchemes = () => {
       .concat(`callbackUrl=${encodeURIComponent(callbackUrl)}`);
 
     window.location.href = url;
-    requestSecondaryWebviewClose();
   }
 
   return (

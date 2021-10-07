@@ -13,6 +13,11 @@ type LandingProps = {
   getHostInfo: Function,
 };
 
+window.addEventListener('miniAppWebviewClosed', function (e) {
+  let message = e.detail;
+  console.log(message);
+});
+
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
