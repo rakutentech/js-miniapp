@@ -1,6 +1,5 @@
 // @flow
 import React, { useState } from 'react';
-import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
