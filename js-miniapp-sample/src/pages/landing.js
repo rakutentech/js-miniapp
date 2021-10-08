@@ -18,6 +18,11 @@ window.addEventListener('miniAppWebviewClosed', function (e) {
   console.log(message);
 });
 
+window.addEventListener('miniAppOnPause', function (e) {
+  let message = e.detail;
+  console.log(message);
+});
+
 const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
