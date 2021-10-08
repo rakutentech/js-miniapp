@@ -17,7 +17,7 @@ const GeolocationPositionError = {
 };
 
 class IOSExecutor implements PlatformExecutor {
-  execEvents(event: CustomEvent<any>): void {
+  execEvents(event): void {
     (window as any).dispatchEvent(event);
   }
   exec(action, param, onSuccess, onError) {
