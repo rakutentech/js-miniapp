@@ -52,29 +52,31 @@ window.addEventListener(MiniAppEvents.externalwebviewclose, function (e) {
   let message = e.detail;
   console.log(message);
   externalwebviewcloseeventcount++;
-  document.getElementById('webviewclose').textContent = 'External Webview Closed: ' + externalwebviewcloseeventcount;
+  document.getElementById('webviewclose').textContent =
+    'External Webview Closed: ' + externalwebviewcloseeventcount;
 });
 
 window.addEventListener(MiniAppEvents.pause, function (e) {
   let message = e.detail;
   console.log(message);
   pauseeventcount++;
-  document.getElementById('pause').textContent = 'Mini App Paused: ' + pauseeventcount;
+  document.getElementById('pause').textContent =
+    'Mini App Paused: ' + pauseeventcount;
 });
 
 window.addEventListener(MiniAppEvents.resume, function (e) {
   let message = e.detail;
   console.log(message);
   resumeeventcount++;
-  document.getElementById('resume').textContent = 'Mini App Resumed: ' + resumeeventcount;
-  ;
+  document.getElementById('resume').textContent =
+    'Mini App Resumed: ' + resumeeventcount;
 });
 
 const NativeEvents = () => {
   const classes = useStyles();
 
   function onOpenExternalWebview() {
-    const EXTERNAL_WEBVIEW_URL = 'https://www.google.com'
+    const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
     var url = new URL(EXTERNAL_WEBVIEW_URL);
     window.location.href = url;
   }
@@ -95,7 +97,9 @@ const NativeEvents = () => {
           </Button>
         </CardActions>
         <div className={classes.info}>
-          <p id="webviewclose">External Webview Closed: {externalwebviewcloseeventcount}</p>
+          <p id="webviewclose">
+            External Webview Closed: {externalwebviewcloseeventcount}
+          </p>
           <p id="pause">Mini App Paused: {pauseeventcount}</p>
           <p id="resume">Mini App Resumed: {resumeeventcount}</p>
         </div>

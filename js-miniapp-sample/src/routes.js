@@ -15,7 +15,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import EventIcon from '@material-ui/icons/CompareArrows'
+import EventIcon from '@material-ui/icons/CompareArrows';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
