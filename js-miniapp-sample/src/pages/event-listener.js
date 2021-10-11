@@ -52,7 +52,7 @@ window.addEventListener(MiniAppEvents.externalwebviewclose, function (e) {
   let message = e.detail;
   console.log(message);
   externalwebviewcloseeventcount++;
-  document.getElementById('webviewclose').textContent =
+  document.getElementById('webviewclose').innerText =
     'External Webview Closed: ' + externalwebviewcloseeventcount;
 });
 
@@ -60,7 +60,7 @@ window.addEventListener(MiniAppEvents.pause, function (e) {
   let message = e.detail;
   console.log(message);
   pauseeventcount++;
-  document.getElementById('pause').textContent =
+  document.getElementById('pause').innerText =
     'Mini App Paused: ' + pauseeventcount;
 });
 
@@ -68,7 +68,7 @@ window.addEventListener(MiniAppEvents.resume, function (e) {
   let message = e.detail;
   console.log(message);
   resumeeventcount++;
-  document.getElementById('resume').textContent =
+  document.getElementById('resume').innerText =
     'Mini App Resumed: ' + resumeeventcount;
 });
 
