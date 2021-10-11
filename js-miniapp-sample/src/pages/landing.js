@@ -3,7 +3,6 @@ import { CardContent, makeStyles } from '@material-ui/core';
 import GreyCard from '../components/GreyCard';
 import { setHostEnvironmentInfo } from '../services/landing/actions';
 import { connect } from 'react-redux';
-import { MiniAppEvents } from 'js-miniapp-sdk';
 
 type LandingProps = {
   platform: ?string,
@@ -13,21 +12,6 @@ type LandingProps = {
   infoError: string,
   getHostInfo: Function,
 };
-
-window.addEventListener(MiniAppEvents.externalwebviewclose, function (e) {
-  let message = e.detail;
-  console.log(message);
-});
-
-window.addEventListener(MiniAppEvents.pause, function (e) {
-  let message = e.detail;
-  console.log(message);
-});
-
-window.addEventListener(MiniAppEvents.resume, function (e) {
-  let message = e.detail;
-  console.log(message);
-});
 
 const useStyles = makeStyles((theme) => ({
   card: {
