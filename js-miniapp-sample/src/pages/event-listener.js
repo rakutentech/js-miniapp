@@ -52,24 +52,31 @@ window.addEventListener(MiniAppEvents.externalwebviewclose, function (e) {
   let message = e.detail;
   console.log(message);
   externalwebviewcloseeventcount++;
-  document.getElementById('webviewclose').innerText =
-    'External Webview Closed: ' + externalwebviewcloseeventcount;
+  const webviewclose = document.getElementById('webviewclose');
+  if (webviewclose) {
+    webviewclose.innerText =
+      'External Webview Closed: ' + externalwebviewcloseeventcount;
+  }
 });
 
 window.addEventListener(MiniAppEvents.pause, function (e) {
   let message = e.detail;
   console.log(message);
   pauseeventcount++;
-  document.getElementById('pause').innerText =
-    'Mini App Paused: ' + pauseeventcount;
+  const pause = document.getElementById('pause');
+  if (pause) {
+    pause.innerText = 'Mini App Paused: ' + pauseeventcount;
+  }
 });
 
 window.addEventListener(MiniAppEvents.resume, function (e) {
   let message = e.detail;
   console.log(message);
   resumeeventcount++;
-  document.getElementById('resume').innerText =
-    'Mini App Resumed: ' + resumeeventcount;
+  const resume = document.getElementById('resume');
+  if (resume) {
+    resume.innerText = 'Mini App Resumed: ' + resumeeventcount;
+  }
 });
 
 const NativeEvents = () => {
