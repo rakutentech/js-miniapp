@@ -2,7 +2,7 @@
  * Enum for supported SDK event types
  */
 export enum MiniAppEvents {
-  externalwebviewclose = 'miniappwebviewclosed',
-  pause = 'miniapppause',
-  resume = 'miniappresume',
+  EXTERNAL_WEBVIEW_CLOSE = 'miniappwebviewclosed',
+  PAUSE = 'miniapppause',
+  RESUME = 'miniappresume',
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MiniAppEvents } from 'js-miniapp-sdk';
 
 import {
@@ -44,46 +44,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-let externalwebviewcloseeventcount = 0;
-let pauseeventcount = 0;
-let resumeeventcount = 0;
-
-window.addEventListener(MiniAppEvents.externalwebviewclose, function (e) {
-  let message = e.detail;
-  console.log(message);
-  externalwebviewcloseeventcount++;
-  const webviewclose = document.getElementById('webviewclose');
-  if (webviewclose) {
-    webviewclose.innerText =
-      'External Webview Closed: ' + externalwebviewcloseeventcount;
-  }
-});
-
-window.addEventListener(MiniAppEvents.pause, function (e) {
-  let message = e.detail;
-  console.log(message);
-  pauseeventcount++;
-  const pause = document.getElementById('pause');
-  if (pause) {
-    pause.innerText = 'Mini App Paused: ' + pauseeventcount;
-  }
-});
-
-window.addEventListener(MiniAppEvents.resume, function (e) {
-  let message = e.detail;
-  console.log(message);
-  resumeeventcount++;
-  const resume = document.getElementById('resume');
-  if (resume) {
-    resume.innerText = 'Mini App Resumed: ' + resumeeventcount;
-  }
-});
+const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
 
 const NativeEvents = () => {
   const classes = useStyles();
+  let [
+    externalWebviewCloseEventCount,
+    setExternalWebviewCloseEventCount,
+  ] = useState(0);
+  let [pauseEventCount, setPauseEventCount] = useState(0);
+  let [resumeEventCount, setResumeEventCount] = useState(0);
+
+  window.addEventListener(MiniAppEvents.EXTERNAL_WEBVIEW_CLOSE, function (e) {
+    let message = e.detail;
+    console.log(message);
+    externalWebviewCloseEventCount++;
+    setExternalWebviewCloseEventCount(externalWebviewCloseEventCount);
+  });
+
+  window.addEventListener(MiniAppEvents.PAUSE, function (e) {
+    let message = e.detail;
+    console.log(message);
+    pauseEventCount++;
+    setPauseEventCount(pauseEventCount);
+  });
+
+  window.addEventListener(MiniAppEvents.RESUME, function (e) {
+    let message = e.detail;
+    console.log(message);
+    resumeEventCount++;
+    setResumeEventCount(resumeEventCount);
+  });
 
   function onOpenExternalWebview() {
-    const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
     var url = new URL(EXTERNAL_WEBVIEW_URL);
     window.location.href = url;
   }
@@ -104,11 +97,9 @@ const NativeEvents = () => {
           </Button>
         </CardActions>
         <div className={classes.info}>
-          <p id="webviewclose">
-            External Webview Closed: {externalwebviewcloseeventcount}
-          </p>
-          <p id="pause">Mini App Paused: {pauseeventcount}</p>
-          <p id="resume">Mini App Resumed: {resumeeventcount}</p>
+          <p>External Webview Closed: {externalWebviewCloseEventCount}</p>
+          <p>Mini App Paused: {pauseEventCount}</p>
+          <p>Mini App Resumed: {resumeEventCount}</p>
         </div>
       </GreyCard>
     </div>
