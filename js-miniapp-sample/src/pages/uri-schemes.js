@@ -73,7 +73,7 @@ const UriSchemes = () => {
   const [callbackUrl, setCallbackUrl] = useState(
     `${window.location.protocol}//${window.location.host}/index.html`
   );
-  let deeplinkUrl = ""
+  let deeplinkUrl = '';
 
   function validateParams(params) {
     if (!params.startsWith('?') || params.indexOf('=') <= -1) {
@@ -182,10 +182,10 @@ const UriSchemes = () => {
           </Button>
         </CardActions>
       </GreyCard>
-      <br/>
+      <br />
       <GreyCard className={classes.card}>
-      <CardContent className={classes.content}>Deep Link</CardContent>
-      <CardContent className={deeplinkClass.content}>
+        <CardContent className={classes.content}>Deep Link</CardContent>
+        <CardContent className={deeplinkClass.content}>
           <TextField
             className={classes.textfield}
             onChange={handleInput}
@@ -198,11 +198,7 @@ const UriSchemes = () => {
           />
         </CardContent>
         <CardActions className={deeplinkClass.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={openDeeplinkURL}
-          >
+          <Button variant="contained" color="primary" onClick={openDeeplinkURL}>
             Open
           </Button>
         </CardActions>
