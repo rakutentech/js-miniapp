@@ -18,6 +18,8 @@ var error_types_1 = require("./types/error-types");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
+var mabCustomEventQueue = [];
+exports.mabCustomEventQueue = mabCustomEventQueue;
 /** @internal */
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
@@ -55,6 +57,21 @@ var MiniAppBridge = /** @class */ (function () {
         }
         queueObj.onError(errorMessage);
         removeFromMessageQueue(queueObj);
+    };
+    /**
+     * Event Callback method that will be called from native side
+     * to this bridge. This method will send back the value to the
+     * mini app that listen to this eventType.
+     * @param  {[String]} eventType EventType which will be used to listen for the event
+     * @param  {[String]} value Additional message sent from the native on invoking for the eventType
+     */
+    MiniAppBridge.prototype.execCustomEventsCallback = function (eventType, value) {
+        var queueObj = mabCustomEventQueue.filter(function (customEvent) { return customEvent.type === eventType; })[0];
+        if (!queueObj) {
+            queueObj = new CustomEvent(eventType, { detail: value });
+            mabCustomEventQueue.unshift(queueObj);
+        }
+        this.executor.execEvents(queueObj);
     };
     /**
      * Associating getUniqueId function to MiniAppBridge object.
@@ -366,6 +383,9 @@ var GeolocationPositionError = {
 var IOSExecutor = /** @class */ (function () {
     function IOSExecutor() {
     }
+    IOSExecutor.prototype.execEvents = function (event) {
+        window.dispatchEvent(event);
+    };
     IOSExecutor.prototype.exec = function (action, param, onSuccess, onError) {
         var callback = {};
         callback.onSuccess = onSuccess;
