@@ -69,7 +69,7 @@ const UuidFetcher = (props: UUIDProps) => {
     textArea.style.top = '0';
     textArea.style.left = '0';
     textArea.style.position = 'fixed';
-    document.body.appendChild(textArea);
+    document.body !== null && document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
     try {
@@ -78,7 +78,7 @@ const UuidFetcher = (props: UUIDProps) => {
     } catch (err) {
       setCopyStatus({ success: false, error: true });
     }
-    document.body.removeChild(textArea);
+    document.body !== null && document.body.removeChild(textArea);
   }
 
   return (
