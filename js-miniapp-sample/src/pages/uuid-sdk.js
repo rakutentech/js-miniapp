@@ -41,21 +41,24 @@ type UUIDProps = {
 const UuidFetcher = (props: UUIDProps) => {
   const classes = useStyles();
   const [copyStatus, setCopyStatus] = useState({
+    success: false,
     error: false,
-    message: '',
   });
 
   function copyToClipboard() {
+    if (props.uuid === undefined) {
+      return;
+    }
     if (!navigator.clipboard) {
       fallbackCopyMethod(props.uuid);
       return;
     }
     navigator.clipboard.writeText(props.uuid).then(
       function () {
-        setCopyStatus({ success: true, error: false, message: '' });
+        setCopyStatus({ success: true, error: false });
       },
       function (err) {
-        setCopyStatus({ success: false, error: true, message: '' });
+        setCopyStatus({ success: false, error: true });
       }
     );
   }
@@ -71,9 +74,9 @@ const UuidFetcher = (props: UUIDProps) => {
     textArea.select();
     try {
       document.execCommand('copy');
-      setCopyStatus({ success: true, error: false, message: '' });
+      setCopyStatus({ success: true, error: false });
     } catch (err) {
-      setCopyStatus({ success: false, error: true, message: '' });
+      setCopyStatus({ success: false, error: true });
     }
     document.body.removeChild(textArea);
   }
@@ -94,6 +97,7 @@ const UuidFetcher = (props: UUIDProps) => {
           GET UNIQUE ID
         </Button>
         <Button
+          disabled={!props.uuid}
           data-testid="get-unique-id"
           variant="contained"
           color="primary"
@@ -105,7 +109,7 @@ const UuidFetcher = (props: UUIDProps) => {
           open={copyStatus.success}
           autoHideDuration={3000}
           onClose={() => {
-            setCopyStatus({ success: false, error: false, message: '' });
+            setCopyStatus({ success: false, error: false });
           }}
           message="Unique ID copied !!"
         />
@@ -113,7 +117,7 @@ const UuidFetcher = (props: UUIDProps) => {
           open={copyStatus.error}
           autoHideDuration={3000}
           onClose={() => {
-            setCopyStatus({ success: false, error: false, message: '' });
+            setCopyStatus({ success: false, error: false });
           }}
           message="Failed to copy!"
         />
