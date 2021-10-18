@@ -44,6 +44,10 @@
     {
       "name": "rakuten.miniapp.user.POINTS",
       "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.ATTACHMENTS",
+      "reason": "Describe your reason here (optional)."
     }
   ],
 
