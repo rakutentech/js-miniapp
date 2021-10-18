@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Button,
   CardContent,
   CardActions,
   makeStyles,
+  Snackbar,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 
@@ -39,6 +40,44 @@ type UUIDProps = {
 
 const UuidFetcher = (props: UUIDProps) => {
   const classes = useStyles();
+  const [copyStatus, setCopyStatus] = useState({
+    error: false,
+    message: '',
+  });
+
+  function copyToClipboard() {
+    if (!navigator.clipboard) {
+      fallbackCopyMethod(props.uuid);
+      return;
+    }
+    navigator.clipboard.writeText(props.uuid).then(
+      function () {
+        setCopyStatus({ success: true, error: false, message: '' });
+      },
+      function (err) {
+        setCopyStatus({ success: false, error: true, message: '' });
+      }
+    );
+  }
+
+  function fallbackCopyMethod(text) {
+    var textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.top = '0';
+    textArea.style.left = '0';
+    textArea.style.position = 'fixed';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      setCopyStatus({ success: true, error: false, message: '' });
+    } catch (err) {
+      setCopyStatus({ success: false, error: true, message: '' });
+    }
+    document.body.removeChild(textArea);
+  }
+
   return (
     <GreyCard>
       <CardContent className={classes.content}>
@@ -54,6 +93,30 @@ const UuidFetcher = (props: UUIDProps) => {
         >
           GET UNIQUE ID
         </Button>
+        <Button
+          data-testid="get-unique-id"
+          variant="contained"
+          color="primary"
+          onClick={copyToClipboard}
+        >
+          Copy
+        </Button>
+        <Snackbar
+          open={copyStatus.success}
+          autoHideDuration={3000}
+          onClose={() => {
+            setCopyStatus({ success: false, error: false, message: '' });
+          }}
+          message="Unique ID copied !!"
+        />
+        <Snackbar
+          open={copyStatus.error}
+          autoHideDuration={3000}
+          onClose={() => {
+            setCopyStatus({ success: false, error: false, message: '' });
+          }}
+          message="Failed to copy!"
+        />
       </CardActions>
     </GreyCard>
   );
