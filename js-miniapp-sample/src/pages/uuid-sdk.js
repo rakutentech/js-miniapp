@@ -98,7 +98,7 @@ const UuidFetcher = (props: UUIDProps) => {
         </Button>
         <Button
           disabled={!props.uuid}
-          data-testid="get-unique-id"
+          data-testid="clipboard-copy"
           variant="contained"
           color="primary"
           onClick={copyToClipboard}
