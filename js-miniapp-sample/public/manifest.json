@@ -46,7 +46,7 @@
       "reason": "Describe your reason here (optional)."
     },
     {
-      "name": "rakuten.miniapp.user.ATTACHMENTS",
+      "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
       "reason": "Describe your reason here (optional)."
     }
   ],
