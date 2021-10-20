@@ -94,9 +94,13 @@ var MiniAppBridge = /** @class */ (function () {
      * @param  {[String]} value Additional message sent from the native on invoking for the eventType
      */
     MiniAppBridge.prototype.execCustomEventsCallback = function (eventType, value) {
-        var queueObj = mabCustomEventQueue.filter(function (customEvent) { return customEvent.type === eventType; })[0];
+        var event = new CustomEvent(eventType, { detail: value });
+        var queueObj = mabCustomEventQueue.filter(function (customEvent) { return customEvent === event; })[0];
         if (!queueObj) {
-            queueObj = new CustomEvent(eventType, { detail: value });
+            if (eventType === event.type) {
+                removeFromEventQueue(event);
+            }
+            queueObj = event;
             mabCustomEventQueue.unshift(queueObj);
         }
         this.executor.execEvents(queueObj);
@@ -385,6 +389,12 @@ function removeFromMessageQueue(queueObj) {
     var messageObjIndex = mabMessageQueue.indexOf(queueObj);
     if (messageObjIndex !== -1) {
         mabMessageQueue.splice(messageObjIndex, 1);
+    }
+}
+function removeFromEventQueue(queueObj) {
+    var eventObjIndex = mabCustomEventQueue.indexOf(mabCustomEventQueue.filter(function (customEvent) { return customEvent.type === queueObj.type; })[0]);
+    if (eventObjIndex !== -1) {
+        mabCustomEventQueue.splice(eventObjIndex, 1);
     }
 }
 function trimBannerText(message, maxLength) {
