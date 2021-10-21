@@ -22,24 +22,26 @@ export class MiniAppSDKLogger {
   }
 }
 
-const originalLog = console.log;
-const originalWarn = console.warn;
-const originalError = console.error;
-const originalDebug = console.debug;
+if (typeof window !== 'undefined') { // when running unit tests, window does not exist
+  const originalLog = console.log;
+  const originalWarn = console.warn;
+  const originalError = console.error;
+  const originalDebug = console.debug;
 
-console.log = (...argumentsList) => {
-  getLogger().log('📗', 'log', argumentsList);
-  originalLog.apply(null, argumentsList);
-};
-console.warn = (...argumentsList) => {
-  getLogger().log('📙', 'warning', argumentsList);
-  originalWarn.apply(null, argumentsList);
-};
-console.error = (...argumentsList) => {
-  getLogger().log('📕', 'error', argumentsList);
-  originalError.apply(null, argumentsList);
-};
-console.debug = (...argumentsList) => {
-  getLogger().log('📘', 'debug', argumentsList);
-  originalDebug.apply(null, argumentsList);
-};
+  console.log = (...argumentsList) => {
+    getLogger().log('📗', 'log', argumentsList);
+    originalLog.apply(null, argumentsList);
+  };
+  console.warn = (...argumentsList) => {
+    getLogger().log('📙', 'warning', argumentsList);
+    originalWarn.apply(null, argumentsList);
+  };
+  console.error = (...argumentsList) => {
+    getLogger().log('📕', 'error', argumentsList);
+    originalError.apply(null, argumentsList);
+  };
+  console.debug = (...argumentsList) => {
+    getLogger().log('📘', 'debug', argumentsList);
+    originalDebug.apply(null, argumentsList);
+  };
+}
