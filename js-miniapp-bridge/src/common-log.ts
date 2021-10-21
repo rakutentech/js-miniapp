@@ -17,34 +17,45 @@ export function getLogger() {
 export class MiniAppSDKLogger {
   logger: PlatformLogger;
   lastLog;
-  originalConsole = originalLog;
 
   constructor(logger: PlatformLogger) {
     this.logger = logger;
   }
 
   logOnConsole(type, argumentsList) {
-    switch (type) {
-      case 'debug':
-        this.originalConsole = originalDebug;
-        break;
-      case 'warn':
-        this.originalConsole = originalWarn;
-        break;
-      case 'error':
-        this.originalConsole = originalError;
-        break;
-      default:
-        this.originalConsole = originalLog;
-        break;
-    }
-    this.originalConsole.apply(null, argumentsList);
+    getConsoleForLogType(type).apply(null, argumentsList);
   }
 
-  log(emoji, type, argumentsList) {
-    this.lastLog = { icon: emoji, messageType: type, message: argumentsList };
-    this.logger.log(emoji, type, argumentsList);
+  log(type: LogType, argumentsList) {
+    this.lastLog = {
+      icon: type.icon,
+      messageType: type.type,
+      message: argumentsList,
+    };
+    this.logger.log(type.icon, type.type, argumentsList);
     this.logOnConsole(type, argumentsList);
+  }
+}
+
+class LogType {
+  static readonly debug = new LogType('debug', '📘');
+  static readonly log = new LogType('log', '📗');
+  static readonly warn = new LogType('warning', '📙');
+  static readonly error = new LogType('error', '📕');
+
+  private constructor(readonly type: string, readonly icon: string) {}
+}
+
+function getConsoleForLogType(type: LogType) {
+  switch (type) {
+    case LogType.debug:
+      return originalDebug;
+    case LogType.warn:
+      return originalWarn;
+    case LogType.error:
+      return originalError;
+    default:
+      return originalLog;
   }
 }
 
@@ -53,29 +64,24 @@ const originalWarn = console.warn;
 const originalError = console.error;
 const originalDebug = console.debug;
 
-function logMessage(
-  logStream,
-  emoji: string,
-  type: string,
-  argumentsList: any[]
-) {
+function logMessage(type: LogType, argumentsList: any[]) {
   const logger = getLogger();
   if (logger !== undefined) {
-    logger.log(emoji, type, argumentsList);
+    logger.log(type, argumentsList);
   } else {
-    logStream.apply(null, argumentsList);
+    getConsoleForLogType(type).apply(null, argumentsList);
   }
 }
 
 console.log = (...argumentsList) => {
-  logMessage(originalLog, '📗', 'log', argumentsList);
+  logMessage(LogType.log, argumentsList);
 };
 console.warn = (...argumentsList) => {
-  logMessage(originalWarn, '📙', 'warning', argumentsList);
+  logMessage(LogType.warn, argumentsList);
 };
 console.error = (...argumentsList) => {
-  logMessage(originalError, '📕', 'error', argumentsList);
+  logMessage(LogType.error, argumentsList);
 };
 console.debug = (...argumentsList) => {
-  logMessage(originalDebug, '📘', 'debug', argumentsList);
+  logMessage(LogType.debug, argumentsList);
 };
