@@ -6,42 +6,76 @@ export interface PlatformLogger {
 /** @internal */
 export function getLogger() {
   // tslint:disable:no-any
-  return (window as any).MiniAppSDKLogger as MiniAppSDKLogger;
+  if (typeof window !== 'undefined') {
+    // when not running in webview or browser, window does not exist
+    return (window as any).MiniAppSDKLogger as MiniAppSDKLogger;
+  }
+  return undefined;
 }
 
 /** @internal */
 export class MiniAppSDKLogger {
   logger: PlatformLogger;
+  lastLog;
+  originalConsole = originalLog;
 
   constructor(logger: PlatformLogger) {
     this.logger = logger;
   }
 
+  logOnConsole(type, argumentsList) {
+    switch (type) {
+      case 'debug':
+        this.originalConsole = originalDebug;
+        break;
+      case 'warn':
+        this.originalConsole = originalWarn;
+        break;
+      case 'error':
+        this.originalConsole = originalError;
+        break;
+      default:
+        this.originalConsole = originalLog;
+        break;
+    }
+    this.originalConsole.apply(null, argumentsList);
+  }
+
   log(emoji, type, argumentsList) {
+    this.lastLog = { icon: emoji, messageType: type, message: argumentsList };
     this.logger.log(emoji, type, argumentsList);
+    this.logOnConsole(type, argumentsList);
   }
 }
 
-if (typeof window !== 'undefined') { // when running unit tests, window does not exist
-  const originalLog = console.log;
-  const originalWarn = console.warn;
-  const originalError = console.error;
-  const originalDebug = console.debug;
+const originalLog = console.log;
+const originalWarn = console.warn;
+const originalError = console.error;
+const originalDebug = console.debug;
 
-  console.log = (...argumentsList) => {
-    getLogger().log('📗', 'log', argumentsList);
-    originalLog.apply(null, argumentsList);
-  };
-  console.warn = (...argumentsList) => {
-    getLogger().log('📙', 'warning', argumentsList);
-    originalWarn.apply(null, argumentsList);
-  };
-  console.error = (...argumentsList) => {
-    getLogger().log('📕', 'error', argumentsList);
-    originalError.apply(null, argumentsList);
-  };
-  console.debug = (...argumentsList) => {
-    getLogger().log('📘', 'debug', argumentsList);
-    originalDebug.apply(null, argumentsList);
-  };
+function logMessage(
+  logStream,
+  emoji: string,
+  type: string,
+  argumentsList: any[]
+) {
+  const logger = getLogger();
+  if (logger !== undefined) {
+    logger.log(emoji, type, argumentsList);
+  } else {
+    logStream.apply(null, argumentsList);
+  }
 }
+
+console.log = (...argumentsList) => {
+  logMessage(originalLog, '📗', 'log', argumentsList);
+};
+console.warn = (...argumentsList) => {
+  logMessage(originalWarn, '📙', 'warning', argumentsList);
+};
+console.error = (...argumentsList) => {
+  logMessage(originalError, '📕', 'error', argumentsList);
+};
+console.debug = (...argumentsList) => {
+  logMessage(originalDebug, '📘', 'debug', argumentsList);
+};
