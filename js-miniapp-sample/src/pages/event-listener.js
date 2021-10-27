@@ -48,10 +48,8 @@ const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
 
 const NativeEvents = () => {
   const classes = useStyles();
-  let [
-    externalWebviewCloseEventCount,
-    setExternalWebviewCloseEventCount,
-  ] = useState(0);
+  let [externalWebviewCloseEventCount, setExternalWebviewCloseEventCount] =
+    useState(0);
   let [pauseEventCount, setPauseEventCount] = useState(0);
   let [resumeEventCount, setResumeEventCount] = useState(0);
 
