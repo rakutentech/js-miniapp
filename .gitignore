@@ -3,3 +3,4 @@
 
 # Keep bridge.js file
 !/bridge.js
+!/log.js
