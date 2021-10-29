@@ -1,5 +1,5 @@
 // @flow
-import React, { useReducer, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
   Button,
