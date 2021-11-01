@@ -62,7 +62,7 @@ type FileDownloadProps = {
 
 const FileDownload = (props: FileDownloadProps) => {
   const classes = useStyles();
-  let [permissionStatus, setpermissionStatus] = useState('');
+  let [isPermissionGranted, setIsPermissionGranted] = useState(false);
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
@@ -85,7 +85,7 @@ const FileDownload = (props: FileDownloadProps) => {
         Promise.all([
           hasPermission(CustomPermissionName.FILE_DOWNLOAD, permissions)
             ? startFileDownload(url, fileName)
-            : setpermissionStatus('"FILE_DOWNLOAD" permission not granted.'),
+            : setIsPermissionGranted(false),
         ])
       )
       .catch((miniAppError) => {
@@ -103,7 +103,7 @@ const FileDownload = (props: FileDownloadProps) => {
   }
 
   function startFileDownload(url, fileName) {
-    setpermissionStatus('');
+    setIsPermissionGranted(true);
     fetch(url, { method: 'GET' })
       .then((response) => response.blob())
       .then((blob) => {
@@ -165,7 +165,11 @@ const FileDownload = (props: FileDownloadProps) => {
           </Button>
         </CardActions>
         <div className={classes.info}>
-          <p> {permissionStatus} </p>
+          <p>
+            {' '}
+            {!isPermissionGranted &&
+              '"FILE_DOWNLOAD" permission not granted.'}{' '}
+          </p>
         </div>
       </GreyCard>
     </div>
