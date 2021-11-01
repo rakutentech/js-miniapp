@@ -166,9 +166,7 @@ const FileDownload = (props: FileDownloadProps) => {
         </CardActions>
         <div className={classes.info}>
           <p>
-            {' '}
-            {!isPermissionGranted &&
-              '"FILE_DOWNLOAD" permission not granted.'}{' '}
+            {!isPermissionGranted && '"FILE_DOWNLOAD" permission not granted.'}
           </p>
         </div>
       </GreyCard>
