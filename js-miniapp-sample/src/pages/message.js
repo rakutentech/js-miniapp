@@ -27,6 +27,11 @@ import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
 import { MessageTypeId } from '../services/message/types';
 
+const defaultTexts = new Map();
+defaultTexts.set(MessageTypeId.SINGLE_CONTACT, "Single contact");
+defaultTexts.set(MessageTypeId.SINGLE_CONTACT_ID, "Specific contact ID");
+defaultTexts.set(MessageTypeId.MULTIPLE_CONTACTS, "Multiple contact");
+
 const useStyles = makeStyles((theme) => ({
   scrollable: {
     overflowY: 'auto',
@@ -85,7 +90,7 @@ const Message = (props: MessageTypeProps) => {
     id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
     contactId: '',
     image: pandaLogo,
-    text: 'Sample text',
+    text: 'Single contact',
     caption: 'Sample caption',
     action: 'https://www.example.com/',
     bannerMessage: 'Win 30 coins from every friends who joins from your invite',
@@ -123,6 +128,9 @@ const Message = (props: MessageTypeProps) => {
     return true;
   };
   const handleChange = (event) => {
+    message.text = defaultTexts.get(event.target.value);
+    message.action = "https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099";
+    message.caption = "Open JS miniapp";
     setMessage({ ...message, id: event.target.value });
   };
   const talkToChatbot = () => {
