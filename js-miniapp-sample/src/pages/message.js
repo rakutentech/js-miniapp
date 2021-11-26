@@ -28,9 +28,9 @@ import type { MessageType } from '../services/message/types';
 import { MessageTypeId } from '../services/message/types';
 
 const defaultTexts = new Map();
-defaultTexts.set(MessageTypeId.SINGLE_CONTACT, "Single contact");
-defaultTexts.set(MessageTypeId.SINGLE_CONTACT_ID, "Specific contact ID");
-defaultTexts.set(MessageTypeId.MULTIPLE_CONTACTS, "Multiple contact");
+defaultTexts.set(MessageTypeId.SINGLE_CONTACT, 'Single contact');
+defaultTexts.set(MessageTypeId.SINGLE_CONTACT_ID, 'Specific contact ID');
+defaultTexts.set(MessageTypeId.MULTIPLE_CONTACTS, 'Multiple contact');
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -129,8 +129,9 @@ const Message = (props: MessageTypeProps) => {
   };
   const handleChange = (event) => {
     message.text = defaultTexts.get(event.target.value);
-    message.action = "https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099";
-    message.caption = "Open JS miniapp";
+    message.action =
+      'https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099';
+    message.caption = 'Open JS miniapp';
     setMessage({ ...message, id: event.target.value });
   };
   const talkToChatbot = () => {
