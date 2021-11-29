@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  Card,
-  Grid,
-  Button,
-  makeStyles,
-} from '@material-ui/core';
+import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   contentSection: {
     height: '30%',
-    padding: '10px', 
+    padding: '10px',
   },
   label: {
     display: 'block',
@@ -50,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   imageBoxContent: {
     height: '250px',
     objectFit: 'contain',
-  }
+  },
 }));
 
 const Camera = () => {
@@ -63,14 +58,16 @@ const Camera = () => {
     }
     var reader = new FileReader();
     reader.onload = function (e) {
-      document.getElementById('imageBox').style.setProperty('display', 'block')
-      document.getElementById('imageBoxContent').setAttribute('src', e.target.result);
-    }
+      document.getElementById('imageBox').style.setProperty('display', 'block');
+      document
+        .getElementById('imageBoxContent')
+        .setAttribute('src', e.target.result);
+    };
     reader.readAsDataURL(files[0]);
   };
 
   function clear() {
-    document.getElementById('imageBox').style.setProperty('display', 'none')
+    document.getElementById('imageBox').style.setProperty('display', 'none');
     document.getElementById('imageBoxContent').setAttribute('src', '');
     document.getElementById('cameraBack').value = '';
     document.getElementById('cameraFront').value = '';
@@ -79,7 +76,11 @@ const Camera = () => {
   return (
     <Card className={classes.root}>
       <Card id="imageBox" className={classes.imageBox}>
-        <img id="imageBoxContent" alt="CapturedPicture" className={classes.imageBoxContent}/>
+        <img
+          id="imageBoxContent"
+          alt="CapturedPicture"
+          className={classes.imageBoxContent}
+        />
       </Card>
       <Grid className={classes.grid} align="center" justify="center">
         <div className={classes.contentSection}>
@@ -107,20 +108,14 @@ const Camera = () => {
         </div>
 
         <div className={classes.contentSection}>
-          <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                clear()
-              }
-            >
-              Clear
-            </Button>
+          <Button variant="contained" color="primary" onClick={() => clear()}>
+            Clear
+          </Button>
         </div>
       </Grid>
     </Card>
-  )
-}
+  );
+};
 
 export { Camera };
 export default Camera;
