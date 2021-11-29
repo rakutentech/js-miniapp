@@ -58,7 +58,7 @@ const Camera = () => {
     }
     var reader = new FileReader();
     reader.onload = function (e) {
-      document.getElementById('imageBox').style.setProperty('display', 'block');
+      document.getElementById('imageBox').style.display = 'block';
       document
         .getElementById('imageBoxContent')
         .setAttribute('src', e.target.result);
@@ -67,7 +67,7 @@ const Camera = () => {
   };
 
   function clear() {
-    document.getElementById('imageBox').style.setProperty('display', 'none');
+    document.getElementById('imageBox').style.display = 'none';
     document.getElementById('imageBoxContent').setAttribute('src', '');
     document.getElementById('cameraBack').value = '';
     document.getElementById('cameraFront').value = '';
