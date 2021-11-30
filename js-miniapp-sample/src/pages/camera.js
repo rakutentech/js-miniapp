@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   imageBox: {
     height: '250px',
     margin: '20px',
-    display: 'none',
   },
   imageBoxContent: {
     height: '250px',
@@ -51,38 +50,35 @@ const useStyles = makeStyles((theme) => ({
 const Camera = () => {
   const classes = useStyles();
 
+  const [image, setImage] = useState(null);
+  const [backCamera, setBackCamera] = useState("");
+  const [frontCamera, setFrontCamera] = useState("");
+
   const setFiles = (e) => {
     const files = e.target.files;
     if (!files && files.length > 0) {
       return;
     }
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById('imageBox').style.display = 'block';
-      document
-        .getElementById('imageBoxContent')
-        .setAttribute('src', e.target.result);
-    };
-    reader.readAsDataURL(files[0]);
+    setImage(URL.createObjectURL(e.target.files[0]));
   };
 
   function clear() {
-    document.getElementById('imageBox').style.display = 'none';
-    document.getElementById('imageBoxContent').setAttribute('src', '');
-    document.getElementById('cameraBack').value = '';
-    document.getElementById('cameraFront').value = '';
+    setImage(null)
+    setBackCamera("")
+    setFrontCamera("")
   }
 
   return (
     <Card className={classes.root}>
-      <Card id="imageBox" className={classes.imageBox}>
+      <Card id="imageBox" className={classes.imageBox} hidden={image == null}>
         <img
           id="imageBoxContent"
           alt="CapturedPicture"
           className={classes.imageBoxContent}
+          src={image}
         />
       </Card>
-      <Grid className={classes.grid} align="center" justify="center">
+      <Grid className={classes.grid} align="center">
         <div className={classes.contentSection}>
           <label className={classes.label}>Backside</label>
           <input
@@ -92,6 +88,7 @@ const Camera = () => {
             onChange={setFiles}
             data-testid="file-input-image-back"
             capture="environment"
+            value={backCamera}
           />
         </div>
 
@@ -104,6 +101,7 @@ const Camera = () => {
             onChange={setFiles}
             data-testid="file-input-image-front"
             capture="user"
+            value={frontCamera}
           />
         </div>
 
