@@ -51,8 +51,8 @@ const Camera = () => {
   const classes = useStyles();
 
   const [image, setImage] = useState(null);
-  const [backCamera, setBackCamera] = useState("");
-  const [frontCamera, setFrontCamera] = useState("");
+  const [backCamera, setBackCamera] = useState('');
+  const [frontCamera, setFrontCamera] = useState('');
 
   const setFiles = (e) => {
     const files = e.target.files;
@@ -63,9 +63,9 @@ const Camera = () => {
   };
 
   function clear() {
-    setImage(null)
-    setBackCamera("")
-    setFrontCamera("")
+    setImage(null);
+    setBackCamera('');
+    setFrontCamera('');
   }
 
   return (
