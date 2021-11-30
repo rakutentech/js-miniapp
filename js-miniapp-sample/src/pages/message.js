@@ -31,6 +31,9 @@ const defaultTexts = new Map();
 defaultTexts.set(MessageTypeId.SINGLE_CONTACT, 'Single contact');
 defaultTexts.set(MessageTypeId.SINGLE_CONTACT_ID, 'Specific contact ID');
 defaultTexts.set(MessageTypeId.MULTIPLE_CONTACTS, 'Multiple contact');
+const defaultCaption = 'Open JS miniapp';
+const defaultAction =
+  'https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -90,9 +93,9 @@ const Message = (props: MessageTypeProps) => {
     id: messageTypes[0] !== undefined ? messageTypes[0].id : -1,
     contactId: '',
     image: pandaLogo,
-    text: 'Single contact',
-    caption: 'Sample caption',
-    action: 'https://www.example.com/',
+    text: defaultTexts.get(MessageTypeId.SINGLE_CONTACT),
+    caption: defaultCaption,
+    action: defaultAction,
     bannerMessage: 'Win 30 coins from every friends who joins from your invite',
   });
   const [validation, setValidationState] = useState({
@@ -129,9 +132,8 @@ const Message = (props: MessageTypeProps) => {
   };
   const handleChange = (event) => {
     message.text = defaultTexts.get(event.target.value);
-    message.action =
-      'https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099';
-    message.caption = 'Open JS miniapp';
+    message.action = defaultAction;
+    message.caption = defaultCaption;
     setMessage({ ...message, id: event.target.value });
   };
   const talkToChatbot = () => {
