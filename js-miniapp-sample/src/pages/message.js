@@ -142,7 +142,7 @@ const Message = (props: MessageTypeProps) => {
         props
           .sendMessageToContact(
             message.image.trim() ?? '',
-            message.text.trim(),
+            message.text !== undefined ? message.text.trim() : '',
             message.caption.trim() ?? '',
             message.action.trim() ?? '',
             message.bannerMessage.trim() ?? ''
@@ -167,7 +167,7 @@ const Message = (props: MessageTypeProps) => {
           .sendMessageToContactId(
             message.contactId.trim(),
             message.image.trim() ?? '',
-            message.text.trim(),
+            message.text !== undefined ? message.text.trim() : '',
             message.caption.trim() ?? '',
             message.action.trim() ?? ''
           )
@@ -190,7 +190,7 @@ const Message = (props: MessageTypeProps) => {
         props
           .sendMessageToMultipleContacts(
             message.image.trim() ?? '',
-            message.text.trim(),
+            message.text !== undefined ? message.text.trim() : '',
             message.caption.trim() ?? '',
             message.action.trim() ?? '',
             message.bannerMessage.trim() ?? ''
