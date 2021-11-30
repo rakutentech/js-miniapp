@@ -52,7 +52,6 @@ const Camera = () => {
 
   const [image, setImage] = useState(null);
   const [backCamera, setBackCamera] = useState('');
-  const [frontCamera, setFrontCamera] = useState('');
 
   const setFiles = (e) => {
     const files = e.target.files;
@@ -65,7 +64,6 @@ const Camera = () => {
   function clear() {
     setImage(null);
     setBackCamera('');
-    setFrontCamera('');
   }
 
   return (
@@ -80,7 +78,7 @@ const Camera = () => {
       </Card>
       <Grid className={classes.grid} align="center">
         <div className={classes.contentSection}>
-          <label className={classes.label}>Backside</label>
+          <label className={classes.label}>Pick Image</label>
           <input
             id="cameraBack"
             type="file"
@@ -91,20 +89,6 @@ const Camera = () => {
             value={backCamera}
           />
         </div>
-
-        <div className={classes.contentSection}>
-          <label className={classes.label}>Frontside</label>
-          <input
-            id="cameraFront"
-            type="file"
-            accept=".jpg,.jpeg,.png,.svg,.gif"
-            onChange={setFiles}
-            data-testid="file-input-image-front"
-            capture="user"
-            value={frontCamera}
-          />
-        </div>
-
         <div className={classes.contentSection}>
           <Button variant="contained" color="primary" onClick={() => clear()}>
             Clear
