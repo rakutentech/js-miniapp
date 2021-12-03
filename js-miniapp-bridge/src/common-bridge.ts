@@ -18,6 +18,8 @@ import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
+import { Product, PurchasedProduct } from './types/purchaseProduct';
+
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
@@ -503,6 +505,23 @@ export class MiniAppBridge {
             ...JSON.parse(info),
             platform: this.platform,
           } as HostEnvironmentInfo),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating purchaseItemWith function to MiniAppBridge object.
+   * @param {string} id Item id that user wanted to purchase
+   */
+  purchaseItemWith(id: string) {
+    console.log('Bridge purchaseItemWith');
+    return new Promise<PurchasedProduct>((resolve, reject) => {
+      return this.executor.exec(
+        'purchaseItem',
+        { itemId: id },
+        purchasedProduct =>
+          resolve(JSON.parse(purchasedProduct) as PurchasedProduct),
         error => reject(error)
       );
     });

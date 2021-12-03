@@ -10,6 +10,8 @@ import {
   Points,
   HostEnvironmentInfo,
   Platform as HostPlatform,
+  Product,
+  PurchasedProduct,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -125,7 +127,15 @@ interface Platform {
   getPlatform(): string;
 }
 
-export class MiniApp implements MiniAppFeatures, Ad, Platform {
+interface Purchase {
+  /**
+   * Request the host app to purchase an item with the id
+   * @returns Promise of the purchased product details
+   */
+  purchaseItemWith(id: string): Promise<PurchasedProduct>;
+}
+
+export class MiniApp implements MiniAppFeatures, Ad, Platform, Purchase {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
 
@@ -219,5 +229,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
+  }
+
+  purchaseItemWith(id: string): Promise<PurchasedProduct> {
+    return getBridge().purchaseItemWith(id);
   }
 }
