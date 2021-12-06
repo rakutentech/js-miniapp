@@ -52,7 +52,7 @@ const Camera = () => {
   const [image, setImage] = useState(null);
   const [backCamera] = useState(undefined);
 
-  const cameraRef = useRef();
+  const cameraRef = useRef(null);
 
   const setFiles = (e) => {
     const files = e.target.files;
@@ -64,7 +64,9 @@ const Camera = () => {
 
   function clear() {
     setImage(null);
-    cameraRef.current.value = '';
+    if (cameraRef.current !== null) {
+      cameraRef.current.value = '';
+    }
   }
 
   return (
