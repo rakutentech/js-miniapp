@@ -10,11 +10,10 @@ import {
   Points,
   HostEnvironmentInfo,
   Platform as HostPlatform,
-  Product,
-  PurchasedProduct,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
+import { PurchaseItemService } from './modules/purchase-item';
 import { getBridge } from './utils';
 
 /**
@@ -127,17 +126,10 @@ interface Platform {
   getPlatform(): string;
 }
 
-interface Purchase {
-  /**
-   * Request the host app to purchase an item with the id
-   * @returns Promise of the purchased product details
-   */
-  purchaseItemWith(id: string): Promise<PurchasedProduct>;
-}
-
-export class MiniApp implements MiniAppFeatures, Ad, Platform, Purchase {
+export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
+  purchaseService = new PurchaseItemService();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
@@ -229,9 +221,5 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform, Purchase {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
-  }
-
-  purchaseItemWith(id: string): Promise<PurchasedProduct> {
-    return getBridge().purchaseItemWith(id);
   }
 }

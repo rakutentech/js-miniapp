@@ -515,7 +515,6 @@ export class MiniAppBridge {
    * @param {string} id Item id that user wanted to purchase
    */
   purchaseItemWith(id: string) {
-    console.log('Bridge purchaseItemWith');
     return new Promise<PurchasedProduct>((resolve, reject) => {
       return this.executor.exec(
         'purchaseItem',

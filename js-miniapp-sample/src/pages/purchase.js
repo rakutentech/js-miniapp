@@ -47,12 +47,11 @@ function PurchaseComponent() {
   };
 
   const purchaseItem = () => {
-    MiniApp.purchaseItemWith(inputValue)
+    MiniApp.purchaseService.purchaseItemWith(inputValue)
     .then((success) => {
       console.log("Success:", success);
     })
     .catch((error) => {
-      console.log("Error:", error);
       console.error(error);
     });
   };
