@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PurchaseComponent() {
   const classes = useStyles();
-  let inputValue = "";
+  let inputValue = '';
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -47,13 +47,14 @@ function PurchaseComponent() {
   };
 
   const purchaseItem = () => {
-    MiniApp.purchaseService.purchaseItemWith(inputValue)
-    .then((success) => {
-      console.log("Success:", success);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    MiniApp.purchaseService
+      .purchaseItemWith(inputValue)
+      .then((success) => {
+        console.log('Success:', success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
