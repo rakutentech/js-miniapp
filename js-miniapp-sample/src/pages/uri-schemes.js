@@ -68,12 +68,11 @@ const UriSchemes = () => {
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
   const classes = useStyles();
   const deeplinkClass = deepLinkStyle();
-
   const [params, setParams] = useState('?testSendParam=someValue&test2=test2');
   const [callbackUrl, setCallbackUrl] = useState(
     `${window.location.protocol}//${window.location.host}/index.html`
   );
-  let deeplinkUrl = '';
+  const [externalUrl, setExternalUrl] = useState('');
 
   function validateParams(params) {
     if (!params.startsWith('?') || params.indexOf('=') <= -1) {
@@ -97,17 +96,12 @@ const UriSchemes = () => {
       .concat(url.search ? '&' : '?')
       .concat(`callbackUrl=${encodeURIComponent(callbackUrl)}`);
 
+    onOpenUrl(url);
+  }
+
+  function onOpenUrl(url) {
     window.location.href = url;
   }
-
-  function openDeeplinkURL() {
-    window.location.href = deeplinkUrl;
-  }
-
-  const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    deeplinkUrl = e.currentTarget.value;
-  };
 
   return (
     <div className={classes.scrollable}>
@@ -145,7 +139,9 @@ const UriSchemes = () => {
           </Button>
         </CardActions>
 
-        <CardContent className={classes.content}>External Webview</CardContent>
+        <CardContent className={classes.content}>
+          External Webview Params & Callback
+        </CardContent>
         <CardContent className={classes.content}>
           <TextField
             className={classes.textfield}
@@ -184,11 +180,12 @@ const UriSchemes = () => {
       </GreyCard>
       <br />
       <GreyCard className={classes.card}>
-        <CardContent className={classes.content}>Deep Link</CardContent>
+        <CardContent className={classes.content}>URL or Deep Link</CardContent>
         <CardContent className={deeplinkClass.content}>
           <TextField
             className={classes.textfield}
-            onChange={handleInput}
+            onChange={(e) => setExternalUrl(e.currentTarget.value)}
+            value={externalUrl}
             label="Deep Link URL"
             variant="outlined"
             color="primary"
@@ -198,7 +195,11 @@ const UriSchemes = () => {
           />
         </CardContent>
         <CardActions className={deeplinkClass.actions}>
-          <Button variant="contained" color="primary" onClick={openDeeplinkURL}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => externalUrl && onOpenUrl(externalUrl)}
+          >
             Open
           </Button>
         </CardActions>
