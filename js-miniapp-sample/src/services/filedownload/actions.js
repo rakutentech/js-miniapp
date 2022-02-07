@@ -3,7 +3,7 @@ import MiniApp, { DownloadHeaders } from 'js-miniapp-sdk';
 import { FILE_DOWNLOAD_SUCCESS, FILE_DOWNLOAD_FAILURE } from './types';
 
 type DownloadFileAction = {
-  type: String,
+  type: string,
   filename: ?string,
   error: ?string,
 };
