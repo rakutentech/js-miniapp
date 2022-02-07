@@ -188,10 +188,16 @@ const FileDownload = (props: FileDownloadProps) => {
   }
 
   function validateName(name) {
-    if (name !== undefined && props.filename.length > 0) {
-      return true;
+    const hasDeniedFileDownloadPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.FILE_DOWNLOAD);
+    if (hasDeniedFileDownloadPermission) {
+      return 'File Permission denied';
     }
-    return false;
+    if (name !== undefined && props.filename.length > 0) {
+      return name;
+    }
+    return '-';
   }
 
   function DownloadDisplay() {
@@ -206,13 +212,7 @@ const FileDownload = (props: FileDownloadProps) => {
         id="input-points-term"
         error={state.isError || hasDeniedFileDownloadPermission}
         label={'Filename (last download)'}
-        value={
-          hasDeniedFileDownloadPermission
-            ? 'File Permission denied'
-            : validateName(props.filename)
-            ? props.filename
-            : '-'
-        }
+        value={validateName(props.filename)}
       />
     );
   }
