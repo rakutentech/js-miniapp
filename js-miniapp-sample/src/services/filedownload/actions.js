@@ -15,12 +15,12 @@ const requestDownloadFile = (
 ): Function => {
   return (dispatch) => {
     return MiniApp.downloadFile(filename, url, headers)
-      .then((filename) => {
+      .then((name) => {
         dispatch({
           type: FILE_DOWNLOAD_SUCCESS,
-          filename: filename,
+          filename: name,
         });
-        return Promise.resolve(filename);
+        return Promise.resolve(name);
       })
       .catch((error) => {
         dispatch({

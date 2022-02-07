@@ -202,7 +202,7 @@ const FileDownload = (props: FileDownloadProps) => {
         value={
           hasDeniedFileDownloadPermission
             ? 'File Permission denied'
-            : props.filename !== undefined && props.filename.length > 0
+            : (props.filename !== undefined ? props.filename.length > 0 : false)
             ? props.filename
             : '-'
         }
