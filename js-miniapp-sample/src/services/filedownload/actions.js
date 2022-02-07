@@ -1,9 +1,11 @@
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { DownloadHeaders } from 'js-miniapp-sdk';
 
 import { FILE_DOWNLOAD_SUCCESS, FILE_DOWNLOAD_FAILURE } from './types';
 
-type DownloadFileSuccessAction = {
-  filename: String,
+type DownloadFileAction = {
+  type: String,
+  filename: ?string,
+  error: ?string,
 };
 
 const requestDownloadFile = (
@@ -20,14 +22,14 @@ const requestDownloadFile = (
         });
         return Promise.resolve(filename);
       })
-      .catch((e) => {
+      .catch((error) => {
         dispatch({
           type: FILE_DOWNLOAD_FAILURE,
+          error,
         });
-        throw e;
       });
   };
 };
 
 export { requestDownloadFile };
-export type { DownloadFileSuccessAction };
+export type { DownloadFileAction };

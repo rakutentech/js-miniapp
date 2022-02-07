@@ -1,24 +1,31 @@
-import type { DownloadFileSuccessAction } from './actions';
-import { FILE_DOWNLOAD_SUCCESS } from './types';
+import type { DownloadFileAction } from './actions';
+import { FILE_DOWNLOAD_FAILURE, FILE_DOWNLOAD_SUCCESS } from './types';
 
 type FileDownloadState = {
   +filename: ?string,
 };
 
 const defaultState: FileDownloadState = {
-  filename: '',
+  filename: undefined,
+  error: undefined,
 };
 
 const FileDownloadReducer = (
   state: FileDownloadState = defaultState,
-  action: DownloadFileSuccessAction
-): string => {
-  switch (action.type) {
-    case FILE_DOWNLOAD_SUCCESS:
-      return action.filename;
-    default:
-      return state;
+  action: DownloadFileAction = {}
+): FileDownloadState => {
+  if (action.type === FILE_DOWNLOAD_SUCCESS) {
+    return {
+      ...defaultState,
+      filename: action.filename,
+    };
+  } else if (action.type === FILE_DOWNLOAD_FAILURE) {
+    return {
+      ...defaultState,
+      error: action.error,
+    };
   }
+  return state;
 };
 
 export { FileDownloadReducer };

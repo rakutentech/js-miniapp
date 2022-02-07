@@ -18,8 +18,9 @@ import {
   CustomPermissionResult,
   CustomPermissionName,
   CustomPermissionStatus,
+  DownloadHeaders,
 } from 'js-miniapp-sdk';
-import { MiniApp } from 'js-miniapp-sdk/build/js-miniapp-sdk/src/miniapp';
+
 import { requestDownloadFile } from '../services/filedownload/actions';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,6 +74,16 @@ export const initialState = {
   hasRequestedPermissions: false,
 };
 
+type State = {
+  isLoading: ?boolean,
+  isError: ?boolean,
+  hasRequestedPermissions: boolean,
+};
+
+type Action = {
+  type: string,
+};
+
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'FILE_DOWNLOAD_INIT':
@@ -104,7 +115,11 @@ export const dataFetchReducer = (state: State, action: Action) => {
 type FileDownloadProps = {
   permissions: CustomPermissionName[],
   filename: string,
-  downloadFile: (filename, url, headers) => Promise<string>,
+  downloadFile: (
+    filename: string,
+    url: string,
+    headers: DownloadHeaders
+  ) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -296,7 +311,7 @@ const FileDownload = (props: FileDownloadProps) => {
 const mapStateToProps = (state) => {
   return {
     permissions: state.permissions,
-    filename: state.file,
+    filename: state.file.filename,
   };
 };
 
