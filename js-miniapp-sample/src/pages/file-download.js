@@ -1,10 +1,12 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 
 import {
   Button,
   CardContent,
   CardActions,
+  TextField,
+  CircularProgress,
   makeStyles,
 } from '@material-ui/core';
 
@@ -17,6 +19,8 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
 } from 'js-miniapp-sdk';
+import { MiniApp } from 'js-miniapp-sdk/build/js-miniapp-sdk/src/miniapp';
+import { requestDownloadFile } from '../services/filedownload/actions';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -51,16 +55,63 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 0,
     paddingBottom: 10,
   },
+  formInput: {
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: 'calc(50% - 10px)',
+    left: 'calc(50% - 10px)',
+  },
 }));
+
+export const initialState = {
+  isLoading: false,
+  isError: false,
+  hasRequestedPermissions: false,
+};
+
+export const dataFetchReducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'FILE_DOWNLOAD_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        hasRequestedPermissions: false,
+      };
+    case 'FILE_DOWNLOAD_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        hasRequestedPermissions: true,
+      };
+    case 'FILE_DOWNLOAD_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+      };
+
+    default:
+      throw Error('Unknown action type');
+  }
+};
 
 type FileDownloadProps = {
   permissions: CustomPermissionName[],
+  filename: string,
+  downloadFile: (filename, url, headers) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
 };
 
 const FileDownload = (props: FileDownloadProps) => {
+  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
   let [isPermissionGranted, setIsPermissionGranted] = useState(true);
 
@@ -104,39 +155,65 @@ const FileDownload = (props: FileDownloadProps) => {
 
   function startFileDownload(url, fileName) {
     setIsPermissionGranted(true);
-    fetch(url, { method: 'GET' })
-      .then((response) => response.blob())
-      .then((blob) => {
-        var fileReader = new window.FileReader();
-        fileReader.readAsDataURL(blob);
-        fileReader.onloadend = () => {
-          var a = document.createElement('a');
-          a.href = fileReader.result;
-          a.download = fileName;
-          document.body && document.body.appendChild(a);
-          a.click();
-          a.remove();
-        };
+    props
+      .downloadFile(fileName, url, { token: 'test' })
+      .then(() => dispatch({ type: 'FILE_DOWNLOAD_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
+        dispatch({ type: 'FILE_DOWNLOAD_FAILURE' });
       });
+  }
+
+  function handleDownloadClick(e, url, fileName) {
+    if (!state.isLoading) {
+      e.preventDefault();
+      dispatch({ type: 'FILE_DOWNLOAD_INIT' });
+      onDownloadFile(url, fileName);
+    }
+  }
+
+  function DownloadDisplay() {
+    const hasDeniedFileDownloadPermission =
+      state.hasRequestedPermissions &&
+      !hasPermission(CustomPermissionName.FILE_DOWNLOAD);
+    return (
+      <TextField
+        variant="outlined"
+        disabled={true}
+        className={classes.formInput}
+        id="input-points-term"
+        error={state.isError || hasDeniedFileDownloadPermission}
+        label={'Filename (last download)'}
+        value={
+          hasDeniedFileDownloadPermission
+            ? 'File Permission denied'
+            : props.filename !== undefined && props.filename.length > 0
+            ? props.filename
+            : '-'
+        }
+      />
+    );
   }
 
   return (
     <div className={classes.scrollable}>
       <GreyCard className={classes.card}>
-        <CardContent className={classes.content}>
-          Download Files via XHR
-        </CardContent>
+        <CardContent className={classes.content}>Download Files</CardContent>
+        {DownloadDisplay()}
+        {state.isLoading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
         <CardActions className={classes.actions}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              // $FlowFixMe
-              onDownloadFile(
+            onClick={(e) => {
+              handleDownloadClick(
+                e,
                 'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
                 'sample.jpg'
-              )
-            }
+              );
+            }}
           >
             Download Image
           </Button>
@@ -146,13 +223,13 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              // $FlowFixMe
-              onDownloadFile(
+            onClick={(e) => {
+              handleDownloadClick(
+                e,
                 'https://file-examples-com.github.io/uploads/2017/02/zip_2MB.zip',
                 'sample.zip'
-              )
-            }
+              );
+            }}
           >
             Download ZIP
           </Button>
@@ -162,13 +239,13 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              // $FlowFixMe
-              onDownloadFile(
+            onClick={(e) => {
+              handleDownloadClick(
+                e,
                 'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
                 'sample.mp3'
-              )
-            }
+              );
+            }}
           >
             Download MP3
           </Button>
@@ -178,13 +255,13 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              // $FlowFixMe
-              onDownloadFile(
+            onClick={(e) => {
+              handleDownloadClick(
+                e,
                 'https://file-examples-com.github.io/uploads/2017/02/file_example_CSV_5000.csv',
                 'sample.csv'
-              )
-            }
+              );
+            }}
           >
             Download CSV
           </Button>
@@ -194,13 +271,13 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              // $FlowFixMe
-              onDownloadFile(
+            onClick={(e) => {
+              handleDownloadClick(
+                e,
                 'https://file-examples-com.github.io/uploads/2018/04/file_example_MOV_480_700kB.mov',
                 'sample.mov'
-              )
-            }
+              );
+            }}
           >
             Download MOV
           </Button>
@@ -219,6 +296,7 @@ const FileDownload = (props: FileDownloadProps) => {
 const mapStateToProps = (state) => {
   return {
     permissions: state.permissions,
+    filename: state.file,
   };
 };
 
@@ -226,6 +304,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     requestPermissions: (permissions) =>
       dispatch(requestCustomPermissions(permissions)),
+    downloadFile: (filename, url, headers) =>
+      dispatch(requestDownloadFile(filename, url, headers)),
   };
 };
 
