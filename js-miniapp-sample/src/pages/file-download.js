@@ -187,6 +187,13 @@ const FileDownload = (props: FileDownloadProps) => {
     }
   }
 
+  function validateName(name) {
+    if (name !== undefined && props.filename.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   function DownloadDisplay() {
     const hasDeniedFileDownloadPermission =
       state.hasRequestedPermissions &&
@@ -202,7 +209,7 @@ const FileDownload = (props: FileDownloadProps) => {
         value={
           hasDeniedFileDownloadPermission
             ? 'File Permission denied'
-            : (props.filename !== undefined ? props.filename.length > 0 : false)
+            : validateName(props.filename)
             ? props.filename
             : '-'
         }
