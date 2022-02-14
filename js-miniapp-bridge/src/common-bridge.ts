@@ -524,7 +524,7 @@ export class MiniAppBridge {
       );
     });
   }
-  
+
   /**
    * Associating purchaseItemWith function to MiniAppBridge object.
    * @param {string} id Item id that user wanted to purchase
