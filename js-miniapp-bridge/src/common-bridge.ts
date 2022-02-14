@@ -18,6 +18,7 @@ import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
+import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
@@ -503,6 +504,21 @@ export class MiniAppBridge {
             ...JSON.parse(info),
             platform: this.platform,
           } as HostEnvironmentInfo),
+        error => reject(error)
+      );
+    });
+  }
+
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'downloadFile',
+        { filename, url, headers },
+        id => resolve(id),
         error => reject(error)
       );
     });
