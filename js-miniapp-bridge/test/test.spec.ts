@@ -644,19 +644,19 @@ describe('getPoints', () => {
 describe('downloadFile', () => {
   it('will parse the download file response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      2,
-      'test.jpg'
-    );
+    mockExecutor.exec.callsArgWith(2, 'test.jpg');
 
-    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})).to.eventually.deep.equal('test.jpg');
+    return expect(
+      bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.deep.equal('test.jpg');
   });
 
   it('will parse the Error response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
 
-    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})).to.eventually.be.rejected;
+    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {}))
+      .to.eventually.be.rejected;
   });
 });
 
