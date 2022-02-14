@@ -354,6 +354,18 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('downloadFile', { filename: filename, url: url, headers: headers }, function (id) { return resolve(id); }, function (error) { return reject(error); });
         });
     };
+    /**
+     * Associating purchaseItemWith function to MiniAppBridge object.
+     * @param {string} id Item id that user wanted to purchase
+     */
+    MiniAppBridge.prototype.purchaseItemWith = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('purchaseItem', { itemId: id }, function (purchasedProduct) {
+                return resolve(JSON.parse(purchasedProduct));
+            }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
