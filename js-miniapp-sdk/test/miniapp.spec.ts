@@ -47,6 +47,7 @@ window.MiniAppBridge = {
   sendMessageToContact: sandbox.stub(),
   sendMessageToContactId: sandbox.stub(),
   sendMessageToMultipleContacts: sandbox.stub(),
+  downloadFile: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -511,6 +512,17 @@ describe('sendMessage', () => {
         'test_contact_id',
         messageToContact
       )
+    ).to.eventually.equal(response);
+  });
+});
+
+describe('downloadFile', () => {
+  it('possible to retrieve result from the MiniAppBridge when request is successful', () => {
+    const response = 'test.jpg';
+
+    window.MiniAppBridge.downloadFile.resolves(response);
+    expect(
+      miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
     ).to.eventually.equal(response);
   });
 });
