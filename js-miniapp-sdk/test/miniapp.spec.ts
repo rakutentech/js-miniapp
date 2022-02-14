@@ -525,4 +525,17 @@ describe('downloadFile', () => {
       miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
     ).to.eventually.equal(response);
   });
+
+  it('should retrieve MiniAppError response from the MiniAppBridge once there is an error with no type and no message', () => {
+    const json = parseMiniAppError('{}');
+    const error = new MiniAppError(json);
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.downloadFile.resolves(error);
+    expect(
+      miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.equal(error);
+  });
 });
