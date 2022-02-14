@@ -18,7 +18,7 @@ import {
   CustomPermissionResult,
   CustomPermissionName,
   CustomPermissionStatus,
-  DownloadHeaders,
+  DownloadFileHeaders,
 } from 'js-miniapp-sdk';
 
 import { requestDownloadFile } from '../services/filedownload/actions';
@@ -118,7 +118,7 @@ type FileDownloadProps = {
   downloadFile: (
     filename: string,
     url: string,
-    headers: DownloadHeaders
+    headers: DownloadFileHeaders
   ) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
