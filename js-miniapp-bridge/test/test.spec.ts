@@ -641,6 +641,25 @@ describe('getPoints', () => {
   });
 });
 
+describe('downloadFile', () => {
+  it('will parse the download file response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      'test.jpg'
+    );
+
+    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})).to.eventually.deep.equal('test.jpg');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})).to.eventually.be.rejected;
+  });
+});
+
 describe('console.log', () => {
   const logger = new Logger.MiniAppSDKLogger(mockLogger);
   window.MiniAppSDKLogger = logger;
