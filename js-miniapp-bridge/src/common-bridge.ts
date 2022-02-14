@@ -19,7 +19,7 @@ import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
 import { Product, PurchasedProduct } from './types/purchaseProduct';
-
+import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
@@ -510,6 +510,21 @@ export class MiniAppBridge {
     });
   }
 
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'downloadFile',
+        { filename, url, headers },
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
+  
   /**
    * Associating purchaseItemWith function to MiniAppBridge object.
    * @param {string} id Item id that user wanted to purchase

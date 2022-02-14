@@ -8,6 +8,7 @@ import {
   ShareInfoType,
   ScreenOrientation,
   Points,
+  DownloadFileHeaders,
   HostEnvironmentInfo,
   Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
@@ -76,6 +77,16 @@ interface MiniAppFeatures {
    * @returns Promise of the provided environment info from mini app.
    */
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
+
+  /**
+   * Request a file download
+   * @returns Promise of the downloaded files name
+   */
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string>;
 }
 
 /**
@@ -221,5 +232,13 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
+  }
+
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string> {
+    return getBridge().downloadFile(filename, url, headers);
   }
 }
