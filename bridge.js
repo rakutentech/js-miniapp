@@ -348,6 +348,12 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject(error); });
         });
     };
+    MiniAppBridge.prototype.downloadFile = function (filename, url, headers) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('downloadFile', { filename: filename, url: url, headers: headers }, function (id) { return resolve(id); }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
