@@ -18,7 +18,7 @@ import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
-import { DownloadHeaders } from './types/download-headers';
+import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
@@ -512,7 +512,7 @@ export class MiniAppBridge {
   downloadFile(
     filename: string,
     url: string,
-    headers: DownloadHeaders
+    headers: DownloadFileHeaders
   ): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(

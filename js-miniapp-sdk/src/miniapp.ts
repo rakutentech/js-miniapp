@@ -8,7 +8,7 @@ import {
   ShareInfoType,
   ScreenOrientation,
   Points,
-  DownloadHeaders,
+  DownloadFileHeaders,
   HostEnvironmentInfo,
   Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
@@ -84,7 +84,7 @@ interface MiniAppFeatures {
   downloadFile(
     filename: string,
     url: string,
-    headers: DownloadHeaders
+    headers: DownloadFileHeaders
   ): Promise<string>;
 }
 
@@ -235,7 +235,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   downloadFile(
     filename: string,
     url: string,
-    headers: DownloadHeaders
+    headers: DownloadFileHeaders
   ): Promise<string> {
     return getBridge().downloadFile(filename, url, headers);
   }
