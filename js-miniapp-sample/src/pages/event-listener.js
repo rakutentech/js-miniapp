@@ -97,13 +97,13 @@ const NativeEvents = () => {
 
   window.addEventListener(MiniAppEvents.KEYBOARDHIDDEN, function (e) {
     let message = e.detail.message;
-    let screenHeightValue = e.detail.screenHeight;
-    let keyboardHeightValue = e.detail.keyboardHeight;
-    console.log(message + ', ' + screenHeight + ', ' + keyboardHeight);
-    screenHeight = screenHeightValue;
-    keyboardHeight = keyboardHeightValue;
-    setScreenHeight(screenHeightValue);
-    setKeyboardHeight(keyboardHeightValue);
+    let hiddenScreenHeightValue = e.detail.screenHeight;
+    let hiddenKeyboardHeightValue = e.detail.keyboardHeight;
+    console.log(message + ', ' + hiddenScreenHeightValue + ', ' + hiddenKeyboardHeightValue);
+    screenHeight = hiddenScreenHeightValue;
+    keyboardHeight = hiddenKeyboardHeightValue;
+    setScreenHeight(hiddenScreenHeightValue);
+    setKeyboardHeight(hiddenKeyboardHeightValue);
   });
 
   function onOpenExternalWebview() {
