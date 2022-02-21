@@ -99,7 +99,13 @@ const NativeEvents = () => {
     let message = e.detail.message;
     let hiddenScreenHeightValue = e.detail.screenHeight;
     let hiddenKeyboardHeightValue = e.detail.keyboardHeight;
-    console.log(message + ', ' + hiddenScreenHeightValue + ', ' + hiddenKeyboardHeightValue);
+    console.log(
+      message +
+        ', ' +
+        hiddenScreenHeightValue +
+        ', ' +
+        hiddenKeyboardHeightValue
+    );
     screenHeight = hiddenScreenHeightValue;
     keyboardHeight = hiddenKeyboardHeightValue;
     setScreenHeight(hiddenScreenHeightValue);

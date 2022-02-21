@@ -144,9 +144,9 @@ const appItems = [
     navLink: '/gifs',
     component: GifPage,
   },
-  { 
+  {
     icon: <ShoppingCartIcon />,
-    label: "Purchase",
+    label: 'Purchase',
     navLink: '/purchase',
     component: PurchaseComponent,
   },
