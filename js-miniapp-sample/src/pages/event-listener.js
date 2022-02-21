@@ -3,6 +3,7 @@ import { MiniAppEvents } from 'js-miniapp-sdk';
 
 import {
   Button,
+  TextField,
   CardContent,
   CardActions,
   makeStyles,
@@ -42,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 0,
     paddingBottom: 10,
   },
+  formInput: {
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
 }));
 
 const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
@@ -54,26 +60,50 @@ const NativeEvents = () => {
   ] = useState(0);
   let [pauseEventCount, setPauseEventCount] = useState(0);
   let [resumeEventCount, setResumeEventCount] = useState(0);
+  let [screenHeight, setScreenHeight] = useState(0);
+  let [keyboardHeight, setKeyboardHeight] = useState(0);
 
   window.addEventListener(MiniAppEvents.EXTERNAL_WEBVIEW_CLOSE, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     externalWebviewCloseEventCount++;
     setExternalWebviewCloseEventCount(externalWebviewCloseEventCount);
   });
 
   window.addEventListener(MiniAppEvents.PAUSE, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     pauseEventCount++;
     setPauseEventCount(pauseEventCount);
   });
 
   window.addEventListener(MiniAppEvents.RESUME, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     resumeEventCount++;
     setResumeEventCount(resumeEventCount);
+  });
+
+  window.addEventListener(MiniAppEvents.KEYBOARDSHOWN, function (e) {
+    let message = e.detail.message;
+    let screenHeightValue = e.detail.screenHeight;
+    let keyboardHeightValue = e.detail.keyboardHeight;
+    console.log(message + ', ' + screenHeight + ', ' + keyboardHeight);
+    screenHeight = screenHeightValue;
+    keyboardHeight = keyboardHeightValue;
+    setScreenHeight(screenHeightValue);
+    setKeyboardHeight(keyboardHeightValue);
+  });
+
+  window.addEventListener(MiniAppEvents.KEYBOARDHIDDEN, function (e) {
+    let message = e.detail.message;
+    let screenHeightValue = e.detail.screenHeight;
+    let keyboardHeightValue = e.detail.keyboardHeight;
+    console.log(message + ', ' + screenHeight + ', ' + keyboardHeight);
+    screenHeight = screenHeightValue;
+    keyboardHeight = keyboardHeightValue;
+    setScreenHeight(screenHeightValue);
+    setKeyboardHeight(keyboardHeightValue);
   });
 
   function onOpenExternalWebview() {
@@ -100,6 +130,17 @@ const NativeEvents = () => {
           <p>External Webview Closed: {externalWebviewCloseEventCount}</p>
           <p>Mini App Paused: {pauseEventCount}</p>
           <p>Mini App Resumed: {resumeEventCount}</p>
+        </div>
+        <hr />
+        <div>
+          <p>Keyboard Events</p>
+          <TextField
+            className={classes.formInput}
+            variant="outlined"
+            placeholder="Toggle Keyboard..."
+          ></TextField>
+          <p>Mini App Screen Height: {screenHeight}</p>
+          <p>Mini App Keyboard Height: {keyboardHeight}</p>
         </div>
       </GreyCard>
     </div>

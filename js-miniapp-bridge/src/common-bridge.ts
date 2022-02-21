@@ -119,9 +119,18 @@ export class MiniAppBridge {
    * mini app that listen to this eventType.
    * @param  {[String]} eventType EventType which will be used to listen for the event
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
+   * @param  {[String]} screenHeight Additional message sent from the native on invoking for the screenHeight
+   * @param  {[String]} keyboardHeight Additional message sent from the native on invoking for the keyboardHeight
    */
-  execCustomEventsCallback(eventType: string, value: string) {
-    const event = new CustomEvent(eventType, { detail: value });
+  execCustomEventsCallback(
+    eventType: string,
+    value: string,
+    screenHeight: number,
+    keyboardHeight: number
+  ) {
+    const event = new CustomEvent(eventType, {
+      detail: { message: value, screenHeight, keyboardHeight },
+    });
     let queueObj = mabCustomEventQueue.filter(
       customEvent => customEvent === event
     )[0];
