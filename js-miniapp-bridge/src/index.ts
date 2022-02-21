@@ -21,6 +21,7 @@ import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
+import { DownloadFileHeaders } from './types/download-file-headers';
 import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import {
@@ -32,6 +33,7 @@ import {
   errorTypesDescriptions,
   MiniAppErrorType,
 } from './types/error-types';
+import { Product, PurchasedProduct } from './types/purchaseProduct';
 
 export {
   MiniAppBridge,
@@ -49,6 +51,7 @@ export {
   Contact,
   Points,
   HostEnvironmentInfo,
+  DownloadFileHeaders,
   Platform,
   MessageToContact,
   MiniAppError,
@@ -58,4 +61,6 @@ export {
   parseMiniAppError,
   errorTypesDescriptions,
   MiniAppErrorType,
+  Product,
+  PurchasedProduct,
 };

@@ -47,6 +47,7 @@ window.MiniAppBridge = {
   sendMessageToContact: sandbox.stub(),
   sendMessageToContactId: sandbox.stub(),
   sendMessageToMultipleContacts: sandbox.stub(),
+  downloadFile: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -512,5 +513,29 @@ describe('sendMessage', () => {
         messageToContact
       )
     ).to.eventually.equal(response);
+  });
+});
+
+describe('downloadFile', () => {
+  it('possible to retrieve result from the MiniAppBridge when request is successful', () => {
+    const response = 'test.jpg';
+
+    window.MiniAppBridge.downloadFile.resolves(response);
+    expect(
+      miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve MiniAppError response from the MiniAppBridge once there is an error with no type and no message', () => {
+    const json = parseMiniAppError('{}');
+    const error = new MiniAppError(json);
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.downloadFile.resolves(error);
+    expect(
+      miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.equal(error);
   });
 });
