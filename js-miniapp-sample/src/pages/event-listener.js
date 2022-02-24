@@ -60,6 +60,7 @@ const NativeEvents = () => {
   ] = useState(0);
   let [pauseEventCount, setPauseEventCount] = useState(0);
   let [resumeEventCount, setResumeEventCount] = useState(0);
+  let [navigationBarHeight, setNavigationBarHeight] = useState(0);
   let [screenHeight, setScreenHeight] = useState(0);
   let [keyboardHeight, setKeyboardHeight] = useState(0);
 
@@ -86,28 +87,44 @@ const NativeEvents = () => {
 
   window.addEventListener(MiniAppEvents.KEYBOARDSHOWN, function (e) {
     let message = e.detail.message;
+    let navigationBarHeightValue = e.detail.navigationBarHeight;
     let screenHeightValue = e.detail.screenHeight;
     let keyboardHeightValue = e.detail.keyboardHeight;
-    console.log(message + ', ' + screenHeight + ', ' + keyboardHeight);
+    console.log(
+      message +
+        ', ' +
+        navigationBarHeightValue +
+        ', ' +
+        screenHeight +
+        ', ' +
+        keyboardHeight
+    );
+    navigationBarHeight = navigationBarHeightValue;
     screenHeight = screenHeightValue;
     keyboardHeight = keyboardHeightValue;
+    setNavigationBarHeight(navigationBarHeightValue);
     setScreenHeight(screenHeightValue);
     setKeyboardHeight(keyboardHeightValue);
   });
 
   window.addEventListener(MiniAppEvents.KEYBOARDHIDDEN, function (e) {
     let message = e.detail.message;
+    let hiddenNavigationBarHeightValue = e.detail.navigationBarHeight;
     let hiddenScreenHeightValue = e.detail.screenHeight;
     let hiddenKeyboardHeightValue = e.detail.keyboardHeight;
     console.log(
       message +
         ', ' +
+        hiddenNavigationBarHeightValue +
+        ', ' +
         hiddenScreenHeightValue +
         ', ' +
         hiddenKeyboardHeightValue
     );
+    navigationBarHeight = hiddenNavigationBarHeightValue;
     screenHeight = hiddenScreenHeightValue;
     keyboardHeight = hiddenKeyboardHeightValue;
+    setNavigationBarHeight(hiddenNavigationBarHeightValue);
     setScreenHeight(hiddenScreenHeightValue);
     setKeyboardHeight(hiddenKeyboardHeightValue);
   });
@@ -145,8 +162,9 @@ const NativeEvents = () => {
             variant="outlined"
             placeholder="Toggle Keyboard..."
           ></TextField>
-          <p>Mini App Screen Height: {screenHeight}</p>
-          <p>Mini App Keyboard Height: {keyboardHeight}</p>
+          <p>Navigation Bar Height: {navigationBarHeight}</p>
+          <p>Screen Height: {screenHeight}</p>
+          <p>Keyboard Height: {keyboardHeight}</p>
         </div>
       </GreyCard>
     </div>
