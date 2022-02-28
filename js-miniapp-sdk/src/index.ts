@@ -16,12 +16,15 @@ import {
   Contact,
   Points,
   HostEnvironmentInfo,
+  DownloadFileHeaders,
   Platform,
   MessageToContact,
   MiniAppError,
   AudienceNotSupportedError,
   AuthorizationFailureError,
   ScopesNotSupportedError,
+  Product,
+  PurchasedProduct,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -42,6 +45,7 @@ export {
   AccessTokenData,
   Contact,
   Points,
+  DownloadFileHeaders,
   HostEnvironmentInfo,
   Platform,
   MessageToContact,
@@ -50,4 +54,6 @@ export {
   AuthorizationFailureError,
   ScopesNotSupportedError,
   MiniAppEvents,
+  Product,
+  PurchasedProduct,
 };

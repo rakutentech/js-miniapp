@@ -38,6 +38,11 @@ To build the app for production:
 
 The building will be inside the `build` folder on `js-miniapp-sample` root.<br />
 
+### Environment Variables
+
+The following environment variables should be set before building:
+- `REACT_APP_MINI_APP_ID` - the Mini App ID of this mini app
+
 ## Export Dockerized App Image as TAR
 
 to build and package docker image of the production build:
