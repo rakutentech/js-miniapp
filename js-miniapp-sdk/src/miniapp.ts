@@ -8,11 +8,13 @@ import {
   ShareInfoType,
   ScreenOrientation,
   Points,
+  DownloadFileHeaders,
   HostEnvironmentInfo,
   Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
+import { PurchaseItemService } from './modules/purchase-item';
 import { getBridge } from './utils';
 
 /**
@@ -75,6 +77,16 @@ interface MiniAppFeatures {
    * @returns Promise of the provided environment info from mini app.
    */
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
+
+  /**
+   * Request a file download
+   * @returns Promise of the downloaded files name
+   */
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string>;
 }
 
 /**
@@ -128,6 +140,7 @@ interface Platform {
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
+  purchaseService = new PurchaseItemService();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
@@ -219,5 +232,13 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
+  }
+
+  downloadFile(
+    filename: string,
+    url: string,
+    headers: DownloadFileHeaders
+  ): Promise<string> {
+    return getBridge().downloadFile(filename, url, headers);
   }
 }

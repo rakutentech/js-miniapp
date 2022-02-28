@@ -6,6 +6,7 @@ import { grantedPermissionsReducer } from './permissions/reducers';
 import userReducer from './user/reducers';
 import { UUIDReducer } from './uuid/reducers';
 import { HostEnvironmentInfoReducer } from './landing/reducers';
+import { FileDownloadReducer } from './filedownload/reducers';
 
 export default combineReducers({
   message: MessageReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   user: userReducer,
   uuid: UUIDReducer,
   info: HostEnvironmentInfoReducer,
+  file: FileDownloadReducer,
 });
