@@ -75,7 +75,7 @@ const UriSchemes = () => {
   const [externalUrl, setExternalUrl] = useState('');
 
   function validateParams(params) {
-    return !params.startsWith('?') || params.indexOf('=') <= -1 ? false : true;
+    return params.startsWith('?') && params.indexOf('=') >= 0;
   }
 
   function onOpenExternalWebview() {

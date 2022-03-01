@@ -32,8 +32,9 @@ defaultTexts.set(MessageTypeId.SINGLE_CONTACT, 'Single contact');
 defaultTexts.set(MessageTypeId.SINGLE_CONTACT_ID, 'Specific contact ID');
 defaultTexts.set(MessageTypeId.MULTIPLE_CONTACTS, 'Multiple contact');
 const defaultCaption = 'Open JS miniapp';
-const defaultAction =
-  'https://one.rakuten.co.jp/miniapp/preview/62f98e79-597d-45f6-a867-b5beb67e5099';
+const defaultAction = `https://one.rakuten.co.jp/miniapp/preview/${
+  process.env.REACT_APP_MINI_APP_ID || ''
+}`;
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
