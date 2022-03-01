@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MiniAppEvents } from 'js-miniapp-sdk';
+import { MiniAppEvents, MiniAppKeyboardEvents } from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -85,7 +85,7 @@ const NativeEvents = () => {
     setResumeEventCount(resumeEventCount);
   });
 
-  window.addEventListener(MiniAppEvents.KEYBOARDSHOWN, function (e) {
+  window.addEventListener(MiniAppKeyboardEvents.KEYBOARDSHOWN, function (e) {
     let message = e.detail.message;
     let navigationBarHeightValue = e.detail.navigationBarHeight;
     let screenHeightValue = e.detail.screenHeight;
@@ -107,7 +107,7 @@ const NativeEvents = () => {
     setKeyboardHeight(keyboardHeightValue);
   });
 
-  window.addEventListener(MiniAppEvents.KEYBOARDHIDDEN, function (e) {
+  window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
     let message = e.detail.message;
     let hiddenNavigationBarHeightValue = e.detail.navigationBarHeight;
     let hiddenScreenHeightValue = e.detail.screenHeight;

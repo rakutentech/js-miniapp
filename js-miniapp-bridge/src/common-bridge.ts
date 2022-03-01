@@ -32,8 +32,10 @@ import {
 /** @internal */
 const mabMessageQueue: Callback[] = [];
 const mabCustomEventQueue: CustomEvent[] = [];
+const mabKeyboardEventQueue: CustomEvent[] = [];
 export { mabMessageQueue };
 export { mabCustomEventQueue };
+export { mabKeyboardEventQueue };
 
 /** @internal */
 export interface Callback {
@@ -121,24 +123,11 @@ export class MiniAppBridge {
    * mini app that listen to this eventType.
    * @param  {[String]} eventType EventType which will be used to listen for the event
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
-   * @param  {[String]} navigationBarHeight Additional message sent from the native on invoking for the navigationBarHeight
-   * @param  {[String]} screenHeight Additional message sent from the native on invoking for the screenHeight
-   * @param  {[String]} keyboardHeight Additional message sent from the native on invoking for the keyboardHeight
    */
-  execCustomEventsCallback(
-    eventType: string,
-    value: string,
-    navigationBarHeight: number,
-    screenHeight: number,
-    keyboardHeight: number
-  ) {
+  execCustomEventsCallback(eventType: string, value: string) {
+    console.log('custom event: ' + eventType);
     const event = new CustomEvent(eventType, {
-      detail: {
-        message: value,
-        navigationBarHeight,
-        screenHeight,
-        keyboardHeight,
-      },
+      detail: { message: value },
     });
     let queueObj = mabCustomEventQueue.filter(
       customEvent => customEvent === event
@@ -149,6 +138,45 @@ export class MiniAppBridge {
       }
       queueObj = event;
       mabCustomEventQueue.unshift(queueObj);
+    }
+    this.executor.execEvents(queueObj);
+  }
+
+  /**
+   * Keyboard Events Callback method that will be called from native side
+   * to this bridge. This method will send back the value to the
+   * mini app that listen to this eventType.
+   * @param  {[String]} eventType EventType which will be used to listen for the event
+   * @param  {[String]} message Additional message sent from the native on invoking for the eventType
+   * @param  {[String]} navigationBarHeight Additional message sent from the native on invoking for the navigationBarHeight
+   * @param  {[String]} screenHeight Additional message sent from the native on invoking for the screenHeight
+   * @param  {[String]} keyboardHeight Additional message sent from the native on invoking for the keyboardHeight
+   */
+  execKeyboardEventsCallback(
+    eventType: string,
+    message: string,
+    navigationBarHeight: number,
+    screenHeight: number,
+    keyboardHeight: number
+  ) {
+    console.log('keyboard event: ' + eventType);
+    const event = new CustomEvent(eventType, {
+      detail: {
+        message,
+        navigationBarHeight,
+        screenHeight,
+        keyboardHeight,
+      },
+    });
+    let queueObj = mabKeyboardEventQueue.filter(
+      customEvent => customEvent === event
+    )[0];
+    if (!queueObj) {
+      if (eventType === event.type) {
+        removeFromKeyboardEventQueue(event);
+      }
+      queueObj = event;
+      mabKeyboardEventQueue.unshift(queueObj);
     }
     this.executor.execEvents(queueObj);
   }
@@ -579,6 +607,17 @@ function removeFromEventQueue(queueObj) {
   );
   if (eventObjIndex !== -1) {
     mabCustomEventQueue.splice(eventObjIndex, 1);
+  }
+}
+
+function removeFromKeyboardEventQueue(queueObj) {
+  const eventObjIndex = mabKeyboardEventQueue.indexOf(
+    mabKeyboardEventQueue.filter(
+      customEvent => customEvent.type === queueObj.type
+    )[0]
+  );
+  if (eventObjIndex !== -1) {
+    mabKeyboardEventQueue.splice(eventObjIndex, 1);
   }
 }
 
