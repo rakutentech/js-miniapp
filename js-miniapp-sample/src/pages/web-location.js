@@ -4,6 +4,7 @@ import {
   Button,
   CardActions,
   CardContent,
+  CircularProgress,
   makeStyles,
 } from '@material-ui/core';
 import LocationOffIcon from '@material-ui/icons/LocationOff';
@@ -50,6 +51,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff !important',
     backgroundColor: `${theme.color.primary} !important`,
   },
+  buttonProgress: {
+    position: 'absolute',
+    top: 'calc(50% - 10px)',
+    left: 'calc(50% - 10px)',
+  },
 }));
 
 const Location = (props: any) => {
@@ -60,6 +66,10 @@ const Location = (props: any) => {
     <GreyCard>
       <CardContent className={classes.content}>
         {state.error && <div>Error: {state.error}</div>}
+
+        {state.isLoading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
 
         {state.location && state.isWatching && (
           <div
