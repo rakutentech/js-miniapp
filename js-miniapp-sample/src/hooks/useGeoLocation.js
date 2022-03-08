@@ -5,6 +5,7 @@ import MiniApp from 'js-miniapp-sdk';
 const useGeoLocation = () => {
   const [state, setState] = useState({
     isWatching: false,
+    isLoading: false,
   });
   const watch = () => {
     return MiniApp.requestLocationPermission(
@@ -13,13 +14,25 @@ const useGeoLocation = () => {
       .then(() => {
         setState({
           isWatching: true,
+          isLoading: true,
         });
+
+        const timeout = setTimeout(() => {
+          setState({
+            isWatching: false,
+            isLoading: false,
+            error: 'Timeout',
+          });
+        }, 6000);
 
         navigator.geolocation.getCurrentPosition(
           (pos) => {
+            clearTimeout(timeout);
+
             const { longitude, latitude } = pos.coords;
             setState({
               isWatching: true,
+              isLoading: false,
               location: {
                 latitude,
                 longitude,
@@ -27,6 +40,8 @@ const useGeoLocation = () => {
             });
           },
           (error) => {
+            clearTimeout(timeout);
+
             throw error;
           },
           {
@@ -37,6 +52,7 @@ const useGeoLocation = () => {
       .catch((error) =>
         setState({
           isWatching: false,
+          isLoading: false,
           error,
         })
       );
