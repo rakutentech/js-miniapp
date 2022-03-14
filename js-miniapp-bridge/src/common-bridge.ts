@@ -125,7 +125,6 @@ export class MiniAppBridge {
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
    */
   execCustomEventsCallback(eventType: string, value: string) {
-    console.log('custom event: ' + eventType);
     const event = new CustomEvent(eventType, {
       detail: { message: value },
     });
@@ -159,7 +158,6 @@ export class MiniAppBridge {
     screenHeight: number,
     keyboardHeight: number
   ) {
-    console.log('keyboard event: ' + eventType);
     const event = new CustomEvent(eventType, {
       detail: {
         message,
