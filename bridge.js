@@ -20,6 +20,8 @@ var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
 var mabCustomEventQueue = [];
 exports.mabCustomEventQueue = mabCustomEventQueue;
+var mabKeyboardEventQueue = [];
+exports.mabKeyboardEventQueue = mabKeyboardEventQueue;
 /** @internal */
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
@@ -66,7 +68,9 @@ var MiniAppBridge = /** @class */ (function () {
      * @param  {[String]} value Additional message sent from the native on invoking for the eventType
      */
     MiniAppBridge.prototype.execCustomEventsCallback = function (eventType, value) {
-        var event = new CustomEvent(eventType, { detail: value });
+        var event = new CustomEvent(eventType, {
+            detail: { message: value },
+        });
         var queueObj = mabCustomEventQueue.filter(function (customEvent) { return customEvent === event; })[0];
         if (!queueObj) {
             if (eventType === event.type) {
@@ -74,6 +78,35 @@ var MiniAppBridge = /** @class */ (function () {
             }
             queueObj = event;
             mabCustomEventQueue.unshift(queueObj);
+        }
+        this.executor.execEvents(queueObj);
+    };
+    /**
+     * Keyboard Events Callback method that will be called from native side
+     * to this bridge. This method will send back the value to the
+     * mini app that listen to this eventType.
+     * @param  {[String]} eventType EventType which will be used to listen for the event
+     * @param  {[String]} message Additional message sent from the native on invoking for the eventType
+     * @param  {[String]} navigationBarHeight Additional message sent from the native on invoking for the navigationBarHeight
+     * @param  {[String]} screenHeight Additional message sent from the native on invoking for the screenHeight
+     * @param  {[String]} keyboardHeight Additional message sent from the native on invoking for the keyboardHeight
+     */
+    MiniAppBridge.prototype.execKeyboardEventsCallback = function (eventType, message, navigationBarHeight, screenHeight, keyboardHeight) {
+        var event = new CustomEvent(eventType, {
+            detail: {
+                message: message,
+                navigationBarHeight: navigationBarHeight,
+                screenHeight: screenHeight,
+                keyboardHeight: keyboardHeight,
+            },
+        });
+        var queueObj = mabKeyboardEventQueue.filter(function (customEvent) { return customEvent === event; })[0];
+        if (!queueObj) {
+            if (eventType === event.type) {
+                removeFromKeyboardEventQueue(event);
+            }
+            queueObj = event;
+            mabKeyboardEventQueue.unshift(queueObj);
         }
         this.executor.execEvents(queueObj);
     };
@@ -385,6 +418,12 @@ function removeFromEventQueue(queueObj) {
     var eventObjIndex = mabCustomEventQueue.indexOf(mabCustomEventQueue.filter(function (customEvent) { return customEvent.type === queueObj.type; })[0]);
     if (eventObjIndex !== -1) {
         mabCustomEventQueue.splice(eventObjIndex, 1);
+    }
+}
+function removeFromKeyboardEventQueue(queueObj) {
+    var eventObjIndex = mabKeyboardEventQueue.indexOf(mabKeyboardEventQueue.filter(function (customEvent) { return customEvent.type === queueObj.type; })[0]);
+    if (eventObjIndex !== -1) {
+        mabKeyboardEventQueue.splice(eventObjIndex, 1);
     }
 }
 function trimBannerText(message, maxLength) {
