@@ -6,3 +6,8 @@ export enum MiniAppEvents {
   PAUSE = 'miniapppause',
   RESUME = 'miniappresume',
 }
+
+export enum MiniAppKeyboardEvents {
+  KEYBOARDSHOWN = 'miniappkeyboardshown',
+  KEYBOARDHIDDEN = 'miniappkeyboardhidden',
+}

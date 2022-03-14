@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { MiniAppEvents } from 'js-miniapp-sdk';
+import { MiniAppEvents, MiniAppKeyboardEvents } from 'js-miniapp-sdk';
 
 import {
   Button,
+  TextField,
   CardContent,
   CardActions,
   makeStyles,
@@ -42,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 0,
     paddingBottom: 10,
   },
+  formInput: {
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
 }));
 
 const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
@@ -54,26 +60,73 @@ const NativeEvents = () => {
   ] = useState(0);
   let [pauseEventCount, setPauseEventCount] = useState(0);
   let [resumeEventCount, setResumeEventCount] = useState(0);
+  let [navigationBarHeight, setNavigationBarHeight] = useState(0);
+  let [screenHeight, setScreenHeight] = useState(0);
+  let [keyboardHeight, setKeyboardHeight] = useState(0);
 
   window.addEventListener(MiniAppEvents.EXTERNAL_WEBVIEW_CLOSE, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     externalWebviewCloseEventCount++;
     setExternalWebviewCloseEventCount(externalWebviewCloseEventCount);
   });
 
   window.addEventListener(MiniAppEvents.PAUSE, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     pauseEventCount++;
     setPauseEventCount(pauseEventCount);
   });
 
   window.addEventListener(MiniAppEvents.RESUME, function (e) {
-    let message = e.detail;
+    let message = e.detail.message;
     console.log(message);
     resumeEventCount++;
     setResumeEventCount(resumeEventCount);
+  });
+
+  window.addEventListener(MiniAppKeyboardEvents.KEYBOARDSHOWN, function (e) {
+    let message = e.detail.message;
+    let navigationBarHeightValue = e.detail.navigationBarHeight;
+    let screenHeightValue = e.detail.screenHeight;
+    let keyboardHeightValue = e.detail.keyboardHeight;
+    console.log(
+      message +
+        ', ' +
+        navigationBarHeightValue +
+        ', ' +
+        screenHeight +
+        ', ' +
+        keyboardHeight
+    );
+    navigationBarHeight = navigationBarHeightValue;
+    screenHeight = screenHeightValue;
+    keyboardHeight = keyboardHeightValue;
+    setNavigationBarHeight(navigationBarHeightValue);
+    setScreenHeight(screenHeightValue);
+    setKeyboardHeight(keyboardHeightValue);
+  });
+
+  window.addEventListener(MiniAppKeyboardEvents.KEYBOARDHIDDEN, function (e) {
+    let message = e.detail.message;
+    let hiddenNavigationBarHeightValue = e.detail.navigationBarHeight;
+    let hiddenScreenHeightValue = e.detail.screenHeight;
+    let hiddenKeyboardHeightValue = e.detail.keyboardHeight;
+    console.log(
+      message +
+        ', ' +
+        hiddenNavigationBarHeightValue +
+        ', ' +
+        hiddenScreenHeightValue +
+        ', ' +
+        hiddenKeyboardHeightValue
+    );
+    navigationBarHeight = hiddenNavigationBarHeightValue;
+    screenHeight = hiddenScreenHeightValue;
+    keyboardHeight = hiddenKeyboardHeightValue;
+    setNavigationBarHeight(hiddenNavigationBarHeightValue);
+    setScreenHeight(hiddenScreenHeightValue);
+    setKeyboardHeight(hiddenKeyboardHeightValue);
   });
 
   function onOpenExternalWebview() {
@@ -100,6 +153,18 @@ const NativeEvents = () => {
           <p>External Webview Closed: {externalWebviewCloseEventCount}</p>
           <p>Mini App Paused: {pauseEventCount}</p>
           <p>Mini App Resumed: {resumeEventCount}</p>
+        </div>
+        <hr />
+        <div>
+          <p>Keyboard Events</p>
+          <TextField
+            className={classes.formInput}
+            variant="outlined"
+            placeholder="Toggle Keyboard..."
+          ></TextField>
+          <p>Navigation Bar Height: {navigationBarHeight}</p>
+          <p>Screen Height: {screenHeight}</p>
+          <p>Keyboard Height: {keyboardHeight}</p>
         </div>
       </GreyCard>
     </div>
