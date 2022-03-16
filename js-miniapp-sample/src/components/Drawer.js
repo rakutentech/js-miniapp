@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Hidden, Tooltip, useTheme, useMediaQuery } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
@@ -13,8 +13,10 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import semver from 'semver';
 
 import { setPageTitle } from '../services/home/actions';
+import { setHostEnvironmentInfo } from '../services/landing/actions';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {},
@@ -74,9 +76,18 @@ type ResponsiveDrawerProps = {
   onShrink: Function,
   onOpenClose: Function,
   changeTitle: Function,
+  sdkVersion: string,
+  getHostInfo: Function,
 };
 
 const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
+  useEffect(() => {
+    try {
+      props.getHostInfo();
+    } catch (e) {
+      console.log(e);
+    }
+  }, [props]);
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
@@ -85,6 +96,17 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
   }
   const toggleShrink = () => {
     props.onShrink();
+  };
+
+  const isSupportedSdkVersion = (supportedAbove, supportedBelow) => {
+    const sdkVersion = props.sdkVersion || '0.0.1';
+    supportedAbove = supportedAbove || '0.0.1';
+    supportedBelow = supportedBelow || '10000.0.0';
+
+    return (
+      semver.gte(sdkVersion, supportedAbove) &&
+      semver.lte(sdkVersion, supportedBelow)
+    );
   };
 
   return (
@@ -108,39 +130,47 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
           classes={{ root: classes.NavListRoot }}
         >
           {props.show &&
-            props.navItems.map((it) => (
-              <Tooltip
-                key={it.label}
-                arrow
-                title={props.shrinked ? it.label : ''}
-                placement="right"
-                enterDelay={100}
-                classes={{
-                  tooltip: classes.tooltip,
-                  arrow: classes.tooltipArrow,
-                }}
-              >
-                <ListItem
-                  button
-                  onClick={() => {
-                    props.changeTitle(it.label);
-                    if (isMobile) {
-                      props.onOpenClose(undefined);
-                    }
-                  }}
-                  component={NavLink}
-                  to={it.navLink}
-                  key={it.label}
-                  activeClassName={classes.activeNavLink}
-                  className={clsx(classes.navLink, {
-                    [classes.shrinkedListItem]: props.shrinked,
-                  })}
-                >
-                  <ListItemIcon className="icon">{it.icon}</ListItemIcon>
-                  <ListItemText primary={props.shrinked ? '  ' : it.label} />
-                </ListItem>
-              </Tooltip>
-            ))}
+            props.navItems.map(
+              (it) =>
+                isSupportedSdkVersion(
+                  it.supportedAboveSdkVersion,
+                  it.supportedBelowSdkVersion
+                ) && (
+                  <Tooltip
+                    key={it.label}
+                    arrow
+                    title={props.shrinked ? it.label : ''}
+                    placement="right"
+                    enterDelay={100}
+                    classes={{
+                      tooltip: classes.tooltip,
+                      arrow: classes.tooltipArrow,
+                    }}
+                  >
+                    <ListItem
+                      button
+                      onClick={() => {
+                        props.changeTitle(it.label);
+                        if (isMobile) {
+                          props.onOpenClose(undefined);
+                        }
+                      }}
+                      component={NavLink}
+                      to={it.navLink}
+                      key={it.label}
+                      activeClassName={classes.activeNavLink}
+                      className={clsx(classes.navLink, {
+                        [classes.shrinkedListItem]: props.shrinked,
+                      })}
+                    >
+                      <ListItemIcon className="icon">{it.icon}</ListItemIcon>
+                      <ListItemText
+                        primary={props.shrinked ? '  ' : it.label}
+                      />
+                    </ListItem>
+                  </Tooltip>
+                )
+            )}
         </List>
         <Hidden only={['xs']}>
           <List>
@@ -175,10 +205,18 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state, props) => {
   return {
-    changeTitle: (title) => dispatch(setPageTitle(title)),
+    ...props,
+    sdkVersion: state.info.sdkVersion,
   };
 };
 
-export default connect(null, mapDispatchToProps)(ResponsiveDrawer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeTitle: (title) => dispatch(setPageTitle(title)),
+    getHostInfo: () => dispatch(setHostEnvironmentInfo()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResponsiveDrawer);
