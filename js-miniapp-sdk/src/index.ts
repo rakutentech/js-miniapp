@@ -28,7 +28,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
-import { MiniAppEvents } from './event-types';
+import { MiniAppEvents, MiniAppKeyboardEvents } from './event-types';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
@@ -54,6 +54,7 @@ export {
   AuthorizationFailureError,
   ScopesNotSupportedError,
   MiniAppEvents,
+  MiniAppKeyboardEvents,
   Product,
   PurchasedProduct,
 };
