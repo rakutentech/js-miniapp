@@ -413,6 +413,20 @@ miniApp.chatService.sendMessageToMultipleContacts(messageToContact)
 	});
 ```
 
+#### Open device camera
+Please make sure that `capture` attribute is available, it will open device camera from miniapp.
+
+```html
+<html>
+ ...
+  <div data-role="fieldcontain">
+    <label for="name">Open file chooser to select file using camera</label>
+    <input id='fileselect' type='file' accept='image/*' capture='environment'>
+  </div>
+ ...
+</html>
+```
+
 ## Advanced Usage
 
 ### Errors management
