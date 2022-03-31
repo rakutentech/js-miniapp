@@ -232,7 +232,7 @@ const FileDownload = (props: FileDownloadProps) => {
             onClick={(e) => {
               handleDownloadClick(
                 e,
-                'https://file-examples-com.github.io/uploads/2017/10/file_example_JPG_100kB.jpg',
+                'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
                 'sample.jpg'
               );
             }}
@@ -248,7 +248,7 @@ const FileDownload = (props: FileDownloadProps) => {
             onClick={(e) => {
               handleDownloadClick(
                 e,
-                'https://file-examples-com.github.io/uploads/2017/02/zip_2MB.zip',
+                'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
                 'sample.zip'
               );
             }}
@@ -264,7 +264,7 @@ const FileDownload = (props: FileDownloadProps) => {
             onClick={(e) => {
               handleDownloadClick(
                 e,
-                'https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3',
+                'https://filesamples.com/samples/audio/mp3/sample3.mp3',
                 'sample.mp3'
               );
             }}
@@ -280,7 +280,7 @@ const FileDownload = (props: FileDownloadProps) => {
             onClick={(e) => {
               handleDownloadClick(
                 e,
-                'https://file-examples-com.github.io/uploads/2017/02/file_example_CSV_5000.csv',
+                'https://filesamples.com/samples/document/csv/sample4.csv',
                 'sample.csv'
               );
             }}
@@ -296,7 +296,7 @@ const FileDownload = (props: FileDownloadProps) => {
             onClick={(e) => {
               handleDownloadClick(
                 e,
-                'https://file-examples-com.github.io/uploads/2018/04/file_example_MOV_480_700kB.mov',
+                'https://filesamples.com/samples/video/mov/sample_960x540.mov',
                 'sample.mov'
               );
             }}
