@@ -1,4 +1,4 @@
 /** DownloadFileHeaders. */
 export interface DownloadFileHeaders {
-  token?: string;
+  [header: string]: string;
 }
