@@ -27,7 +27,6 @@ const UUIDReducer = (
   state: UUIDState = defaultState,
   action: UUIDAction = {}
 ): UUIDState => {
-  console.log('reducer: ' + action);
   if (action.type === SET_UNIQUE_ID) {
     return {
       ...defaultState,

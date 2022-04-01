@@ -176,7 +176,6 @@ const UuidFetcher = (props: UUIDProps) => {
 };
 
 const mapStateToProps = (state, props) => {
-  console.log(state);
   return {
     ...props,
     uniqueId: state.uuid.uniqueId,
