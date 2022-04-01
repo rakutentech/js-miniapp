@@ -15,7 +15,8 @@ describe('uuid from mobile sdk', () => {
     renderWithRedux(wrapRouter(wrapTheme(<UuidFetcher />)));
   });
   test('should load the UUID fetcher container', () => {
-    expect(screen.getByText('Not Available')).toBeInTheDocument();
     expect(screen.getByTestId('get-unique-id')).toBeInTheDocument();
+    expect(screen.getByTestId('get-contact-id')).toBeInTheDocument();
+    expect(screen.getByTestId('get-mauid')).toBeInTheDocument();
   });
 });
