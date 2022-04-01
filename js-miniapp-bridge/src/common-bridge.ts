@@ -194,6 +194,34 @@ export class MiniAppBridge {
   }
 
   /**
+   * Associating getContactId function to MiniAppBridge object.
+   */
+  getContactId() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getContactId',
+        null,
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getMauid function to MiniAppBridge object.
+   */
+  getMauid() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getMauid',
+        null,
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
    * Associating requestPermission function to MiniAppBridge object.
    * @param {DevicePermission} permissionType Type of permission that is requested e.g. location
    */

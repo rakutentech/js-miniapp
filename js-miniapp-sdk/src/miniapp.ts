@@ -28,6 +28,18 @@ interface MiniAppFeatures {
   getUniqueId(): Promise<string>;
 
   /**
+   * Request the mini app's contact id from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getContactId(): Promise<string>;
+
+  /**
+   * Request the mini app's mauid from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getMauid(): Promise<string>;
+
+  /**
    * Request the location permission from the host app.
    * You must call this before using `navigator.geolocation`.
    * This will request both the Android/iOS device permission for location (if not yet granted to the host app),
@@ -148,6 +160,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   getUniqueId(): Promise<string> {
     return getBridge().getUniqueId();
+  }
+
+  getContactId(): Promise<string> {
+    return getBridge().getContactId();
+  }
+
+  getMauid(): Promise<string> {
+    return getBridge().getMauid();
   }
 
   requestLocationPermission(permissionDescription = ''): Promise<string> {

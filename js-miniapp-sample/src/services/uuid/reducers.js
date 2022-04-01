@@ -1,28 +1,62 @@
 import type { UUIDAction } from './actions';
-import { SET_UUID, UUID_FETCH_ERROR } from './types';
+import {
+  SET_UNIQUE_ID,
+  SET_CONTACT_ID,
+  SET_MAUID,
+  UNIQUE_ID_FETCH_ERROR,
+  CONTACT_ID_FETCH_ERROR,
+  MAUID_FETCH_ERROR,
+} from './types';
 
 type UUIDState = {
-  +uuid: ?string,
+  +uniqueId: ?string,
+  +contactId: ?string,
+  +mauid: ?string,
 };
 
 const defaultState: UUIDState = {
-  uuid: undefined,
-  uuidError: undefined,
+  uniqueId: undefined,
+  contactId: undefined,
+  mauid: undefined,
+  uniqueIdError: undefined,
+  contactIdError: undefined,
+  mauidError: undefined,
 };
 
 const UUIDReducer = (
   state: UUIDState = defaultState,
   action: UUIDAction = {}
 ): UUIDState => {
-  if (action.type === SET_UUID) {
+  console.log('reducer: ' + action);
+  if (action.type === SET_UNIQUE_ID) {
     return {
       ...defaultState,
-      uuid: action.payload,
+      uniqueId: action.payload,
     };
-  } else if (action.type === UUID_FETCH_ERROR) {
+  } else if (action.type === SET_CONTACT_ID) {
     return {
       ...defaultState,
-      uuidError: action.error,
+      contactId: action.payload,
+    };
+  } else if (action.type === SET_MAUID) {
+    return {
+      ...defaultState,
+      mauid: action.payload,
+    };
+  } else if (action.type === UNIQUE_ID_FETCH_ERROR) {
+    return {
+      ...defaultState,
+      uniqueIdError: action.error,
+    };
+  } else if (action.type === CONTACT_ID_FETCH_ERROR) {
+    return {
+      ...defaultState,
+      contactIdError: action.error,
+    };
+  } else if (action.type === MAUID_FETCH_ERROR) {
+    return {
+      ...defaultState,
+      mauidError: action.error,
     };
   }
   return state;

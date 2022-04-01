@@ -30,6 +30,8 @@ const window: any = {};
 
 window.MiniAppBridge = {
   getUniqueId: sandbox.stub(),
+  getContactId: sandbox.stub(),
+  getMauid: sandbox.stub(),
   requestPermission: sandbox.stub(),
   requestCustomPermissions: sandbox.stub(),
   loadInterstitialAd: sandbox.stub(),
@@ -65,6 +67,24 @@ describe('getUniqueId', () => {
     return expect(miniApp.getUniqueId()).to.eventually.equal(
       'test_mini_app_id'
     );
+  });
+});
+
+describe('getContactId', () => {
+  it('should retrieve the unique id from the Mini App Bridge', () => {
+    window.MiniAppBridge.getContactId.resolves('test_mini_app_contact_id');
+
+    return expect(miniApp.getContactId()).to.eventually.equal(
+      'test_mini_app_contact_id'
+    );
+  });
+});
+
+describe('getMauid', () => {
+  it('should retrieve the unique id from the Mini App Bridge', () => {
+    window.MiniAppBridge.getMauid.resolves('test_mini_mauid');
+
+    return expect(miniApp.getMauid()).to.eventually.equal('test_mini_mauid');
   });
 });
 
