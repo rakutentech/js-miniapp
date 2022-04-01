@@ -23,7 +23,6 @@ import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
 import Camera from './pages/camera';
 import FileDownload from './pages/file-download';
-import FileDownloadXhr from './pages/file-download-xhr';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
 import Landing from './pages/landing';
@@ -132,14 +131,6 @@ const appItems = [
     label: 'File Download',
     navLink: '/file_download',
     component: FileDownload,
-    supportedAboveSdkVersion: '4.1.0',
-  },
-  {
-    icon: <CloudDownloadIcon />,
-    label: 'File Download',
-    navLink: '/file_download_xhr',
-    component: FileDownloadXhr,
-    supportedBelowSdkVersion: '4.0.0',
   },
   {
     icon: <AttachFileIcon />,

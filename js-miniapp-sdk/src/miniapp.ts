@@ -97,7 +97,7 @@ interface MiniAppFeatures {
   downloadFile(
     filename: string,
     url: string,
-    headers: DownloadFileHeaders
+    headers?: DownloadFileHeaders
   ): Promise<string>;
 }
 
@@ -257,7 +257,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   downloadFile(
     filename: string,
     url: string,
-    headers: DownloadFileHeaders
+    headers: DownloadFileHeaders = {}
   ): Promise<string> {
     return getBridge().downloadFile(filename, url, headers);
   }
