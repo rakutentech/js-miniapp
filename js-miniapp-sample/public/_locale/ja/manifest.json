@@ -1,0 +1,73 @@
+{
+  "short_name": "Mini App",
+  "name": "JS MiniApp Sample",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+
+  "reqPermissions": [
+    {
+      "name": "rakuten.miniapp.user.USER_NAME",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+
+  "optPermissions": [
+    {
+      "name": "rakuten.miniapp.user.CONTACT_LIST",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.device.LOCATION",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.ACCESS_TOKEN",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.user.POINTS",
+      "reason": "Describe your reason here (optional)."
+    },
+    {
+      "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
+      "reason": "Describe your reason here (optional)."
+    }
+  ],
+
+  "accessTokenPermissions": [
+    {
+      "audience": "rae",
+      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+    },
+    {
+      "audience": "api-c",
+      "scopes": ["your_service_scope_here"]
+    }
+  ],
+
+  "customMetaData": {
+    "provider": "楽天グループ株式会社",
+    "description": "これはサンプルのミニアプリです.",
+    "fileSizeInMb": "2.3",
+    "importantNotice": "定ケキエサ罠口ぶむけ間協シ員野金ヘリニ非演保フヲハ官挑怠めンつ家各ぽてフわ二整情ぶ場禁うト亡席ぼクるー控度技ぎラート。校本とざ書60前ヱコイニ真泊肺コフス加合へで題59派風今8冬ホレ未92被ゃクリは福付のーん連纓テ働言ソムモ選論ッンねの護裁経進げスに。録県しらへ想辺ウ命石転ヨホシア性北ちいーめ富改夜ワ防嶋たゃっん山2広ぶをも着調ム批職ヱサ瀬者は暮護ふへ。",
+    "termsLink": "https://www.example.com",
+    "privacyPolicyLink": "https://www.example.com"
+  }
+}
