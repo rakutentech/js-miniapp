@@ -16,38 +16,38 @@
   "reqPermissions": [
     {
       "name": "rakuten.miniapp.user.USER_NAME",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     }
   ],
 
   "optPermissions": [
     {
       "name": "rakuten.miniapp.user.CONTACT_LIST",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.device.LOCATION",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.user.ACCESS_TOKEN",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.user.POINTS",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     },
     {
       "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
-      "reason": "Describe your reason here (optional)."
+      "reason": "ここに理由を説明してください（オプション）。"
     }
   ],
 
