@@ -1,73 +1,14 @@
 {
-  "short_name": "Mini App",
-  "name": "JS MiniApp Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
+  "provider": "Rakuten Group Inc",
+  "description": "This is a sample mini app.",
+  "importantNotice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 
-  "reqPermissions": [
-    {
-      "name": "rakuten.miniapp.user.USER_NAME",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-      "reason": "Describe your reason here (optional)."
-    }
-  ],
-
-  "optPermissions": [
-    {
-      "name": "rakuten.miniapp.user.CONTACT_LIST",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.device.LOCATION",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.user.ACCESS_TOKEN",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.user.POINTS",
-      "reason": "Describe your reason here (optional)."
-    },
-    {
-      "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
-      "reason": "Describe your reason here (optional)."
-    }
-  ],
-
-  "accessTokenPermissions": [
-    {
-      "audience": "rae",
-      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
-    },
-    {
-      "audience": "api-c",
-      "scopes": ["your_service_scope_here"]
-    }
-  ],
-
-  "customMetaData": {
-    "provider": "Rakuten Group Inc",
-    "description": "This is a sample mini app.",
-    "fileSizeInMb": "2.3",
-    "importantNotice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "termsLink": "https://www.example.com",
-    "privacyPolicyLink": "https://www.example.com"
-  }
+  "userNameReason": "Describe your reason here.",
+  "profilePhotoReason": "Describe your reason here.",
+  "contactListReason": "Describe your reason here (optional).",
+  "locationReason": "Describe your reason here (optional).",
+  "accessTokenReason": "Describe your reason here (optional).",
+  "sendMessageReason": "Describe your reason here (optional).",
+  "pointsReason": "Describe your reason here (optional).",
+  "fileDownloadReason": "Describe your reason here (optional)."
 }
