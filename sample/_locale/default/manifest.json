@@ -1,0 +1,14 @@
+{
+  "provider": "Rakuten Group Inc",
+  "description": "This is a sample mini app.",
+  "importantNotice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+
+  "userNameReason": "Describe your reason here.",
+  "profilePhotoReason": "Describe your reason here.",
+  "contactListReason": "Describe your reason here (optional).",
+  "locationReason": "Describe your reason here (optional).",
+  "accessTokenReason": "Describe your reason here (optional).",
+  "sendMessageReason": "Describe your reason here (optional).",
+  "pointsReason": "Describe your reason here (optional).",
+  "fileDownloadReason": "Describe your reason here (optional)."
+}
