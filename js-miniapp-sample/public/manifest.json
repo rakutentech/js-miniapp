@@ -16,38 +16,38 @@
   "reqPermissions": [
     {
       "name": "rakuten.miniapp.user.USER_NAME",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_userNameReason__"
     },
     {
       "name": "rakuten.miniapp.user.PROFILE_PHOTO",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_profilePhotoReason__"
     }
   ],
 
   "optPermissions": [
     {
       "name": "rakuten.miniapp.user.CONTACT_LIST",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_contactListReason__"
     },
     {
       "name": "rakuten.miniapp.device.LOCATION",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_locationReason__"
     },
     {
       "name": "rakuten.miniapp.user.ACCESS_TOKEN",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_accessTokenReason__"
     },
     {
       "name": "rakuten.miniapp.user.action.SEND_MESSAGE",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_sendMessageReason__"
     },
     {
       "name": "rakuten.miniapp.user.POINTS",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_pointsReason__"
     },
     {
       "name": "rakuten.miniapp.device.FILE_DOWNLOAD",
-      "reason": "Describe your reason here (optional)."
+      "reason": "__MANIFEST_fileDownloadReason__"
     }
   ],
 
@@ -63,10 +63,10 @@
   ],
 
   "customMetaData": {
-    "provider": "Rakuten Group Inc",
-    "description": "This is a sample mini app.",
+    "provider": "__MANIFEST_provider__",
+    "description": "__MANIFEST_description__",
     "fileSizeInMb": "2.3",
-    "importantNotice": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "importantNotice": "__MANIFEST_importantNotice__",
     "termsLink": "https://www.example.com",
     "privacyPolicyLink": "https://www.example.com"
   }
