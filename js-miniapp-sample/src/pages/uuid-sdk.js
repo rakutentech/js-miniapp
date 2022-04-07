@@ -69,7 +69,7 @@ const UuidFetcher = (props: UUIDProps) => {
 
       <CardActions className={classes.actions}>
         <Button
-          data-testid="get-unique-id"
+          data-testid="get-message-unique-id"
           variant="contained"
           color="primary"
           fullWidth
