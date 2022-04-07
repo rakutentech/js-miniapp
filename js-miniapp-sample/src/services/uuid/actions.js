@@ -1,11 +1,9 @@
 import MiniApp from 'js-miniapp-sdk';
 
 import {
-  SET_UNIQUE_ID,
-  SET_CONTACT_ID,
+  SET_MESSAGE_UNIQUE_ID,
   SET_MAUID,
-  UNIQUE_ID_FETCH_ERROR,
-  CONTACT_ID_FETCH_ERROR,
+  MESSAGE_UNIQUE_ID_FETCH_ERROR,
   MAUID_FETCH_ERROR,
 } from './types';
 
@@ -13,36 +11,18 @@ type GetUUIDAction = { type: String, payload: ?string, error: ?string };
 
 type UUIDAction = GetUUIDAction;
 
-const setUniqueId = (): Function => {
+const setMessageUniqueId = (): Function => {
   return (dispatch) => {
-    MiniApp.getUniqueId()
+    MiniApp.getMessageUniqueId()
       .then((uuidFromSDK) => {
         dispatch({
-          type: SET_UNIQUE_ID,
+          type: SET_MESSAGE_UNIQUE_ID,
           payload: uuidFromSDK,
         });
       })
       .catch((error) => {
         dispatch({
-          type: UNIQUE_ID_FETCH_ERROR,
-          error,
-        });
-      });
-  };
-};
-
-const setContactId = (): Function => {
-  return (dispatch) => {
-    MiniApp.getContactId()
-      .then((contactIdFromSdk) => {
-        dispatch({
-          type: SET_CONTACT_ID,
-          payload: contactIdFromSdk,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: CONTACT_ID_FETCH_ERROR,
+          type: MESSAGE_UNIQUE_ID_FETCH_ERROR,
           error,
         });
       });
@@ -67,5 +47,5 @@ const setMauid = (): Function => {
   };
 };
 
-export { setUniqueId, setContactId, setMauid };
+export { setMessageUniqueId, setMauid };
 export type { UUIDAction };

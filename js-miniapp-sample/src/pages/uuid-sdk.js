@@ -10,13 +10,13 @@ import {
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
-import { setContactId, setMauid, setUniqueId } from '../services/uuid/actions';
+import { setMessageUniqueId, setMauid } from '../services/uuid/actions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
-    height: '500px',
+    height: '250px',
   },
   content: {
     height: '16%',
@@ -38,14 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type UUIDProps = {
-  uniqueId: string,
-  contactId: string,
+  messageUniqueId: string,
   mauid: string,
-  uniqueIdError: string,
-  contactIdError: string,
+  messageUniqueIdError: string,
   mauidError: string,
-  getUniqueId: Function,
-  getContactId: Function,
+  getMessageUniqueId: Function,
   getMauid: Function,
 };
 
@@ -67,7 +64,7 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        {props.uniqueId ?? props.uniqueIdError ?? 'Not Available'}
+        {props.messageUniqueId ?? props.messageUniqueIdError ?? 'Not Available'}
       </CardContent>
 
       <CardActions className={classes.actions}>
@@ -76,17 +73,17 @@ const UuidFetcher = (props: UUIDProps) => {
           variant="contained"
           color="primary"
           fullWidth
-          onClick={props.getUniqueId}
+          onClick={props.getMessageUniqueId}
         >
-          GET UNIQUE ID
+          GET MESSAGE UNIQUE ID
         </Button>
         <CopyToClipboard
-          disabled={!props.uniqueId}
-          text={props.uniqueId}
+          disabled={!props.messageUniqueId}
+          text={props.messageUniqueId}
           onCopy={textCopied}
         >
           <Button
-            disabled={!props.uniqueId}
+            disabled={!props.messageUniqueId}
             data-testid="clipboard-copy"
             variant="contained"
             color="primary"
@@ -110,36 +107,6 @@ const UuidFetcher = (props: UUIDProps) => {
           }}
           message="Failed to copy!"
         />
-      </CardActions>
-
-      <CardContent className={classes.content}>
-        {props.contactId ?? props.contactIdError ?? 'Not Available'}
-      </CardContent>
-
-      <CardActions className={classes.actions}>
-        <Button
-          data-testid="get-contact-id"
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={props.getContactId}
-        >
-          GET CONTACT ID
-        </Button>
-        <CopyToClipboard
-          disabled={!props.contactId}
-          text={props.contactId}
-          onCopy={textCopied}
-        >
-          <Button
-            disabled={!props.contactId}
-            data-testid="clipboard-copy"
-            variant="contained"
-            color="primary"
-          >
-            Copy
-          </Button>
-        </CopyToClipboard>
       </CardActions>
 
       <CardContent className={classes.content}>
@@ -178,19 +145,16 @@ const UuidFetcher = (props: UUIDProps) => {
 const mapStateToProps = (state, props) => {
   return {
     ...props,
-    uniqueId: state.uuid.uniqueId,
-    contactId: state.uuid.contactId,
+    messageUniqueId: state.uuid.messageUniqueId,
+    messageUniqueIdError: state.uuid.messageUniqueIdError,
     mauid: state.uuid.mauid,
-    uniqueIdError: state.uuid.uniqueIdError,
-    contactIdError: state.uuid.contactIdError,
     mauidError: state.uuid.mauidError,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUniqueId: () => dispatch(setUniqueId()),
-    getContactId: () => dispatch(setContactId()),
+    getMessageUniqueId: () => dispatch(setMessageUniqueId()),
     getMauid: () => dispatch(setMauid()),
   };
 };
