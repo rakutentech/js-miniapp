@@ -7,9 +7,13 @@ import {
   CardContent,
   CardActions,
   makeStyles,
+  Typography,
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { purchaseProduct } from '../services/purchase/actions';
+import { PurchasedProduct } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -37,7 +41,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function PurchaseComponent() {
+type PurchaseProductProps = {
+  purchasedProduct: PurchasedProduct,
+  purchaseProductUsing: Function,
+};
+
+function PurchaseComponent(props: PurchaseProductProps) {
   const classes = useStyles();
   let inputValue = '';
 
@@ -47,8 +56,8 @@ function PurchaseComponent() {
   };
 
   const purchaseItem = () => {
-    MiniApp.purchaseService
-      .purchaseItemWith(inputValue)
+    props
+      .purchaseProductUsing(inputValue)
       .then((success) => {
         console.log('Success:', success);
       })
@@ -56,7 +65,26 @@ function PurchaseComponent() {
         console.error(error);
       });
   };
-
+  const card = (
+    <React.Fragment>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Word of the Day
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          adjective
+        </Typography>
+        <Typography variant="body2">
+          well meaning and kindly.
+          <br />
+          {'"a benevolent smile"'}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+    </React.Fragment>
+  );
   return (
     <GreyCard>
       <CardContent className={classes.content}>
@@ -88,4 +116,19 @@ function PurchaseComponent() {
   );
 }
 
-export default PurchaseComponent;
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps: ', state);
+  return {
+    purchasedProduct: state.purchaseProduct,
+    error: state.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    purchaseProductUsing: (itemId: string) => dispatch(purchaseProduct(itemId)),
+  };
+};
+
+export { PurchaseComponent };
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseComponent);
