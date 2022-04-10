@@ -1,14 +1,20 @@
-import React from 'react';
-import MiniApp from 'js-miniapp-sdk';
+import React, { useReducer } from 'react';
 
 import {
   Button,
-  TextField,
+  CardHeader,
+  CircularProgress,
+  FormGroup,
+  Typography,
   CardContent,
   CardActions,
-  makeStyles,
-  Typography,
+  TextField,
+  Paper,
+  Divider,
 } from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
@@ -16,38 +22,134 @@ import { purchaseProduct } from '../services/purchase/actions';
 import { PurchasedProduct } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
-  content: {
-    height: '50%',
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+  },
+  root: {
+    background: theme.color.secondary,
+    width: '85vw',
+    maxWidth: 500,
+  },
+  wrapper: {
+    position: 'relative',
+    marginTop: 10,
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonFailure: {
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: 'calc(50% - 10px)',
+    left: 'calc(50% - 10px)',
+  },
+  error: {
+    color: red[500],
+    marginTop: 10,
+  },
+  success: {
+    color: green[500],
+    marginTop: 20,
+  },
+  rootUserGroup: {
+    alignItems: 'center',
+  },
+  formInput: {
+    width: '90%',
+    marginTop: 10,
+  },
+  rootCardActions: {
     justifyContent: 'center',
+  },
+  caseSelector: {
+    marginTop: 5,
+  },
+  button: {
+    marginBottom: 15,
+  },
+  dataFormsWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    fontSize: 18,
-    color: theme.color.primary,
-    fontWeight: 'bold',
-  },
-  actions: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  textfield: {
-    width: '80%',
-    maxWidth: 300,
-    background: 'white',
-    '& input': {
-      color: theme.color.primary,
-      lineHeight: '1.5em',
-      fontSize: '1.2em',
+  paper: {
+    width: '100%',
+    paddingBottom: 10,
+    marginBottom: 20,
+    '&:last-child': {
+      marginBottom: 0,
     },
+  },
+  red: {
+    color: red[500],
   },
 }));
 
+export const initialState = {
+  isLoading: false,
+  isError: false,
+};
+
+type State = {
+  isLoading: ?boolean,
+  isError: ?boolean,
+};
+
+type Action = {
+  type: string,
+};
+
+export const dataFetchReducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case 'FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+      };
+    case 'FETCH_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+      };
+
+    default:
+      throw Error('Unknown action type');
+  }
+};
+
 type PurchaseProductProps = {
   purchasedProduct: PurchasedProduct,
-  purchaseProductUsing: Function,
+  purchaseProductUsing: () => Promise<PurchasedProduct>,
 };
 
 function PurchaseComponent(props: PurchaseProductProps) {
+  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
+
   let inputValue = '';
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
@@ -55,64 +157,132 @@ function PurchaseComponent(props: PurchaseProductProps) {
     inputValue = e.currentTarget.value;
   };
 
-  const purchaseItem = () => {
+  const buttonClassname = clsx({
+    [classes.buttonFailure]: state.isError,
+    [classes.buttonSuccess]: !state.isError,
+  });
+
+  function purchaseProduct() {
     props
       .purchaseProductUsing(inputValue)
-      .then((success) => {
-        console.log('Success:', success);
-      })
-      .catch((error) => {
-        console.error(error);
+      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
+        dispatch({ type: 'FETCH_FAILURE' });
       });
-  };
-  const card = (
-    <React.Fragment>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </React.Fragment>
-  );
-  return (
-    <GreyCard>
-      <CardContent className={classes.content}>
+  }
+
+  function handleClick(e) {
+    if (!state.isLoading) {
+      e.preventDefault();
+      dispatch({ type: 'FETCH_INIT' });
+      purchaseProduct();
+    }
+  }
+
+  function PurchaseProduct() {
+    return (
+      <Paper className={classes.paper}>
+        <CardHeader subheader="Purchase Product" />
         <TextField
-          type="text"
-          className={classes.textfield}
-          onChange={handleInput}
-          placeholder="Enter Item Id that you want to purchase"
           variant="outlined"
-          color="primary"
-          multiline="true"
-          rowsMax="5"
-          inputProps={{
-            'data-testid': 'input-field',
-          }}
+          className={classes.formInput}
+          id="input-name"
+          error={state.isError}
+          label={'Item ID'}
+          onChange={handleInput}
         />
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          className={classes.button}
-          onClick={purchaseItem}
-          variant="contained"
-        >
-          Purchase Item
-        </Button>
-      </CardActions>
-    </GreyCard>
+      </Paper>
+    );
+  }
+
+  function ShowPurchasedProductDetails() {
+    return (
+      <Paper className={classes.paper}>
+        <CardHeader subheader="Purchased Details" />
+        {!state.isLoading && !state.isError && props.purchasedProduct && (
+          <React.Fragment>
+            <Typography variant="body1" className={classes.success} alignLeft>
+              Transaction Date: {props.purchasedProduct.transactionDate}
+            </Typography>
+            <Typography variant="body1" className={classes.success} alignLeft>
+              Transaction ID: {props.purchasedProduct.transactionId}
+            </Typography>
+            <Divider />
+            <Typography variant="h6">Product Info</Typography>
+            <Typography alignLeft variant="body1" className={classes.success}>
+              {' '}
+              ID: {props.purchasedProduct.product.id}{' '}
+            </Typography>
+            <Typography alignLeft variant="body1" className={classes.success}>
+              {' '}
+              Title: {props.purchasedProduct.product.title}{' '}
+            </Typography>
+            <Typography alignLeft variant="body1" className={classes.success}>
+              {' '}
+              Description: {props.purchasedProduct.product.description}{' '}
+            </Typography>
+            <Typography alignLeft variant="body1" className={classes.success}>
+              {' '}
+              Price: {props.purchasedProduct.product.price.price}{' '}
+            </Typography>
+            <Typography alignLef tvariant="body1" className={classes.success}>
+              {' '}
+              CurrencyCode: {
+                props.purchasedProduct.product.price.currencyCode
+              }{' '}
+            </Typography>
+          </React.Fragment>
+        )}
+      </Paper>
+    );
+  }
+
+  function PurchaseProductCardActionsForm() {
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handleClick}
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
+            className={buttonClassname}
+            disabled={state.isLoading}
+            data-testid="buyProduct"
+          >
+            Buy
+          </Button>
+          {state.isLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
+          )}
+        </div>
+        {state.isError && (
+          <Typography variant="body1" className={classes.error}>
+            Error buying the Product. Trying with valid Product ID
+          </Typography>
+        )}
+      </FormGroup>
+    );
+  }
+
+  return (
+    <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent>
+          <div
+            className={classes.dataFormsWrapper}
+            data-testid="dataFormsWrapper"
+          >
+            {PurchaseProduct()}
+            {ShowPurchasedProductDetails()}
+          </div>
+        </CardContent>
+        <CardActions classes={{ root: classes.rootCardActions }}>
+          {PurchaseProductCardActionsForm()}
+        </CardActions>
+      </GreyCard>
+    </div>
   );
 }
 
@@ -120,7 +290,6 @@ const mapStateToProps = (state) => {
   console.log('mapStateToProps: ', state);
   return {
     purchasedProduct: state.purchaseProduct,
-    error: state.error,
   };
 };
 

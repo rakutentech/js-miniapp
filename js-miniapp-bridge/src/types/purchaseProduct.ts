@@ -1,4 +1,3 @@
-/** Points type. */
 export interface Product {
   id: string;
   title: string;
@@ -7,13 +6,12 @@ export interface Product {
 }
 
 export interface ProductPrice {
-  amount: number;
   currencyCode: string;
   price: string;
 }
 
 export interface PurchasedProduct {
-  orderId: string;
   product: Product;
-  token: string;
+  transactionId: string;
+  transactionDate: string;
 }

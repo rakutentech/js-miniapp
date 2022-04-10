@@ -1,5 +1,4 @@
-import MiniApp from 'js-miniapp-sdk';
-import { PurchasedProduct } from 'js-miniapp-sdk';
+import MiniApp, { PurchasedProduct } from 'js-miniapp-sdk';
 
 import {
   REQUEST_PRODUCT_PURCHASE_SUCCESS,
@@ -7,7 +6,7 @@ import {
 } from './types';
 
 type PurchaseProductSuccessAction = {
-  type: String,
+  type: string,
   purchasedProduct: PurchasedProduct,
 };
 
