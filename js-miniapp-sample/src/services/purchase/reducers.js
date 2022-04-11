@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 import type { PurchaseProductSuccessAction } from './actions';
 
 import { REQUEST_PRODUCT_PURCHASE_SUCCESS } from './types';
