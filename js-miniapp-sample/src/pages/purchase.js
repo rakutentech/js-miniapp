@@ -142,7 +142,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
 
 type PurchaseProductProps = {
   purchasedProduct: PurchasedProduct,
-  purchaseProductUsing: () => Promise<PurchasedProduct>,
+  purchaseProductUsing: (itemId: string) => Promise<PurchasedProduct>,
 };
 
 function PurchaseComponent(props: PurchaseProductProps) {
