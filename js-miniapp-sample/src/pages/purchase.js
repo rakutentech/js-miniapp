@@ -196,41 +196,48 @@ function PurchaseComponent(props: PurchaseProductProps) {
     );
   }
 
+  function TransactionDetails() {
+    var dateInfo = new Date(props.purchasedProduct.transactionDate);
+    return (
+      <Typography
+        variant="body1"
+        className={classes.success}
+        align="left"
+        style={{ paddingLeft: '10px' }}
+      >
+        Transaction Date: {dateInfo.toLocaleDateString()}
+        <br />
+        Transaction Time: {dateInfo.toLocaleTimeString()}
+        <br />
+        Transaction ID: {props.purchasedProduct.transactionId}
+      </Typography>
+    );
+  }
+
   function ShowPurchasedProductDetails() {
     return (
       <Paper className={classes.paper}>
-        <CardHeader subheader="Purchased Details" />
+        <CardHeader />
+        <Typography variant="h6">Transaction Info</Typography>
         {!state.isLoading && !state.isError && props.purchasedProduct && (
           <React.Fragment>
-            <Typography variant="body1" className={classes.success} alignLeft>
-              Transaction Date: {props.purchasedProduct.transactionDate}
-            </Typography>
-            <Typography variant="body1" className={classes.success} alignLeft>
-              Transaction ID: {props.purchasedProduct.transactionId}
-            </Typography>
-            <Divider />
+            {TransactionDetails()}
+            <br />
             <Typography variant="h6">Product Info</Typography>
-            <Typography alignLeft variant="body1" className={classes.success}>
-              {' '}
-              ID: {props.purchasedProduct.product.id}{' '}
-            </Typography>
-            <Typography alignLeft variant="body1" className={classes.success}>
-              {' '}
-              Title: {props.purchasedProduct.product.title}{' '}
-            </Typography>
-            <Typography alignLeft variant="body1" className={classes.success}>
-              {' '}
-              Description: {props.purchasedProduct.product.description}{' '}
-            </Typography>
-            <Typography alignLeft variant="body1" className={classes.success}>
-              {' '}
-              Price: {props.purchasedProduct.product.price.price}{' '}
-            </Typography>
-            <Typography alignLef tvariant="body1" className={classes.success}>
-              {' '}
+            <Typography
+              variant="body1"
+              className={classes.success}
+              align="left"
+              style={{ paddingLeft: '10px' }}
+            >
+              ID: {props.purchasedProduct.product.id} <br />
+              Title: {props.purchasedProduct.product.title} <br />
+              Description: {props.purchasedProduct.product.description} <br />
+              Price: {props.purchasedProduct.product.price.price} <br />
               CurrencyCode: {
                 props.purchasedProduct.product.price.currencyCode
               }{' '}
+              <br />
             </Typography>
           </React.Fragment>
         )}
