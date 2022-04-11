@@ -1,4 +1,9 @@
 ## CHANGELOG
+### 1.14.0 (TBD)
+- **Feature:** Added `purchaseItemWith(id: string)` which will enable the Mini-apps to use this interface to initiate the In-App Purcahse
+
+--- 
+
 ### 1.13.0 (2021-12-17)
 
 - **Feature:** Added default values for message form in demo app

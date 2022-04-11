@@ -10,7 +10,6 @@ import {
   CardActions,
   TextField,
   Paper,
-  Divider,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
@@ -266,7 +265,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
         </div>
         {state.isError && (
           <Typography variant="body1" className={classes.error}>
-            Error buying the Product. Trying with valid Product ID
+            Error buying the Product. Try with valid Product ID
           </Typography>
         )}
       </FormGroup>
