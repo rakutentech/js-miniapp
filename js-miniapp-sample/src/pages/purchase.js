@@ -161,7 +161,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
     [classes.buttonSuccess]: !state.isError,
   });
 
-  function purchaseProduct() {
+  function BuyProduct() {
     props
       .purchaseProductUsing(inputValue)
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
@@ -175,7 +175,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
     if (!state.isLoading) {
       e.preventDefault();
       dispatch({ type: 'FETCH_INIT' });
-      purchaseProduct();
+      BuyProduct();
     }
   }
 

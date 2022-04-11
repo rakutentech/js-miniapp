@@ -4,8 +4,8 @@ import { REQUEST_PRODUCT_PURCHASE_SUCCESS } from './types';
 
 const defaultPurchaseProduct = null;
 const PurchaseProductReducer = (
-  state: ?string = defaultPurchaseProduct,
-  action: PurchaseProductSuccessAction
+  action: PurchaseProductSuccessAction,
+  state: ?string = defaultPurchaseProduct
 ): ?string => {
   switch (action.type) {
     case REQUEST_PRODUCT_PURCHASE_SUCCESS:
