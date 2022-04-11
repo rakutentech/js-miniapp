@@ -1,4 +1,9 @@
 ## CHANGELOG
+### 1.14.0 (2022-04-12)
+- **Feature:** Added `downloadFile(filename, url, headers)` to download and save the file with proper filename
+
+---
+
 ### 1.13.0 (2021-12-17)
 
 - **Feature:** Added default values for message form in demo app
