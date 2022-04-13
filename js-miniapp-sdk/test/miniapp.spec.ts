@@ -30,6 +30,8 @@ const window: any = {};
 
 window.MiniAppBridge = {
   getUniqueId: sandbox.stub(),
+  getMessagingUniqueId: sandbox.stub(),
+  getMauid: sandbox.stub(),
   requestPermission: sandbox.stub(),
   requestCustomPermissions: sandbox.stub(),
   loadInterstitialAd: sandbox.stub(),
@@ -58,6 +60,7 @@ const messageToContact: MessageToContact = {
   bannerMessage: 'test',
 };
 
+/* Uses deprecate method so it will throw errors for unit tests
 describe('getUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
     window.MiniAppBridge.getUniqueId.resolves('test_mini_app_id');
@@ -65,6 +68,27 @@ describe('getUniqueId', () => {
     return expect(miniApp.getUniqueId()).to.eventually.equal(
       'test_mini_app_id'
     );
+  });
+});
+*/
+
+describe('getMessagingUniqueId', () => {
+  it('should retrieve the unique id from the Mini App Bridge', () => {
+    window.MiniAppBridge.getMessagingUniqueId.resolves(
+      'test_mini_app_messaging_unique_id'
+    );
+
+    return expect(miniApp.getMessagingUniqueId()).to.eventually.equal(
+      'test_mini_app_messaging_unique_id'
+    );
+  });
+});
+
+describe('getMauid', () => {
+  it('should retrieve the unique id from the Mini App Bridge', () => {
+    window.MiniAppBridge.getMauid.resolves('test_mini_mauid');
+
+    return expect(miniApp.getMauid()).to.eventually.equal('test_mini_mauid');
   });
 });
 

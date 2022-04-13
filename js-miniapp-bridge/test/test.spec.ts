@@ -117,6 +117,46 @@ describe('getUniqueId', () => {
   });
 });
 
+describe('getMessagingUniqueId', () => {
+  it('will parse the Contact ID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'message_unique_id');
+
+    return expect(bridge.getMessagingUniqueId()).to.eventually.deep.equal(
+      'message_unique_id'
+    );
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
+
+    return expect(
+      bridge.getMessagingUniqueId()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'hostAppError: an error has occured'
+    );
+  });
+});
+
+describe('getMauid', () => {
+  it('will parse the MAUID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'mauid');
+
+    return expect(bridge.getMauid()).to.eventually.deep.equal('mauid');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
+
+    return expect(bridge.getMauid()).to.eventually.be.rejected.and.deep.equal(
+      'hostAppError: an error has occured'
+    );
+  });
+});
+
 describe('requestPermission', () => {
   it('will parse the Unique ID response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
