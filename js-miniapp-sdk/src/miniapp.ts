@@ -16,6 +16,7 @@ import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
 import { PurchaseItemService } from './modules/purchase-item';
 import { getBridge } from './utils';
+import { deprecate } from 'util';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -26,6 +27,18 @@ interface MiniAppFeatures {
    * @returns The Promise of provided id of mini app from injected side.
    */
   getUniqueId(): Promise<string>;
+
+  /**
+   * Request the mini app's messaging unique id from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getMessagingUniqueId(): Promise<string>;
+
+  /**
+   * Request the mini app's mauid from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getMauid(): Promise<string>;
 
   /**
    * Request the location permission from the host app.
@@ -146,8 +159,19 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge().requestPermission(permissionType);
   }
 
+  /**
+   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
+   */
   getUniqueId(): Promise<string> {
     return getBridge().getUniqueId();
+  }
+
+  getMessagingUniqueId(): Promise<string> {
+    return getBridge().getMessagingUniqueId();
+  }
+
+  getMauid(): Promise<string> {
+    return getBridge().getMauid();
   }
 
   requestLocationPermission(permissionDescription = ''): Promise<string> {
