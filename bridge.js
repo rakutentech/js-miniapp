@@ -139,12 +139,31 @@ var MiniAppBridge = /** @class */ (function () {
         this.executor.execEvents(queueObj);
     };
     /**
-     * Associating getUniqueId function to MiniAppBridge object.
+     * Deprecated method for associating getUniqueId function to MiniAppBridge object.
+     * Use `getMessagingUniqueId` or `getMauid` instead
      */
     MiniAppBridge.prototype.getUniqueId = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getUniqueId', null, function (id) { return resolve(id); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating getMessagingUniqueId function to MiniAppBridge object.
+     */
+    MiniAppBridge.prototype.getMessagingUniqueId = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getUniqueId', null, function (id) { return resolve(id); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * Associating getMauid function to MiniAppBridge object.
+     */
+    MiniAppBridge.prototype.getMauid = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getMauid', null, function (id) { return resolve(id); }, function (error) { return reject(error); });
         });
     };
     /**
