@@ -1,9 +1,9 @@
 import MiniApp from 'js-miniapp-sdk';
 
 import {
-  SET_MESSAGE_UNIQUE_ID,
+  SET_MESSAGING_UNIQUE_ID,
   SET_MAUID,
-  MESSAGE_UNIQUE_ID_FETCH_ERROR,
+  MESSAGING_UNIQUE_ID_FETCH_ERROR,
   MAUID_FETCH_ERROR,
 } from './types';
 
@@ -11,18 +11,18 @@ type GetUUIDAction = { type: String, payload: ?string, error: ?string };
 
 type UUIDAction = GetUUIDAction;
 
-const setMessageUniqueId = (): Function => {
+const setMessagingUniqueId = (): Function => {
   return (dispatch) => {
-    MiniApp.getMessageUniqueId()
+    MiniApp.getMessagingUniqueId()
       .then((uuidFromSDK) => {
         dispatch({
-          type: SET_MESSAGE_UNIQUE_ID,
+          type: SET_MESSAGING_UNIQUE_ID,
           payload: uuidFromSDK,
         });
       })
       .catch((error) => {
         dispatch({
-          type: MESSAGE_UNIQUE_ID_FETCH_ERROR,
+          type: MESSAGING_UNIQUE_ID_FETCH_ERROR,
           error,
         });
       });
@@ -47,5 +47,5 @@ const setMauid = (): Function => {
   };
 };
 
-export { setMessageUniqueId, setMauid };
+export { setMessagingUniqueId, setMauid };
 export type { UUIDAction };

@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
-import { setMessageUniqueId, setMauid } from '../services/uuid/actions';
+import { setMessagingUniqueId, setMauid } from '../services/uuid/actions';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type UUIDProps = {
-  messageUniqueId: string,
+  messagingUniqueId: string,
   mauid: string,
-  messageUniqueIdError: string,
+  messagingUniqueIdError: string,
   mauidError: string,
-  getMessageUniqueId: Function,
+  getMessagingUniqueId: Function,
   getMauid: Function,
 };
 
@@ -64,26 +64,26 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        {props.messageUniqueId ?? props.messageUniqueIdError ?? 'Not Available'}
+        {props.messagingUniqueId ?? props.messagingUniqueIdError ?? 'Not Available'}
       </CardContent>
 
       <CardActions className={classes.actions}>
         <Button
-          data-testid="get-message-unique-id"
+          data-testid="get-messaging-unique-id"
           variant="contained"
           color="primary"
           fullWidth
-          onClick={props.getMessageUniqueId}
+          onClick={props.getMessagingUniqueId}
         >
-          GET MESSAGE UNIQUE ID
+          GET MESSAGING UNIQUE ID
         </Button>
         <CopyToClipboard
-          disabled={!props.messageUniqueId}
-          text={props.messageUniqueId}
+          disabled={!props.messagingUniqueId}
+          text={props.messagingUniqueId}
           onCopy={textCopied}
         >
           <Button
-            disabled={!props.messageUniqueId}
+            disabled={!props.messagingUniqueId}
             data-testid="clipboard-copy"
             variant="contained"
             color="primary"
@@ -145,8 +145,8 @@ const UuidFetcher = (props: UUIDProps) => {
 const mapStateToProps = (state, props) => {
   return {
     ...props,
-    messageUniqueId: state.uuid.messageUniqueId,
-    messageUniqueIdError: state.uuid.messageUniqueIdError,
+    messagingUniqueId: state.uuid.messagingUniqueId,
+    messagingUniqueIdError: state.uuid.messagingUniqueIdError,
     mauid: state.uuid.mauid,
     mauidError: state.uuid.mauidError,
   };
@@ -154,7 +154,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getMessageUniqueId: () => dispatch(setMessageUniqueId()),
+    getMessagingUniqueId: () => dispatch(setMessagingUniqueId()),
     getMauid: () => dispatch(setMauid()),
   };
 };

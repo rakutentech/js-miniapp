@@ -117,12 +117,12 @@ describe('getUniqueId', () => {
   });
 });
 
-describe('getMessageUniqueId', () => {
+describe('getMessagingUniqueId', () => {
   it('will parse the Contact ID response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, 'message_unique_id');
 
-    return expect(bridge.getMessageUniqueId()).to.eventually.deep.equal(
+    return expect(bridge.getMessagingUniqueId()).to.eventually.deep.equal(
       'message_unique_id'
     );
   });
@@ -132,7 +132,7 @@ describe('getMessageUniqueId', () => {
     mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
 
     return expect(
-      bridge.getMessageUniqueId()
+      bridge.getMessagingUniqueId()
     ).to.eventually.be.rejected.and.deep.equal(
       'hostAppError: an error has occured'
     );

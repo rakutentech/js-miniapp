@@ -30,7 +30,7 @@ const window: any = {};
 
 window.MiniAppBridge = {
   getUniqueId: sandbox.stub(),
-  getMessageUniqueId: sandbox.stub(),
+  getMessagingUniqueId: sandbox.stub(),
   getMauid: sandbox.stub(),
   requestPermission: sandbox.stub(),
   requestCustomPermissions: sandbox.stub(),
@@ -72,14 +72,14 @@ describe('getUniqueId', () => {
 });
 */
 
-describe('getMessageUniqueId', () => {
+describe('getMessagingUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
-    window.MiniAppBridge.getMessageUniqueId.resolves(
-      'test_mini_app_message_unique_id'
+    window.MiniAppBridge.getMessagingUniqueId.resolves(
+      'test_mini_app_messaging_unique_id'
     );
 
-    return expect(miniApp.getMessageUniqueId()).to.eventually.equal(
-      'test_mini_app_message_unique_id'
+    return expect(miniApp.getMessagingUniqueId()).to.eventually.equal(
+      'test_mini_app_messaging_unique_id'
     );
   });
 });

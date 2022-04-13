@@ -29,10 +29,10 @@ interface MiniAppFeatures {
   getUniqueId(): Promise<string>;
 
   /**
-   * Request the mini app's message unique id from the host app.
+   * Request the mini app's messaging unique id from the host app.
    * @returns The Promise of provided id of mini app from injected side.
    */
-  getMessageUniqueId(): Promise<string>;
+  getMessagingUniqueId(): Promise<string>;
 
   /**
    * Request the mini app's mauid from the host app.
@@ -160,14 +160,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   /**
-   * @deprecated Deprecated method for getting the uniqueId use `getMessageUniqueId` or `getMauid` instead
+   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
    */
   getUniqueId(): Promise<string> {
     return getBridge().getUniqueId();
   }
 
-  getMessageUniqueId(): Promise<string> {
-    return getBridge().getMessageUniqueId();
+  getMessagingUniqueId(): Promise<string> {
+    return getBridge().getMessagingUniqueId();
   }
 
   getMauid(): Promise<string> {

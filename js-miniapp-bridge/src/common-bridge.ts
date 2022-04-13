@@ -181,7 +181,7 @@ export class MiniAppBridge {
 
   /**
    * Deprecated method for associating getUniqueId function to MiniAppBridge object.
-   * Use `getMessageUniqueId` or `getMauid` instead
+   * Use `getMessagingUniqueId` or `getMauid` instead
    */
   getUniqueId() {
     return new Promise<string>((resolve, reject) => {
@@ -195,12 +195,12 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating getMessageUniqueId function to MiniAppBridge object.
+   * Associating getMessagingUniqueId function to MiniAppBridge object.
    */
-  getMessageUniqueId() {
+  getMessagingUniqueId() {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
-        'getMessageUniqueId',
+        'getUniqueId',
         null,
         id => resolve(id),
         error => reject(error)
