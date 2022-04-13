@@ -64,7 +64,9 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        {props.messagingUniqueId ?? props.messagingUniqueIdError ?? 'Not Available'}
+        {props.messagingUniqueId ??
+          props.messagingUniqueIdError ??
+          'Not Available'}
       </CardContent>
 
       <CardActions className={classes.actions}>
