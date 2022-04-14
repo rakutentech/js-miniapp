@@ -18,7 +18,10 @@ import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
 import { purchaseProduct } from '../services/purchase/actions';
-import { PurchasedProduct } from 'js-miniapp-sdk';
+import {
+  PurchasedProductResponse,
+  PurchasedProductResponseStatus,
+} from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -141,8 +144,8 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 type PurchaseProductProps = {
-  purchasedProduct: PurchasedProduct,
-  purchaseProductUsing: (itemId: string) => Promise<PurchasedProduct>,
+  purchasedProduct: PurchasedProductResponse,
+  purchaseProductUsing: (itemId: string) => Promise<PurchasedProductResponse>,
 };
 
 function PurchaseComponent(props: PurchaseProductProps) {
@@ -196,30 +199,34 @@ function PurchaseComponent(props: PurchaseProductProps) {
   }
 
   function TransactionDetails() {
-    var dateInfo = new Date(props.purchasedProduct.transactionDate);
+    var dateInfo = new Date(props.purchasedProduct.product.transactionDate);
     return (
-      <Typography
-        variant="body1"
-        className={classes.success}
-        align="left"
-        style={{ paddingLeft: '10px' }}
-      >
-        Transaction Date: {dateInfo.toLocaleDateString()}
-        <br />
-        Transaction Time: {dateInfo.toLocaleTimeString()}
-        <br />
-        Transaction ID: {props.purchasedProduct.transactionId}
-      </Typography>
+      <React.Fragment>
+        <Typography variant="h6">
+          Transaction - {props.purchasedProduct.status}
+        </Typography>
+        <Typography
+          variant="body1"
+          className={classes.success}
+          align="left"
+          style={{ paddingLeft: '10px' }}
+        >
+          Transaction Date: {dateInfo.toLocaleDateString()}
+          <br />
+          Transaction Time: {dateInfo.toLocaleTimeString()}
+          <br />
+          Transaction ID: {props.purchasedProduct.product.transactionId}
+        </Typography>
+      </React.Fragment>
     );
   }
 
   function ShowPurchasedProductDetails() {
     return (
-      <Paper className={classes.paper}>
+      <React.Fragment>
         <CardHeader />
-        <Typography variant="h6">Transaction Info</Typography>
         {!state.isLoading && !state.isError && props.purchasedProduct && (
-          <React.Fragment>
+          <Paper className={classes.paper}>
             {TransactionDetails()}
             <br />
             <Typography variant="h6">Product Info</Typography>
@@ -229,18 +236,15 @@ function PurchaseComponent(props: PurchaseProductProps) {
               align="left"
               style={{ paddingLeft: '10px' }}
             >
-              ID: {props.purchasedProduct.product.id} <br />
-              Title: {props.purchasedProduct.product.title} <br />
-              Description: {props.purchasedProduct.product.description} <br />
-              Price: {props.purchasedProduct.product.price.price} <br />
-              CurrencyCode: {
-                props.purchasedProduct.product.price.currencyCode
-              }{' '}
+              ID: {props.purchasedProduct.product.productInfo.id} <br />
+              Title: {props.purchasedProduct.product.productInfo.title} <br />
+              Description:{' '}
+              {props.purchasedProduct.product.productInfo.description} <br />
               <br />
             </Typography>
-          </React.Fragment>
+          </Paper>
         )}
-      </Paper>
+      </React.Fragment>
     );
   }
 
@@ -293,7 +297,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps: ', state);
+  console.log('MapStateToProps: ', state);
   return {
     purchasedProduct: state.purchaseProduct,
   };

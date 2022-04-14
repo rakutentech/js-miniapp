@@ -1,4 +1,4 @@
-import MiniApp, { PurchasedProduct } from 'js-miniapp-sdk';
+import MiniApp, { PurchasedProductResponse } from 'js-miniapp-sdk';
 
 import {
   REQUEST_PRODUCT_PURCHASE_SUCCESS,
@@ -7,7 +7,7 @@ import {
 
 type PurchaseProductSuccessAction = {
   type: string,
-  purchasedProduct: PurchasedProduct,
+  purchasedProduct: PurchasedProductResponse,
 };
 
 const purchaseProduct = (itemId: string): Function => {
@@ -18,7 +18,7 @@ const purchaseProduct = (itemId: string): Function => {
         console.log('PurchaseProductSuccessAction: ', purchasedProduct);
         dispatch({
           type: REQUEST_PRODUCT_PURCHASE_SUCCESS,
-          purchasedProduct: purchasedProduct.product,
+          purchasedProduct: purchasedProduct,
         });
         return Promise.resolve(purchasedProduct);
       })

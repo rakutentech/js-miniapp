@@ -11,7 +11,18 @@ export interface ProductPrice {
 }
 
 export interface PurchasedProduct {
-  product: Product;
+  productInfo: Product;
   transactionId: string;
   transactionDate: string;
+}
+
+export interface PurchasedProductResponse {
+  status: PurchasedProductResponseStatus;
+  purchasedProduct: PurchasedProduct;
+}
+
+export enum PurchasedProductResponseStatus {
+  PURCHASED = 'PURCHASED',
+  FAILED = 'FAILED',
+  RESTORED = 'RESTORED',
 }

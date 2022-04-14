@@ -18,7 +18,7 @@ import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
-import { Product, PurchasedProduct } from './types/purchaseProduct';
+import { PurchasedProductResponse } from './types/purchaseProduct';
 import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
@@ -601,12 +601,12 @@ export class MiniAppBridge {
    * @param {string} id Item id that user wanted to purchase
    */
   purchaseItemWith(id: string) {
-    return new Promise<PurchasedProduct>((resolve, reject) => {
+    return new Promise<PurchasedProductResponse>((resolve, reject) => {
       return this.executor.exec(
         'purchaseItem',
         { itemId: id },
         purchasedProduct =>
-          resolve(JSON.parse(purchasedProduct) as PurchasedProduct),
+          resolve(JSON.parse(purchasedProduct) as PurchasedProductResponse),
         error => reject(error)
       );
     });
