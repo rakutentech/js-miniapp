@@ -1,4 +1,4 @@
-// flow-typed signature: ce97198fcb751e4b8adab89c674e4dc3
+// flow-typed signature: 9d881ef6495dccdf130254cc9482c8bc
 // flow-typed version: <<STUB>>/lint-staged_v^10.1.1/flow_v0.121.0
 
 /**
@@ -38,7 +38,15 @@ declare module 'lint-staged/lib/file' {
   declare module.exports: any;
 }
 
+declare module 'lint-staged/lib/formatConfig' {
+  declare module.exports: any;
+}
+
 declare module 'lint-staged/lib/generateTasks' {
+  declare module.exports: any;
+}
+
+declare module 'lint-staged/lib/getRenderer' {
   declare module.exports: any;
 }
 
@@ -58,7 +66,11 @@ declare module 'lint-staged/lib/makeCmdTasks' {
   declare module.exports: any;
 }
 
-declare module 'lint-staged/lib/printErrors' {
+declare module 'lint-staged/lib/messages' {
+  declare module.exports: any;
+}
+
+declare module 'lint-staged/lib/printTaskOutput' {
   declare module.exports: any;
 }
 
@@ -71,6 +83,14 @@ declare module 'lint-staged/lib/resolveTaskFn' {
 }
 
 declare module 'lint-staged/lib/runAll' {
+  declare module.exports: any;
+}
+
+declare module 'lint-staged/lib/state' {
+  declare module.exports: any;
+}
+
+declare module 'lint-staged/lib/symbols' {
   declare module.exports: any;
 }
 
@@ -91,8 +111,14 @@ declare module 'lint-staged/lib/execGit.js' {
 declare module 'lint-staged/lib/file.js' {
   declare module.exports: $Exports<'lint-staged/lib/file'>;
 }
+declare module 'lint-staged/lib/formatConfig.js' {
+  declare module.exports: $Exports<'lint-staged/lib/formatConfig'>;
+}
 declare module 'lint-staged/lib/generateTasks.js' {
   declare module.exports: $Exports<'lint-staged/lib/generateTasks'>;
+}
+declare module 'lint-staged/lib/getRenderer.js' {
+  declare module.exports: $Exports<'lint-staged/lib/getRenderer'>;
 }
 declare module 'lint-staged/lib/getStagedFiles.js' {
   declare module.exports: $Exports<'lint-staged/lib/getStagedFiles'>;
@@ -109,8 +135,11 @@ declare module 'lint-staged/lib/index.js' {
 declare module 'lint-staged/lib/makeCmdTasks.js' {
   declare module.exports: $Exports<'lint-staged/lib/makeCmdTasks'>;
 }
-declare module 'lint-staged/lib/printErrors.js' {
-  declare module.exports: $Exports<'lint-staged/lib/printErrors'>;
+declare module 'lint-staged/lib/messages.js' {
+  declare module.exports: $Exports<'lint-staged/lib/messages'>;
+}
+declare module 'lint-staged/lib/printTaskOutput.js' {
+  declare module.exports: $Exports<'lint-staged/lib/printTaskOutput'>;
 }
 declare module 'lint-staged/lib/resolveGitRepo.js' {
   declare module.exports: $Exports<'lint-staged/lib/resolveGitRepo'>;
@@ -120,6 +149,12 @@ declare module 'lint-staged/lib/resolveTaskFn.js' {
 }
 declare module 'lint-staged/lib/runAll.js' {
   declare module.exports: $Exports<'lint-staged/lib/runAll'>;
+}
+declare module 'lint-staged/lib/state.js' {
+  declare module.exports: $Exports<'lint-staged/lib/state'>;
+}
+declare module 'lint-staged/lib/symbols.js' {
+  declare module.exports: $Exports<'lint-staged/lib/symbols'>;
 }
 declare module 'lint-staged/lib/validateConfig.js' {
   declare module.exports: $Exports<'lint-staged/lib/validateConfig'>;

@@ -1,4 +1,4 @@
-// flow-typed signature: 88066b21802cbc97ae1bb94bc18bd841
+// flow-typed signature: cf2aee7762408bc7dd1172ed71913bdb
 // flow-typed version: <<STUB>>/eslint-plugin-react_v^7.19.0/flow_v0.121.0
 
 /**
@@ -63,6 +63,14 @@ declare module 'eslint-plugin-react/lib/rules/forbid-prop-types' {
 }
 
 declare module 'eslint-plugin-react/lib/rules/function-component-definition' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/hook-use-state' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/iframe-missing-sandbox' {
   declare module.exports: any;
 }
 
@@ -134,11 +142,19 @@ declare module 'eslint-plugin-react/lib/rules/jsx-max-props-per-line' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/jsx-newline' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/jsx-no-bind' {
   declare module.exports: any;
 }
 
 declare module 'eslint-plugin-react/lib/rules/jsx-no-comment-textnodes' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/jsx-no-constructed-context-values' {
   declare module.exports: any;
 }
 
@@ -222,6 +238,10 @@ declare module 'eslint-plugin-react/lib/rules/no-array-index-key' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/no-arrow-function-lifecycle' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/no-children-prop' {
   declare module.exports: any;
 }
@@ -254,11 +274,19 @@ declare module 'eslint-plugin-react/lib/rules/no-find-dom-node' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/no-invalid-html-attribute' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/no-is-mounted' {
   declare module.exports: any;
 }
 
 declare module 'eslint-plugin-react/lib/rules/no-multi-comp' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/no-namespace' {
   declare module.exports: any;
 }
 
@@ -298,6 +326,14 @@ declare module 'eslint-plugin-react/lib/rules/no-unsafe' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/no-unstable-nested-components' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/no-unused-class-component-methods' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/no-unused-prop-types' {
   declare module.exports: any;
 }
@@ -311,6 +347,10 @@ declare module 'eslint-plugin-react/lib/rules/no-will-update-set-state' {
 }
 
 declare module 'eslint-plugin-react/lib/rules/prefer-es6-class' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/prefer-exact-props' {
   declare module.exports: any;
 }
 
@@ -398,7 +438,23 @@ declare module 'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/util/isCreateElement' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/util/isDestructuredFromPragmaImport' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/util/isFirstLetterCapitalized' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/util/jsx' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/util/lifecycleMethods' {
   declare module.exports: any;
 }
 
@@ -431,6 +487,10 @@ declare module 'eslint-plugin-react/lib/util/propTypesSort' {
 }
 
 declare module 'eslint-plugin-react/lib/util/propWrapper' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/util/report' {
   declare module.exports: any;
 }
 
@@ -486,6 +546,12 @@ declare module 'eslint-plugin-react/lib/rules/forbid-prop-types.js' {
 declare module 'eslint-plugin-react/lib/rules/function-component-definition.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/function-component-definition'>;
 }
+declare module 'eslint-plugin-react/lib/rules/hook-use-state.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/hook-use-state'>;
+}
+declare module 'eslint-plugin-react/lib/rules/iframe-missing-sandbox.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/iframe-missing-sandbox'>;
+}
 declare module 'eslint-plugin-react/lib/rules/jsx-boolean-value.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-boolean-value'>;
 }
@@ -537,11 +603,17 @@ declare module 'eslint-plugin-react/lib/rules/jsx-max-depth.js' {
 declare module 'eslint-plugin-react/lib/rules/jsx-max-props-per-line.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-max-props-per-line'>;
 }
+declare module 'eslint-plugin-react/lib/rules/jsx-newline.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-newline'>;
+}
 declare module 'eslint-plugin-react/lib/rules/jsx-no-bind.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-no-bind'>;
 }
 declare module 'eslint-plugin-react/lib/rules/jsx-no-comment-textnodes.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-no-comment-textnodes'>;
+}
+declare module 'eslint-plugin-react/lib/rules/jsx-no-constructed-context-values.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-no-constructed-context-values'>;
 }
 declare module 'eslint-plugin-react/lib/rules/jsx-no-duplicate-props.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-no-duplicate-props'>;
@@ -603,6 +675,9 @@ declare module 'eslint-plugin-react/lib/rules/no-adjacent-inline-elements.js' {
 declare module 'eslint-plugin-react/lib/rules/no-array-index-key.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-array-index-key'>;
 }
+declare module 'eslint-plugin-react/lib/rules/no-arrow-function-lifecycle.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-arrow-function-lifecycle'>;
+}
 declare module 'eslint-plugin-react/lib/rules/no-children-prop.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-children-prop'>;
 }
@@ -627,11 +702,17 @@ declare module 'eslint-plugin-react/lib/rules/no-direct-mutation-state.js' {
 declare module 'eslint-plugin-react/lib/rules/no-find-dom-node.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-find-dom-node'>;
 }
+declare module 'eslint-plugin-react/lib/rules/no-invalid-html-attribute.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-invalid-html-attribute'>;
+}
 declare module 'eslint-plugin-react/lib/rules/no-is-mounted.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-is-mounted'>;
 }
 declare module 'eslint-plugin-react/lib/rules/no-multi-comp.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-multi-comp'>;
+}
+declare module 'eslint-plugin-react/lib/rules/no-namespace.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-namespace'>;
 }
 declare module 'eslint-plugin-react/lib/rules/no-redundant-should-component-update.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-redundant-should-component-update'>;
@@ -660,6 +741,12 @@ declare module 'eslint-plugin-react/lib/rules/no-unknown-property.js' {
 declare module 'eslint-plugin-react/lib/rules/no-unsafe.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-unsafe'>;
 }
+declare module 'eslint-plugin-react/lib/rules/no-unstable-nested-components.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-unstable-nested-components'>;
+}
+declare module 'eslint-plugin-react/lib/rules/no-unused-class-component-methods.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-unused-class-component-methods'>;
+}
 declare module 'eslint-plugin-react/lib/rules/no-unused-prop-types.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-unused-prop-types'>;
 }
@@ -671,6 +758,9 @@ declare module 'eslint-plugin-react/lib/rules/no-will-update-set-state.js' {
 }
 declare module 'eslint-plugin-react/lib/rules/prefer-es6-class.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/prefer-es6-class'>;
+}
+declare module 'eslint-plugin-react/lib/rules/prefer-exact-props.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/prefer-exact-props'>;
 }
 declare module 'eslint-plugin-react/lib/rules/prefer-read-only-props.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/prefer-read-only-props'>;
@@ -735,8 +825,20 @@ declare module 'eslint-plugin-react/lib/util/error.js' {
 declare module 'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket'>;
 }
+declare module 'eslint-plugin-react/lib/util/isCreateElement.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/isCreateElement'>;
+}
+declare module 'eslint-plugin-react/lib/util/isDestructuredFromPragmaImport.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/isDestructuredFromPragmaImport'>;
+}
+declare module 'eslint-plugin-react/lib/util/isFirstLetterCapitalized.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/isFirstLetterCapitalized'>;
+}
 declare module 'eslint-plugin-react/lib/util/jsx.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/jsx'>;
+}
+declare module 'eslint-plugin-react/lib/util/lifecycleMethods.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/lifecycleMethods'>;
 }
 declare module 'eslint-plugin-react/lib/util/linkComponents.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/linkComponents'>;
@@ -761,6 +863,9 @@ declare module 'eslint-plugin-react/lib/util/propTypesSort.js' {
 }
 declare module 'eslint-plugin-react/lib/util/propWrapper.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/propWrapper'>;
+}
+declare module 'eslint-plugin-react/lib/util/report.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/report'>;
 }
 declare module 'eslint-plugin-react/lib/util/usedPropTypes.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/usedPropTypes'>;

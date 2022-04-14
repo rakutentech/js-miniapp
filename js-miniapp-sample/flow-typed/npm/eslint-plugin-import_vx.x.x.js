@@ -1,4 +1,4 @@
-// flow-typed signature: a3a2fd432c0320919d2bb6f23de032cb
+// flow-typed signature: 9c2551a7e584dc50481326f4569d452d
 // flow-typed version: <<STUB>>/eslint-plugin-import_v^2.20.2/flow_v0.121.0
 
 /**
@@ -55,6 +55,10 @@ declare module 'eslint-plugin-import/config/warnings' {
 }
 
 declare module 'eslint-plugin-import/lib/core/importType' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-import/lib/core/packagePath' {
   declare module.exports: any;
 }
 
@@ -166,6 +170,10 @@ declare module 'eslint-plugin-import/lib/rules/no-extraneous-dependencies' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-import/lib/rules/no-import-module-exports' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-import/lib/rules/no-internal-modules' {
   declare module.exports: any;
 }
@@ -195,6 +203,10 @@ declare module 'eslint-plugin-import/lib/rules/no-namespace' {
 }
 
 declare module 'eslint-plugin-import/lib/rules/no-nodejs-modules' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-import/lib/rules/no-relative-packages' {
   declare module.exports: any;
 }
 
@@ -273,6 +285,9 @@ declare module 'eslint-plugin-import/config/warnings.js' {
 }
 declare module 'eslint-plugin-import/lib/core/importType.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/core/importType'>;
+}
+declare module 'eslint-plugin-import/lib/core/packagePath.js' {
+  declare module.exports: $Exports<'eslint-plugin-import/lib/core/packagePath'>;
 }
 declare module 'eslint-plugin-import/lib/core/staticRequire.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/core/staticRequire'>;
@@ -358,6 +373,9 @@ declare module 'eslint-plugin-import/lib/rules/no-dynamic-require.js' {
 declare module 'eslint-plugin-import/lib/rules/no-extraneous-dependencies.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-extraneous-dependencies'>;
 }
+declare module 'eslint-plugin-import/lib/rules/no-import-module-exports.js' {
+  declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-import-module-exports'>;
+}
 declare module 'eslint-plugin-import/lib/rules/no-internal-modules.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-internal-modules'>;
 }
@@ -381,6 +399,9 @@ declare module 'eslint-plugin-import/lib/rules/no-namespace.js' {
 }
 declare module 'eslint-plugin-import/lib/rules/no-nodejs-modules.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-nodejs-modules'>;
+}
+declare module 'eslint-plugin-import/lib/rules/no-relative-packages.js' {
+  declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-relative-packages'>;
 }
 declare module 'eslint-plugin-import/lib/rules/no-relative-parent-imports.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-relative-parent-imports'>;

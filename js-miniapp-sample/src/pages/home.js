@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from '@material-ui/core';
 import clsx from 'clsx';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import ToolBar from '../components/ToolBar';
 import { navItems } from './../routes';
@@ -85,14 +85,13 @@ const Home = (props: any) => {
         })}
       >
         <Container className={classes.wrapperContainer}>
-          <Switch>
+          <Routes>
             {navItems.map((it) => (
               <Route
                 key={it.navLink}
                 path={it.navLink}
-                exact
-                component={
-                  it.component ??
+                element={
+                  it.element ??
                   (() => (
                     <div
                       data-testid="nav-routes"
@@ -104,8 +103,8 @@ const Home = (props: any) => {
                 }
               ></Route>
             ))}
-            <Route path="*" component={navItems[0].component}></Route>
-          </Switch>
+            <Route path="*" element={navItems[0].element}></Route>
+          </Routes>
         </Container>
       </main>
     </Router>

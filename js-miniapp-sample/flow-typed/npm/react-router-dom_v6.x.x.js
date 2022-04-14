@@ -1,5 +1,5 @@
-// flow-typed signature: a619baa45c5e804d22612d501f770766
-// flow-typed version: c1a3d567a9/react-router-dom_v5.x.x/flow_>=v0.104.x
+// flow-typed signature: 41f1a9833e1392a829f1b5e690652bd1
+// flow-typed version: 33952c2eec/react-router-dom_v6.x.x/flow_>=v0.104.x
 
 declare module "react-router-dom" {
   declare export var BrowserRouter: React$ComponentType<{|
@@ -128,31 +128,48 @@ declare module "react-router-dom" {
     children?: React$Node
   |}>
 
+  declare export var Route: React$ComponentType<{|
+    caseSensitive?: boolean,
+    children?: React$Node,
+    element?: React$Element<any> | null,
+    index?: boolean,
+    path?: string,
+  |}>
+
   declare export var Prompt: React$ComponentType<{|
     message: string | ((location: Location) => string | boolean),
     when?: boolean
   |}>
 
-  declare export var Redirect: React$ComponentType<{|
-    to: string | LocationShape,
-    push?: boolean,
-    from?: string,
-    exact?: boolean,
-    strict?: boolean
+  declare export var Outlet: React$ComponentType<{|
+    context?: mixed;
   |}>
+
+  declare export var useNavigate: () => (
+    & ((
+      to: To,
+      options?: {|
+        replace?: boolean, state?: any,
+      |},
+    ) => void)
+    & ((delta: number) => void)
+  );
+
+  declare export var Navigate: (props: {|
+    to: To;
+    replace?: boolean;
+    state?: any;
+  |}) => null;
 
   declare export var Route: React$ComponentType<{|
-    component?: React$ComponentType<*>,
-    render?: (router: ContextRouter) => React$Node,
-    children?: React$ComponentType<ContextRouter> | React$Node,
-    path?: string | Array<string>,
-    exact?: boolean,
-    strict?: boolean,
-    location?: LocationShape,
-    sensitive?: boolean
+    caseSensitive?: boolean,
+    children?: React$Node,
+    element?: React$Element<any> | null,
+    index?: boolean,
+    path?: string,
   |}>
 
-  declare export var Switch: React$ComponentType<{|
+  declare export var Routes: React$ComponentType<{|
     children?: React$Node,
     location?: Location
   |}>
@@ -177,8 +194,110 @@ declare module "react-router-dom" {
 
   declare export function useHistory(): $PropertyType<ContextRouter, 'history'>;
   declare export function useLocation(): $PropertyType<ContextRouter, 'location'>;
+  declare export function useOutletContext<T>(): T;
   declare export function useParams<Params = $PropertyType<$PropertyType<ContextRouter, 'match'>, 'params'>>(): Params;
   declare export function useRouteMatch(path?: MatchPathOptions | string | string[]): $PropertyType<ContextRouter, 'match'>;
 
   declare export function generatePath(pattern?: string, params?: { +[string]: mixed, ... }): string;
+
+  declare type RouteObject = {|
+    caseSensitive?: boolean,
+    children?: Array<RouteObject>,
+    element?: React$Node,
+    index?: boolean,
+    path?: string,
+  |};
+
+  declare export function createRoutesFromChildren(
+    children: React$Node,
+  ): Array<RouteObject>;
+
+  declare type Params<Key: string> = {
+    +[key: Key]: string | void;
+  };
+
+  declare type RouteMatch<ParamKey: string> = {|
+    params: Params<ParamKey>,
+    pathname: string,
+    route: RouteObject,
+  |};
+
+  declare export function matchRoutes(
+    routes: Array<RouteObject>,
+    location: LocationShape | string,
+    basename?: string,
+  ): Array<RouteMatch<string>> | null;
+
+  declare export function renderMatches(
+    matches: Array<RouteMatch<string>> | null,
+  ): React$Element<any> | null;
+
+  declare type PathPattern = {|
+    path: string,
+    caseSensitive?: boolean,
+    end?: boolean,
+  |};
+
+  declare type PathMatch<ParamKey: string = string> = {|
+    params: Params<ParamKey>,
+    pathname: string,
+    pattern: PathPattern,
+  |};
+
+  declare export function matchPath<ParamKey: string = string>(
+    pattern: PathPattern | string,
+    pathname: string,
+  ): PathMatch<ParamKey> | null;
+
+  declare type To = LocationShape | string;
+
+  declare type Path = {|
+    pathname: string,
+    search: string,
+    hash: string,
+  |};
+
+  declare export function resolvePath(
+    to: To,
+    fromPathname?: string
+  ): Path;
+
+  declare export function useHref(to: To): string;
+
+  declare export function useInRouterContext(): boolean;
+
+  declare export function useNavigationType(): 'POP' | 'PUSH' | 'REPLACE';
+
+  declare export function useMatch<ParamKey: string = string>(
+    pattern: PathPattern | string
+  ): PathMatch<ParamKey> | null;
+
+  declare export function useOutlet<T = any>(): React$Element<T> | null;
+
+  declare export function useRoutes<T = any>(
+    routes: Array<RouteObject>,
+    location?: LocationShape | string,
+  ): React$Element<T> | null;
+
+  declare export function useSearchParams(
+    defaultInit?: URLSearchParamsInit
+  ): [URLSearchParams, SetURLSearchParams];
+
+  declare type URLSearchParamsInit =
+    | string
+    | Array<[string, string]>
+    | { [key: string]: string | Array<string>, ... }
+    | URLSearchParams;
+
+  declare type SetURLSearchParams = (
+    nextInit?: URLSearchParamsInit,
+    navigateOpts?: {|
+      replace?: boolean,
+      state?: any,
+    |}
+  ) => void;
+
+  declare export function createSearchParams(
+    init?: URLSearchParamsInit,
+  ): URLSearchParams;
 }
