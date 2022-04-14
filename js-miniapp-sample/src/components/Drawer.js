@@ -158,7 +158,7 @@ const ResponsiveDrawer = (props: ResponsiveDrawerProps) => {
                       component={NavLink}
                       to={it.navLink}
                       key={it.label}
-                      activeClassName={classes.activeNavLink}
+                      activeclassname={classes.activeNavLink}
                       className={clsx(classes.navLink, {
                         [classes.shrinkedListItem]: props.shrinked,
                       })}

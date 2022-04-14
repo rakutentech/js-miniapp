@@ -1,4 +1,4 @@
-import MiniApp, {HostEnvironmentInfo, MiniAppError} from 'js-miniapp-sdk';
+import MiniApp, { HostEnvironmentInfo, MiniAppError } from 'js-miniapp-sdk';
 
 import {
   REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,

@@ -6,7 +6,7 @@ type HomePageState = {
 };
 
 const homeState: HomePageState = {
-  title: 'POC',
+  title: 'Home',
 };
 
 export default (

@@ -197,9 +197,6 @@ jobs:
             yarn sample lint
             yarn sample flow
       - run:
-          name: test
-          command: yarn sample test -- --watchAll=false
-      - run:
           name: build
           command: yarn sample build
       - store_artifacts:

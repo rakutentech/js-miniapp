@@ -18,8 +18,7 @@
 [lints]
 
 [options]
-all=true
-esproposal.optional_chaining=enable
+all=false
 
 [strict]
 
