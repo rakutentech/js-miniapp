@@ -18,10 +18,7 @@ import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
 import { purchaseProduct } from '../services/purchase/actions';
-import {
-  PurchasedProductResponse,
-  PurchasedProductResponseStatus,
-} from 'js-miniapp-sdk';
+import { PurchasedProductResponse } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
