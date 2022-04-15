@@ -173,7 +173,6 @@ function PurchaseComponent(props: PurchaseProductProps) {
 
   function handleClick(e) {
     if (!state.isLoading) {
-      e.preventDefault();
       dispatch({ type: 'FETCH_INIT' });
       BuyProduct();
     }
