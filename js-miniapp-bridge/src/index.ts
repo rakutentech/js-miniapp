@@ -33,10 +33,12 @@ import {
   errorTypesDescriptions,
   MiniAppErrorType,
 } from './types/error-types';
-import { Product,
+import {
+  Product,
   PurchasedProduct,
   PurchasedProductResponseStatus,
-  PurchasedProductResponse } from './types/purchaseProduct';
+  PurchasedProductResponse,
+} from './types/purchaseProduct';
 
 export {
   MiniAppBridge,
