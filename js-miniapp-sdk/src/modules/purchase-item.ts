@@ -1,4 +1,7 @@
-import { PurchasedProductResponse, MiniAppError } from '../../../js-miniapp-bridge/src';
+import {
+  PurchasedProductResponse,
+  MiniAppError,
+} from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
 
 interface PurchaseItemProvider {
@@ -7,7 +10,9 @@ interface PurchaseItemProvider {
 
 /** @internal */
 export class PurchaseItemService {
-  purchaseItemWith(id: string): Promise<PurchasedProductResponse | MiniAppError> {
+  purchaseItemWith(
+    id: string
+  ): Promise<PurchasedProductResponse | MiniAppError> {
     return getBridge().purchaseItemWith(id);
   }
 }
