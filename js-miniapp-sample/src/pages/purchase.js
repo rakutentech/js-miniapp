@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
 import { purchaseProduct } from '../services/purchase/actions';
-import { PurchasedProductResponse } from 'js-miniapp-sdk';
+import { MiniAppError, PurchasedProductResponse } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
 export const initialState = {
   isLoading: false,
   isError: false,
+  error: null,
 };
 
 type State = {
@@ -121,18 +122,24 @@ export const dataFetchReducer = (state: State, action: Action) => {
         ...state,
         isLoading: true,
         isError: false,
+        error: null,
       };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
+        error: null,
       };
     case 'FETCH_FAILURE':
       return {
         ...initialState,
         isLoading: false,
         isError: true,
+        error:
+          (typeof action.miniAppError == 'string'
+            ? action.miniAppError
+            : action.miniAppError.message) || '',
       };
 
     default:
@@ -143,6 +150,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
 type PurchaseProductProps = {
   purchasedProduct: PurchasedProductResponse,
   purchaseProductUsing: (itemId: string) => Promise<PurchasedProductResponse>,
+  purchaseError: MiniAppError,
 };
 
 function PurchaseComponent(props: PurchaseProductProps) {
@@ -165,9 +173,9 @@ function PurchaseComponent(props: PurchaseProductProps) {
     props
       .purchaseProductUsing(inputValue)
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
-      .catch((e) => {
-        console.error(e);
-        dispatch({ type: 'FETCH_FAILURE' });
+      .catch((miniAppError) => {
+        console.log('Product Error: ', miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError });
       });
   }
 
@@ -263,9 +271,9 @@ function PurchaseComponent(props: PurchaseProductProps) {
             <CircularProgress size={20} className={classes.buttonProgress} />
           )}
         </div>
-        {state.isError && (
-          <Typography variant="body1" className={classes.error}>
-            Error buying the Product. Try with valid Product ID
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
           </Typography>
         )}
       </FormGroup>
@@ -296,6 +304,7 @@ const mapStateToProps = (state) => {
   console.log('MapStateToProps: ', state);
   return {
     purchasedProduct: state.purchaseProduct,
+    purchaseError: state.error,
   };
 };
 

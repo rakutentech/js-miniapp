@@ -607,7 +607,15 @@ export class MiniAppBridge {
         { itemId: id },
         purchasedProduct =>
           resolve(JSON.parse(purchasedProduct) as PurchasedProductResponse),
-        error => reject(error)
+          error => {
+            try {
+              const miniAppError = parseMiniAppError(error);
+              return reject(new MiniAppError(miniAppError));
+            } catch (e) {
+              console.error(e);
+              return reject(error);
+            }
+          }
       );
     });
   }

@@ -23,7 +23,7 @@ const purchaseProduct = (itemId: string): Function => {
         return Promise.resolve(purchasedProduct);
       })
       .catch((e) => {
-        console.log('PurchaseProductSuccessAction Error: ', e);
+        console.log('PurchaseProduct Error: ', e);
         dispatch({
           type: REQUEST_PRODUCT_PURCHASE_FAILURE,
         });
