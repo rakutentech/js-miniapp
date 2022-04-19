@@ -173,7 +173,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
   function BuyProduct() {
     props
       .purchaseProductUsing(inputValue)
-      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .then(() => dispatch({ type: 'FETCH_SUCCESS', miniAppError: null }))
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
         dispatch({ type: 'FETCH_FAILURE', miniAppError });
@@ -182,7 +182,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
 
   function handleClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT' });
+      dispatch({ type: 'FETCH_INIT', miniAppError: null });
       BuyProduct();
     }
   }
