@@ -113,6 +113,7 @@ type State = {
 
 type Action = {
   type: string,
+  miniAppError: MiniAppError,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
