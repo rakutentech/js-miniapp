@@ -1,4 +1,3 @@
-/** Points type. */
 export interface Product {
   id: string;
   title: string;
@@ -7,13 +6,23 @@ export interface Product {
 }
 
 export interface ProductPrice {
-  amount: number;
   currencyCode: string;
   price: string;
 }
 
 export interface PurchasedProduct {
-  orderId: string;
-  product: Product;
-  token: string;
+  productInfo: Product;
+  transactionId: string;
+  transactionDate: string;
+}
+
+export interface PurchasedProductResponse {
+  status: PurchasedProductResponseStatus;
+  purchasedProduct: PurchasedProduct;
+}
+
+export enum PurchasedProductResponseStatus {
+  PURCHASED = 'PURCHASED',
+  FAILED = 'FAILED',
+  RESTORED = 'RESTORED',
 }

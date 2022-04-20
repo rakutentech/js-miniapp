@@ -7,6 +7,7 @@ import userReducer from './user/reducers';
 import { UUIDReducer } from './uuid/reducers';
 import { HostEnvironmentInfoReducer } from './landing/reducers';
 import { FileDownloadReducer } from './filedownload/reducers';
+import { PurchaseProductReducer } from './purchase/reducers';
 
 export default combineReducers({
   message: MessageReducer,
@@ -16,4 +17,5 @@ export default combineReducers({
   uuid: UUIDReducer,
   info: HostEnvironmentInfoReducer,
   file: FileDownloadReducer,
+  purchaseProduct: PurchaseProductReducer,
 });

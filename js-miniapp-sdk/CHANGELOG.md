@@ -1,5 +1,10 @@
 ## CHANGELOG
-### 1.14.0 (2022-04-12)
+### 1.15.0 (TBD)
+- **Feature:** Added `purchaseItemWith(id: string)` which will enable the Mini-apps to use this interface to initiate the In-App Purcahse
+
+--- 
+
+### 1.14.0 (2022-04-11)
 - **Feature:** Added `downloadFile(filename, url, headers)` to download and save the file with proper filename
 
 ---

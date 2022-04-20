@@ -1,44 +1,163 @@
-import React from 'react';
-import MiniApp from 'js-miniapp-sdk';
+import React, { useReducer } from 'react';
 
 import {
   Button,
-  TextField,
+  CardHeader,
+  CircularProgress,
+  FormGroup,
+  Typography,
   CardContent,
   CardActions,
-  makeStyles,
+  TextField,
+  Paper,
 } from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
+import { purchaseProduct } from '../services/purchase/actions';
+import { MiniAppError, PurchasedProductResponse } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
-  content: {
-    height: '50%',
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+  },
+  root: {
+    background: theme.color.secondary,
+    width: '85vw',
+    maxWidth: 500,
+  },
+  wrapper: {
+    position: 'relative',
+    marginTop: 10,
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonFailure: {
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+  buttonProgress: {
+    position: 'absolute',
+    top: 'calc(50% - 10px)',
+    left: 'calc(50% - 10px)',
+  },
+  error: {
+    color: red[500],
+    marginTop: 10,
+  },
+  success: {
+    color: green[500],
+    marginTop: 20,
+  },
+  rootUserGroup: {
+    alignItems: 'center',
+  },
+  formInput: {
+    width: '90%',
+    marginTop: 10,
+  },
+  rootCardActions: {
     justifyContent: 'center',
+  },
+  caseSelector: {
+    marginTop: 5,
+  },
+  button: {
+    marginBottom: 15,
+  },
+  dataFormsWrapper: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    fontSize: 18,
-    color: theme.color.primary,
-    fontWeight: 'bold',
-  },
-  actions: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  textfield: {
-    width: '80%',
-    maxWidth: 300,
-    background: 'white',
-    '& input': {
-      color: theme.color.primary,
-      lineHeight: '1.5em',
-      fontSize: '1.2em',
+  paper: {
+    width: '100%',
+    paddingBottom: 10,
+    marginBottom: 20,
+    '&:last-child': {
+      marginBottom: 0,
     },
+  },
+  red: {
+    color: red[500],
   },
 }));
 
-function PurchaseComponent() {
+export const initialState = {
+  isLoading: false,
+  isError: false,
+  error: null,
+};
+
+type State = {
+  isLoading: ?boolean,
+  isError: ?boolean,
+};
+
+type Action = {
+  type: string,
+  miniAppError: MiniAppError,
+};
+
+export const dataFetchReducer = (state: State, action: Action) => {
+  switch (action.type) {
+    case 'FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        error: null,
+      };
+    case 'FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+      };
+    case 'FETCH_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+        error:
+          (typeof action.miniAppError == 'string'
+            ? action.miniAppError
+            : action.miniAppError.message) || '',
+      };
+
+    default:
+      throw Error('Unknown action type');
+  }
+};
+
+type PurchaseProductProps = {
+  purchasedProduct: PurchasedProductResponse,
+  purchaseProductUsing: (itemId: string) => Promise<PurchasedProductResponse>,
+  purchaseError: MiniAppError,
+};
+
+function PurchaseComponent(props: PurchaseProductProps) {
+  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
+
   let inputValue = '';
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
@@ -46,46 +165,155 @@ function PurchaseComponent() {
     inputValue = e.currentTarget.value;
   };
 
-  const purchaseItem = () => {
-    MiniApp.purchaseService
-      .purchaseItemWith(inputValue)
-      .then((success) => {
-        console.log('Success:', success);
-      })
-      .catch((error) => {
-        console.error(error);
+  const buttonClassname = clsx({
+    [classes.buttonFailure]: state.isError,
+    [classes.buttonSuccess]: !state.isError,
+  });
+
+  function BuyProduct() {
+    props
+      .purchaseProductUsing(inputValue)
+      .then(() => dispatch({ type: 'FETCH_SUCCESS', miniAppError: null }))
+      .catch((miniAppError) => {
+        console.log('Product Error: ', miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError });
       });
-  };
+  }
+
+  function handleClick(e) {
+    if (!state.isLoading) {
+      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      BuyProduct();
+    }
+  }
+
+  function PurchaseProduct() {
+    return (
+      <Paper className={classes.paper}>
+        <CardHeader subheader="Purchase Product" />
+        <TextField
+          variant="outlined"
+          className={classes.formInput}
+          id="input-name"
+          error={state.isError}
+          label={'Item ID'}
+          onChange={handleInput}
+        />
+      </Paper>
+    );
+  }
+
+  function TransactionDetails() {
+    var dateInfo = new Date(props.purchasedProduct.product.transactionDate);
+    return (
+      <React.Fragment>
+        <Typography variant="h6">
+          Transaction - {props.purchasedProduct.status}
+        </Typography>
+        <Typography
+          variant="body1"
+          className={classes.success}
+          align="left"
+          style={{ paddingLeft: '10px' }}
+        >
+          Transaction Date: {dateInfo.toLocaleDateString()}
+          <br />
+          Transaction Time: {dateInfo.toLocaleTimeString()}
+          <br />
+          Transaction ID: {props.purchasedProduct.product.transactionId}
+        </Typography>
+      </React.Fragment>
+    );
+  }
+
+  function ShowPurchasedProductDetails() {
+    return (
+      <React.Fragment>
+        <CardHeader />
+        {!state.isLoading && !state.isError && props.purchasedProduct && (
+          <Paper className={classes.paper}>
+            {TransactionDetails()}
+            <br />
+            <Typography variant="h6">Product Info</Typography>
+            <Typography
+              variant="body1"
+              className={classes.success}
+              align="left"
+              style={{ paddingLeft: '10px' }}
+            >
+              ID: {props.purchasedProduct.product.productInfo.id} <br />
+              Title: {props.purchasedProduct.product.productInfo.title} <br />
+              Description:{' '}
+              {props.purchasedProduct.product.productInfo.description} <br />
+              <br />
+            </Typography>
+          </Paper>
+        )}
+      </React.Fragment>
+    );
+  }
+
+  function PurchaseProductCardActionsForm() {
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handleClick}
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
+            className={buttonClassname}
+            disabled={state.isLoading}
+            data-testid="buyProduct"
+          >
+            Buy
+          </Button>
+          {state.isLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
+          )}
+        </div>
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
+      </FormGroup>
+    );
+  }
 
   return (
-    <GreyCard>
-      <CardContent className={classes.content}>
-        <TextField
-          type="text"
-          className={classes.textfield}
-          onChange={handleInput}
-          placeholder="Enter Item Id that you want to purchase"
-          variant="outlined"
-          color="primary"
-          multiline="true"
-          rowsMax="5"
-          inputProps={{
-            'data-testid': 'input-field',
-          }}
-        />
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          className={classes.button}
-          onClick={purchaseItem}
-          variant="contained"
-        >
-          Purchase Item
-        </Button>
-      </CardActions>
-    </GreyCard>
+    <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent>
+          <div
+            className={classes.dataFormsWrapper}
+            data-testid="dataFormsWrapper"
+          >
+            {PurchaseProduct()}
+            {ShowPurchasedProductDetails()}
+          </div>
+        </CardContent>
+        <CardActions classes={{ root: classes.rootCardActions }}>
+          {PurchaseProductCardActionsForm()}
+        </CardActions>
+      </GreyCard>
+    </div>
   );
 }
 
-export default PurchaseComponent;
+const mapStateToProps = (state) => {
+  console.log('MapStateToProps: ', state);
+  return {
+    purchasedProduct: state.purchaseProduct,
+    purchaseError: state.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    purchaseProductUsing: (itemId: string) => dispatch(purchaseProduct(itemId)),
+  };
+};
+
+export { PurchaseComponent };
+export default connect(mapStateToProps, mapDispatchToProps)(PurchaseComponent);
