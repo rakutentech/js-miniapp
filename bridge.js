@@ -443,7 +443,16 @@ var MiniAppBridge = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('purchaseItem', { itemId: id }, function (purchasedProduct) {
                 return resolve(JSON.parse(purchasedProduct));
-            }, function (error) { return reject(error); });
+            }, function (error) {
+                try {
+                    var miniAppError = error_types_1.parseMiniAppError(error);
+                    return reject(new error_types_1.MiniAppError(miniAppError));
+                }
+                catch (e) {
+                    console.error(e);
+                    return reject(error);
+                }
+            });
         });
     };
     return MiniAppBridge;
