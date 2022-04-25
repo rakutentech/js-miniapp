@@ -9,10 +9,6 @@ import {
   CircularProgress,
   makeStyles,
 } from '@material-ui/core';
-
-import GreyCard from '../components/GreyCard';
-import { connect } from 'react-redux';
-import { requestCustomPermissions } from '../services/permissions/actions';
 import {
   CustomPermission,
   CustomPermissionResult,
@@ -20,8 +16,12 @@ import {
   CustomPermissionStatus,
   DownloadFileHeaders,
 } from 'js-miniapp-sdk';
+import { connect } from 'react-redux';
 
+import { pandaLogo } from '../assets/images/base64';
+import GreyCard from '../components/GreyCard';
 import { requestDownloadFile } from '../services/filedownload/actions';
+import { requestCustomPermissions } from '../services/permissions/actions';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -129,6 +129,7 @@ const FileDownload = (props: FileDownloadProps) => {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
   let [isPermissionGranted, setIsPermissionGranted] = useState(true);
+  let [dataUri, setDataUri] = useState(pandaLogo)
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
@@ -179,9 +180,8 @@ const FileDownload = (props: FileDownloadProps) => {
       });
   }
 
-  function handleDownloadClick(e, url, fileName) {
+  function handleDownloadClick(url, fileName) {
     if (!state.isLoading) {
-      e.preventDefault();
       dispatch({ type: 'FILE_DOWNLOAD_INIT' });
       onDownloadFile(url, fileName);
     }
@@ -229,9 +229,8 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
+            onClick={() => {
               handleDownloadClick(
-                e,
                 'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
                 'sample.jpg'
               );
@@ -245,9 +244,8 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
+            onClick={() => {
               handleDownloadClick(
-                e,
                 'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
                 'sample.zip'
               );
@@ -261,9 +259,8 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
+            onClick={() => {
               handleDownloadClick(
-                e,
                 'https://filesamples.com/samples/audio/mp3/sample3.mp3',
                 'sample.mp3'
               );
@@ -277,9 +274,8 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
+            onClick={() => {
               handleDownloadClick(
-                e,
                 'https://filesamples.com/samples/document/csv/sample4.csv',
                 'sample.csv'
               );
@@ -293,15 +289,38 @@ const FileDownload = (props: FileDownloadProps) => {
           <Button
             variant="contained"
             color="primary"
-            onClick={(e) => {
+            onClick={() => {
               handleDownloadClick(
-                e,
                 'https://filesamples.com/samples/video/mov/sample_960x540.mov',
                 'sample.mov'
               );
             }}
           >
             Download MOV
+          </Button>
+        </CardActions>
+
+        <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-base64"
+            label={'Base64 data string'}
+            value={dataUri}
+            onChange={setDataUri}
+          />
+
+        <CardActions className={classes.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              handleDownloadClick(
+                dataUri,
+                'panda.png'
+              );
+            }}
+          >
+            Download Base64 Data
           </Button>
         </CardActions>
 
