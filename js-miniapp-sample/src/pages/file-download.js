@@ -129,7 +129,7 @@ const FileDownload = (props: FileDownloadProps) => {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
   let [isPermissionGranted, setIsPermissionGranted] = useState(true);
-  let [dataUri, setDataUri] = useState(pandaLogo)
+  let [dataUri, setDataUri] = useState(pandaLogo);
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
@@ -217,6 +217,16 @@ const FileDownload = (props: FileDownloadProps) => {
     );
   }
 
+  function renderButton(text, id, onClick) {
+    return (
+      <CardActions className={classes.actions}>
+        <Button variant="contained" color="primary" onClick={onClick} id={id}>
+          {text}
+        </Button>
+      </CardActions>
+    );
+  }
+
   return (
     <div className={classes.scrollable}>
       <GreyCard className={classes.card}>
@@ -225,104 +235,52 @@ const FileDownload = (props: FileDownloadProps) => {
         {state.isLoading && (
           <CircularProgress size={20} className={classes.buttonProgress} />
         )}
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
-                'sample.jpg'
-              );
-            }}
-          >
-            Download Image
-          </Button>
-        </CardActions>
+        {renderButton('Download Image', 'button-download-image', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
+            'sample.jpg'
+          );
+        })}
 
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
-                'sample.zip'
-              );
-            }}
-          >
-            Download ZIP
-          </Button>
-        </CardActions>
+        {renderButton('Download ZIP', 'button-download-zip', () => {
+          handleDownloadClick(
+            'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
+            'sample.zip'
+          );
+        })}
 
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                'https://filesamples.com/samples/audio/mp3/sample3.mp3',
-                'sample.mp3'
-              );
-            }}
-          >
-            Download MP3
-          </Button>
-        </CardActions>
+        {renderButton('Download MP3', 'button-download-mp3', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/audio/mp3/sample3.mp3',
+            'sample.mp3'
+          );
+        })}
 
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                'https://filesamples.com/samples/document/csv/sample4.csv',
-                'sample.csv'
-              );
-            }}
-          >
-            Download CSV
-          </Button>
-        </CardActions>
+        {renderButton('Download CSV', 'button-download-csv', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/document/csv/sample4.csv',
+            'sample.csv'
+          );
+        })}
 
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                'https://filesamples.com/samples/video/mov/sample_960x540.mov',
-                'sample.mov'
-              );
-            }}
-          >
-            Download MOV
-          </Button>
-        </CardActions>
+        {renderButton('Download MOV', 'button-download-mov', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/video/mov/sample_960x540.mov',
+            'sample.mov'
+          );
+        })}
 
         <TextField
-            variant="outlined"
-            className={classes.formInput}
-            id="input-base64"
-            label={'Base64 data string'}
-            value={dataUri}
-            onChange={setDataUri}
-          />
-
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              handleDownloadClick(
-                dataUri,
-                'panda.png'
-              );
-            }}
-          >
-            Download Base64 Data
-          </Button>
-        </CardActions>
+          variant="outlined"
+          className={classes.formInput}
+          id="input-base64"
+          label={'Base64 data string'}
+          value={dataUri}
+          onChange={setDataUri}
+        />
+        {renderButton('Download Base64 Data', 'button-download-base64', () => {
+          handleDownloadClick(dataUri, 'panda.png');
+        })}
 
         <div className={classes.info}>
           <p>
