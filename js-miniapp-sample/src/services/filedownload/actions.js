@@ -1,6 +1,10 @@
 import MiniApp, { DownloadFileHeaders } from 'js-miniapp-sdk';
 
-import { FILE_DOWNLOAD_SUCCESS, FILE_DOWNLOAD_FAILURE } from './types';
+import {
+  FILE_DOWNLOAD_SUCCESS,
+  FILE_DOWNLOAD_FAILURE,
+  FILE_DOWNLOAD_INIT,
+} from './types';
 
 type DownloadFileAction = {
   type: string,
@@ -14,6 +18,10 @@ const requestDownloadFile = (
   headers: DownloadFileHeaders
 ): Function => {
   return (dispatch) => {
+    dispatch({
+      type: FILE_DOWNLOAD_INIT,
+    });
+
     return MiniApp.downloadFile(filename, url, headers)
       .then((name) => {
         dispatch({
