@@ -28,6 +28,11 @@ import {
   parseMiniAppError,
   ScopesNotSupportedError,
 } from './types/error-types';
+import {
+  MiniAppSecureStorageKeyValues,
+  SecureStorageResponseStatus,
+  MiniAppSecureStorageSize,
+} from './types/secure-storage';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -592,6 +597,104 @@ export class MiniAppBridge {
         { filename, url, headers },
         id => resolve(id),
         error => reject(error)
+      );
+    });
+  }
+
+  setSecureStorage(items: MiniAppSecureStorageKeyValues) {
+    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+      return this.executor.exec(
+        'setSecureStorage',
+        { setSecureStorageItems: items },
+        responseData => {
+          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
+        },
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            return reject(new MiniAppError(miniAppError));
+          } catch (e) {
+            return reject(error);
+          }
+        }
+      );
+    });
+  }
+
+  getSecureStorageItem(key: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageItem',
+        { secureStorageKey: key },
+        responseData => resolve(responseData),
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            return reject(new MiniAppError(miniAppError));
+          } catch (e) {
+            return reject(error);
+          }
+        }
+      );
+    });
+  }
+
+  removeSecureStorageItems(keys: [string]) {
+    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+      return this.executor.exec(
+        'removeSecureStorageItems',
+        { secureStorageKeyList: keys },
+        responseData => {
+          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
+        },
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            return reject(new MiniAppError(miniAppError));
+          } catch (e) {
+            return reject(error);
+          }
+        }
+      );
+    });
+  }
+
+  clearSecureStorage() {
+    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+      return this.executor.exec(
+        'clearSecureStorage',
+        null,
+        responseData => {
+          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
+        },
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            return reject(new MiniAppError(miniAppError));
+          } catch (e) {
+            return reject(error);
+          }
+        }
+      );
+    });
+  }
+
+  getSecureStorageSize() {
+    return new Promise<MiniAppSecureStorageSize>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageSize',
+        null,
+        responseData => {
+          resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
+        },
+        error => {
+          try {
+            const miniAppError = parseMiniAppError(error);
+            return reject(new MiniAppError(miniAppError));
+          } catch (e) {
+            return reject(error);
+          }
+        }
       );
     });
   }
