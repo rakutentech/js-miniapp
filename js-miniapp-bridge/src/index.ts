@@ -25,13 +25,14 @@ import { DownloadFileHeaders } from './types/download-file-headers';
 import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import {
-  MiniAppError,
-  AudienceNotSupportedError,
   AuthorizationFailureError,
+  AudienceNotSupportedError,
+  DownloadFailedError,
+  DownloadHttpError,
+  InvalidUrlError,
+  MiniAppError,
+  SaveFailureError,
   ScopesNotSupportedError,
-  parseMiniAppError,
-  errorTypesDescriptions,
-  MiniAppErrorType,
 } from './types/error-types';
 
 export {
@@ -53,11 +54,12 @@ export {
   DownloadFileHeaders,
   Platform,
   MessageToContact,
-  MiniAppError,
-  AudienceNotSupportedError,
   AuthorizationFailureError,
+  AudienceNotSupportedError,
+  DownloadFailedError,
+  DownloadHttpError,
+  InvalidUrlError,
+  MiniAppError,
+  SaveFailureError,
   ScopesNotSupportedError,
-  parseMiniAppError,
-  errorTypesDescriptions,
-  MiniAppErrorType,
 };

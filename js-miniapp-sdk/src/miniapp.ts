@@ -91,8 +91,9 @@ interface MiniAppFeatures {
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
 
   /**
-   * Request a file download
-   * @returns Promise of the downloaded files name
+   * Request to download a file and save to the user's device.
+   * @returns Promise of the downloaded files name. Response will be `null` in case the user cancelled the download.
+   * Can be rejected with {@link MiniAppError}, {@link DownloadFailedError}, {@link DownloadHttpError}, {@link InvalidUrlError}, or {@link SaveFailureError}.
    */
   downloadFile(
     filename: string,

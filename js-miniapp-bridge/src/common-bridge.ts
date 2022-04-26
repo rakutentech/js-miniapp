@@ -19,14 +19,7 @@ import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
 import { DownloadFileHeaders } from './types/download-file-headers';
-import {
-  AudienceNotSupportedError,
-  AuthorizationFailureError,
-  MiniAppError,
-  MiniAppErrorType,
-  parseMiniAppError,
-  ScopesNotSupportedError,
-} from './types/error-types';
+import { parseMiniAppError } from './types/error-types';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -407,28 +400,7 @@ export class MiniAppBridge {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
           resolve(new AccessTokenData(nativeTokenData));
         },
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            const errorType: MiniAppErrorType =
-              MiniAppErrorType[
-                miniAppError.type as keyof typeof MiniAppErrorType
-              ];
-            switch (errorType) {
-              case MiniAppErrorType.AuthorizationFailureError:
-                return reject(new AuthorizationFailureError(miniAppError));
-              case MiniAppErrorType.AudienceNotSupportedError:
-                return reject(new AudienceNotSupportedError(miniAppError));
-              case MiniAppErrorType.ScopesNotSupportedError:
-                return reject(new ScopesNotSupportedError(miniAppError));
-              default:
-                return reject(new MiniAppError(miniAppError));
-            }
-          } catch (e) {
-            console.error(e);
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -545,22 +517,7 @@ export class MiniAppBridge {
         'getPoints',
         null,
         points => resolve(JSON.parse(points) as Points),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            const errorType: MiniAppErrorType =
-              MiniAppErrorType[
-                miniAppError.type as keyof typeof MiniAppErrorType
-              ];
-            switch (errorType) {
-              default:
-                return reject(new MiniAppError(miniAppError));
-            }
-          } catch (e) {
-            console.error(e);
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -589,8 +546,14 @@ export class MiniAppBridge {
       return this.executor.exec(
         'downloadFile',
         { filename, url, headers },
-        id => resolve(id),
-        error => reject(error)
+        id => {
+          if (id !== 'null' && id !== null) {
+            resolve(id);
+          } else {
+            resolve(null);
+          }
+        },
+        error => reject(parseMiniAppError(error))
       );
     });
   }
