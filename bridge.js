@@ -271,26 +271,7 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('getAccessToken', { audience: audience, scopes: scopes }, function (tokenData) {
                 var nativeTokenData = JSON.parse(tokenData);
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
-            }, function (error) {
-                try {
-                    var miniAppError = error_types_1.parseMiniAppError(error);
-                    var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
-                    switch (errorType) {
-                        case error_types_1.MiniAppErrorType.AuthorizationFailureError:
-                            return reject(new error_types_1.AuthorizationFailureError(miniAppError));
-                        case error_types_1.MiniAppErrorType.AudienceNotSupportedError:
-                            return reject(new error_types_1.AudienceNotSupportedError(miniAppError));
-                        case error_types_1.MiniAppErrorType.ScopesNotSupportedError:
-                            return reject(new error_types_1.ScopesNotSupportedError(miniAppError));
-                        default:
-                            return reject(new error_types_1.MiniAppError(miniAppError));
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    return reject(error);
-                }
-            });
+            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
     /**
@@ -376,20 +357,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.getPoints = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) {
-                try {
-                    var miniAppError = error_types_1.parseMiniAppError(error);
-                    var errorType = error_types_1.MiniAppErrorType[miniAppError.type];
-                    switch (errorType) {
-                        default:
-                            return reject(new error_types_1.MiniAppError(miniAppError));
-                    }
-                }
-                catch (e) {
-                    console.error(e);
-                    return reject(error);
-                }
-            });
+            return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
     MiniAppBridge.prototype.getHostEnvironmentInfo = function () {
@@ -403,7 +371,14 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.downloadFile = function (filename, url, headers) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('downloadFile', { filename: filename, url: url, headers: headers }, function (id) { return resolve(id); }, function (error) { return reject(error); });
+            return _this.executor.exec('downloadFile', { filename: filename, url: url, headers: headers }, function (id) {
+                if (id !== 'null' && id !== null) {
+                    resolve(id);
+                }
+                else {
+                    resolve(null);
+                }
+            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
     return MiniAppBridge;
@@ -441,7 +416,7 @@ function trimBannerText(message, maxLength) {
         : message;
 }
 
-},{"./types/error-types":3,"./types/token-data":5}],2:[function(require,module,exports){
+},{"./types/error-types":5,"./types/token-data":8}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -490,7 +465,213 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
     }, function (error) { return console.error(error); });
 };
 
-},{"../common-bridge":1,"../types/platform":4}],3:[function(require,module,exports){
+},{"../common-bridge":1,"../types/platform":7}],3:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var mini_app_error_1 = require("./mini-app-error");
+var MiniAppAuthErrorType;
+(function (MiniAppAuthErrorType) {
+    MiniAppAuthErrorType["AudienceNotSupportedError"] = "AudienceNotSupportedError";
+    MiniAppAuthErrorType["ScopesNotSupportedError"] = "ScopesNotSupportedError";
+    MiniAppAuthErrorType["AuthorizationFailureError"] = "AuthorizationFailureError";
+})(MiniAppAuthErrorType || (MiniAppAuthErrorType = {}));
+var AudienceNotSupportedError = /** @class */ (function (_super) {
+    __extends(AudienceNotSupportedError, _super);
+    function AudienceNotSupportedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, AudienceNotSupportedError.prototype);
+        _this.message = "The value passed for 'audience' is not supported.";
+        return _this;
+    }
+    return AudienceNotSupportedError;
+}(mini_app_error_1.MiniAppError));
+exports.AudienceNotSupportedError = AudienceNotSupportedError;
+var ScopesNotSupportedError = /** @class */ (function (_super) {
+    __extends(ScopesNotSupportedError, _super);
+    function ScopesNotSupportedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, ScopesNotSupportedError.prototype);
+        _this.message = "The value passed for 'scopes' is not supported.";
+        return _this;
+    }
+    return ScopesNotSupportedError;
+}(mini_app_error_1.MiniAppError));
+exports.ScopesNotSupportedError = ScopesNotSupportedError;
+var AuthorizationFailureError = /** @class */ (function (_super) {
+    __extends(AuthorizationFailureError, _super);
+    function AuthorizationFailureError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, AuthorizationFailureError.prototype);
+        return _this;
+    }
+    return AuthorizationFailureError;
+}(mini_app_error_1.MiniAppError));
+exports.AuthorizationFailureError = AuthorizationFailureError;
+function parseAuthError(json) {
+    var errorType = MiniAppAuthErrorType[json.type];
+    switch (errorType) {
+        case MiniAppAuthErrorType.AuthorizationFailureError:
+            return new AuthorizationFailureError(json);
+        case MiniAppAuthErrorType.AudienceNotSupportedError:
+            return new AudienceNotSupportedError(json);
+        case MiniAppAuthErrorType.ScopesNotSupportedError:
+            return new ScopesNotSupportedError(json);
+        default:
+            return undefined;
+    }
+}
+exports.parseAuthError = parseAuthError;
+
+},{"./mini-app-error":6}],4:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var mini_app_error_1 = require("./mini-app-error");
+var MiniAppDownloadErrorType;
+(function (MiniAppDownloadErrorType) {
+    MiniAppDownloadErrorType["DownloadFailedError"] = "DownloadFailedError";
+    MiniAppDownloadErrorType["InvalidUrlError"] = "InvalidUrlError";
+    MiniAppDownloadErrorType["SaveFailureError"] = "SaveFailureError";
+    MiniAppDownloadErrorType["DownloadHttpError"] = "DownloadHttpError";
+})(MiniAppDownloadErrorType || (MiniAppDownloadErrorType = {}));
+/**
+ * Error returned by `MiniApp.downloadFile` when failed to download or save the file.
+ */
+var DownloadFailedError = /** @class */ (function (_super) {
+    __extends(DownloadFailedError, _super);
+    function DownloadFailedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, DownloadFailedError.prototype);
+        _this.message = 'Failed to download the file.';
+        return _this;
+    }
+    return DownloadFailedError;
+}(mini_app_error_1.MiniAppError));
+exports.DownloadFailedError = DownloadFailedError;
+/**
+ * Error returned by `MiniApp.downloadFile` when the provided URL is invalid.
+ * Only `http:`, `https:` and `data:` URLs are supported.
+ */
+var InvalidUrlError = /** @class */ (function (_super) {
+    __extends(InvalidUrlError, _super);
+    function InvalidUrlError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, InvalidUrlError.prototype);
+        _this.message = 'The provided URL is invalid.';
+        return _this;
+    }
+    return InvalidUrlError;
+}(mini_app_error_1.MiniAppError));
+exports.InvalidUrlError = InvalidUrlError;
+/**
+ * Error returned by `MiniApp.downloadFile` when failed to save file to device.
+ */
+var SaveFailureError = /** @class */ (function (_super) {
+    __extends(SaveFailureError, _super);
+    function SaveFailureError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, SaveFailureError.prototype);
+        _this.message = 'Failed to save the file to the device.';
+        return _this;
+    }
+    return SaveFailureError;
+}(mini_app_error_1.MiniAppError));
+exports.SaveFailureError = SaveFailureError;
+/**
+ * Error returned by `MiniApp.downloadFile` when failed to download the file due to an HTTP error.
+ * @param code HTTP error code returned by the server.
+ */
+var DownloadHttpError = /** @class */ (function (_super) {
+    __extends(DownloadHttpError, _super);
+    function DownloadHttpError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, DownloadHttpError.prototype);
+        _this.code = errorInput.code;
+        _this.message = errorInput.message;
+        return _this;
+    }
+    return DownloadHttpError;
+}(mini_app_error_1.MiniAppError));
+exports.DownloadHttpError = DownloadHttpError;
+function parseDownloadError(json) {
+    var errorType = MiniAppDownloadErrorType[json.type];
+    switch (errorType) {
+        case MiniAppDownloadErrorType.DownloadFailedError:
+            return new DownloadFailedError(json);
+        case MiniAppDownloadErrorType.InvalidUrlError:
+            return new InvalidUrlError(json);
+        case MiniAppDownloadErrorType.SaveFailureError:
+            return new SaveFailureError(json);
+        case MiniAppDownloadErrorType.DownloadHttpError:
+            return new DownloadHttpError(json);
+        default:
+            return undefined;
+    }
+}
+exports.parseDownloadError = parseDownloadError;
+
+},{"./mini-app-error":6}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var auth_errors_1 = require("./auth-errors");
+exports.AuthorizationFailureError = auth_errors_1.AuthorizationFailureError;
+exports.AudienceNotSupportedError = auth_errors_1.AudienceNotSupportedError;
+exports.ScopesNotSupportedError = auth_errors_1.ScopesNotSupportedError;
+var download_file_errors_1 = require("./download-file-errors");
+exports.DownloadFailedError = download_file_errors_1.DownloadFailedError;
+exports.DownloadHttpError = download_file_errors_1.DownloadHttpError;
+exports.InvalidUrlError = download_file_errors_1.InvalidUrlError;
+exports.SaveFailureError = download_file_errors_1.SaveFailureError;
+var mini_app_error_1 = require("./mini-app-error");
+exports.MiniAppError = mini_app_error_1.MiniAppError;
+function parseMiniAppError(jsonString) {
+    try {
+        var json = JSON.parse(jsonString);
+        return (auth_errors_1.parseAuthError(json) || download_file_errors_1.parseDownloadError(json) || new mini_app_error_1.MiniAppError(json));
+    }
+    catch (e) {
+        console.error(e);
+        return new mini_app_error_1.MiniAppError({
+            type: 'MiniAppError',
+            message: 'Failed to parse the error: ' + jsonString,
+        });
+    }
+}
+exports.parseMiniAppError = parseMiniAppError;
+
+},{"./auth-errors":3,"./download-file-errors":4,"./mini-app-error":6}],6:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -507,19 +688,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
- * Enum for supported SDK error types
- */
-var MiniAppErrorType;
-(function (MiniAppErrorType) {
-    MiniAppErrorType["AudienceNotSupportedError"] = "AudienceNotSupportedError";
-    MiniAppErrorType["ScopesNotSupportedError"] = "ScopesNotSupportedError";
-    MiniAppErrorType["AuthorizationFailureError"] = "AuthorizationFailureError";
-})(MiniAppErrorType = exports.MiniAppErrorType || (exports.MiniAppErrorType = {}));
-function parseMiniAppError(jsonString) {
-    return JSON.parse(jsonString);
-}
-exports.parseMiniAppError = parseMiniAppError;
-/**
  * This class is a representation of an error sent from MiniApp mobile SDK
  */
 var MiniAppError = /** @class */ (function (_super) {
@@ -529,70 +697,14 @@ var MiniAppError = /** @class */ (function (_super) {
         _this.errorInput = errorInput;
         Object.setPrototypeOf(_this, MiniAppError.prototype);
         _this.name = errorInput.type;
-        _this.setMessage(errorInput.message);
+        _this.message = errorInput.message;
         return _this;
     }
-    MiniAppError.prototype.setMessage = function (newMessage) {
-        if (newMessage !== undefined) {
-            var enumKey = MiniAppErrorType[newMessage];
-            if (enumKey !== undefined) {
-                this.message = exports.errorTypesDescriptions.get(enumKey);
-            }
-        }
-        if (!this.message || /^\s*$/.test(this.message)) {
-            this.message = newMessage;
-        }
-    };
     return MiniAppError;
 }(Error));
 exports.MiniAppError = MiniAppError;
-var AudienceNotSupportedError = /** @class */ (function (_super) {
-    __extends(AudienceNotSupportedError, _super);
-    function AudienceNotSupportedError(errorInput) {
-        var _this = _super.call(this, errorInput) || this;
-        _this.errorInput = errorInput;
-        Object.setPrototypeOf(_this, AudienceNotSupportedError.prototype);
-        _super.prototype.setMessage.call(_this, MiniAppErrorType.AudienceNotSupportedError);
-        return _this;
-    }
-    return AudienceNotSupportedError;
-}(MiniAppError));
-exports.AudienceNotSupportedError = AudienceNotSupportedError;
-var ScopesNotSupportedError = /** @class */ (function (_super) {
-    __extends(ScopesNotSupportedError, _super);
-    function ScopesNotSupportedError(errorInput) {
-        var _this = _super.call(this, errorInput) || this;
-        _this.errorInput = errorInput;
-        Object.setPrototypeOf(_this, ScopesNotSupportedError.prototype);
-        _super.prototype.setMessage.call(_this, MiniAppErrorType.ScopesNotSupportedError);
-        return _this;
-    }
-    return ScopesNotSupportedError;
-}(MiniAppError));
-exports.ScopesNotSupportedError = ScopesNotSupportedError;
-var AuthorizationFailureError = /** @class */ (function (_super) {
-    __extends(AuthorizationFailureError, _super);
-    function AuthorizationFailureError(errorInput) {
-        var _this = _super.call(this, errorInput) || this;
-        _this.errorInput = errorInput;
-        Object.setPrototypeOf(_this, AuthorizationFailureError.prototype);
-        return _this;
-    }
-    return AuthorizationFailureError;
-}(MiniAppError));
-exports.AuthorizationFailureError = AuthorizationFailureError;
-exports.errorTypesDescriptions = new Map([
-    [
-        MiniAppErrorType.AudienceNotSupportedError,
-        "The value passed for 'audience' is not supported.",
-    ],
-    [
-        MiniAppErrorType.ScopesNotSupportedError,
-        "The value passed for 'scopes' is not supported.",
-    ],
-]);
 
-},{}],4:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -603,7 +715,7 @@ var Platform;
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
 
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Token data type. */
