@@ -604,8 +604,8 @@ export class MiniAppBridge {
   setSecureStorage(items: MiniAppSecureStorageKeyValues) {
     return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
       return this.executor.exec(
-        'setSecureStorage',
-        { setSecureStorageItems: items },
+        'setSecureStorageItems',
+        { storeItems: items },
         responseData => {
           resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
         },
