@@ -18,7 +18,6 @@ import { Contact } from './types/contact';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { HostEnvironmentInfo } from './types/host-environment-info';
-import { PurchasedProductResponse } from './types/purchaseProduct';
 import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
@@ -687,30 +686,6 @@ export class MiniAppBridge {
             const miniAppError = parseMiniAppError(error);
             return reject(new MiniAppError(miniAppError));
           } catch (e) {
-            return reject(error);
-          }
-        }
-      );
-    });
-  }
-
-  /**
-   * Associating purchaseItemWith function to MiniAppBridge object.
-   * @param {string} id Item id that user wanted to purchase
-   */
-  purchaseItemWith(id: string) {
-    return new Promise<PurchasedProductResponse>((resolve, reject) => {
-      return this.executor.exec(
-        'purchaseItem',
-        { itemId: id },
-        purchasedProduct =>
-          resolve(JSON.parse(purchasedProduct) as PurchasedProductResponse),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            console.error(e);
             return reject(error);
           }
         }

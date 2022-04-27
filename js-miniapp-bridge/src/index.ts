@@ -37,12 +37,7 @@ import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
-import {
-  Product,
-  PurchasedProduct,
-  PurchasedProductResponseStatus,
-  PurchasedProductResponse,
-} from './types/purchaseProduct';
+
 
 export {
   MiniAppBridge,
@@ -70,10 +65,6 @@ export {
   parseMiniAppError,
   errorTypesDescriptions,
   MiniAppErrorType,
-  Product,
-  PurchasedProduct,
-  PurchasedProductResponseStatus,
-  PurchasedProductResponse,
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 };

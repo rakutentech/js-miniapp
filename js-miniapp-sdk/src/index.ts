@@ -23,7 +23,6 @@ import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   ScopesNotSupportedError,
-  PurchasedProductResponse,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -54,5 +53,4 @@ export {
   ScopesNotSupportedError,
   MiniAppEvents,
   MiniAppKeyboardEvents,
-  PurchasedProductResponse,
 };

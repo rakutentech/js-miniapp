@@ -14,7 +14,6 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
-import { PurchaseItemService } from './modules/purchase-item';
 import { getBridge } from './utils';
 import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
@@ -155,7 +154,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
   secureStorageService = new SecureStorageService();
-  purchaseService = new PurchaseItemService();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
