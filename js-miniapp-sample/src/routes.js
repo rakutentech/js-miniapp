@@ -17,7 +17,6 @@ import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
