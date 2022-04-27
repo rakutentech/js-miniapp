@@ -35,7 +35,6 @@ import {
 } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
-  SecureStorageResponseStatus,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
 import {
@@ -76,6 +75,5 @@ export {
   PurchasedProductResponseStatus,
   PurchasedProductResponse,
   MiniAppSecureStorageKeyValues,
-  SecureStorageResponseStatus,
   MiniAppSecureStorageSize,
 };

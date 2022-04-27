@@ -6,11 +6,6 @@ export type MiniAppSecureStorageKeyValues = {
   [key: string]: string;
 };
 
-export interface SecureStorageResponseStatus {
-  isSuccess: boolean;
-  messsage?: string;
-}
-
 /* tslint:disable:interface-over-type-literal */
 export type MiniAppSecureStorageSize = {
   used: number;

@@ -2,22 +2,17 @@ import { MiniAppError } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
 import {
   MiniAppSecureStorageKeyValues,
-  SecureStorageResponseStatus,
   MiniAppSecureStorageSize,
 } from '../../../js-miniapp-bridge/src/types/secure-storage';
 
 interface SecureStorageProvider {
-  setItems(
-    items: MiniAppSecureStorageKeyValues
-  ): Promise<SecureStorageResponseStatus>;
+  setItems(items: MiniAppSecureStorageKeyValues): Promise<undefined>;
 
   getItem(key: string): Promise<string | MiniAppError>;
 
-  removeItems(
-    key: [string]
-  ): Promise<SecureStorageResponseStatus | MiniAppError>;
+  removeItems(key: [string]): Promise<undefined | MiniAppError>;
 
-  clear(): Promise<SecureStorageResponseStatus | MiniAppError>;
+  clear(): Promise<undefined | MiniAppError>;
 
   size(): Promise<MiniAppSecureStorageSize | MiniAppError>;
 }
@@ -26,7 +21,7 @@ interface SecureStorageProvider {
 export class SecureStorageService {
   setItems(
     items: MiniAppSecureStorageKeyValues
-  ): Promise<SecureStorageResponseStatus | MiniAppError> {
+  ): Promise<undefined | MiniAppError> {
     return getBridge().setSecureStorage(items);
   }
 
@@ -34,13 +29,11 @@ export class SecureStorageService {
     return getBridge().getSecureStorageItem(key);
   }
 
-  removeItems(
-    key: [string]
-  ): Promise<SecureStorageResponseStatus | MiniAppError> {
+  removeItems(key: [string]): Promise<undefined | MiniAppError> {
     return getBridge().removeSecureStorageItems(key);
   }
 
-  clear(): Promise<SecureStorageResponseStatus | MiniAppError> {
+  clear(): Promise<undefined | MiniAppError> {
     return getBridge().clearSecureStorage();
   }
 

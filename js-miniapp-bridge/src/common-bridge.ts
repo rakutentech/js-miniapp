@@ -30,7 +30,6 @@ import {
 } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
-  SecureStorageResponseStatus,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
 
@@ -602,13 +601,11 @@ export class MiniAppBridge {
   }
 
   setSecureStorage(items: MiniAppSecureStorageKeyValues) {
-    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+    return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
         'setSecureStorageItems',
         { storeItems: items },
-        responseData => {
-          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
-        },
+        success => resolve(undefined),
         error => {
           try {
             const miniAppError = parseMiniAppError(error);
@@ -640,13 +637,11 @@ export class MiniAppBridge {
   }
 
   removeSecureStorageItems(keys: [string]) {
-    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+    return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
         'removeSecureStorageItems',
         { secureStorageKeyList: keys },
-        responseData => {
-          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
-        },
+        success => resolve(undefined),
         error => {
           try {
             const miniAppError = parseMiniAppError(error);
@@ -660,12 +655,12 @@ export class MiniAppBridge {
   }
 
   clearSecureStorage() {
-    return new Promise<SecureStorageResponseStatus>((resolve, reject) => {
+    return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
         'clearSecureStorage',
         null,
         responseData => {
-          resolve(JSON.parse(responseData) as SecureStorageResponseStatus);
+          resolve(JSON.parse(responseData) as undefined);
         },
         error => {
           try {
