@@ -8,36 +8,35 @@ import {
 interface SecureStorageProvider {
   setItems(items: MiniAppSecureStorageKeyValues): Promise<undefined>;
 
-  getItem(key: string): Promise<string | MiniAppError>;
+  getItem(key: string): Promise<string>;
 
-  removeItems(key: [string]): Promise<undefined | MiniAppError>;
+  removeItems(key: [string]): Promise<undefined>;
 
-  clear(): Promise<undefined | MiniAppError>;
+  clear(): Promise<undefined>;
 
-  size(): Promise<MiniAppSecureStorageSize | MiniAppError>;
+  size(): Promise<MiniAppSecureStorageSize>;
 }
 
 /** @internal */
 export class SecureStorageService {
-  setItems(
-    items: MiniAppSecureStorageKeyValues
-  ): Promise<undefined | MiniAppError> {
+  setItems(items: MiniAppSecureStorageKeyValues): Promise<undefined> {
     return getBridge().setSecureStorage(items);
   }
 
-  getItem(key: string): Promise<string | MiniAppError> {
+  getItem(key: string): Promise<string> {
     return getBridge().getSecureStorageItem(key);
   }
 
-  removeItems(key: [string]): Promise<undefined | MiniAppError> {
+  removeItems(key: [string]): Promise<undefined> {
     return getBridge().removeSecureStorageItems(key);
   }
 
-  clear(): Promise<undefined | MiniAppError> {
+  clear(): Promise<undefined> {
     return getBridge().clearSecureStorage();
   }
 
-  size(): Promise<MiniAppSecureStorageSize | MiniAppError> {
+  size(): Promise<MiniAppSecureStorageSize> {
+    console.log('SecureStorageService size()');
     return getBridge().getSecureStorageSize();
   }
 }

@@ -5,19 +5,12 @@
  */
 
 import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types';
-import { DevicePermission } from './types/device-permission';
+import { Contact } from './types/contact';
 import {
   CustomPermission,
   CustomPermissionResponse,
 } from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
-import { ScreenOrientation } from './types/screen';
-import { AccessTokenData, NativeTokenData } from './types/token-data';
-import { Contact } from './types/contact';
-import { MessageToContact } from './types/message-to-contact';
-import { Points } from './types/points';
-import { HostEnvironmentInfo } from './types/host-environment-info';
+import { DevicePermission } from './types/device-permission';
 import { DownloadFileHeaders } from './types/download-file-headers';
 import {
   AudienceNotSupportedError,
@@ -27,10 +20,17 @@ import {
   parseMiniAppError,
   ScopesNotSupportedError,
 } from './types/error-types';
+import { HostEnvironmentInfo } from './types/host-environment-info';
+import { MessageToContact } from './types/message-to-contact';
+import { Points } from './types/points';
+import { Reward } from './types/response-types';
+import { ScreenOrientation } from './types/screen';
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
+import { ShareInfoType } from './types/share-info';
+import { AccessTokenData, NativeTokenData } from './types/token-data';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -603,7 +603,7 @@ export class MiniAppBridge {
     return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
         'setSecureStorageItems',
-        { storeItems: items },
+        { secureStorageItems: items },
         success => resolve(undefined),
         error => {
           try {
