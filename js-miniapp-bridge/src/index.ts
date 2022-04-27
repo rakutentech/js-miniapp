@@ -38,7 +38,6 @@ import {
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
 
-
 export {
   MiniAppBridge,
   MiniAppSDKLogger,
