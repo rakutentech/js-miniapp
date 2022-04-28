@@ -55,7 +55,7 @@ export class StorageOccupiedError extends MiniAppError {
     Object.setPrototypeOf(this, StorageOccupiedError.prototype);
   }
 }
-export function parseAuthError(json: MiniAppJson) {
+export function parseStorageError(json: MiniAppJson) {
   const errorType: MiniAppStorageErrorType =
     MiniAppStorageErrorType[json.type as keyof typeof MiniAppStorageErrorType];
   switch (errorType) {
