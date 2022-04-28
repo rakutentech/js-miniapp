@@ -24,12 +24,12 @@ const setItems = (items: string): Function => {
   return (dispatch) => {
     return MiniApp.secureStorageService
       .setItems(items)
-      .then((responseData) => {
-        console.log('Action setItems Success: ', responseData);
+      .then(() => {
+        console.log('setItems Success: ');
         dispatch({
           type: SET_SECURE_STORAGE_SUCCESS,
         });
-        return Promise.resolve(responseData);
+        return Promise.resolve(undefined);
       })
       .catch((error) => {
         console.log('SetItems Error: ', error);
@@ -69,12 +69,12 @@ const removeItems = (keys: [string]): Function => {
   return (dispatch) => {
     return MiniApp.secureStorageService
       .removeItems(keys)
-      .then((responseData) => {
-        console.log('removeItems SuccessAction: ', responseData);
+      .then(() => {
+        console.log('removeItems SuccessAction: ');
         dispatch({
           type: REMOVE_ITEMS_STORAGE_SUCCESS,
         });
-        return Promise.resolve(responseData);
+        return Promise.resolve(undefined);
       })
       .catch((error) => {
         console.log('removeItems Error: ', error);

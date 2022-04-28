@@ -547,7 +547,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
             {state.inputError}
           </Typography>
         )}
-        {!state.isLoading && !state.isError && state.isSuccess && (
+        {!state.isLoading && !state.isError && state.isSuccess && props.size && (
           <Typography variant="body1" className={classes.red}>
             <div>Maximum Available: {props.size.max}</div>
             <div>Used Space: {props.size.used}</div>
@@ -574,7 +574,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
       <Box sx={{ width: '100%', typography: 'body1' }}>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <TabList onChange={handleChange}>
               <Tab label="Set" value="1" />
               <Tab label="Get" value="2" />
               <Tab label="Remove" value="3" />

@@ -33,6 +33,13 @@ import {
   MiniAppError,
   SaveFailureError,
   ScopesNotSupportedError,
+  SecureStorageFullError,
+  IOError,
+  StorageUnavailable,
+  UnavailableItem,
+  EmptyStorage,
+  FailedDeleteError,
+  StorageOccupiedError,
 } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
@@ -68,4 +75,11 @@ export {
   ScopesNotSupportedError,
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
+  SecureStorageFullError,
+  IOError,
+  StorageUnavailable,
+  UnavailableItem,
+  EmptyStorage,
+  FailedDeleteError,
+  StorageOccupiedError,
 };

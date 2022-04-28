@@ -11,6 +11,15 @@ import {
   parseDownloadError,
   SaveFailureError,
 } from './download-file-errors';
+import {
+  SecureStorageFullError,
+  IOError,
+  StorageUnavailable,
+  UnavailableItem,
+  EmptyStorage,
+  FailedDeleteError,
+  StorageOccupiedError,
+} from './secure-storage-errors'
 import { MiniAppError, MiniAppJson } from './mini-app-error';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
@@ -39,4 +48,11 @@ export {
   parseMiniAppError,
   SaveFailureError,
   ScopesNotSupportedError,
+  SecureStorageFullError,
+  IOError,
+  StorageUnavailable,
+  UnavailableItem,
+  EmptyStorage,
+  FailedDeleteError,
+  StorageOccupiedError,
 };
