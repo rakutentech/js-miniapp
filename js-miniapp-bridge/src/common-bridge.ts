@@ -568,14 +568,7 @@ export class MiniAppBridge {
         'setSecureStorageItems',
         { secureStorageItems: items },
         success => resolve(undefined),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -586,14 +579,7 @@ export class MiniAppBridge {
         'getSecureStorageItem',
         { secureStorageKey: key },
         responseData => resolve(responseData),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -604,14 +590,7 @@ export class MiniAppBridge {
         'removeSecureStorageItems',
         { secureStorageKeyList: keys },
         success => resolve(undefined),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -624,14 +603,7 @@ export class MiniAppBridge {
         responseData => {
           resolve(JSON.parse(responseData) as undefined);
         },
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -644,14 +616,7 @@ export class MiniAppBridge {
         responseData => {
           resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
         },
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            return reject(new MiniAppError(miniAppError));
-          } catch (e) {
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
