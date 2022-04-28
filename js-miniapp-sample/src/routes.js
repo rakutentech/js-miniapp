@@ -17,7 +17,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import SecurityIcon from '@material-ui/icons/Security';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
@@ -145,8 +145,8 @@ const appItems = [
     component: GifPage,
   },
   {
-    icon: <ShoppingCartIcon />,
-    label: 'ASecureStorage',
+    icon: <SecurityIcon />,
+    label: 'SecureStorage',
     navLink: '/secure-storage',
     component: SecureStorageComponent,
   },

@@ -11,7 +11,6 @@ const setItemsReducer = (
 ): ?string => {
   switch (action.type) {
     case SET_SECURE_STORAGE_SUCCESS:
-      console.log('Reducer SECURE_STORAGE_SUCCESS: ', action);
       return action;
     default:
       return state;
@@ -25,7 +24,6 @@ const getItemsReducer = (
 ): ?string => {
   switch (action.type) {
     case GET_SECURE_STORAGE_SUCCESS:
-      console.log('Reducer GET_SECURE_STORAGE_SUCCESS: ', action.item);
       return action.item;
     default:
       return state;
@@ -39,7 +37,6 @@ const removeItemsReducer = (
 ): ?string => {
   switch (action.type) {
     case REMOVE_ITEMS_STORAGE_SUCCESS:
-      console.log('Reducer REMOVE_ITEMS_STORAGE_SUCCESS: ', action);
       return action;
     default:
       return state;
@@ -53,7 +50,6 @@ const getSizeReducer = (
 ): ?string => {
   switch (action.type) {
     case GET_SIZE_SECURE_STORAGE_SUCCESS:
-      console.log('Reducer GET_SIZE_SECURE_STORAGE_SUCCESS: ', action.size);
       return action;
     default:
       return state;
@@ -67,7 +63,6 @@ const clearStorageReducer = (
 ): ?string => {
   switch (action.type) {
     case CLEAR_SECURE_STORAGE_SUCCESS:
-      console.log('Reducer CLEAR_SECURE_STORAGE_SUCCESS: ', action);
       return action;
     default:
       return state;

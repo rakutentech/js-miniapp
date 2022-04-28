@@ -200,7 +200,6 @@ type SecureStorageProps = {
 };
 
 function SecureStorageComponent(props: SecureStorageProps) {
-  console.log('SecureStorageProps: ', props);
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
   let setStoreKey = useRef(null);
@@ -291,7 +290,6 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function getSizeButtonClick(e) {
-    console.log('getSizeButtonClick:');
     if (!state.isLoading) {
       dispatch({ type: 'FETCH_INIT', miniAppError: null });
       props
@@ -565,7 +563,6 @@ function SecureStorageComponent(props: SecureStorageProps) {
 }
 
 const mapStateToProps = (state) => {
-  //console.log('mapStateToProps: ', state);
   return {
     setItems: state.secureStorage.setItems,
     getItems: state.secureStorage.getItem,
@@ -575,13 +572,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  //   console.log('mapDispatchToProps: ', dispatch);
   return {
     requestSetItems: (items: string) => dispatch(setItems(items)),
     requestGetItem: (key: string) => dispatch(getItem(key)),
     requestRemoveItems: (keys: [string]) => dispatch(removeItems(keys)),
-    requestClear: () => dispatch(clear),
-    requestSize: () => dispatch(size),
+    requestClear: () => dispatch(clear()),
+    requestSize: () => dispatch(size()),
   };
 };
 

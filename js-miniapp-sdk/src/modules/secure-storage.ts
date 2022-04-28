@@ -36,7 +36,6 @@ export class SecureStorageService {
   }
 
   size(): Promise<MiniAppSecureStorageSize> {
-    console.log('SecureStorageService size()');
     return getBridge().getSecureStorageSize();
   }
 }
