@@ -28,12 +28,9 @@ import {
   SaveFailureError,
   ScopesNotSupportedError,
   SecureStorageFullError,
-  IOError,
-  StorageUnavailable,
-  UnavailableItem,
-  EmptyStorage,
-  FailedDeleteError,
-  StorageOccupiedError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -69,10 +66,7 @@ export {
   MiniAppEvents,
   MiniAppKeyboardEvents,
   SecureStorageFullError,
-  IOError,
-  StorageUnavailable,
-  UnavailableItem,
-  EmptyStorage,
-  FailedDeleteError,
-  StorageOccupiedError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 };

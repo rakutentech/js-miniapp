@@ -13,12 +13,9 @@ import {
 } from './download-file-errors';
 import {
   SecureStorageFullError,
-  IOError,
-  StorageUnavailable,
-  UnavailableItem,
-  EmptyStorage,
-  FailedDeleteError,
-  StorageOccupiedError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
   parseStorageError,
 } from './secure-storage-errors';
 import { MiniAppError, MiniAppJson } from './mini-app-error';
@@ -53,10 +50,7 @@ export {
   SaveFailureError,
   ScopesNotSupportedError,
   SecureStorageFullError,
-  IOError,
-  StorageUnavailable,
-  UnavailableItem,
-  EmptyStorage,
-  FailedDeleteError,
-  StorageOccupiedError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 };
