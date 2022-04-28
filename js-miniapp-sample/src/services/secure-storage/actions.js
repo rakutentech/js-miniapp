@@ -12,6 +12,8 @@ import {
   GET_SIZE_SECURE_STORAGE_FAILURE,
 } from './types';
 
+import { MiniAppSecureStorageSize } from 'js-miniapp-sdk';
+
 type SetItemsSuccessAction = { type: String };
 type GetItemSuccessAction = { type: String, item: string };
 type RemoveItemsSuccessAction = { type: String };

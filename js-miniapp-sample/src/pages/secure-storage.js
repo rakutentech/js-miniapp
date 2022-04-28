@@ -120,6 +120,9 @@ export const initialState = {
   isLoading: false,
   isError: false,
   error: null,
+  isSuccess: false,
+  inputError: null,
+  isStorageCleaned: false,
 };
 
 type State = {
@@ -143,6 +146,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         error: null,
         isSuccess: false,
         inputError: null,
+        isStorageCleaned: false,
       };
     case 'FETCH_SUCCESS':
       return {
@@ -152,6 +156,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         error: null,
         isSuccess: true,
         inputError: null,
+        isStorageCleaned: false,
       };
     case 'FETCH_FAILURE':
       return {
@@ -164,6 +169,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
             : action.miniAppError.message) || '',
         isSuccess: false,
         inputError: null,
+        isStorageCleaned: false,
       };
     case 'INPUT_FAILURE':
       return {
@@ -173,6 +179,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         error: null,
         isSuccess: false,
         inputError: action.inputError,
+        isStorageCleaned: false,
       };
     case 'RESET':
       return {
@@ -182,6 +189,17 @@ export const dataFetchReducer = (state: State, action: Action) => {
         error: null,
         isSuccess: false,
         inputError: null,
+        isStorageCleaned: false,
+      };
+    case 'STORAGE_CLEAR_SUCCESS':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: false,
+        error: null,
+        isSuccess: false,
+        inputError: null,
+        isStorageCleaned: true,
       };
     default:
       throw Error('Unknown action type');
@@ -190,7 +208,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
 
 type SecureStorageProps = {
   getItems: string,
-  size: MiniAppSecureStorageSize,
+  size: String,
   requestSetItems: (items: string) => Promise<undefined>,
   requestGetItem: (key: string) => Promise<string>,
   requestRemoveItems: (key: [string]) => Promise<undefined>,
@@ -312,7 +330,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
         .requestClear()
         .then((response) => {
           console.log('Page - clearStorageItems - Success', response);
-          dispatch({ type: 'FETCH_SUCCESS', miniAppError: null });
+          dispatch({ type: 'STORAGE_CLEAR_SUCCESS', miniAppError: null });
         })
         .catch((miniAppError) => {
           console.log('Page - clearSecureStorageItems - Error: ', miniAppError);
@@ -527,6 +545,17 @@ function SecureStorageComponent(props: SecureStorageProps) {
         {!state.isLoading && state.isError && (
           <Typography variant="body1" className={classes.red}>
             {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && !state.isError && state.isSuccess && (
+          <Typography variant="body1" className={classes.red}>
+            <div>Maximum Available: {props.size.max}</div>
+            <div>Used Space: {props.size.used}</div>
+          </Typography>
+        )}
+        {!state.isLoading && !state.isError && state.isStorageCleaned && (
+          <Typography variant="body1" className={classes.red}>
+            Storage Cleared Successfully
           </Typography>
         )}
       </FormGroup>

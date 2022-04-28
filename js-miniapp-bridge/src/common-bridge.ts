@@ -600,9 +600,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'clearSecureStorage',
         null,
-        responseData => {
-          resolve(JSON.parse(responseData) as undefined);
-        },
+        success => resolve(undefined),
         error => reject(parseMiniAppError(error))
       );
     });

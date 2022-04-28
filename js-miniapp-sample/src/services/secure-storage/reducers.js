@@ -62,7 +62,7 @@ const getSizeReducer = (
 ): ?string => {
   switch (action.type) {
     case GET_SIZE_SECURE_STORAGE_SUCCESS:
-      return action;
+      return action.size;
     default:
       return state;
   }
