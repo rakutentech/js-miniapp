@@ -1,10 +1,10 @@
 import { MiniAppError, MiniAppJson } from './mini-app-error';
 
 enum MiniAppStorageErrorType {
-    SecureStorageFullError = 'SecureStorageFullError',
-    SecureStorageBusyError = 'SecureStorageBusyError',
-    SecureStorageUnavailableError = 'SecureStorageUnavailableError',
-    SecureStorageIOError = 'SecureStorageIOError',
+  SecureStorageFullError = 'SecureStorageFullError',
+  SecureStorageBusyError = 'SecureStorageBusyError',
+  SecureStorageUnavailableError = 'SecureStorageUnavailableError',
+  SecureStorageIOError = 'SecureStorageIOError',
 }
 
 export class SecureStorageFullError extends MiniAppError {
