@@ -23,7 +23,7 @@ const setItemsReducer = (
 ): ?string => {
   switch (action.type) {
     case SET_SECURE_STORAGE_SUCCESS:
-      return action;
+      return action.type;
     default:
       return state;
   }
@@ -49,7 +49,7 @@ const removeItemsReducer = (
 ): ?string => {
   switch (action.type) {
     case REMOVE_ITEMS_STORAGE_SUCCESS:
-      return action;
+      return action.type;
     default:
       return state;
   }
@@ -75,7 +75,7 @@ const clearStorageReducer = (
 ): ?string => {
   switch (action.type) {
     case CLEAR_SECURE_STORAGE_SUCCESS:
-      return action;
+      return action.type;
     default:
       return state;
   }

@@ -14,11 +14,11 @@ import {
 
 import { MiniAppSecureStorageSize } from 'js-miniapp-sdk';
 
-type SetItemsSuccessAction = { type: String };
-type GetItemSuccessAction = { type: String, item: string };
-type RemoveItemsSuccessAction = { type: String };
-type ClearSuccessAction = { type: String };
-type SizeSuccessAction = { type: String, size: MiniAppSecureStorageSize };
+type SetItemsSuccessAction = { type: string };
+type GetItemSuccessAction = { type: string, item: string };
+type RemoveItemsSuccessAction = { type: string };
+type ClearSuccessAction = { type: string };
+type SizeSuccessAction = { type: string, size: MiniAppSecureStorageSize };
 
 const setItems = (items: string): Function => {
   return (dispatch) => {

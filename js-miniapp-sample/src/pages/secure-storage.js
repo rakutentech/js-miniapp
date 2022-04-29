@@ -133,7 +133,7 @@ type State = {
 type Action = {
   type: string,
   miniAppError: MiniAppError,
-  inputError: String,
+  inputError: ?string,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
@@ -208,7 +208,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
 
 type SecureStorageProps = {
   getItems: string,
-  size: String,
+  size: string,
   requestSetItems: (items: string) => Promise<undefined>,
   requestGetItem: (key: string) => Promise<string>,
   requestRemoveItems: (key: [string]) => Promise<undefined>,
@@ -240,7 +240,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
   function setSecureStorageButtonClick(e) {
     if (isTextFieldValuesValid()) {
       if (!state.isLoading) {
-        dispatch({ type: 'FETCH_INIT', miniAppError: null });
+        dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
         const keyValuePair = {};
         keyValuePair[setStoreKey.current.value] = setStoreValue.current.value;
         keyValuePair[setStoreKey1.current.value] = setStoreValue1.current.value;
@@ -253,11 +253,15 @@ function SecureStorageComponent(props: SecureStorageProps) {
           .requestSetItems(keyValuePair)
           .then((response) => {
             console.log('Page - SetItems - Success', response);
-            dispatch({ type: 'FETCH_SUCCESS', miniAppError: null });
+            dispatch({
+              type: 'FETCH_SUCCESS',
+              miniAppError: null,
+              inputError: null,
+            });
           })
           .catch((miniAppError) => {
             console.log('Page - SetItems - Error: ', miniAppError);
-            dispatch({ type: 'FETCH_FAILURE', miniAppError });
+            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
           });
       }
     }
@@ -266,16 +270,20 @@ function SecureStorageComponent(props: SecureStorageProps) {
   function getSecureStorageButtonClick(e) {
     if (!isEmpty(getItemUsingKey.current.value)) {
       if (!state.isLoading) {
-        dispatch({ type: 'FETCH_INIT', miniAppError: null });
+        dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
         props
           .requestGetItem(getItemUsingKey.current.value)
           .then((response) => {
             console.log('Page - GetItems - Success', response);
-            dispatch({ type: 'FETCH_SUCCESS', miniAppError: null });
+            dispatch({
+              type: 'FETCH_SUCCESS',
+              miniAppError: null,
+              inputError: null,
+            });
           })
           .catch((miniAppError) => {
             console.log('Page - GetItems - Error: ', miniAppError);
-            dispatch({ type: 'FETCH_FAILURE', miniAppError });
+            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
           });
       }
     } else {
@@ -293,48 +301,60 @@ function SecureStorageComponent(props: SecureStorageProps) {
       return isEmpty(str) === false;
     });
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       props
         .requestRemoveItems(filteredKeys)
         .then((response) => {
           console.log('Page - RemoveItems - Success', response);
-          dispatch({ type: 'FETCH_SUCCESS', miniAppError: null });
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            miniAppError: null,
+            inputError: null,
+          });
         })
         .catch((miniAppError) => {
           console.log('Page - RemoveItems - Error: ', miniAppError);
-          dispatch({ type: 'FETCH_FAILURE', miniAppError });
+          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
         });
     }
   }
 
   function getSizeButtonClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       props
         .requestSize()
         .then((response) => {
           console.log('Page - Size - Success', response);
-          dispatch({ type: 'FETCH_SUCCESS', miniAppError: null });
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            miniAppError: null,
+            inputError: null,
+          });
         })
         .catch((miniAppError) => {
           console.log('Page - Size - Error: ', miniAppError);
-          dispatch({ type: 'FETCH_FAILURE', miniAppError });
+          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
         });
     }
   }
 
   function clearSecureStorageSizeButtonClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       props
         .requestClear()
         .then((response) => {
           console.log('Page - clearStorageItems - Success', response);
-          dispatch({ type: 'STORAGE_CLEAR_SUCCESS', miniAppError: null });
+          dispatch({
+            type: 'STORAGE_CLEAR_SUCCESS',
+            miniAppError: null,
+            inputError: null,
+          });
         })
         .catch((miniAppError) => {
           console.log('Page - clearSecureStorageItems - Error: ', miniAppError);
-          dispatch({ type: 'FETCH_FAILURE', miniAppError });
+          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
         });
     }
   }
@@ -564,8 +584,8 @@ function SecureStorageComponent(props: SecureStorageProps) {
 
   const [value, setValue] = React.useState('1');
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    dispatch({ type: 'RESET', miniAppError: null });
+  const handleChange = (event: Event, newValue: string) => {
+    dispatch({ type: 'RESET', miniAppError: null, inputError: null });
     setValue(newValue);
   };
 

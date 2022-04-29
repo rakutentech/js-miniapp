@@ -1,5 +1,6 @@
 import { MiniAppError } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../utils';
+import { MiniAppEvents } from '../event-types/index';
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
