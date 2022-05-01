@@ -15,8 +15,8 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
-import { MiniAppError } from 'js-miniapp-sdk';
-import React, { useReducer, useRef } from 'react';
+import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
+import React, { useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   clear,
@@ -208,11 +208,11 @@ export const dataFetchReducer = (state: State, action: Action) => {
 
 type SecureStorageProps = {
   getItems: string,
-  size: string,
-  requestSetItems: (items: string) => Promise<undefined>,
+  size: MiniAppSecureStorageSize,
+  requestSetItems: (items: string) => Promise<string>,
   requestGetItem: (key: string) => Promise<string>,
-  requestRemoveItems: (key: [string]) => Promise<undefined>,
-  requestClear: () => Promise<undefined>,
+  requestRemoveItems: (key: Array<string>) => Promise<string>,
+  requestClear: () => Promise<string>,
   requestSize: () => Promise<MiniAppSecureStorageSize>,
   storageError: MiniAppError,
 };
@@ -220,13 +220,13 @@ type SecureStorageProps = {
 function SecureStorageComponent(props: SecureStorageProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
-  let setStoreKey = useRef(null);
-  let setStoreValue = useRef(null);
-  let setStoreKey1 = useRef(null);
-  let setStoreValue1 = useRef(null);
-  let getItemUsingKey = useRef(null);
-  let removeUsingKey = useRef(null);
-  let removeUsingKey1 = useRef(null);
+  const [storeKey, setStoreKey] = useState('');
+  const [storeKeyValue, setStoreKeyValue] = useState('');
+  const [storeKey1, setStoreKey1] = useState('');
+  const [storeKeyValue1, setStoreKeyValue1] = useState('');
+  const [getItemUsingKey, setGetItemUsingKey] = useState('');
+  const [removeItemUsingKey, setRemoveItemUsingKey] = useState('');
+  const [removeItemUsingKey1, setRemoveItemUsingKey1] = useState('');
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
@@ -242,15 +242,15 @@ function SecureStorageComponent(props: SecureStorageProps) {
       if (!state.isLoading) {
         dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
         const keyValuePair = {};
-        keyValuePair[setStoreKey.current.value] = setStoreValue.current.value;
-        keyValuePair[setStoreKey1.current.value] = setStoreValue1.current.value;
+        keyValuePair[storeKey] = storeKeyValue;
+        keyValuePair[storeKey1] = storeKeyValue1;
 
         Object.keys(keyValuePair).forEach((key) => {
           if (!keyValuePair[key]) delete keyValuePair[key];
         });
 
         props
-          .requestSetItems(keyValuePair)
+          .requestSetItems(keyValuePair.toString())
           .then((response) => {
             console.log('Page - SetItems - Success', response);
             dispatch({
@@ -268,11 +268,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function getSecureStorageButtonClick(e) {
-    if (!isEmpty(getItemUsingKey.current.value)) {
+    if (!isEmpty(getItemUsingKey)) {
       if (!state.isLoading) {
         dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
         props
-          .requestGetItem(getItemUsingKey.current.value)
+          .requestGetItem(getItemUsingKey)
           .then((response) => {
             console.log('Page - GetItems - Success', response);
             dispatch({
@@ -296,7 +296,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function removeItemsFromSecureStorageButtonClick(e) {
-    const keys = [removeUsingKey.current.value, removeUsingKey1.current.value];
+    const keys = [removeItemUsingKey, removeItemUsingKey1];
     const filteredKeys = keys.filter(function (str) {
       return isEmpty(str) === false;
     });
@@ -360,14 +360,14 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function isTextFieldValuesValid() {
-    if (isEmpty(setStoreKey.current.value)) {
+    if (isEmpty(storeKeyValue)) {
       dispatch({
         type: 'INPUT_FAILURE',
         miniAppError: null,
         inputError: 'Key cannot be empty',
       });
       return false;
-    } else if (isEmpty(setStoreValue.current.value)) {
+    } else if (isEmpty(storeKeyValue)) {
       dispatch({
         type: 'INPUT_FAILURE',
         miniAppError: null,
@@ -388,14 +388,16 @@ function SecureStorageComponent(props: SecureStorageProps) {
             className={classes.formInput}
             id="input-name"
             label={'Key'}
-            inputRef={setStoreKey}
+            value={storeKey}
+            onChange={(e) => setStoreKey(e.target.value)}
           />
           <TextField
             variant="outlined"
             className={classes.formInput}
             id="input-name"
             label={'Value'}
-            inputRef={setStoreValue}
+            value={storeKeyValue}
+            onChange={(e) => setStoreKeyValue(e.target.value)}
           />
         </Card>
         <br />
@@ -405,14 +407,16 @@ function SecureStorageComponent(props: SecureStorageProps) {
             className={classes.formInput}
             id="input-name"
             label={'Key'}
-            inputRef={setStoreKey1}
+            value={storeKey1}
+            onChange={(e) => setStoreKey1(e.target.value)}
           />
           <TextField
             variant="outlined"
             className={classes.formInput}
             id="input-name"
             label={'Value'}
-            inputRef={setStoreValue1}
+            value={storeKeyValue1}
+            onChange={(e) => setStoreKeyValue1(e.target.value)}
           />
         </Card>
         <br />
@@ -453,7 +457,8 @@ function SecureStorageComponent(props: SecureStorageProps) {
           className={classes.formInput}
           id="input-name"
           label={'Key'}
-          inputRef={getItemUsingKey}
+          value={getItemUsingKey}
+          onChange={(e) => setGetItemUsingKey(e.target.value)}
         />
         <br />
         <Button
@@ -492,7 +497,8 @@ function SecureStorageComponent(props: SecureStorageProps) {
           className={classes.formInput}
           id="input-name"
           label={'Key'}
-          inputRef={removeUsingKey}
+          value={removeItemUsingKey}
+          onChange={(e) => setRemoveItemUsingKey(e.target.value)}
         />
         <br />
         <TextField
@@ -500,7 +506,8 @@ function SecureStorageComponent(props: SecureStorageProps) {
           className={classes.formInput}
           id="input-name"
           label={'Key'}
-          inputRef={removeUsingKey1}
+          value={removeItemUsingKey1}
+          onChange={(e) => setRemoveItemUsingKey1(e.target.value)}
         />
         <br />
         <br />
@@ -622,9 +629,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    requestSetItems: (items: string) => dispatch(setItems(items)),
-    requestGetItem: (key: string) => dispatch(getItem(key)),
-    requestRemoveItems: (keys: [string]) => dispatch(removeItems(keys)),
+    requestSetItems: (items) => dispatch(setItems(items)),
+    requestGetItem: (key) => dispatch(getItem(key)),
+    requestRemoveItems: (keys) => dispatch(removeItems(keys)),
     requestClear: () => dispatch(clear()),
     requestSize: () => dispatch(size()),
   };
