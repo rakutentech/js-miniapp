@@ -23,7 +23,7 @@ type SizeSuccessAction = { type: string, size: MiniAppSecureStorageSize };
 const setItems = (items: string): Function => {
   return (dispatch) => {
     return MiniApp.secureStorageService
-      .setItems(items)
+      .setItems(JSON.parse(items))
       .then(() => {
         console.log('setItems Success: ');
         dispatch({

@@ -16,7 +16,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   clear,
@@ -244,13 +244,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
         const keyValuePair = {};
         keyValuePair[storeKey] = storeKeyValue;
         keyValuePair[storeKey1] = storeKeyValue1;
-
         Object.keys(keyValuePair).forEach((key) => {
           if (!keyValuePair[key]) delete keyValuePair[key];
         });
-
         props
-          .requestSetItems(keyValuePair.toString())
+          .requestSetItems(JSON.stringify(keyValuePair))
           .then((response) => {
             console.log('Page - SetItems - Success', response);
             dispatch({
@@ -440,6 +438,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
             {state.inputError}
           </Typography>
         )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
         {!state.isLoading && state.isSuccess && (
           <Typography variant="body1" className={classes.red}>
             Items stored Successfully
@@ -478,6 +481,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
         {!state.isLoading && state.isError && (
           <Typography variant="body1" className={classes.red}>
             {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
           </Typography>
         )}
         {!state.isLoading && !state.isError && (
@@ -530,6 +538,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
             {state.inputError}
           </Typography>
         )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
         {!state.isLoading && state.isSuccess && (
           <Typography variant="body1" className={classes.red}>
             Items removed Successfully
@@ -572,6 +585,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
         {!state.isLoading && state.isError && (
           <Typography variant="body1" className={classes.red}>
             {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
           </Typography>
         )}
         {!state.isLoading && !state.isError && state.isSuccess && props.size && (

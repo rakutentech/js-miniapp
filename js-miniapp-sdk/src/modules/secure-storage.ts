@@ -16,6 +16,10 @@ interface SecureStorageProvider {
   clear(): Promise<undefined>;
 
   size(): Promise<MiniAppSecureStorageSize>;
+
+  onSecureStorageReady(): Promise<string>;
+
+  onSecureStorageLoadError(): Promise<string>;
 }
 
 /** @internal */
@@ -38,5 +42,24 @@ export class SecureStorageService {
 
   size(): Promise<MiniAppSecureStorageSize> {
     return getBridge().getSecureStorageSize();
+  }
+
+  onSecureStorageReady(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      return window.addEventListener(MiniAppEvents.SECURE_STORAGE_READY, () => {
+        resolve('success');
+      });
+    });
+  }
+
+  onSecureStorageLoadError(): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      return window.addEventListener(
+        MiniAppEvents.SECURE_STORAGE_FAILED,
+        () => {
+          resolve('success');
+        }
+      );
+    });
   }
 }

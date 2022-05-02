@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { CardContent, makeStyles } from '@material-ui/core';
 import GreyCard from '../components/GreyCard';
-import { setHostEnvironmentInfo } from '../services/landing/actions';
+import {
+  setHostEnvironmentInfo,
+  onSecureStorageReady,
+} from '../services/landing/actions';
+
 import { connect } from 'react-redux';
 
 type LandingProps = {
@@ -12,6 +16,7 @@ type LandingProps = {
   hostLocale: ?string,
   infoError: string,
   getHostInfo: Function,
+  onSecureStorageReady: Function,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +56,7 @@ const Landing = (props: LandingProps) => {
   useEffect(() => {
     try {
       props.getHostInfo();
+      checkSecureStorageStorageReady(props);
     } catch (e) {
       console.log(e);
     }
@@ -82,6 +88,20 @@ const Landing = (props: LandingProps) => {
   );
 };
 
+function checkSecureStorageStorageReady(props: LandingProps) {
+  props
+    .onSecureStorageReady()
+    .then((response) => {
+      console.log('Page - checkSecureStorageStorageReady - Success', response);
+    })
+    .catch((miniAppError) => {
+      console.log(
+        'Page - checkSecureStorageStorageReady - Error: ',
+        miniAppError
+      );
+    });
+}
+
 const mapStateToProps = (state, props) => {
   return {
     ...props,
@@ -97,6 +117,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getHostInfo: () => dispatch(setHostEnvironmentInfo()),
+    onSecureStorageReady: () => dispatch(onSecureStorageReady()),
   };
 };
 
