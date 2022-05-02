@@ -26,7 +26,7 @@ var AndroidExecutor = /** @class */ (function () {
 }());
 window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExecutor());
 
-},{"../common-bridge":2,"../types/platform":7}],2:[function(require,module,exports){
+},{"../common-bridge":2,"../types/platform":8}],2:[function(require,module,exports){
 "use strict";
 /** @internal */
 var __assign = (this && this.__assign) || function () {
@@ -409,6 +409,38 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
+    MiniAppBridge.prototype.setSecureStorage = function (items) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('setSecureStorageItems', { secureStorageItems: items }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
+    MiniAppBridge.prototype.getSecureStorageItem = function (key) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getSecureStorageItem', { secureStorageKey: key }, function (responseData) { return resolve(responseData); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
+    MiniAppBridge.prototype.removeSecureStorageItems = function (keys) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('removeSecureStorageItems', { secureStorageKeyList: keys }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
+    MiniAppBridge.prototype.clearSecureStorage = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('clearSecureStorage', null, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
+    MiniAppBridge.prototype.getSecureStorageSize = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getSecureStorageSize', null, function (responseData) {
+                resolve(JSON.parse(responseData));
+            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
@@ -444,7 +476,7 @@ function trimBannerText(message, maxLength) {
         : message;
 }
 
-},{"./types/error-types":5,"./types/token-data":8}],3:[function(require,module,exports){
+},{"./types/error-types":5,"./types/token-data":9}],3:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -633,12 +665,20 @@ exports.DownloadFailedError = download_file_errors_1.DownloadFailedError;
 exports.DownloadHttpError = download_file_errors_1.DownloadHttpError;
 exports.InvalidUrlError = download_file_errors_1.InvalidUrlError;
 exports.SaveFailureError = download_file_errors_1.SaveFailureError;
+var secure_storage_errors_1 = require("./secure-storage-errors");
+exports.SecureStorageFullError = secure_storage_errors_1.SecureStorageFullError;
+exports.SecureStorageBusyError = secure_storage_errors_1.SecureStorageBusyError;
+exports.SecureStorageUnavailableError = secure_storage_errors_1.SecureStorageUnavailableError;
+exports.SecureStorageIOError = secure_storage_errors_1.SecureStorageIOError;
 var mini_app_error_1 = require("./mini-app-error");
 exports.MiniAppError = mini_app_error_1.MiniAppError;
 function parseMiniAppError(jsonString) {
     try {
         var json = JSON.parse(jsonString);
-        return (auth_errors_1.parseAuthError(json) || download_file_errors_1.parseDownloadError(json) || new mini_app_error_1.MiniAppError(json));
+        return (auth_errors_1.parseAuthError(json) ||
+            download_file_errors_1.parseDownloadError(json) ||
+            secure_storage_errors_1.parseStorageError(json) ||
+            new mini_app_error_1.MiniAppError(json));
     }
     catch (e) {
         console.error(e);
@@ -650,7 +690,7 @@ function parseMiniAppError(jsonString) {
 }
 exports.parseMiniAppError = parseMiniAppError;
 
-},{"./auth-errors":3,"./download-file-errors":4,"./mini-app-error":6}],6:[function(require,module,exports){
+},{"./auth-errors":3,"./download-file-errors":4,"./mini-app-error":6,"./secure-storage-errors":7}],6:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -685,6 +725,95 @@ exports.MiniAppError = MiniAppError;
 
 },{}],7:[function(require,module,exports){
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var mini_app_error_1 = require("./mini-app-error");
+var MiniAppStorageErrorType;
+(function (MiniAppStorageErrorType) {
+    MiniAppStorageErrorType["SecureStorageFullError"] = "SecureStorageFullError";
+    MiniAppStorageErrorType["SecureStorageBusyError"] = "SecureStorageBusyError";
+    MiniAppStorageErrorType["SecureStorageUnavailableError"] = "SecureStorageUnavailableError";
+    MiniAppStorageErrorType["SecureStorageIOError"] = "SecureStorageIOError";
+})(MiniAppStorageErrorType || (MiniAppStorageErrorType = {}));
+var SecureStorageFullError = /** @class */ (function (_super) {
+    __extends(SecureStorageFullError, _super);
+    function SecureStorageFullError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, SecureStorageFullError.prototype);
+        _this.message = 'Storage limit is exceeded or full already';
+        return _this;
+    }
+    return SecureStorageFullError;
+}(mini_app_error_1.MiniAppError));
+exports.SecureStorageFullError = SecureStorageFullError;
+var SecureStorageBusyError = /** @class */ (function (_super) {
+    __extends(SecureStorageBusyError, _super);
+    function SecureStorageBusyError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, SecureStorageBusyError.prototype);
+        _this.message = 'Storage is busy, please try again';
+        return _this;
+    }
+    return SecureStorageBusyError;
+}(mini_app_error_1.MiniAppError));
+exports.SecureStorageBusyError = SecureStorageBusyError;
+var SecureStorageUnavailableError = /** @class */ (function (_super) {
+    __extends(SecureStorageUnavailableError, _super);
+    function SecureStorageUnavailableError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, SecureStorageUnavailableError.prototype);
+        _this.message = 'Storage is not yet loaded or failed to load';
+        return _this;
+    }
+    return SecureStorageUnavailableError;
+}(mini_app_error_1.MiniAppError));
+exports.SecureStorageUnavailableError = SecureStorageUnavailableError;
+var SecureStorageIOError = /** @class */ (function (_super) {
+    __extends(SecureStorageIOError, _super);
+    function SecureStorageIOError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, SecureStorageIOError.prototype);
+        _this.message = 'Unable to read/write changes in Storage.';
+        return _this;
+    }
+    return SecureStorageIOError;
+}(mini_app_error_1.MiniAppError));
+exports.SecureStorageIOError = SecureStorageIOError;
+function parseStorageError(json) {
+    var errorType = MiniAppStorageErrorType[json.type];
+    switch (errorType) {
+        case MiniAppStorageErrorType.SecureStorageFullError:
+            return new SecureStorageFullError(json);
+        case MiniAppStorageErrorType.SecureStorageBusyError:
+            return new SecureStorageBusyError(json);
+        case MiniAppStorageErrorType.SecureStorageUnavailableError:
+            return new SecureStorageUnavailableError(json);
+        case MiniAppStorageErrorType.SecureStorageIOError:
+            return new SecureStorageIOError(json);
+        default:
+            return undefined;
+    }
+}
+exports.parseStorageError = parseStorageError;
+
+},{"./mini-app-error":6}],8:[function(require,module,exports){
+"use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Device platform. */
@@ -694,7 +823,7 @@ var Platform;
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Token data type. */
