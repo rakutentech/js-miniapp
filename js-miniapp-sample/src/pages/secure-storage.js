@@ -16,7 +16,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
-import React, { useReducer, useState, useEffect } from 'react';
+import React, { useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   clear,
