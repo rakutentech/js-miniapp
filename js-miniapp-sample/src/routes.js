@@ -17,6 +17,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import SecurityIcon from '@material-ui/icons/Security';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
@@ -35,6 +36,7 @@ import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
+import SecureStorageComponent from './pages/secure-storage';
 
 const homeItem = [
   {
@@ -141,7 +143,13 @@ const appItems = [
     label: "GIF's & WebP",
     navLink: '/gifs',
     component: GifPage,
-  }
+  },
+  {
+    icon: <SecurityIcon />,
+    label: 'SecureStorage',
+    navLink: '/secure-storage',
+    component: SecureStorageComponent,
+  },
 ];
 
 const navItems: Object[] = homeItem.concat(

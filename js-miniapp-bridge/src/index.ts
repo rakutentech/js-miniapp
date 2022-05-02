@@ -33,7 +33,15 @@ import {
   MiniAppError,
   SaveFailureError,
   ScopesNotSupportedError,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 } from './types/error-types';
+import {
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+} from './types/secure-storage';
 
 export {
   MiniAppBridge,
@@ -62,4 +70,10 @@ export {
   MiniAppError,
   SaveFailureError,
   ScopesNotSupportedError,
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 };

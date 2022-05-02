@@ -16,6 +16,7 @@ import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
 import { getBridge } from './utils';
 import { deprecate } from 'util';
+import { SecureStorageService } from './modules/secure-storage';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -153,6 +154,7 @@ interface Platform {
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
+  secureStorageService = new SecureStorageService();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

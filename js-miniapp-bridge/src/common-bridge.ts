@@ -5,20 +5,24 @@
  */
 
 import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types';
-import { DevicePermission } from './types/device-permission';
+import { Contact } from './types/contact';
 import {
   CustomPermission,
   CustomPermissionResponse,
 } from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
-import { ScreenOrientation } from './types/screen';
-import { AccessTokenData, NativeTokenData } from './types/token-data';
-import { Contact } from './types/contact';
+import { DevicePermission } from './types/device-permission';
+import { DownloadFileHeaders } from './types/download-file-headers';
+import { HostEnvironmentInfo } from './types/host-environment-info';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
-import { HostEnvironmentInfo } from './types/host-environment-info';
-import { DownloadFileHeaders } from './types/download-file-headers';
+import { Reward } from './types/response-types';
+import { ScreenOrientation } from './types/screen';
+import {
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+} from './types/secure-storage';
+import { ShareInfoType } from './types/share-info';
+import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { parseMiniAppError } from './types/error-types';
 
 /** @internal */
@@ -552,6 +556,63 @@ export class MiniAppBridge {
           } else {
             resolve(null);
           }
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  setSecureStorage(items: MiniAppSecureStorageKeyValues) {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'setSecureStorageItems',
+        { secureStorageItems: items },
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  getSecureStorageItem(key: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageItem',
+        { secureStorageKey: key },
+        responseData => resolve(responseData),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  removeSecureStorageItems(keys: [string]) {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'removeSecureStorageItems',
+        { secureStorageKeyList: keys },
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  clearSecureStorage() {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'clearSecureStorage',
+        null,
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  getSecureStorageSize() {
+    return new Promise<MiniAppSecureStorageSize>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageSize',
+        null,
+        responseData => {
+          resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
         },
         error => reject(parseMiniAppError(error))
       );

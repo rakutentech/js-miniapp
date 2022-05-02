@@ -27,6 +27,10 @@ import {
   MiniAppError,
   SaveFailureError,
   ScopesNotSupportedError,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -61,4 +65,8 @@ export {
   ScopesNotSupportedError,
   MiniAppEvents,
   MiniAppKeyboardEvents,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 };
