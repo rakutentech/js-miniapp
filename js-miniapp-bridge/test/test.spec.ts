@@ -22,7 +22,9 @@ import {
 } from '../src';
 
 /* tslint:disable:no-any */
-const window: any = {};
+const window: any = {
+  addEventListener: sinon.stub(),
+};
 (global as any).window = window;
 
 const sandbox = sinon.createSandbox();

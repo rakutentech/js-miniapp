@@ -18,12 +18,13 @@ import { Points } from './types/points';
 import { Reward } from './types/response-types';
 import { ScreenOrientation } from './types/screen';
 import {
+  MiniAppSecureStorageEvents,
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
 import { ShareInfoType } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
-import { parseMiniAppError } from './types/error-types';
+import { MiniAppError, parseMiniAppError } from './types/error-types';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -71,10 +72,22 @@ export interface PlatformExecutor {
 export class MiniAppBridge {
   executor: PlatformExecutor;
   platform: string;
+  isSecureStorageReady = false;
+  secureStorageLoadError: MiniAppError | null = null;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
+
+    window.addEventListener(
+      MiniAppSecureStorageEvents.onReady,
+      () => (this.isSecureStorageReady = true)
+    );
+    window.addEventListener(
+      MiniAppSecureStorageEvents.onLoadError,
+      (e: CustomEvent) =>
+        (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
+    );
   }
 
   /**
