@@ -13,6 +13,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var secure_storage_1 = require("./types/secure-storage");
 var token_data_1 = require("./types/token-data");
 var error_types_1 = require("./types/error-types");
 /** @internal */
@@ -25,8 +26,15 @@ exports.mabKeyboardEventQueue = mabKeyboardEventQueue;
 /** @internal */
 var MiniAppBridge = /** @class */ (function () {
     function MiniAppBridge(executor) {
+        var _this = this;
+        this.isSecureStorageReady = false;
+        this.secureStorageLoadError = null;
         this.executor = executor;
         this.platform = executor.getPlatform();
+        window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
+        window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
+            return (_this.secureStorageLoadError = error_types_1.parseMiniAppError(e.detail.message));
+        });
     }
     /**
      * Success Callback method that will be called from native side
@@ -448,7 +456,7 @@ function trimBannerText(message, maxLength) {
         : message;
 }
 
-},{"./types/error-types":5,"./types/token-data":9}],2:[function(require,module,exports){
+},{"./types/error-types":5,"./types/secure-storage":9,"./types/token-data":10}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -845,6 +853,15 @@ var Platform;
 })(Platform = exports.Platform || (exports.Platform = {}));
 
 },{}],9:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var MiniAppSecureStorageEvents;
+(function (MiniAppSecureStorageEvents) {
+    MiniAppSecureStorageEvents["onReady"] = "miniappsecurestorageready";
+    MiniAppSecureStorageEvents["onLoadError"] = "miniappsecurestorageloaderror";
+})(MiniAppSecureStorageEvents = exports.MiniAppSecureStorageEvents || (exports.MiniAppSecureStorageEvents = {}));
+
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /** Token data type. */
