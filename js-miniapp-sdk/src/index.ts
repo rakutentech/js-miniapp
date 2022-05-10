@@ -31,6 +31,7 @@ import {
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
+  MiniAppSecureStorageEvents,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -69,4 +70,5 @@ export {
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
+  MiniAppSecureStorageEvents,
 };

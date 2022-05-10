@@ -4,7 +4,9 @@ import { MiniAppEvents } from '../event-types/index';
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
+  MiniAppSecureStorageEvents,
 } from '../../../js-miniapp-bridge/src/types/secure-storage';
+import { parseMiniAppError } from '../../../js-miniapp-bridge/src/types/error-types';
 
 interface SecureStorageProvider {
   setItems(items: MiniAppSecureStorageKeyValues): Promise<undefined>;
@@ -17,9 +19,9 @@ interface SecureStorageProvider {
 
   size(): Promise<MiniAppSecureStorageSize>;
 
-  onSecureStorageReady(): Promise<string>;
+  onReady(): Promise<string>;
 
-  onSecureStorageLoadError(): Promise<string>;
+  onLoadError(): Promise<string>;
 }
 
 /** @internal */
@@ -44,22 +46,26 @@ export class SecureStorageService {
     return getBridge().getSecureStorageSize();
   }
 
-  onSecureStorageReady(): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      return window.addEventListener(MiniAppEvents.SECURE_STORAGE_READY, () => {
-        resolve('success');
+  onReady(onReady: () => void) {
+    if (getBridge().isSecureStorageReady) {
+      onReady();
+    } else {
+      window.addEventListener(MiniAppSecureStorageEvents.onReady, () => {
+        onReady();
       });
-    });
+    }
   }
 
-  onSecureStorageLoadError(): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      return window.addEventListener(
-        MiniAppEvents.SECURE_STORAGE_FAILED,
-        () => {
-          resolve('success');
+  onLoadError(onLoadError: (error: MiniAppError) => void) {
+    if (getBridge().secureStorageLoadError) {
+      onLoadError(getBridge().secureStorageLoadError);
+    } else {
+      window.addEventListener(
+        MiniAppSecureStorageEvents.onLoadError,
+        (e: CustomEvent) => {
+          onLoadError(parseMiniAppError(e.detail.message));
         }
       );
-    });
+    }
   }
 }

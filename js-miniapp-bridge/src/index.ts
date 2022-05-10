@@ -41,6 +41,7 @@ import {
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
+  MiniAppSecureStorageEvents,
 } from './types/secure-storage';
 
 export {
@@ -76,4 +77,5 @@ export {
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
+  MiniAppSecureStorageEvents,
 };

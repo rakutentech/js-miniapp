@@ -11,3 +11,8 @@ export type MiniAppSecureStorageSize = {
   used: number;
   max: number;
 };
+
+export enum MiniAppSecureStorageEvents {
+  onReady = 'miniappsecurestorageready',
+  onLoadError = 'miniappsecurestorageloaderror',
+}

@@ -5,7 +5,10 @@ import HomeStateReducer from './home/reducers';
 import { grantedPermissionsReducer } from './permissions/reducers';
 import userReducer from './user/reducers';
 import { UUIDReducer } from './uuid/reducers';
-import { HostEnvironmentInfoReducer } from './landing/reducers';
+import {
+  HostEnvironmentInfoReducer,
+  SecureStorageStatusReducer,
+} from './landing/reducers';
 import { FileDownloadReducer } from './filedownload/reducers';
 import storageReducer from './secure-storage/reducers';
 
@@ -18,4 +21,5 @@ export default combineReducers({
   info: HostEnvironmentInfoReducer,
   file: FileDownloadReducer,
   secureStorage: storageReducer,
+  secureStorageStatus: SecureStorageStatusReducer,
 });

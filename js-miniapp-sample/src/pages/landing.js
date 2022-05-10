@@ -17,6 +17,7 @@ type LandingProps = {
   infoError: string,
   getHostInfo: Function,
   onSecureStorageReady: Function,
+  secureStorageStatus: string,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -83,6 +84,9 @@ const Landing = (props: LandingProps) => {
         <p className={classes.info}>
           URL Fragment: {window.location.hash || 'None'}
         </p>
+        <p className={classes.info}>
+          Secure Storage Status: {props.secureStorageStatus}
+        </p>
       </CardContent>
     </GreyCard>
   );
@@ -111,6 +115,10 @@ const mapStateToProps = (state, props) => {
     sdkVersion: state.info.sdkVersion,
     hostLocale: state.info.hostLocale,
     infoError: state.info.infoError,
+    secureStorageStatus:
+      (state.secureStorageStatus.isReady && 'Ready') ||
+      state.secureStorageStatus.error ||
+      'Not Ready',
   };
 };
 
