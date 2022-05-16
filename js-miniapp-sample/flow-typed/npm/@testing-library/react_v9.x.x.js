@@ -1,15 +1,13 @@
-// flow-typed signature: 38ccc5bbcbb54d21f37adca5cc3ed7a1
-// flow-typed version: 0b0eb4afe9/@testing-library/react_v9.x.x/flow_>=v0.104.x
+// flow-typed signature: 9745117fda5797dbf999750903c880dc
+// flow-typed version: 9f17ca11b4/@testing-library/react_v9.x.x/flow_>=v0.104.x
 
 declare module '@testing-library/react' {
-  // This type comes from
-  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L64
-  declare type ReactDOMTestUtilsThenable = {
-    then(resolve: () => mixed, reject?: () => mixed): mixed,
-    ...
-  };
-  // This type comes from
-  // https://github.com/facebook/flow/blob/v0.104.0/lib/react-dom.js#L116
+  // This type comes from react-dom_v17.x.x.js
+  declare interface ReactDOMTestUtilsThenable {
+    then(resolve: () => mixed, reject?: () => mixed): mixed;
+  }
+
+  // This type comes from react-dom_v17.x.x.js
   declare type ReactDOMTestUtilsAct = (
     callback: () => void | ReactDOMTestUtilsThenable
   ) => ReactDOMTestUtilsThenable;
@@ -133,7 +131,7 @@ declare module '@testing-library/react' {
     container?: HTMLElement,
     baseElement?: HTMLElement,
     hydrate?: boolean,
-    wrapper?: React.ComponentType,
+    wrapper?: React$ComponentType<any>,
   |};
 
   declare export type RenderOptionsWithCustomQueries<
@@ -143,17 +141,17 @@ declare module '@testing-library/react' {
     container?: HTMLElement,
     baseElement?: HTMLElement,
     hydrate?: boolean,
-    wrapper?: React.ComponentType,
+    wrapper?: React$ComponentType<any>,
   |};
 
   declare export function render(
-    ui: React.ReactElement<any>,
+    ui: React$Element<any>,
     options?: RenderOptionsWithoutCustomQueries
   ): RenderResult<>;
   declare export function render<
     CustomQueries: { [string]: (...args: Array<any>) => any, ... }
   >(
-    ui: React.ReactElement<any>,
+    ui: React$Element<any>,
     options: RenderOptionsWithCustomQueries<CustomQueries>
   ): RenderResult<CustomQueries>;
 

@@ -1,6 +1,13 @@
-import type { RequestHostInfoSuccessAction } from './actions';
+import type {
+  RequestHostInfoSuccessAction,
+  OnStorageReadySuccessAction,
+} from './actions';
 import { HostEnvironmentInfo } from 'js-miniapp-sdk';
-import { REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS } from './types';
+import {
+  REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,
+  ON_SECURE_STORAGE_READY_SUCCESS,
+  ON_SECURE_STORAGE_READY_FAILURE,
+} from './types';
 
 const defaultInfo = {};
 const HostEnvironmentInfoReducer = (
@@ -15,4 +22,29 @@ const HostEnvironmentInfoReducer = (
   }
 };
 
-export { HostEnvironmentInfoReducer };
+const defaultStorageStatusItem = null;
+const SecureStorageStatusReducer = (
+  state: ?string = defaultStorageStatusItem,
+  action: OnStorageReadySuccessAction
+) => {
+  switch (action.type) {
+    case ON_SECURE_STORAGE_READY_SUCCESS:
+      return {
+        isReady: true,
+        error: null,
+      };
+    case ON_SECURE_STORAGE_READY_FAILURE:
+      return {
+        isReady: false,
+        error: action.error,
+      };
+    default:
+      return {
+        isReady: false,
+        error: null,
+        ...state,
+      };
+  }
+};
+
+export { HostEnvironmentInfoReducer, SecureStorageStatusReducer };

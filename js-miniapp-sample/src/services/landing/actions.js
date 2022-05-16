@@ -1,11 +1,14 @@
+import MiniApp, {HostEnvironmentInfo, MiniAppError} from 'js-miniapp-sdk';
+
 import {
   REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,
   REQUEST_HOST_ENVIRONMENT_INFO_ERROR,
+  ON_SECURE_STORAGE_READY_SUCCESS,
+  ON_SECURE_STORAGE_READY_FAILURE,
 } from './types';
-import MiniApp from 'js-miniapp-sdk';
-import { HostEnvironmentInfo } from 'js-miniapp-sdk';
 
 type RequestHostInfoSuccessAction = { type: String, info: HostEnvironmentInfo };
+type OnStorageReadySuccessAction = { type: string, error?: MiniAppError };
 
 const setHostEnvironmentInfo = (): Function => {
   return (dispatch) => {
@@ -25,5 +28,28 @@ const setHostEnvironmentInfo = (): Function => {
   };
 };
 
-export { setHostEnvironmentInfo };
-export type { RequestHostInfoSuccessAction };
+const onSecureStorageReady = (): Function => {
+  return (dispatch) => {
+    return new Promise((resolve) => {
+      MiniApp.secureStorageService.onReady(() => {
+        console.log('onSecureStorageReady SuccessAction: ');
+        dispatch({
+          type: ON_SECURE_STORAGE_READY_SUCCESS,
+        });
+        return resolve();
+      });
+
+      MiniApp.secureStorageService.onLoadError((error) => {
+        console.log('onSecureStorageReady Error: ', error);
+        dispatch({
+          type: ON_SECURE_STORAGE_READY_FAILURE,
+          error: error,
+        });
+        return resolve(error);
+      });
+    });
+  };
+};
+
+export { setHostEnvironmentInfo, onSecureStorageReady };
+export type { RequestHostInfoSuccessAction, OnStorageReadySuccessAction };

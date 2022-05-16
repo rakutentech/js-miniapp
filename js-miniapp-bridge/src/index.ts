@@ -25,15 +25,24 @@ import { DownloadFileHeaders } from './types/download-file-headers';
 import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import {
-  MiniAppError,
-  AudienceNotSupportedError,
   AuthorizationFailureError,
+  AudienceNotSupportedError,
+  DownloadFailedError,
+  DownloadHttpError,
+  InvalidUrlError,
+  MiniAppError,
+  SaveFailureError,
   ScopesNotSupportedError,
-  parseMiniAppError,
-  errorTypesDescriptions,
-  MiniAppErrorType,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 } from './types/error-types';
-import { Product, PurchasedProduct } from './types/purchaseProduct';
+import {
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+  MiniAppSecureStorageEvents,
+} from './types/secure-storage';
 
 export {
   MiniAppBridge,
@@ -54,13 +63,19 @@ export {
   DownloadFileHeaders,
   Platform,
   MessageToContact,
-  MiniAppError,
-  AudienceNotSupportedError,
   AuthorizationFailureError,
+  AudienceNotSupportedError,
+  DownloadFailedError,
+  DownloadHttpError,
+  InvalidUrlError,
+  MiniAppError,
+  SaveFailureError,
   ScopesNotSupportedError,
-  parseMiniAppError,
-  errorTypesDescriptions,
-  MiniAppErrorType,
-  Product,
-  PurchasedProduct,
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
+  MiniAppSecureStorageEvents,
 };

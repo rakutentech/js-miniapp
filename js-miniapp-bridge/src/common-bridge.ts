@@ -5,29 +5,26 @@
  */
 
 import { AdTypes } from './types/ad-types';
-import { Reward } from './types/response-types';
-import { DevicePermission } from './types/device-permission';
+import { Contact } from './types/contact';
 import {
   CustomPermission,
   CustomPermissionResponse,
 } from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
-import { ScreenOrientation } from './types/screen';
-import { AccessTokenData, NativeTokenData } from './types/token-data';
-import { Contact } from './types/contact';
+import { DevicePermission } from './types/device-permission';
+import { DownloadFileHeaders } from './types/download-file-headers';
+import { HostEnvironmentInfo } from './types/host-environment-info';
 import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
-import { HostEnvironmentInfo } from './types/host-environment-info';
-import { Product, PurchasedProduct } from './types/purchaseProduct';
-import { DownloadFileHeaders } from './types/download-file-headers';
+import { Reward } from './types/response-types';
+import { ScreenOrientation } from './types/screen';
 import {
-  AudienceNotSupportedError,
-  AuthorizationFailureError,
-  MiniAppError,
-  MiniAppErrorType,
-  parseMiniAppError,
-  ScopesNotSupportedError,
-} from './types/error-types';
+  MiniAppSecureStorageEvents,
+  MiniAppSecureStorageKeyValues,
+  MiniAppSecureStorageSize,
+} from './types/secure-storage';
+import { ShareInfoType } from './types/share-info';
+import { AccessTokenData, NativeTokenData } from './types/token-data';
+import { MiniAppError, parseMiniAppError } from './types/error-types';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -75,10 +72,22 @@ export interface PlatformExecutor {
 export class MiniAppBridge {
   executor: PlatformExecutor;
   platform: string;
+  isSecureStorageReady = false;
+  secureStorageLoadError: MiniAppError | null = null;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
+
+    window.addEventListener(
+      MiniAppSecureStorageEvents.onReady,
+      () => (this.isSecureStorageReady = true)
+    );
+    window.addEventListener(
+      MiniAppSecureStorageEvents.onLoadError,
+      (e: CustomEvent) =>
+        (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
+    );
   }
 
   /**
@@ -180,12 +189,41 @@ export class MiniAppBridge {
   }
 
   /**
-   * Associating getUniqueId function to MiniAppBridge object.
+   * Deprecated method for associating getUniqueId function to MiniAppBridge object.
+   * Use `getMessagingUniqueId` or `getMauid` instead
    */
   getUniqueId() {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'getUniqueId',
+        null,
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getMessagingUniqueId function to MiniAppBridge object.
+   */
+  getMessagingUniqueId() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getUniqueId',
+        null,
+        id => resolve(id),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * Associating getMauid function to MiniAppBridge object.
+   */
+  getMauid() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getMauid',
         null,
         id => resolve(id),
         error => reject(error)
@@ -379,28 +417,7 @@ export class MiniAppBridge {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
           resolve(new AccessTokenData(nativeTokenData));
         },
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            const errorType: MiniAppErrorType =
-              MiniAppErrorType[
-                miniAppError.type as keyof typeof MiniAppErrorType
-              ];
-            switch (errorType) {
-              case MiniAppErrorType.AuthorizationFailureError:
-                return reject(new AuthorizationFailureError(miniAppError));
-              case MiniAppErrorType.AudienceNotSupportedError:
-                return reject(new AudienceNotSupportedError(miniAppError));
-              case MiniAppErrorType.ScopesNotSupportedError:
-                return reject(new ScopesNotSupportedError(miniAppError));
-              default:
-                return reject(new MiniAppError(miniAppError));
-            }
-          } catch (e) {
-            console.error(e);
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -517,22 +534,7 @@ export class MiniAppBridge {
         'getPoints',
         null,
         points => resolve(JSON.parse(points) as Points),
-        error => {
-          try {
-            const miniAppError = parseMiniAppError(error);
-            const errorType: MiniAppErrorType =
-              MiniAppErrorType[
-                miniAppError.type as keyof typeof MiniAppErrorType
-              ];
-            switch (errorType) {
-              default:
-                return reject(new MiniAppError(miniAppError));
-            }
-          } catch (e) {
-            console.error(e);
-            return reject(error);
-          }
-        }
+        error => reject(parseMiniAppError(error))
       );
     });
   }
@@ -561,24 +563,71 @@ export class MiniAppBridge {
       return this.executor.exec(
         'downloadFile',
         { filename, url, headers },
-        id => resolve(id),
-        error => reject(error)
+        id => {
+          if (id !== 'null' && id !== null) {
+            resolve(id);
+          } else {
+            resolve(null);
+          }
+        },
+        error => reject(parseMiniAppError(error))
       );
     });
   }
 
-  /**
-   * Associating purchaseItemWith function to MiniAppBridge object.
-   * @param {string} id Item id that user wanted to purchase
-   */
-  purchaseItemWith(id: string) {
-    return new Promise<PurchasedProduct>((resolve, reject) => {
+  setSecureStorage(items: MiniAppSecureStorageKeyValues) {
+    return new Promise<undefined>((resolve, reject) => {
       return this.executor.exec(
-        'purchaseItem',
-        { itemId: id },
-        purchasedProduct =>
-          resolve(JSON.parse(purchasedProduct) as PurchasedProduct),
-        error => reject(error)
+        'setSecureStorageItems',
+        { secureStorageItems: items },
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  getSecureStorageItem(key: string) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageItem',
+        { secureStorageKey: key },
+        responseData => resolve(responseData),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  removeSecureStorageItems(keys: [string]) {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'removeSecureStorageItems',
+        { secureStorageKeyList: keys },
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  clearSecureStorage() {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'clearSecureStorage',
+        null,
+        success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  getSecureStorageSize() {
+    return new Promise<MiniAppSecureStorageSize>((resolve, reject) => {
+      return this.executor.exec(
+        'getSecureStorageSize',
+        null,
+        responseData => {
+          resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
+        },
+        error => reject(parseMiniAppError(error))
       );
     });
   }
