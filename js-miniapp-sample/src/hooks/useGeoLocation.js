@@ -45,7 +45,7 @@ const useGeoLocation = () => {
             setState({
               isWatching: false,
               isLoading: false,
-              error: 'Location Disabled'
+              error: 'Location Disabled',
             });
           },
           {
