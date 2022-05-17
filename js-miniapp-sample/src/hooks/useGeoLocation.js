@@ -39,10 +39,14 @@ const useGeoLocation = () => {
               },
             });
           },
-          (error) => {
+          (_error) => {
             clearTimeout(timeout);
 
-            throw error;
+            setState({
+              isWatching: false,
+              isLoading: false,
+              error: 'Location Disabled',
+            });
           },
           {
             enableHighAccuracy: true,
