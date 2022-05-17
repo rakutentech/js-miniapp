@@ -39,7 +39,7 @@ const useGeoLocation = () => {
               },
             });
           },
-          (error) => {
+          (_error) => {
             clearTimeout(timeout);
 
             setState({
