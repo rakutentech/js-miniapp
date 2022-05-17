@@ -14,8 +14,9 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
-import { PurchaseItemService } from './modules/purchase-item';
 import { getBridge } from './utils';
+import { deprecate } from 'util';
+import { SecureStorageService } from './modules/secure-storage';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -26,6 +27,18 @@ interface MiniAppFeatures {
    * @returns The Promise of provided id of mini app from injected side.
    */
   getUniqueId(): Promise<string>;
+
+  /**
+   * Request the mini app's messaging unique id from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getMessagingUniqueId(): Promise<string>;
+
+  /**
+   * Request the mini app's mauid from the host app.
+   * @returns The Promise of provided id of mini app from injected side.
+   */
+  getMauid(): Promise<string>;
 
   /**
    * Request the location permission from the host app.
@@ -79,8 +92,9 @@ interface MiniAppFeatures {
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo>;
 
   /**
-   * Request a file download
-   * @returns Promise of the downloaded files name
+   * Request to download a file and save to the user's device.
+   * @returns Promise of the downloaded files name. Response will be `null` in case the user cancelled the download.
+   * Can be rejected with {@link MiniAppError}, {@link DownloadFailedError}, {@link DownloadHttpError}, {@link InvalidUrlError}, or {@link SaveFailureError}.
    */
   downloadFile(
     filename: string,
@@ -140,14 +154,25 @@ interface Platform {
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
-  purchaseService = new PurchaseItemService();
+  secureStorageService = new SecureStorageService();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
   }
 
+  /**
+   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
+   */
   getUniqueId(): Promise<string> {
     return getBridge().getUniqueId();
+  }
+
+  getMessagingUniqueId(): Promise<string> {
+    return getBridge().getMessagingUniqueId();
+  }
+
+  getMauid(): Promise<string> {
+    return getBridge().getMauid();
   }
 
   requestLocationPermission(permissionDescription = ''): Promise<string> {

@@ -1,28 +1,46 @@
 import type { UUIDAction } from './actions';
-import { SET_UUID, UUID_FETCH_ERROR } from './types';
+import {
+  SET_MESSAGING_UNIQUE_ID,
+  SET_MAUID,
+  MESSAGING_UNIQUE_ID_FETCH_ERROR,
+  MAUID_FETCH_ERROR,
+} from './types';
 
 type UUIDState = {
-  +uuid: ?string,
+  +messagingUniqueId: ?string,
+  +mauid: ?string,
 };
 
 const defaultState: UUIDState = {
-  uuid: undefined,
-  uuidError: undefined,
+  messagingUniqueId: undefined,
+  mauid: undefined,
+  messagingUniqueIdError: undefined,
+  mauidError: undefined,
 };
 
 const UUIDReducer = (
   state: UUIDState = defaultState,
   action: UUIDAction = {}
 ): UUIDState => {
-  if (action.type === SET_UUID) {
+  if (action.type === SET_MESSAGING_UNIQUE_ID) {
     return {
       ...defaultState,
-      uuid: action.payload,
+      messagingUniqueId: action.payload,
     };
-  } else if (action.type === UUID_FETCH_ERROR) {
+  } else if (action.type === SET_MAUID) {
     return {
       ...defaultState,
-      uuidError: action.error,
+      mauid: action.payload,
+    };
+  } else if (action.type === MESSAGING_UNIQUE_ID_FETCH_ERROR) {
+    return {
+      ...defaultState,
+      messagingUniqueIdError: action.error,
+    };
+  } else if (action.type === MAUID_FETCH_ERROR) {
+    return {
+      ...defaultState,
+      mauidError: action.error,
     };
   }
   return state;

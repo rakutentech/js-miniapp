@@ -11,16 +11,20 @@ import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
   DevicePermission,
-  errorTypesDescriptions,
+  DownloadFailedError,
+  DownloadHttpError,
+  InvalidUrlError,
   MessageToContact,
   MiniAppError,
-  MiniAppErrorType,
+  SaveFailureError,
   ScopesNotSupportedError,
   ScreenOrientation,
 } from '../src';
 
 /* tslint:disable:no-any */
-const window: any = {};
+const window: any = {
+  addEventListener: sinon.stub(),
+};
 (global as any).window = window;
 
 const sandbox = sinon.createSandbox();
@@ -117,6 +121,46 @@ describe('getUniqueId', () => {
   });
 });
 
+describe('getMessagingUniqueId', () => {
+  it('will parse the Contact ID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'message_unique_id');
+
+    return expect(bridge.getMessagingUniqueId()).to.eventually.deep.equal(
+      'message_unique_id'
+    );
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
+
+    return expect(
+      bridge.getMessagingUniqueId()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'hostAppError: an error has occured'
+    );
+  });
+});
+
+describe('getMauid', () => {
+  it('will parse the MAUID response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'mauid');
+
+    return expect(bridge.getMauid()).to.eventually.deep.equal('mauid');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, 'hostAppError: an error has occured');
+
+    return expect(bridge.getMauid()).to.eventually.be.rejected.and.deep.equal(
+      'hostAppError: an error has occured'
+    );
+  });
+});
+
 describe('requestPermission', () => {
   it('will parse the Unique ID response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
@@ -169,24 +213,18 @@ describe('getToken', () => {
       '{ "type": "AudienceNotSupportedError", "message": null }'
     );
 
-    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
-      .to.eventually.be.rejected.and.be.an.instanceof(AudienceNotSupportedError)
-      .and.have.property(
-        'message',
-        errorTypesDescriptions.get(MiniAppErrorType.AudienceNotSupportedError)
-      );
+    return expect(
+      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.be.rejected.and.be.an.instanceof(AudienceNotSupportedError);
   });
 
   it('will parse the AccessToken ScopesNotSupportedError JSON response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "type": "ScopesNotSupportedError" }');
 
-    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
-      .to.eventually.be.rejected.and.be.an.instanceof(ScopesNotSupportedError)
-      .and.have.property(
-        'message',
-        errorTypesDescriptions.get(MiniAppErrorType.ScopesNotSupportedError)
-      );
+    return expect(
+      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.be.rejected.and.be.an.instanceof(ScopesNotSupportedError);
   });
 
   it('will parse the AccessToken AuthorizationFailureError JSON response', () => {
@@ -196,9 +234,9 @@ describe('getToken', () => {
       '{ "type": "AuthorizationFailureError", "message": "test message" }'
     );
 
-    return expect(bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2']))
-      .to.eventually.be.rejected.and.be.an.instanceof(AuthorizationFailureError)
-      .and.have.property('message', 'test message');
+    return expect(
+      bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.be.rejected.and.be.an.instanceof(AuthorizationFailureError);
   });
 
   it('will parse the AccessToken error JSON response', () => {
@@ -228,7 +266,7 @@ describe('getToken', () => {
 
     return expect(
       bridge.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
-    ).to.eventually.be.rejected.and.to.equal('an error occurred');
+    ).to.eventually.be.rejected.and.to.be.an.instanceOf(MiniAppError);
   });
 });
 
@@ -651,12 +689,51 @@ describe('downloadFile', () => {
     ).to.eventually.deep.equal('test.jpg');
   });
 
-  it('will parse the Error response', () => {
+  const fileDownloadErrorRequest = (errorJson: string) => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+    mockExecutor.exec.callsArgWith(3, errorJson);
 
-    return expect(bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {}))
-      .to.eventually.be.rejected;
+    return bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {});
+  };
+
+  it('will parse the Error response', () => {
+    return expect(
+      fileDownloadErrorRequest('{ "message": "message"}')
+    ).to.eventually.be.rejected.and.to.contain({ message: 'message' });
+  });
+
+  it('will parse DownloadFailedError response', () => {
+    return expect(
+      fileDownloadErrorRequest(
+        '{ "type": "DownloadFailedError", "message": "test message" }'
+      )
+    ).to.eventually.be.rejected.and.be.an.instanceof(DownloadFailedError);
+  });
+
+  it('will parse InvalidUrlError response', () => {
+    return expect(
+      fileDownloadErrorRequest(
+        '{ "type": "InvalidUrlError", "message": "test message" }'
+      )
+    ).to.eventually.be.rejected.and.be.an.instanceof(InvalidUrlError);
+  });
+
+  it('will parse SaveFailureError response', () => {
+    return expect(
+      fileDownloadErrorRequest(
+        '{ "type": "SaveFailureError", "message": "test message" }'
+      )
+    ).to.eventually.be.rejected.and.be.an.instanceof(SaveFailureError);
+  });
+
+  it('will parse DownloadHttpError response', () => {
+    return expect(
+      fileDownloadErrorRequest(
+        '{ "type": "DownloadHttpError", "code": 400, "message": "test message" }'
+      )
+    )
+      .to.eventually.be.rejected.and.be.an.instanceof(DownloadHttpError)
+      .and.to.contain({ code: 400 });
   });
 });
 

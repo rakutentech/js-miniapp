@@ -1,27 +1,28 @@
 // @flow
-import React, { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 
 import {
   Button,
   CardContent,
   CardActions,
-  TextField,
   CircularProgress,
   makeStyles,
+  TextField,
 } from '@material-ui/core';
-
-import GreyCard from '../components/GreyCard';
-import { connect } from 'react-redux';
-import { requestCustomPermissions } from '../services/permissions/actions';
 import {
   CustomPermission,
   CustomPermissionResult,
   CustomPermissionName,
   CustomPermissionStatus,
   DownloadFileHeaders,
+  MiniAppError,
 } from 'js-miniapp-sdk';
+import { connect } from 'react-redux';
 
+import { pandaLogo } from '../assets/images/base64';
+import GreyCard from '../components/GreyCard';
 import { requestDownloadFile } from '../services/filedownload/actions';
+import { requestCustomPermissions } from '../services/permissions/actions';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -68,53 +69,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const initialState = {
-  isLoading: false,
-  isError: false,
-  hasRequestedPermissions: false,
-};
-
-type State = {
-  isLoading: ?boolean,
-  isError: ?boolean,
-  hasRequestedPermissions: boolean,
-};
-
-type Action = {
-  type: string,
-};
-
-export const dataFetchReducer = (state: State, action: Action) => {
-  switch (action.type) {
-    case 'FILE_DOWNLOAD_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-        hasRequestedPermissions: false,
-      };
-    case 'FILE_DOWNLOAD_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        hasRequestedPermissions: true,
-      };
-    case 'FILE_DOWNLOAD_FAILURE':
-      return {
-        ...initialState,
-        isLoading: false,
-        isError: true,
-      };
-
-    default:
-      throw Error('Unknown action type');
-  }
-};
-
 type FileDownloadProps = {
   permissions: CustomPermissionName[],
   filename: string,
+  isLoading: boolean,
+  error: MiniAppError,
   downloadFile: (
     filename: string,
     url: string,
@@ -126,9 +85,9 @@ type FileDownloadProps = {
 };
 
 const FileDownload = (props: FileDownloadProps) => {
-  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
   let [isPermissionGranted, setIsPermissionGranted] = useState(true);
+  let [dataUri, setDataUri] = useState(pandaLogo);
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
@@ -148,11 +107,9 @@ const FileDownload = (props: FileDownloadProps) => {
           .map((permission) => permission.name)
       )
       .then((permissions) =>
-        Promise.all([
-          hasPermission(CustomPermissionName.FILE_DOWNLOAD, permissions)
-            ? startFileDownload(url, fileName)
-            : setIsPermissionGranted(false),
-        ])
+        hasPermission(CustomPermissionName.FILE_DOWNLOAD, permissions)
+          ? startFileDownload(url, fileName)
+          : setIsPermissionGranted(false)
       )
       .catch((miniAppError) => {
         console.error(miniAppError);
@@ -170,50 +127,42 @@ const FileDownload = (props: FileDownloadProps) => {
 
   function startFileDownload(url, fileName) {
     setIsPermissionGranted(true);
-    props
-      .downloadFile(fileName, url, { token: 'test' })
-      .then(() => dispatch({ type: 'FILE_DOWNLOAD_SUCCESS' }))
-      .catch((e) => {
-        console.error(e);
-        dispatch({ type: 'FILE_DOWNLOAD_FAILURE' });
-      });
+    return props.downloadFile(fileName, url, { token: 'test' });
   }
 
-  function handleDownloadClick(e, url, fileName) {
-    if (!state.isLoading) {
-      e.preventDefault();
-      dispatch({ type: 'FILE_DOWNLOAD_INIT' });
+  function handleDownloadClick(url, fileName) {
+    if (!props.isLoading) {
       onDownloadFile(url, fileName);
     }
   }
 
   function validateName(name) {
-    const hasDeniedFileDownloadPermission =
-      state.hasRequestedPermissions &&
-      !hasPermission(CustomPermissionName.FILE_DOWNLOAD);
-    if (hasDeniedFileDownloadPermission) {
-      return 'File Permission denied';
-    }
-    if (name !== undefined && props.filename.length > 0) {
+    if (name !== undefined && props.filename && props.filename.length > 0) {
       return name;
     }
     return '-';
   }
 
   function DownloadDisplay() {
-    const hasDeniedFileDownloadPermission =
-      state.hasRequestedPermissions &&
-      !hasPermission(CustomPermissionName.FILE_DOWNLOAD);
     return (
       <TextField
         variant="outlined"
         disabled={true}
         className={classes.formInput}
         id="input-points-term"
-        error={state.isError || hasDeniedFileDownloadPermission}
         label={'Filename (last download)'}
         value={validateName(props.filename)}
       />
+    );
+  }
+
+  function renderButton(text, id, onClick) {
+    return (
+      <CardActions className={classes.actions}>
+        <Button variant="contained" color="primary" onClick={onClick} id={id}>
+          {text}
+        </Button>
+      </CardActions>
     );
   }
 
@@ -221,95 +170,66 @@ const FileDownload = (props: FileDownloadProps) => {
     <div className={classes.scrollable}>
       <GreyCard className={classes.card}>
         <CardContent className={classes.content}>Download Files</CardContent>
-        {DownloadDisplay()}
-        {state.isLoading && (
-          <CircularProgress size={20} className={classes.buttonProgress} />
-        )}
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleDownloadClick(
-                e,
-                'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
-                'sample.jpg'
-              );
-            }}
-          >
-            Download Image
-          </Button>
-        </CardActions>
-
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleDownloadClick(
-                e,
-                'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
-                'sample.zip'
-              );
-            }}
-          >
-            Download ZIP
-          </Button>
-        </CardActions>
-
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleDownloadClick(
-                e,
-                'https://filesamples.com/samples/audio/mp3/sample3.mp3',
-                'sample.mp3'
-              );
-            }}
-          >
-            Download MP3
-          </Button>
-        </CardActions>
-
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleDownloadClick(
-                e,
-                'https://filesamples.com/samples/document/csv/sample4.csv',
-                'sample.csv'
-              );
-            }}
-          >
-            Download CSV
-          </Button>
-        </CardActions>
-
-        <CardActions className={classes.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => {
-              handleDownloadClick(
-                e,
-                'https://filesamples.com/samples/video/mov/sample_960x540.mov',
-                'sample.mov'
-              );
-            }}
-          >
-            Download MOV
-          </Button>
-        </CardActions>
 
         <div className={classes.info}>
           <p>
             {!isPermissionGranted && '"FILE_DOWNLOAD" permission not granted.'}
+            {props.error && props.error.message}
           </p>
         </div>
+
+        {DownloadDisplay()}
+
+        {props.isLoading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
+
+        {renderButton('Download Image', 'button-download-image', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
+            'sample.jpg'
+          );
+        })}
+
+        {renderButton('Download ZIP', 'button-download-zip', () => {
+          handleDownloadClick(
+            'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
+            'sample.zip'
+          );
+        })}
+
+        {renderButton('Download MP3', 'button-download-mp3', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/audio/mp3/sample3.mp3',
+            'sample.mp3'
+          );
+        })}
+
+        {renderButton('Download CSV', 'button-download-csv', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/document/csv/sample4.csv',
+            'sample.csv'
+          );
+        })}
+
+        {renderButton('Download MOV', 'button-download-mov', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/video/mov/sample_960x540.mov',
+            'sample.mov'
+          );
+        })}
+
+        <TextField
+          variant="outlined"
+          className={classes.formInput}
+          id="input-base64"
+          label={'Base64 data string'}
+          value={dataUri}
+          onChange={(event) => setDataUri(event.target.value)}
+        />
+        {renderButton('Download Base64 Data', 'button-download-base64', () => {
+          handleDownloadClick(dataUri, 'panda.png');
+        })}
       </GreyCard>
     </div>
   );
@@ -319,6 +239,8 @@ const mapStateToProps = (state) => {
   return {
     permissions: state.permissions,
     filename: state.file.filename,
+    error: state.file.error,
+    isLoading: state.file.isLoading,
   };
 };
 
