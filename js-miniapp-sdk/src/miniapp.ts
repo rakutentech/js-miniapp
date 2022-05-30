@@ -11,6 +11,7 @@ import {
   DownloadFileHeaders,
   HostEnvironmentInfo,
   Platform as HostPlatform,
+  CloseAlertInfo,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -101,6 +102,11 @@ interface MiniAppFeatures {
     url: string,
     headers?: DownloadFileHeaders
   ): Promise<string>;
+
+  /**
+   * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
+   */
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<undefined>;
 }
 
 /**
@@ -265,5 +271,9 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     headers: DownloadFileHeaders = {}
   ): Promise<string> {
     return getBridge().downloadFile(filename, url, headers);
+  }
+
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<undefined> {
+    return getBridge().setCloseAlert(alertInfo);
   }
 }
