@@ -153,7 +153,7 @@ const CloseConfirmAlert = () => {
     MiniApp.setCloseAlert(alert)
       .then(() => {
         console.log('Success');
-        alert("Saved")
+        alert('Saved');
       })
       .catch((error) => {
         console.log('Error: ', error);
