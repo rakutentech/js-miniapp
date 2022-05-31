@@ -11,8 +11,7 @@ import {
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { red } from '@material-ui/core/colors';
-import { CloseAlertInfo } from 'js-miniapp-sdk';
-import MiniApp from 'js-miniapp-sdk';
+import { MiniApp, CloseAlertInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
