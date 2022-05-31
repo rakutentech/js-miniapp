@@ -79,5 +79,5 @@ export {
   SecureStorageUnavailableError,
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
-  CloseAlertInfo
+  CloseAlertInfo,
 };
