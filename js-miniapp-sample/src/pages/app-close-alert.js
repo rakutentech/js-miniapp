@@ -1,4 +1,4 @@
-import React, { useRef, useState, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import {
   Button,
   Container,
@@ -10,7 +10,7 @@ import {
 
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { green, red } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import { CloseAlertInfo } from 'js-miniapp-sdk';
 import MiniApp from 'js-miniapp-sdk';
 
