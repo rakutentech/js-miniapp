@@ -145,7 +145,7 @@ function CloseConfirmAlert() {
 
   function setMiniAppCloseAlert() {
     const alert: CloseAlertInfo = {
-      shouldDisplay: true,
+      shouldDisplay: checked,
       title: title,
       description: description,
     };

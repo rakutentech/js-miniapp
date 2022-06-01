@@ -635,7 +635,6 @@ export class MiniAppBridge {
 
   /**
    * @param alertInfo Close confirmation alert info.
-   * @returns Promise resolves with the contact id received a message.
    * @see {setCloseAlert}
    */
   setCloseAlert(alertInfo: CloseAlertInfo) {
