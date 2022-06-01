@@ -11,7 +11,7 @@ import {
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { red } from '@material-ui/core/colors';
-import { MiniApp, CloseAlertInfo } from 'js-miniapp-sdk';
+import MiniApp, { CloseAlertInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,7 +109,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
   }
 };
 
-const CloseConfirmAlert = () => {
+function CloseConfirmAlert() {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
 
   const classes = useStyles();
@@ -122,7 +122,7 @@ const CloseConfirmAlert = () => {
     setChecked(event.target.checked);
   };
 
-  function setCloseAlert() {
+  function closeAlert() {
     if (!isTextFieldValuesValid(title)) {
       dispatch({
         type: 'INPUT_FAILURE',
@@ -228,7 +228,7 @@ const CloseConfirmAlert = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => setCloseAlert()}
+            onClick={() => closeAlert()}
           >
             Save
           </Button>
