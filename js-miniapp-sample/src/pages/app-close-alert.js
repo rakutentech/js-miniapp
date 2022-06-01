@@ -236,7 +236,7 @@ function CloseConfirmAlert() {
       </Grid>
     </Container>
   );
-};
+}
 
 export { CloseConfirmAlert };
 export default CloseConfirmAlert;
