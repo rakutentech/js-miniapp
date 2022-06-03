@@ -18,6 +18,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
+import NotificationImportantOutlinedIcon from '@material-ui/icons/NotificationImportantOutlined';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
@@ -37,6 +38,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import SecureStorageComponent from './pages/secure-storage';
+import { CloseConfirmAlert } from './pages/app-close-alert';
 
 const homeItem = [
   {
@@ -149,6 +151,12 @@ const appItems = [
     label: 'SecureStorage',
     navLink: '/secure-storage',
     component: SecureStorageComponent,
+  },
+  {
+    icon: <NotificationImportantOutlinedIcon />,
+    label: 'Close Alert',
+    navLink: '/close-confirm-alert',
+    element: <CloseConfirmAlert />,
   },
 ];
 

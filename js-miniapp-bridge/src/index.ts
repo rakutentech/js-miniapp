@@ -24,6 +24,7 @@ import { HostEnvironmentInfo } from './types/host-environment-info';
 import { DownloadFileHeaders } from './types/download-file-headers';
 import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
+import { CloseAlertInfo } from './types/close-alert';
 import {
   AuthorizationFailureError,
   AudienceNotSupportedError,
@@ -78,4 +79,5 @@ export {
   SecureStorageUnavailableError,
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
+  CloseAlertInfo,
 };

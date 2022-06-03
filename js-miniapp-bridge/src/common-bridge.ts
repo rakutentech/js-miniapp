@@ -17,6 +17,7 @@ import { MessageToContact } from './types/message-to-contact';
 import { Points } from './types/points';
 import { Reward } from './types/response-types';
 import { ScreenOrientation } from './types/screen';
+import { CloseAlertInfo } from './types/close-alert';
 import {
   MiniAppSecureStorageEvents,
   MiniAppSecureStorageKeyValues,
@@ -627,6 +628,21 @@ export class MiniAppBridge {
         responseData => {
           resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
         },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * @param alertInfo Close confirmation alert info.
+   * @see {setCloseAlert}
+   */
+  setCloseAlert(alertInfo: CloseAlertInfo) {
+    return new Promise<undefined>((resolve, reject) => {
+      return this.executor.exec(
+        'setCloseAlert',
+        { closeAlertInfo: alertInfo },
+        success => resolve(undefined),
         error => reject(parseMiniAppError(error))
       );
     });
