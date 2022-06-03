@@ -421,6 +421,16 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
+    /**
+     * @param alertInfo Close confirmation alert info.
+     * @see {setCloseAlert}
+     */
+    MiniAppBridge.prototype.setCloseAlert = function (alertInfo) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('setCloseAlert', { closeAlertInfo: alertInfo }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
