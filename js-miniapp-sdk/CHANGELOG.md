@@ -1,4 +1,8 @@
 ## CHANGELOG
+### 1.15.0 (TBD)
+- **Feature:** Added `setCloseAlert(alertInfo: CloseAlertInfo)` interface support to Mini Apps share info about Close confirm alert
+
+---
 ### 1.14.0 (2022-04-12)
 - **Feature:** Added `downloadFile(filename, url, headers)` to download and save the file with proper filename
 

@@ -218,6 +218,13 @@ const FileDownload = (props: FileDownloadProps) => {
           );
         })}
 
+        {renderButton('Download Image - Dot', 'button-download-image', () => {
+          handleDownloadClick(
+            'https://filesamples.com/samples/image/jpg/sample_640%C3%97426.jpg',
+            'sample.jun-2022.test.jpg'
+          );
+        })}
+
         <TextField
           variant="outlined"
           className={classes.formInput}
