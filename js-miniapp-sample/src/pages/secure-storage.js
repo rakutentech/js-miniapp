@@ -236,30 +236,58 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function setSecureStorageButtonClick(e) {
-    if (isTextFieldValuesValid()) {
-      if (!state.isLoading) {
-        dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
-        const keyValuePair = {};
-        keyValuePair[storeKey] = storeKeyValue;
-        keyValuePair[storeKey1] = storeKeyValue1;
-        Object.keys(keyValuePair).forEach((key) => {
-          if (!keyValuePair[key]) delete keyValuePair[key];
-        });
-        props
-          .requestSetItems(JSON.stringify(keyValuePair))
-          .then((response) => {
-            console.log('Page - SetItems - Success', response);
-            dispatch({
-              type: 'FETCH_SUCCESS',
-              miniAppError: null,
-              inputError: null,
-            });
-          })
-          .catch((miniAppError) => {
-            console.log('Page - SetItems - Error: ', miniAppError);
-            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+    if (
+      isKeyAndValueEmpty(storeKey, storeKeyValue) &&
+      isKeyAndValueEmpty(storeKey1, storeKeyValue1)
+    ) {
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Please enter Key and Value',
+      });
+      return;
+    }
+
+    if (
+      isValidKeyValue(storeKey, storeKeyValue) &&
+      isValidKeyValue(storeKey1, storeKeyValue1)
+    ) {
+      dispatch({ type: 'RESET', miniAppError: null, inputError: null });
+      saveItems();
+    } else {
+      console.log('ERROR');
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Please enter both Key and Value',
+      });
+      return;
+    }
+  }
+
+  function saveItems() {
+    if (!state.isLoading) {
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
+      const keyValuePair = {};
+      keyValuePair[storeKey] = storeKeyValue;
+      keyValuePair[storeKey1] = storeKeyValue1;
+      Object.keys(keyValuePair).forEach((key) => {
+        if (!keyValuePair[key]) delete keyValuePair[key];
+      });
+      props
+        .requestSetItems(JSON.stringify(keyValuePair))
+        .then((response) => {
+          console.log('Page - SetItems - Success', response);
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            miniAppError: null,
+            inputError: null,
           });
-      }
+        })
+        .catch((miniAppError) => {
+          console.log('Page - SetItems - Error: ', miniAppError);
+          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+        });
     }
   }
 
@@ -355,24 +383,21 @@ function SecureStorageComponent(props: SecureStorageProps) {
     }
   }
 
-  function isTextFieldValuesValid() {
-    if (isEmpty(storeKeyValue)) {
-      dispatch({
-        type: 'INPUT_FAILURE',
-        miniAppError: null,
-        inputError: 'Key cannot be empty',
-      });
-      return false;
-    } else if (isEmpty(storeKeyValue)) {
-      dispatch({
-        type: 'INPUT_FAILURE',
-        miniAppError: null,
-        inputError: 'Value cannot be empty',
-      });
-      return false;
-    } else {
+  function isKeyAndValueEmpty(key, value) {
+    if (isEmpty(key) && isEmpty(value)) {
       return true;
+    } else {
+      return false;
     }
+  }
+
+  function isValidKeyValue(key, value) {
+    if (isEmpty(key) && !isEmpty(value)) {
+      return false;
+    } else if (!isEmpty(key) && isEmpty(value)) {
+      return false;
+    }
+    return true;
   }
 
   function SetSecureStorageCardActionsForm() {
@@ -592,8 +617,9 @@ function SecureStorageComponent(props: SecureStorageProps) {
         )}
         {!state.isLoading && !state.isError && state.isSuccess && props.size && (
           <Typography variant="body1" className={classes.red}>
-            <div>Maximum Available: {props.size.max}</div>
+            <div>Maximum Size: {props.size.max}</div>
             <div>Used Space: {props.size.used}</div>
+            <div>Available: {props.size.max - props.size.used}</div>
           </Typography>
         )}
         {!state.isLoading && !state.isError && state.isStorageCleaned && (
@@ -609,6 +635,17 @@ function SecureStorageComponent(props: SecureStorageProps) {
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <Button
+          onClick={pushRandom5kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 5k Records
+        </Button>
+        <br />
+        <Button
           onClick={pushRandom10kRecords}
           variant="contained"
           color="primary"
@@ -618,17 +655,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
         >
           Push 10k Records
         </Button>
-        <br />
-        <Button
-          onClick={pushRandom50kRecords}
-          variant="contained"
-          color="primary"
-          classes={{ root: classes.button }}
-          className={buttonClassname}
-          disabled={state.isLoading}
-        >
-          Push 50k Records
-        </Button>
+
         <br />
         <Button
           onClick={pushRandom100kRecords}
@@ -658,15 +685,15 @@ function SecureStorageComponent(props: SecureStorageProps) {
     );
   }
 
-  function pushRandom10kRecords(e) {
+  function pushRandom5kRecords(e) {
     if (!state.isLoading) {
-      pushRandomRecords('JS Sample - ', 100000);
+      pushRandomRecords('', 5000);
     }
   }
 
-  function pushRandom50kRecords(e) {
+  function pushRandom10kRecords(e) {
     if (!state.isLoading) {
-      pushRandomRecords('', 50000);
+      pushRandomRecords('JS Sample - ', 10000);
     }
   }
 
@@ -680,23 +707,23 @@ function SecureStorageComponent(props: SecureStorageProps) {
     if (!state.isLoading) {
       dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       const keyValuePair = {};
-      for (let i = 0; i < maxCount; i++) {
-        keyValuePair[prefix + i] = i;
-        props
-          .requestSetItems(JSON.stringify(keyValuePair))
-          .then((response) => {
-            console.log('Page - SetItems - Success', response);
-            dispatch({
-              type: 'FETCH_SUCCESS',
-              miniAppError: null,
-              inputError: null,
-            });
-          })
-          .catch((miniAppError) => {
-            console.log('Page - SetItems - Error: ', miniAppError);
-            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
-          });
+      for (let i = 0; i < 10; i++) {
+        keyValuePair[prefix + i] = JSON.stringify(i);
       }
+      props
+        .requestSetItems(JSON.stringify(keyValuePair))
+        .then((response) => {
+          console.log('Page - SetItems - Success', response);
+          dispatch({
+            type: 'FETCH_SUCCESS',
+            miniAppError: null,
+            inputError: null,
+          });
+        })
+        .catch((miniAppError) => {
+          console.log('Page - SetItems - Error: ', miniAppError);
+          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+        });
     }
   }
   const [value, setValue] = React.useState('1');
