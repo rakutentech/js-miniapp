@@ -1,13 +1,11 @@
 import {
   Button,
-  Card,
   CircularProgress,
   Container,
   FormGroup,
   TextField,
   Typography,
 } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import { green, red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
@@ -16,7 +14,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
   clear,
@@ -380,7 +378,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
   function SetSecureStorageCardActionsForm() {
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
-        <Card>
+        <Fragment>
           <TextField
             variant="outlined"
             className={classes.formInput}
@@ -397,9 +395,9 @@ function SecureStorageComponent(props: SecureStorageProps) {
             value={storeKeyValue}
             onChange={(e) => setStoreKeyValue(e.target.value)}
           />
-        </Card>
+        </Fragment>
         <br />
-        <Card>
+        <Fragment>
           <TextField
             variant="outlined"
             className={classes.formInput}
@@ -416,7 +414,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
             value={storeKeyValue1}
             onChange={(e) => setStoreKeyValue1(e.target.value)}
           />
-        </Card>
+        </Fragment>
         <br />
         <br />
         <Button
@@ -607,6 +605,100 @@ function SecureStorageComponent(props: SecureStorageProps) {
     );
   }
 
+  function QA() {
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <Button
+          onClick={pushRandom10kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 10k Records
+        </Button>
+        <br />
+        <Button
+          onClick={pushRandom50kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 50k Records
+        </Button>
+        <br />
+        <Button
+          onClick={pushRandom100kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 100k Records
+        </Button>
+
+        {state.isLoading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
+      </FormGroup>
+    );
+  }
+
+  function pushRandom10kRecords(e) {
+    if (!state.isLoading) {
+      pushRandomRecords('JS Sample - ', 100000);
+    }
+  }
+
+  function pushRandom50kRecords(e) {
+    if (!state.isLoading) {
+      pushRandomRecords('', 50000);
+    }
+  }
+
+  function pushRandom100kRecords(e) {
+    if (!state.isLoading) {
+      pushRandomRecords('JS - ', 100000);
+    }
+  }
+
+  function pushRandomRecords(prefix, maxCount) {
+    if (!state.isLoading) {
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
+      const keyValuePair = {};
+      for (let i = 0; i < maxCount; i++) {
+        keyValuePair[prefix + i] = i;
+        props
+          .requestSetItems(JSON.stringify(keyValuePair))
+          .then((response) => {
+            console.log('Page - SetItems - Success', response);
+            dispatch({
+              type: 'FETCH_SUCCESS',
+              miniAppError: null,
+              inputError: null,
+            });
+          })
+          .catch((miniAppError) => {
+            console.log('Page - SetItems - Error: ', miniAppError);
+            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+          });
+      }
+    }
+  }
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event: Event, newValue: string) => {
@@ -616,22 +708,24 @@ function SecureStorageComponent(props: SecureStorageProps) {
 
   return (
     <Container className={classes.wrapperContainer}>
-      <Box sx={{ width: '100%', typography: 'body1' }}>
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={handleChange}>
-              <Tab label="Set" value="1" />
-              <Tab label="Get" value="2" />
-              <Tab label="Remove" value="3" />
-              <Tab label="Others" value="4" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">{SetSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="2">{GetSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="3">{RemoveSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="4">{OtherFunctionalitiesCardActionsForm()}</TabPanel>
-        </TabContext>
-      </Box>
+      <TabContext value={value}>
+        <TabList
+          variant="scrollable"
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Set" value="1" />
+          <Tab label="Get" value="2" />
+          <Tab label="Remove" value="3" />
+          <Tab label="Others" value="4" />
+          <Tab label="QA" value="5" />
+        </TabList>
+        <TabPanel value="1">{SetSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="2">{GetSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="3">{RemoveSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="4">{OtherFunctionalitiesCardActionsForm()}</TabPanel>
+        <TabPanel value="5">{QA()}</TabPanel>
+      </TabContext>
     </Container>
   );
 }
