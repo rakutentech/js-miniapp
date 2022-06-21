@@ -261,7 +261,6 @@ function SecureStorageComponent(props: SecureStorageProps) {
         miniAppError: null,
         inputError: 'Please enter both Key and Value',
       });
-      return;
     }
   }
 
@@ -390,9 +389,8 @@ function SecureStorageComponent(props: SecureStorageProps) {
   function isKeyAndValueEmpty(key, val) {
     if (isEmpty(key) && isEmpty(val)) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   function isValidKeyValue(key, val) {
