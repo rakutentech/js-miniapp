@@ -86,7 +86,7 @@ const UriSchemes = () => {
       return;
     }
 
-    var url = new URL(EXTERNAL_WEBVIEW_URL + params);
+    let url = new URL(EXTERNAL_WEBVIEW_URL + params);
 
     url.search = url.search
       .concat(url.search ? '&' : '?')

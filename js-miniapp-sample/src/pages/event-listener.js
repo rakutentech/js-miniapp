@@ -128,7 +128,7 @@ const NativeEvents = () => {
   });
 
   function onOpenExternalWebview() {
-    var url = new URL(EXTERNAL_WEBVIEW_URL);
+    let url = new URL(EXTERNAL_WEBVIEW_URL);
     window.location.href = url;
   }
 
