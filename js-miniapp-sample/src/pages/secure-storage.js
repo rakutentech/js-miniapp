@@ -274,21 +274,25 @@ function SecureStorageComponent(props: SecureStorageProps) {
       Object.keys(keyValuePair).forEach((key) => {
         if (!keyValuePair[key]) delete keyValuePair[key];
       });
-      props
-        .requestSetItems(JSON.stringify(keyValuePair))
-        .then((response) => {
-          console.log('Page - SetItems - Success', response);
-          dispatch({
-            type: 'FETCH_SUCCESS',
-            miniAppError: null,
-            inputError: null,
-          });
-        })
-        .catch((miniAppError) => {
-          console.log('Page - SetItems - Error: ', miniAppError);
-          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
-        });
+      requestSetItems(keyValuePair);
     }
+  }
+
+  function requestSetItems(keyValuePair) {
+    props
+      .requestSetItems(JSON.stringify(keyValuePair))
+      .then((response) => {
+        console.log('Page - SetItems - Success', response);
+        dispatch({
+          type: 'FETCH_SUCCESS',
+          miniAppError: null,
+          inputError: null,
+        });
+      })
+      .catch((miniAppError) => {
+        console.log('Page - SetItems - Error: ', miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+      });
   }
 
   function getSecureStorageButtonClick(e) {
@@ -383,18 +387,18 @@ function SecureStorageComponent(props: SecureStorageProps) {
     }
   }
 
-  function isKeyAndValueEmpty(key, value) {
-    if (isEmpty(key) && isEmpty(value)) {
+  function isKeyAndValueEmpty(key, val) {
+    if (isEmpty(key) && isEmpty(val)) {
       return true;
     } else {
       return false;
     }
   }
 
-  function isValidKeyValue(key, value) {
-    if (isEmpty(key) && !isEmpty(value)) {
+  function isValidKeyValue(key, val) {
+    if (isEmpty(key) && !isEmpty(val)) {
       return false;
-    } else if (!isEmpty(key) && isEmpty(value)) {
+    } else if (!isEmpty(key) && isEmpty(val)) {
       return false;
     }
     return true;
@@ -685,19 +689,19 @@ function SecureStorageComponent(props: SecureStorageProps) {
     );
   }
 
-  function pushRandom5kRecords(e) {
+  function pushRandom5kRecords() {
     if (!state.isLoading) {
       pushRandomRecords('', 5000);
     }
   }
 
-  function pushRandom10kRecords(e) {
+  function pushRandom10kRecords() {
     if (!state.isLoading) {
       pushRandomRecords('JS Sample - ', 10000);
     }
   }
 
-  function pushRandom100kRecords(e) {
+  function pushRandom100kRecords() {
     if (!state.isLoading) {
       pushRandomRecords('JS - ', 100000);
     }
@@ -707,23 +711,10 @@ function SecureStorageComponent(props: SecureStorageProps) {
     if (!state.isLoading) {
       dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       const keyValuePair = {};
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < maxCount; i++) {
         keyValuePair[prefix + i] = JSON.stringify(i);
       }
-      props
-        .requestSetItems(JSON.stringify(keyValuePair))
-        .then((response) => {
-          console.log('Page - SetItems - Success', response);
-          dispatch({
-            type: 'FETCH_SUCCESS',
-            miniAppError: null,
-            inputError: null,
-          });
-        })
-        .catch((miniAppError) => {
-          console.log('Page - SetItems - Error: ', miniAppError);
-          dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
-        });
+      requestSetItems(keyValuePair);
     }
   }
   const [value, setValue] = React.useState('1');
