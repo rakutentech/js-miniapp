@@ -62,7 +62,9 @@ const Media = () => {
 
   return (
     <GreyCard className={classes.card}>
-      <CardContent className={classes.content}>Autoplay Fullscreen Video</CardContent>
+      <CardContent className={classes.content}>
+        Autoplay Fullscreen Video
+      </CardContent>
       <CardContent className={classes.content}>
         <ReactPlayerLoader
           accountId="1752604059001"
@@ -71,9 +73,7 @@ const Media = () => {
         ></ReactPlayerLoader>
       </CardContent>
 
-      <CardContent className={classes.content}>
-        Normal Video
-      </CardContent>
+      <CardContent className={classes.content}>Normal Video</CardContent>
       <CardActions className={classes.actions}>
         <Button
           variant="contained"
