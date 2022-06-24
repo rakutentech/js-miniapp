@@ -150,7 +150,7 @@ const appItems = [
     icon: <SecurityIcon />,
     label: 'SecureStorage',
     navLink: '/secure-storage',
-    component: SecureStorageComponent,
+    element: <SecureStorageComponent />,
   },
   {
     icon: <NotificationImportantOutlinedIcon />,

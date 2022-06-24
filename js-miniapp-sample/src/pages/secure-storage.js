@@ -1,13 +1,11 @@
 import {
   Button,
-  Card,
   CircularProgress,
   Container,
   FormGroup,
   TextField,
   Typography,
 } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
 import { green, red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
@@ -16,7 +14,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import {
   clear,
@@ -238,31 +236,62 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function setSecureStorageButtonClick(e) {
-    if (isTextFieldValuesValid()) {
-      if (!state.isLoading) {
-        dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
-        const keyValuePair = {};
-        keyValuePair[storeKey] = storeKeyValue;
-        keyValuePair[storeKey1] = storeKeyValue1;
-        Object.keys(keyValuePair).forEach((key) => {
-          if (!keyValuePair[key]) delete keyValuePair[key];
-        });
-        props
-          .requestSetItems(JSON.stringify(keyValuePair))
-          .then((response) => {
-            console.log('Page - SetItems - Success', response);
-            dispatch({
-              type: 'FETCH_SUCCESS',
-              miniAppError: null,
-              inputError: null,
-            });
-          })
-          .catch((miniAppError) => {
-            console.log('Page - SetItems - Error: ', miniAppError);
-            dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
-          });
-      }
+    if (
+      isKeyAndValueEmpty(storeKey, storeKeyValue) &&
+      isKeyAndValueEmpty(storeKey1, storeKeyValue1)
+    ) {
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Please enter Key and Value',
+      });
+      return;
     }
+
+    if (
+      isValidKeyValue(storeKey, storeKeyValue) &&
+      isValidKeyValue(storeKey1, storeKeyValue1)
+    ) {
+      dispatch({ type: 'RESET', miniAppError: null, inputError: null });
+      saveItems();
+    } else {
+      console.log('ERROR');
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Please enter both Key and Value',
+      });
+    }
+  }
+
+  function saveItems() {
+    if (!state.isLoading) {
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
+      const keyValuePair = {};
+      keyValuePair[storeKey] = storeKeyValue;
+      keyValuePair[storeKey1] = storeKeyValue1;
+      Object.keys(keyValuePair).forEach((key) => {
+        if (!keyValuePair[key]) delete keyValuePair[key];
+      });
+      requestSetItems(keyValuePair);
+    }
+  }
+
+  function requestSetItems(keyValuePair) {
+    props
+      .requestSetItems(JSON.stringify(keyValuePair))
+      .then((response) => {
+        console.log('Page - SetItems - Success', response);
+        dispatch({
+          type: 'FETCH_SUCCESS',
+          miniAppError: null,
+          inputError: null,
+        });
+      })
+      .catch((miniAppError) => {
+        console.log('Page - SetItems - Error: ', miniAppError);
+        dispatch({ type: 'FETCH_FAILURE', miniAppError, inputError: null });
+      });
   }
 
   function getSecureStorageButtonClick(e) {
@@ -357,30 +386,23 @@ function SecureStorageComponent(props: SecureStorageProps) {
     }
   }
 
-  function isTextFieldValuesValid() {
-    if (isEmpty(storeKeyValue)) {
-      dispatch({
-        type: 'INPUT_FAILURE',
-        miniAppError: null,
-        inputError: 'Key cannot be empty',
-      });
+  function isKeyAndValueEmpty(key, val) {
+    return isEmpty(key) && isEmpty(val);
+  }
+
+  function isValidKeyValue(key, val) {
+    if (isEmpty(key) && !isEmpty(val)) {
       return false;
-    } else if (isEmpty(storeKeyValue)) {
-      dispatch({
-        type: 'INPUT_FAILURE',
-        miniAppError: null,
-        inputError: 'Value cannot be empty',
-      });
+    } else if (!isEmpty(key) && isEmpty(val)) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   function SetSecureStorageCardActionsForm() {
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
-        <Card>
+        <Fragment>
           <TextField
             variant="outlined"
             className={classes.formInput}
@@ -397,9 +419,9 @@ function SecureStorageComponent(props: SecureStorageProps) {
             value={storeKeyValue}
             onChange={(e) => setStoreKeyValue(e.target.value)}
           />
-        </Card>
+        </Fragment>
         <br />
-        <Card>
+        <Fragment>
           <TextField
             variant="outlined"
             className={classes.formInput}
@@ -416,7 +438,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
             value={storeKeyValue1}
             onChange={(e) => setStoreKeyValue1(e.target.value)}
           />
-        </Card>
+        </Fragment>
         <br />
         <br />
         <Button
@@ -594,8 +616,9 @@ function SecureStorageComponent(props: SecureStorageProps) {
         )}
         {!state.isLoading && !state.isError && state.isSuccess && props.size && (
           <Typography variant="body1" className={classes.red}>
-            <div>Maximum Available: {props.size.max}</div>
+            <div>Maximum Size: {props.size.max}</div>
             <div>Used Space: {props.size.used}</div>
+            <div>Available: {props.size.max - props.size.used}</div>
           </Typography>
         )}
         {!state.isLoading && !state.isError && state.isStorageCleaned && (
@@ -607,6 +630,88 @@ function SecureStorageComponent(props: SecureStorageProps) {
     );
   }
 
+  function QA() {
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <Button
+          onClick={pushRandom5kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 5k Records
+        </Button>
+        <br />
+        <Button
+          onClick={pushRandom10kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 10k Records
+        </Button>
+
+        <br />
+        <Button
+          onClick={pushRandom100kRecords}
+          variant="contained"
+          color="primary"
+          classes={{ root: classes.button }}
+          className={buttonClassname}
+          disabled={state.isLoading}
+        >
+          Push 100k Records
+        </Button>
+
+        {state.isLoading && (
+          <CircularProgress size={20} className={classes.buttonProgress} />
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
+      </FormGroup>
+    );
+  }
+
+  function pushRandom5kRecords() {
+    if (!state.isLoading) {
+      pushRandomRecords('', 5000);
+    }
+  }
+
+  function pushRandom10kRecords() {
+    if (!state.isLoading) {
+      pushRandomRecords('JS Sample - ', 10000);
+    }
+  }
+
+  function pushRandom100kRecords() {
+    if (!state.isLoading) {
+      pushRandomRecords('JS - ', 100000);
+    }
+  }
+
+  function pushRandomRecords(prefix, maxCount) {
+    if (!state.isLoading) {
+      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
+      const keyValuePair = {};
+      for (let i = 0; i < maxCount; i++) {
+        keyValuePair[prefix + i] = JSON.stringify(i);
+      }
+      requestSetItems(keyValuePair);
+    }
+  }
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event: Event, newValue: string) => {
@@ -616,22 +721,24 @@ function SecureStorageComponent(props: SecureStorageProps) {
 
   return (
     <Container className={classes.wrapperContainer}>
-      <Box sx={{ width: '100%', typography: 'body1' }}>
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList onChange={handleChange}>
-              <Tab label="Set" value="1" />
-              <Tab label="Get" value="2" />
-              <Tab label="Remove" value="3" />
-              <Tab label="Others" value="4" />
-            </TabList>
-          </Box>
-          <TabPanel value="1">{SetSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="2">{GetSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="3">{RemoveSecureStorageCardActionsForm()}</TabPanel>
-          <TabPanel value="4">{OtherFunctionalitiesCardActionsForm()}</TabPanel>
-        </TabContext>
-      </Box>
+      <TabContext value={value}>
+        <TabList
+          variant="scrollable"
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
+          <Tab label="Set" value="1" />
+          <Tab label="Get" value="2" />
+          <Tab label="Remove" value="3" />
+          <Tab label="Others" value="4" />
+          <Tab label="QA" value="5" />
+        </TabList>
+        <TabPanel value="1">{SetSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="2">{GetSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="3">{RemoveSecureStorageCardActionsForm()}</TabPanel>
+        <TabPanel value="4">{OtherFunctionalitiesCardActionsForm()}</TabPanel>
+        <TabPanel value="5">{QA()}</TabPanel>
+      </TabContext>
     </Container>
   );
 }
