@@ -387,10 +387,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
   }
 
   function isKeyAndValueEmpty(key, val) {
-    if (isEmpty(key) && isEmpty(val)) {
-      return true;
-    }
-    return false;
+    return isEmpty(key) && isEmpty(val);
   }
 
   function isValidKeyValue(key, val) {
