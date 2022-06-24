@@ -1,6 +1,7 @@
 ## CHANGELOG
-### 1.15.0 (TBD)
+### 1.15.0 (2022-06-24)
 - **Feature:** Added `setCloseAlert(alertInfo: CloseAlertInfo)` interface support to Mini Apps share info about Close confirm alert
+- **Feature:** Added Secure storage related interfaces. `setItems(items: MiniAppSecureStorageKeyValues)` , `getItem(key: string)`, `removeItems(key: [string])`, `clear()`, `size()`. These interfaces can be used to storage items in the SDK.
 
 ---
 ### 1.14.0 (2022-04-12)
