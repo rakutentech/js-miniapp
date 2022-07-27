@@ -111,7 +111,7 @@ const FileDownload = (props: FileDownloadProps) => {
           : setIsPermissionGranted(false)
       )
       .catch((miniAppError) => {
-        setIsPermissionGranted(false)
+        setIsPermissionGranted(false);
         console.error(miniAppError);
       });
   }
