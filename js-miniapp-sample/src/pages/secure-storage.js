@@ -630,88 +630,6 @@ function SecureStorageComponent(props: SecureStorageProps) {
     );
   }
 
-  function QA() {
-    return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
-        <Button
-          onClick={pushRandom5kRecords}
-          variant="contained"
-          color="primary"
-          classes={{ root: classes.button }}
-          className={buttonClassname}
-          disabled={state.isLoading}
-        >
-          Push 5k Records
-        </Button>
-        <br />
-        <Button
-          onClick={pushRandom10kRecords}
-          variant="contained"
-          color="primary"
-          classes={{ root: classes.button }}
-          className={buttonClassname}
-          disabled={state.isLoading}
-        >
-          Push 10k Records
-        </Button>
-
-        <br />
-        <Button
-          onClick={pushRandom100kRecords}
-          variant="contained"
-          color="primary"
-          classes={{ root: classes.button }}
-          className={buttonClassname}
-          disabled={state.isLoading}
-        >
-          Push 100k Records
-        </Button>
-
-        {state.isLoading && (
-          <CircularProgress size={20} className={classes.buttonProgress} />
-        )}
-        {!state.isLoading && state.isError && (
-          <Typography variant="body1" className={classes.red}>
-            {state.inputError}
-          </Typography>
-        )}
-        {!state.isLoading && state.isError && (
-          <Typography variant="body1" className={classes.red}>
-            {state.error}
-          </Typography>
-        )}
-      </FormGroup>
-    );
-  }
-
-  function pushRandom5kRecords() {
-    if (!state.isLoading) {
-      pushRandomRecords('', 5000);
-    }
-  }
-
-  function pushRandom10kRecords() {
-    if (!state.isLoading) {
-      pushRandomRecords('JS Sample - ', 10000);
-    }
-  }
-
-  function pushRandom100kRecords() {
-    if (!state.isLoading) {
-      pushRandomRecords('JS - ', 100000);
-    }
-  }
-
-  function pushRandomRecords(prefix, maxCount) {
-    if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
-      const keyValuePair = {};
-      for (let i = 0; i < maxCount; i++) {
-        keyValuePair[prefix + i] = JSON.stringify(i);
-      }
-      requestSetItems(keyValuePair);
-    }
-  }
   const [value, setValue] = React.useState('1');
 
   const handleChange = (event: Event, newValue: string) => {
@@ -731,13 +649,11 @@ function SecureStorageComponent(props: SecureStorageProps) {
           <Tab label="Get" value="2" />
           <Tab label="Remove" value="3" />
           <Tab label="Others" value="4" />
-          <Tab label="QA" value="5" />
         </TabList>
         <TabPanel value="1">{SetSecureStorageCardActionsForm()}</TabPanel>
         <TabPanel value="2">{GetSecureStorageCardActionsForm()}</TabPanel>
         <TabPanel value="3">{RemoveSecureStorageCardActionsForm()}</TabPanel>
         <TabPanel value="4">{OtherFunctionalitiesCardActionsForm()}</TabPanel>
-        <TabPanel value="5">{QA()}</TabPanel>
       </TabContext>
     </Container>
   );
