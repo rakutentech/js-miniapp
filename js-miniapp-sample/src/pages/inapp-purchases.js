@@ -49,66 +49,68 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function InAppPurchase() {
-    const classes = useStyles();
-    const [productId, setProductId] = useState('');
+  const classes = useStyles();
+  const [productId, setProductId] = useState('');
 
-    const listProducts = () => {
-        MiniApp.purchases.getProducts()
-            .then((success) => {
-                console.log(success);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
+  const listProducts = () => {
+    MiniApp.purchases
+      .getProducts()
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    const purchaseProduct = () => {
-        MiniApp.purchases.purchase(productId)
-        .then((success) => {
-            console.log(success);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
+  const purchaseProduct = () => {
+    MiniApp.purchases
+      .purchase(productId)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    return (
-        <div className={classes.divstyles}>
-            <GreyCard>
-                <CardContent className={classes.content}>
-                    <TextField
-                        variant="outlined"
-                        className={classes.formInput}
-                        id="input-name"
-                        label={'PrductId'}
-                        value={productId}
-                        onChange={(e) => setProductId(e.target.value)}
-                    />
-                </CardContent>
+  return (
+    <div className={classes.divstyles}>
+      <GreyCard>
+        <CardContent className={classes.content}>
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-name"
+            label={'PrductId'}
+            value={productId}
+            onChange={(e) => setProductId(e.target.value)}
+          />
+        </CardContent>
 
-                <CardActions className={classes.actions}>
-                    <Button
-                        color="primary"
-                        className={classes.button}
-                        onClick={purchaseProduct}
-                        variant="contained"
-                    >
-                        Purchase Product
-                    </Button>
-                </CardActions>
-            </GreyCard>
-            <CardActions className={classes.actions}>
-                <Button
-                    color="primary"
-                    className={classes.button}
-                    onClick={listProducts}
-                    variant="contained"
-                >
-                    List Products
-                </Button>
-            </CardActions>
-        </div>
-    );
+        <CardActions className={classes.actions}>
+          <Button
+            color="primary"
+            className={classes.button}
+            onClick={purchaseProduct}
+            variant="contained"
+          >
+            Purchase Product
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <CardActions className={classes.actions}>
+        <Button
+          color="primary"
+          className={classes.button}
+          onClick={listProducts}
+          variant="contained"
+        >
+          List Products
+        </Button>
+      </CardActions>
+    </div>
+  );
 }
 
-export default InAppPurchase
+export default InAppPurchase;
