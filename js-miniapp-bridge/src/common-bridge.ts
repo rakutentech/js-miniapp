@@ -650,10 +650,7 @@ export class MiniAppBridge {
   }
 
   /**
-   * In-App Purchases Implementation
-   */
-  /**
-   * This will retrieve the list of products deatils available for inapp-purchases from the play/app stores.
+   * This will retrieve the list of products details available for In-App Purchases associated with Google Play™ or Apple App Store™.
    * @returns List of products for inapp-purchases
    * @see {getProducts}
    */
@@ -671,35 +668,17 @@ export class MiniAppBridge {
   }
 
   /**
-   * This will requst for the inapp-purchase of a product with product id from the app/play store.
+   * This will request for the In-app Purchase of a product with product id associated with Google Play™ or Apple App Store™.
    * @param id Product id of the product to be purchased.
    * @returns Purchased product details and the transaction details of the purchase.
    */
-  purchase(id: string) {
+  purchaseWith(id: string) {
     return new Promise<PurchasedProduct>((resolve, reject) => {
       return this.executor.exec(
         'requestPurchaseProduct',
         { id },
         responseData => {
           resolve(JSON.parse(responseData) as PurchasedProduct);
-        },
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  /**
-   * Retrieves the details of products purchased.
-   * @param ids List of purchased product ids.
-   * @returns list of product and transaction details for purchased products.
-   */
-  purchasedProducts(ids: string[]) {
-    return new Promise<PurchasedProduct[]>((resolve, reject) => {
-      return this.executor.exec(
-        'requestPurchasedProducts',
-        { ids },
-        responseData => {
-          resolve(JSON.parse(responseData) as PurchasedProduct[]);
         },
         error => reject(parseMiniAppError(error))
       );

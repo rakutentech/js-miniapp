@@ -47,6 +47,8 @@ window.MiniAppBridge = {
   sendMessageToContactId: sandbox.stub(),
   sendMessageToMultipleContacts: sandbox.stub(),
   downloadFile: sandbox.stub(),
+  getProducts: sandbox.stub(),
+  purchaseWith: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -548,5 +550,57 @@ describe('downloadFile', () => {
     expect(
       miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
     ).to.eventually.equal(error);
+  });
+});
+
+describe('getProducts', () => {
+  it('should retrieve the list of products available for purchase', () => {
+    const response = [
+      {
+        title: 'MyApp_A',
+        description: 'This is app A for purchase',
+        id: 'com.rakuten.myappa',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+      {
+        title: 'MyApp_B',
+        description: 'This is app B for purchase',
+        id: 'com.rakuten.myappb',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+    ];
+
+    window.MiniAppBridge.getProducts.resolves(response);
+    return expect(miniApp.purchases.getProducts()).to.eventually.equal(
+      response
+    );
+  });
+});
+
+describe('purchaseWith', () => {
+  it('should Purchases the app with given id', () => {
+    const response = {
+      product: {
+        title: 'MyApp_A',
+        description: 'This is app A for purchase',
+        id: 'com.rakuten.myappa',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+      transactionId: 'transction_id_a',
+      transactionDate: '2022/11/23',
+    };
+    const productId = 'com.rakuten.myappa';
+
+    window.MiniAppBridge.purchaseWith.resolves(response);
+    return expect(miniApp.purchases.purchaseWith(productId)).to.eventually.equal(response);
   });
 });
