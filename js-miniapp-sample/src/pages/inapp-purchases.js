@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MiniApp from 'js-miniapp-sdk';
 
 import {
@@ -10,8 +10,6 @@ import {
 } from '@material-ui/core';
 
 import GreyCard from '../components/GreyCard';
-import { useState } from 'react';
-// import { InAppPurchases } from 'js-miniapp-sdk/build/js-miniapp-sdk/src/modules/inapp-purchases';
 
 const useStyles = makeStyles((theme) => ({
   content: {
