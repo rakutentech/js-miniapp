@@ -26,6 +26,7 @@ import {
 import { ShareInfoType } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
+import { Product, PurchasedProduct } from './types/inapp-purchases';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -643,6 +644,63 @@ export class MiniAppBridge {
         'setCloseAlert',
         { closeAlertInfo: alertInfo },
         success => resolve(undefined),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * In-App Purchases Implementation
+   */
+  /**
+   * This will retrieve the list of products deatils available for inapp-purchases from the play/app stores.
+   * @returns List of products for inapp-purchases
+   * @see {getProducts}
+   */
+  getProducts() {
+    return new Promise<Product[]>((resolve, reject) => {
+      return this.executor.exec(
+        'requestGetProducts',
+        null,
+        responseData => {
+          resolve(JSON.parse(responseData) as Product[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This will requst for the inapp-purchase of a product with product id from the app/play store.
+   * @param id Product id of the product to be purchased.
+   * @returns Purchased product details and the transaction details of the purchase.
+   */
+  purchase(id: string) {
+    return new Promise<PurchasedProduct>((resolve, reject) => {
+      return this.executor.exec(
+        'requestPurchaseProduct',
+        { id },
+        responseData => {
+          resolve(JSON.parse(responseData) as PurchasedProduct);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Retrieves the details of products purchased.
+   * @param ids List of purchased product ids.
+   * @returns list of product and transaction details for purchased products.
+   */
+  purchasedProducts(ids: string[]) {
+    return new Promise<PurchasedProduct[]>((resolve, reject) => {
+      return this.executor.exec(
+        'requestPurchasedProducts',
+        { ids },
+        responseData => {
+          resolve(JSON.parse(responseData) as PurchasedProduct[]);
+        },
         error => reject(parseMiniAppError(error))
       );
     });
