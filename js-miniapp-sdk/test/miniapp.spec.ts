@@ -601,6 +601,8 @@ describe('purchaseWith', () => {
     const productId = 'com.rakuten.myappa';
 
     window.MiniAppBridge.purchaseWith.resolves(response);
-    return expect(miniApp.purchases.purchaseWith(productId)).to.eventually.equal(response);
+    return expect(
+      miniApp.purchases.purchaseWith(productId)
+    ).to.eventually.equal(response);
   });
 });
