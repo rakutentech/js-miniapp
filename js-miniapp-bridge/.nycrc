@@ -1,6 +1,5 @@
 {
-    "extends": "../.nycrc",
-    "include": [
-      "src/**/*.ts"
-    ]
+  "extends": "../.nycrc",
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/android/*.ts", "src/ios/*.ts"]
 }
