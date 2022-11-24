@@ -395,7 +395,7 @@ describe('getAccessToken', () => {
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.user.getPoints()).to.eventually.equal(response);
     });
-    
+
     it('should retrieve Points from MiniApp when request is successful', () => {
       const response = [
         {
@@ -404,6 +404,7 @@ describe('getAccessToken', () => {
           cash: 30,
         },
       ];
+
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.getPoints()).to.eventually.equal(response);
     });
@@ -708,7 +709,7 @@ describe('secureStorage', () => {
   });
 
   it('should call secureStorageService onReady when bridge isSecureStorageReady is true', () => {
-    var isCalled = false;
+    let isCalled = false;
     const onReady = function onReady() {
       isCalled = true;
     };
@@ -719,7 +720,7 @@ describe('secureStorage', () => {
   });
 
   it('should call window addEventListener when bridge isSecureStorageReady is false', () => {
-    var isCalled = false;
+    let isCalled = false;
     function onReady() {
       isCalled = true;
     }
@@ -732,7 +733,7 @@ describe('secureStorage', () => {
   });
 
   it('should call window addEventListener when bridge secureStorageLoadError is null', () => {
-    var isCalled = false;
+    let isCalled = false;
     function onReady() {
       isCalled = true;
     }
@@ -744,7 +745,7 @@ describe('secureStorage', () => {
   });
 
   it('should call window addEventListener when bridge secureStorageError is null', () => {
-    const onLoadError = function(error: MiniAppError) {};
+    const onLoadError = (error: MiniAppError) => {};
 
     window.addEventListener = sandbox.spy();
 
@@ -755,9 +756,9 @@ describe('secureStorage', () => {
   it('should call window addEventListener when bridge has a secureStorageError', () => {
     const error = new MiniAppError({});
     const key: [string] = ['key'];
-    var isCalled = false;
+    let isCalled = false;
 
-    const onLoadError = function(error: MiniAppError) {
+    const onLoadError = (error: MiniAppError) => {
       isCalled = true;
     };
 
@@ -784,6 +785,7 @@ describe('setCloseAlert', () => {
     expect(error.name).to.equal(undefined);
 
     window.MiniAppBridge.setCloseAlert.resolves(error);
+
     return expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(error);
   });
 });

@@ -690,10 +690,9 @@ describe('getPoints', () => {
 describe('getHostEnvironmentInfo', () => {
   it('should retrieve HostEnvironmentInfo once getHostEnvironmentInfo is called', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    bridge.platform = 'Android';
-    const platform: Platform = bridge.platform as Platform;
+    bridge.platform = Platform.ANDROID;
     const hostEnvironmentInfo: HostEnvironmentInfo = {
-      platform: platform,
+      platform: Platform.ANDROID,
       platformVersion: '',
       hostVersion: '',
       sdkVersion: '',
@@ -702,7 +701,7 @@ describe('getHostEnvironmentInfo', () => {
 
     mockExecutor.exec.callsArgWith(2, JSON.stringify(hostEnvironmentInfo));
     bridge.getHostEnvironmentInfo();
-    return expect(bridge.platform).to.deep.equal(platform);
+    return expect(bridge.platform).to.deep.equal(hostEnvironmentInfo.platform);
   });
 
   it('should retrieve an error response', () => {
@@ -938,7 +937,7 @@ describe('setCloseAlert', () => {
     const alertInfo: CloseAlertInfo = createCloseAlertInfo();
 
     mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
-    
+
     return expect(bridge.setCloseAlert(alertInfo)).to.eventually.be.rejected;
   });
 });
