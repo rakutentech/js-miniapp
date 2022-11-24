@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SendJsonToHostApp() {
+function UniversalBridge() {
   const classes = useStyles();
   const defaultInputValue = '{"data":"This is a sample json information"}';
   let inputValue = defaultInputValue;
@@ -49,7 +49,7 @@ function SendJsonToHostApp() {
 
   const sendJson = () => {
     const info = { content: inputValue };
-    MiniApp.sendJsonToHostapp(info)
+    MiniApp.universalBridge.sendJsonToHostapp(info)
       .then((success) => {
         console.log(success);
       })

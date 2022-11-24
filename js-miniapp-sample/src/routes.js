@@ -19,6 +19,7 @@ import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
 import NotificationImportantOutlinedIcon from '@material-ui/icons/NotificationImportantOutlined';
+import SendIcon from '@material-ui/icons/SendSharp';
 
 import Ads from './pages/ads';
 import AuthToken from './pages/auth-token';
@@ -160,7 +161,7 @@ const appItems = [
     element: <CloseConfirmAlert />,
   },
   {
-    icon: <NotificationImportantOutlinedIcon />,
+    icon: <SendIcon />,
     label: 'Universal Bridge',
     navLink: '/universal-bridge',
     element: <UniversalBridge />,
