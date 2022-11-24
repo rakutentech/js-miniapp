@@ -10,15 +10,23 @@ import {
 import {
   AudienceNotSupportedError,
   AuthorizationFailureError,
+  CloseAlertInfo,
   DevicePermission,
   DownloadFailedError,
   DownloadHttpError,
+  HostEnvironmentInfo,
   InvalidUrlError,
   MessageToContact,
   MiniAppError,
+  MiniAppSecureStorageKeyValues,
+  Platform,
   SaveFailureError,
   ScopesNotSupportedError,
   ScreenOrientation,
+  SecureStorageFullError,
+  SecureStorageBusyError,
+  SecureStorageUnavailableError,
+  SecureStorageIOError,
 } from '../src';
 
 /* tslint:disable:no-any */
@@ -679,6 +687,31 @@ describe('getPoints', () => {
   });
 });
 
+describe('getHostEnvironmentInfo', () => {
+  it('should retrieve HostEnvironmentInfo once getHostEnvironmentInfo is called', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    bridge.platform = Platform.ANDROID;
+    const hostEnvironmentInfo: HostEnvironmentInfo = {
+      platform: Platform.ANDROID,
+      platformVersion: '',
+      hostVersion: '',
+      sdkVersion: '',
+      hostLocale: '',
+    };
+
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(hostEnvironmentInfo));
+    bridge.getHostEnvironmentInfo();
+    return expect(bridge.platform).to.deep.equal(hostEnvironmentInfo.platform);
+  });
+
+  it('should retrieve an error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.getHostEnvironmentInfo()).to.eventually.be.rejected;
+  });
+});
+
 describe('downloadFile', () => {
   it('will parse the download file response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
@@ -687,6 +720,15 @@ describe('downloadFile', () => {
     return expect(
       bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
     ).to.eventually.deep.equal('test.jpg');
+  });
+
+  it('will return null', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, null);
+
+    return expect(
+      bridge.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.deep.equal(null);
   });
 
   const fileDownloadErrorRequest = (errorJson: string) => {
@@ -737,6 +779,177 @@ describe('downloadFile', () => {
   });
 });
 
+describe('secureStorage', () => {
+  const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+  it('will respond an undefined once setSecureStorage is called', () => {
+    const values: MiniAppSecureStorageKeyValues = { ['key']: 'value' };
+
+    mockExecutor.exec.callsArgWith(2, undefined);
+
+    return expect(bridge.setSecureStorage(values)).to.eventually.deep.equal(
+      undefined
+    );
+  });
+
+  it('will be rejected once setSecureStorage has an error', () => {
+    const values: MiniAppSecureStorageKeyValues = { ['key']: 'value' };
+
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.setSecureStorage(values)).to.eventually.be.rejected;
+  });
+
+  it('will respond a string once getSecureStorageItem is called', () => {
+    const response = '';
+    const key = 'key';
+
+    mockExecutor.exec.callsArgWith(2, response);
+    return expect(bridge.getSecureStorageItem(key)).to.eventually.deep.equal(
+      response
+    );
+  });
+
+  it('will be rejected once getSecureStorageItem has an error', () => {
+    const key = 'key';
+
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.getSecureStorageItem(key)).to.eventually.be.rejected;
+  });
+
+  it('will respond an undefined once removeSecureStorageItems is called', () => {
+    const key: [string] = ['key'];
+
+    mockExecutor.exec.callsArgWith(2, undefined);
+
+    return expect(
+      bridge.removeSecureStorageItems(key)
+    ).to.eventually.deep.equal(undefined);
+  });
+
+  it('will be rejected once removeSecureStorageItems has an error', () => {
+    const key: [string] = ['key'];
+
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.removeSecureStorageItems(key)).to.eventually.be
+      .rejected;
+  });
+
+  it('will respond an undefined once clearSecureStorage is called', () => {
+    mockExecutor.exec.callsArgWith(2, undefined);
+
+    return expect(bridge.clearSecureStorage()).to.eventually.deep.equal(
+      undefined
+    );
+  });
+
+  it('will be rejected once clearSecureStorage has an error', () => {
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.clearSecureStorage()).to.eventually.be.rejected;
+  });
+
+  it('will respond an undefined once getSecureStorageSize is called', () => {
+    const response = JSON.stringify({ used: 100, max: 5000 });
+
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(bridge.getSecureStorageSize()).to.eventually.deep.equal(
+      JSON.parse(response)
+    );
+  });
+
+  it('will be rejected once getSecureStoragesIZE has an error', () => {
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.getSecureStorageSize()).to.eventually.be.rejected;
+  });
+
+  it('will parse the SecureStorage SecureStorageFullError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "SecureStorageFullError", "message": null }'
+    );
+
+    return expect(
+      bridge.getSecureStorageSize()
+    ).to.eventually.be.rejected.and.be.an.instanceof(SecureStorageFullError);
+  });
+
+  it('will parse the SecureStorage SecureStorageUnavailableError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "SecureStorageUnavailableError", "message": null }'
+    );
+
+    return expect(
+      bridge.getSecureStorageSize()
+    ).to.eventually.be.rejected.and.be.an.instanceof(
+      SecureStorageUnavailableError
+    );
+  });
+  it('will parse the SecureStorage SecureStorageBusyError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "SecureStorageBusyError", "message": null }'
+    );
+
+    return expect(
+      bridge.getSecureStorageSize()
+    ).to.eventually.be.rejected.and.be.an.instanceof(SecureStorageBusyError);
+  });
+  it('will parse the SecureStorage SecureStorageIOError JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "type": "SecureStorageIOError", "message": null }'
+    );
+
+    return expect(
+      bridge.getSecureStorageSize()
+    ).to.eventually.be.rejected.and.be.an.instanceof(SecureStorageIOError);
+  });
+});
+
+describe('setCloseAlert', () => {
+  it('will respond an undefined', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const alertInfo: CloseAlertInfo = createCloseAlertInfo();
+
+    mockExecutor.exec.callsArgWith(2, undefined);
+
+    return expect(bridge.setCloseAlert(alertInfo)).to.eventually.deep.equal(
+      undefined
+    );
+  });
+
+  it('will be rejected once it has an error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const alertInfo: CloseAlertInfo = createCloseAlertInfo();
+
+    mockExecutor.exec.callsArgWith(3, '{ "message": "message"}');
+
+    return expect(bridge.setCloseAlert(alertInfo)).to.eventually.be.rejected;
+  });
+});
+
+function createCloseAlertInfo(): CloseAlertInfo {
+  return {
+    title: 'title',
+    description: 'description',
+    shouldDisplay: false,
+  };
+}
+
 describe('console.log', () => {
   const logger = new Logger.MiniAppSDKLogger(mockLogger);
   window.MiniAppSDKLogger = logger;
@@ -772,6 +985,12 @@ describe('console.log', () => {
       messageType: 'error',
       message: ['test'],
     });
+  });
+  it('will return an undefined', () => {
+    (global as any).window = undefined;
+    window.MiniAppSDKLogger = logger;
+    console.error(undefined);
+    return expect(Logger.getLogger()).to.deep.equal(undefined);
   });
 });
 
