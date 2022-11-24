@@ -647,6 +647,22 @@ export class MiniAppBridge {
       );
     });
   }
+
+   /**
+   * Associating sendJsonToHostapp function to MiniAppBridge object.
+   * @param {info} The json string information to send to HostApp.
+   * @see {sendJsonToHostapp}
+   */
+  sendJsonToHostapp(info: String) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'sendJsonToHostapp',
+        { jsonInfo: info },
+        success => resolve(success),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**
