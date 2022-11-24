@@ -16,9 +16,10 @@ import {
   CloseAlertInfo,
   MiniAppSecureStorageSize,
   MiniAppSecureStorageKeyValues,
+  Platform,
+  HostEnvironmentInfo,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
-import { HostEnvironmentInfo, Platform } from 'js-miniapp-sdk';
 import miniAppInstance from '../src';
 
 const sandbox = sinon.createSandbox();
