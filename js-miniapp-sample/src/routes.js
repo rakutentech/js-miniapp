@@ -39,6 +39,7 @@ import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import SecureStorageComponent from './pages/secure-storage';
 import { CloseConfirmAlert } from './pages/app-close-alert';
+import UniversalBridge from './pages/universal-bridge';
 
 const homeItem = [
   {
@@ -157,6 +158,12 @@ const appItems = [
     label: 'Close Alert',
     navLink: '/close-confirm-alert',
     element: <CloseConfirmAlert />,
+  },
+  {
+    icon: <NotificationImportantOutlinedIcon />,
+    label: 'Universal Bridge',
+    navLink: '/universal-bridge',
+    element: <UniversalBridge />,
   },
 ];
 

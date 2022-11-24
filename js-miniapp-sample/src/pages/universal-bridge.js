@@ -1,0 +1,93 @@
+import React from 'react';
+import MiniApp from 'js-miniapp-sdk';
+
+import {
+  Button,
+  TextField,
+  CardContent,
+  CardActions,
+  makeStyles,
+} from '@material-ui/core';
+
+import GreyCard from '../components/GreyCard';
+
+const useStyles = makeStyles((theme) => ({
+  content: {
+    height: '50%',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    fontSize: 18,
+    color: theme.color.primary,
+    fontWeight: 'bold',
+  },
+  actions: {
+    justifyContent: 'center',
+  },
+  textfield: {
+    width: '80%',
+    maxWidth: 300,
+    background: 'white',
+    '& input': {
+      color: theme.color.primary,
+      lineHeight: '1.5em',
+      fontSize: '1.2em',
+    },
+  },
+}));
+
+function SendJsonToHostApp() {
+  const classes = useStyles();
+  const defaultInputValue = '{"data":"This is a sample json information"}';
+  let inputValue = defaultInputValue;
+
+  const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    inputValue = e.currentTarget.value;
+  };
+
+  const sendJson = () => {
+    const info = { content: inputValue };
+    MiniApp.sendJsonToHostapp(info)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((miniAppError) => {
+        console.error('Send Json Error: ', miniAppError);
+      });
+  };
+
+  return (
+    <GreyCard>
+      <CardContent className={classes.content}>
+        <TextField
+          type="text"
+          className={classes.textfield}
+          onChange={handleInput}
+          placeholder="Content"
+          defaultValue={defaultInputValue}
+          variant="outlined"
+          color="primary"
+          multiline="true"
+          rowsMax="10"
+          inputProps={{
+            'data-testid': 'input-field',
+          }}
+        />
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          color="primary"
+          className={classes.button}
+          onClick={sendJson}
+          variant="contained"
+        >
+          Send Json to HostApp
+        </Button>
+      </CardActions>
+    </GreyCard>
+  );
+}
+
+export default UniversalBridge;
