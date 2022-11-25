@@ -47,8 +47,8 @@ window.MiniAppBridge = {
   sendMessageToContactId: sandbox.stub(),
   sendMessageToMultipleContacts: sandbox.stub(),
   downloadFile: sandbox.stub(),
-  getProducts: sandbox.stub(),
-  purchaseWith: sandbox.stub(),
+  prepareProductsList: sandbox.stub(),
+  purchaseProductWith: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -553,7 +553,7 @@ describe('downloadFile', () => {
   });
 });
 
-describe('getProducts', () => {
+describe('prepareProductsList', () => {
   it('should retrieve the list of products available for purchase', () => {
     const response = [
       {
@@ -576,14 +576,14 @@ describe('getProducts', () => {
       },
     ];
 
-    window.MiniAppBridge.getProducts.resolves(response);
-    return expect(miniApp.purchases.getProducts()).to.eventually.equal(
+    window.MiniAppBridge.prepareProductsList.resolves(response);
+    return expect(miniApp.purchases.prepareProductsList()).to.eventually.equal(
       response
     );
   });
 });
 
-describe('purchaseWith', () => {
+describe('purchaseProductWith', () => {
   it('should Purchases the app with given id', () => {
     const response = {
       product: {
@@ -600,9 +600,9 @@ describe('purchaseWith', () => {
     };
     const productId = 'com.rakuten.myappa';
 
-    window.MiniAppBridge.purchaseWith.resolves(response);
+    window.MiniAppBridge.purchaseProductWith.resolves(response);
     return expect(
-      miniApp.purchases.purchaseWith(productId)
+      miniApp.purchases.purchaseProductWith(productId)
     ).to.eventually.equal(response);
   });
 });

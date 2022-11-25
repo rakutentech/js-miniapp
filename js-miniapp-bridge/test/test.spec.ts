@@ -50,7 +50,7 @@ beforeEach(() => {
   sandbox.restore();
 });
 
-describe('getProducts', () => {
+describe('prepareProductsList', () => {
   it('will list the products', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     const response =
@@ -78,11 +78,13 @@ describe('getProducts', () => {
       },
     ];
 
-    return expect(bridge.getProducts()).to.eventually.deep.equal(expected);
+    return expect(bridge.prepareProductsList()).to.eventually.deep.equal(
+      expected
+    );
   });
 });
 
-describe('purchase', () => {
+describe('purchaseProductWith', () => {
   it('will purchase product with id', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     const response =
@@ -104,9 +106,9 @@ describe('purchase', () => {
       },
     ];
     const productId = 'com.rakuten.myappa';
-    return expect(bridge.purchaseWith(productId)).to.eventually.deep.equal(
-      expected
-    );
+    return expect(
+      bridge.purchaseProductWith(productId)
+    ).to.eventually.deep.equal(expected);
   });
 });
 

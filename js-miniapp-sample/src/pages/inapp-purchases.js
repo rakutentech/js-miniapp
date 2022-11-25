@@ -54,7 +54,7 @@ function InAppPurchase() {
 
   const listProducts = () => {
     MiniApp.purchases
-      .getProducts()
+      .prepareProductsList()
       .then((success) => {
         console.log(success);
       })
@@ -65,7 +65,7 @@ function InAppPurchase() {
 
   const purchaseProduct = () => {
     MiniApp.purchases
-      .purchase(productId)
+      .purchaseProductWith(productId)
       .then((success) => {
         console.log(success);
       })

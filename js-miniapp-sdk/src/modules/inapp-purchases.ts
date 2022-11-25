@@ -7,21 +7,21 @@ interface PurchaseProvider {
    * @param id The product id which must be purchased from inapp-purchase.
    * This will return the status of inapp-purchase and the details of the purchased product.
    */
-  purchaseWith(id: string): Promise<PurchasedProduct>;
+  purchaseProductWith(id: string): Promise<PurchasedProduct>;
 
   /**
    * Retrieves and lists all the products from the play/app store which are available for inapp-purchases.
    */
-  getProducts(): Promise<Product[]>;
+  prepareProductsList(): Promise<Product[]>;
 }
 
 /** @internal */
 export class Purchases {
-  getProducts(): Promise<Product[]> {
-    return getBridge().getProducts();
+  prepareProductsList(): Promise<Product[]> {
+    return getBridge().prepareProductsList();
   }
 
-  purchaseWith(id: string): Promise<PurchasedProduct> {
-    return getBridge().purchaseWith(id);
+  purchaseProductWith(id: string): Promise<PurchasedProduct> {
+    return getBridge().purchaseProductWith(id);
   }
 }

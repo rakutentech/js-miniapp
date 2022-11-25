@@ -654,13 +654,13 @@ export class MiniAppBridge {
    * @returns List of products for inapp-purchases
    * @see {getProducts}
    */
-  getProducts() {
+  prepareProductsList() {
     return new Promise<Product[]>((resolve, reject) => {
       return this.executor.exec(
-        'requestGetProducts',
+        'prepareProductsList',
         null,
-        responseData => {
-          resolve(JSON.parse(responseData) as Product[]);
+        productsList => {
+          resolve(JSON.parse(productsList) as Product[]);
         },
         error => reject(parseMiniAppError(error))
       );
@@ -672,13 +672,13 @@ export class MiniAppBridge {
    * @param id Product id of the product to be purchased.
    * @returns Purchased product details and the transaction details of the purchase.
    */
-  purchaseWith(id: string) {
+  purchaseProductWith(id: string) {
     return new Promise<PurchasedProduct>((resolve, reject) => {
       return this.executor.exec(
-        'requestPurchaseProduct',
-        { id },
-        responseData => {
-          resolve(JSON.parse(responseData) as PurchasedProduct);
+        'purchaseProductWith',
+        { product_id: id },
+        purchasedProduct => {
+          resolve(JSON.parse(purchasedProduct) as PurchasedProduct);
         },
         error => reject(parseMiniAppError(error))
       );
