@@ -1,5 +1,5 @@
-import React from 'react';
-import MiniApp from 'js-miniapp-sdk';
+import React, { useState } from 'react';
+import { MiniApp, HostAppEvents } from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -12,8 +12,20 @@ import {
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  card: {
+    width: '100%',
+    height: 'auto',
+  },
+  actions: {
+    justifyContent: 'center',
+  },
   content: {
-    height: '50%',
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -21,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 18,
     color: theme.color.primary,
     fontWeight: 'bold',
-  },
-  actions: {
-    justifyContent: 'center',
+    paddingBottom: 0,
   },
   textfield: {
-    width: '80%',
+    width: '90%',
     maxWidth: 300,
+    marginTop: 10,
+    marginBottom: 10,
     background: 'white',
     '& input': {
       color: theme.color.primary,
@@ -37,10 +49,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function UniversalBridge() {
+const UniversalBridge = () => {
   const classes = useStyles();
-  const defaultInputValue = '{"data":"This is a sample json information"}';
-  let inputValue = defaultInputValue;
+  const defaultJsonValue = '{"data":"This is a sample json information"}';
+  let inputValue = defaultJsonValue;
+  let [receiveJsonInfo, setReceiveJsonInfo] = useState('');
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -49,7 +62,8 @@ function UniversalBridge() {
 
   const sendJson = () => {
     const info = { content: inputValue };
-    MiniApp.universalBridge.sendJsonToHostapp(info)
+    MiniApp.universalBridge
+      .sendJsonToHostapp(info)
       .then((success) => {
         console.log(success);
       })
@@ -58,36 +72,68 @@ function UniversalBridge() {
       });
   };
 
+  const receiveJson = () => {
+    window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
+      let message = e.detail.message;
+      console.log(message);
+      receiveJsonInfo = message;
+      setReceiveJsonInfo(message);
+    });
+  };
+
   return (
-    <GreyCard>
-      <CardContent className={classes.content}>
-        <TextField
-          type="text"
-          className={classes.textfield}
-          onChange={handleInput}
-          placeholder="Content"
-          defaultValue={defaultInputValue}
-          variant="outlined"
-          color="primary"
-          multiline="true"
-          rowsMax="10"
-          inputProps={{
-            'data-testid': 'input-field',
-          }}
-        />
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          className={classes.button}
-          onClick={sendJson}
-          variant="contained"
-        >
-          Send Json to HostApp
-        </Button>
-      </CardActions>
-    </GreyCard>
+    <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          <p>Send Json to HostApp</p>
+        </CardContent>
+        <CardContent className={classes.content}>
+          <TextField
+            type="text"
+            className={classes.textfield}
+            onChange={handleInput}
+            placeholder="Content"
+            defaultValue={defaultJsonValue}
+            variant="outlined"
+            color="primary"
+            multiline="true"
+            inputProps={{
+              'data-testid': 'input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={classes.actions}>
+          <Button
+            color="primary"
+            className={classes.button}
+            onClick={sendJson}
+            variant="contained"
+          >
+            Send Json to HostApp
+          </Button>
+        </CardActions>
+        <hr />
+        <CardContent className={classes.content}>
+          <p>Received Json from HostApp</p>
+        </CardContent>
+        <CardContent className={classes.content}>
+          <TextField
+            type="text"
+            className={classes.textfield}
+            onChange={handleInput}
+            placeholder="Received Json info here..."
+            defaultValue={receiveJsonInfo}
+            variant="outlined"
+            color="primary"
+            multiline="true"
+            inputProps={{
+              'data-testid': 'input-field',
+            }}
+          />
+        </CardContent>
+      </GreyCard>
+    </div>
   );
-}
+};
 
 export default UniversalBridge;
