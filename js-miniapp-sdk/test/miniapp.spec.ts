@@ -61,6 +61,7 @@ window.MiniAppBridge = {
   getSecureStorageItem: sandbox.stub(),
   removeSecureStorageItems: sandbox.stub(),
   isSecureStorageReady: sandbox.stub(),
+  sendJsonToHostapp: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -787,5 +788,26 @@ describe('setCloseAlert', () => {
     window.MiniAppBridge.setCloseAlert.resolves(error);
 
     return expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(error);
+  });
+});
+
+describe('sendJsonToHostapp', () => {
+  it('should retrieve null from the MiniAppBridge once sendJsonToHostapp call is successful', () => {
+    const jsonToHostapp = 'test content';
+    const response = null;
+
+    window.MiniAppBridge.sendJsonToHostapp.resolves(response);
+    return expect(
+      miniApp.universalBridge.sendJsonToHostapp(jsonToHostapp)
+    ).to.eventually.equal(response);
+  });
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const jsonToHostapp = 'test content';
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.sendJsonToHostapp.resolves(error);
+    return expect(
+      miniApp.universalBridge.sendJsonToHostapp(jsonToHostapp)
+    ).to.eventually.equal(error);
   });
 });

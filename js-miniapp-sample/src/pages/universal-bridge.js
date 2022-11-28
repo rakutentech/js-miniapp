@@ -122,13 +122,10 @@ const UniversalBridge = () => {
             className={classes.textfield}
             onChange={handleInput}
             placeholder="Received Json info here..."
-            defaultValue={receiveJsonInfo}
+            value={receiveJsonInfo}
             variant="outlined"
             color="primary"
             multiline="true"
-            inputProps={{
-              'data-testid': 'input-field',
-            }}
           />
         </CardContent>
       </GreyCard>

@@ -950,6 +950,18 @@ function createCloseAlertInfo(): CloseAlertInfo {
   };
 }
 
+describe('sendJsonToHostapp', () => {
+  it('will return the send json string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.sendJsonToHostapp('{"data":"This is a sample json information"}')
+    ).to.eventually.deep.equal(response);
+  });
+});
+
 describe('console.log', () => {
   const logger = new Logger.MiniAppSDKLogger(mockLogger);
   window.MiniAppSDKLogger = logger;
