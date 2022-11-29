@@ -61,7 +61,6 @@ const UniversalBridge = () => {
     console.log(message);
     receiveJsonInfo = message;
     setReceiveJsonInfo(message);
-    receiveJsonResponseBack();
   });
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
@@ -78,18 +77,6 @@ const UniversalBridge = () => {
       })
       .catch((miniAppError) => {
         console.error('Send Json Error: ', miniAppError);
-      });
-  };
-
-  const receiveJsonResponseBack = () => {
-    const responseReceiveJson = { content: 'Json received successfully' };
-    MiniApp.universalBridge
-      .sendJsonToHostapp(responseReceiveJson)
-      .then((success) => {
-        console.log(success);
-      })
-      .catch((miniAppError) => {
-        console.error('Receive Json Response Error: ', miniAppError);
       });
   };
 
