@@ -33,6 +33,9 @@ import {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
+  Product,
+  ProductPrice,
+  PurchasedProduct,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -46,6 +49,7 @@ import {
 const miniAppInstance = new MiniApp();
 
 export default miniAppInstance;
+
 export {
   CustomPermission,
   CustomPermissionName,
@@ -78,4 +82,7 @@ export {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
+  Product,
+  ProductPrice,
+  PurchasedProduct,
 };

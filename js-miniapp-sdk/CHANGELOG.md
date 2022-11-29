@@ -1,5 +1,6 @@
 ## CHANGELOG
 ### 1.16.0 (TBD)
+- **Feature:** Added In-app purchases related interfaces. `prepareProductsList()` , `purchaseProductWith(id: string)`. These interfaces can be used to prepare the list of products and make a in-app purchase with product id from associated with Google Play™ or Apple App Store™.
 - **Feature:** Added Universal Bridge related interface e.g. `sendJsonToHostapp` to send any JSON/String to the HostApp. Also, added support with `HostAppEvents` to receive any JSON/String to MiniApp from the HostApp.
 
 ### 1.15.0 (2022-06-24)

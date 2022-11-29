@@ -18,6 +18,7 @@ import { ChatService } from './modules/chat-service';
 import { getBridge } from './utils';
 import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
+import { Purchases } from './modules/inapp-purchases';
 import { UniversalBridge } from './modules/universal-bridge';
 
 /**
@@ -162,6 +163,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
   chatService = new ChatService();
   secureStorageService = new SecureStorageService();
+  purchases = new Purchases();
   universalBridge = new UniversalBridge();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {

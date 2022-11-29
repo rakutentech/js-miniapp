@@ -19,6 +19,7 @@ import EventIcon from '@material-ui/icons/CompareArrows';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
 import NotificationImportantOutlinedIcon from '@material-ui/icons/NotificationImportantOutlined';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SendIcon from '@material-ui/icons/SendSharp';
 
 import Ads from './pages/ads';
@@ -40,6 +41,7 @@ import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import SecureStorageComponent from './pages/secure-storage';
 import { CloseConfirmAlert } from './pages/app-close-alert';
+import Purchases from './pages/inapp-purchases';
 import UniversalBridge from './pages/universal-bridge';
 
 const homeItem = [
@@ -63,6 +65,12 @@ const appItems = [
     label: 'Fetch Unique ID from SDK',
     navLink: '/fetch_id',
     element: <UuidFetcher />,
+  },
+  {
+    icon: <ShoppingCartIcon />,
+    label: 'InApp Purchases',
+    navLink: '/inapp_purchases',
+    element: <Purchases />,
   },
   {
     icon: <LocationOnIcon />,
