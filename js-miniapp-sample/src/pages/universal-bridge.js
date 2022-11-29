@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MiniApp, HostAppEvents } from 'js-miniapp-sdk';
+import MiniApp from 'js-miniapp-sdk';
+import { HostAppEvents } from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -55,6 +56,14 @@ const UniversalBridge = () => {
   let inputValue = defaultJsonValue;
   let [receiveJsonInfo, setReceiveJsonInfo] = useState('');
 
+  window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
+    let message = e.detail.message;
+    console.log(message);
+    receiveJsonInfo = message;
+    setReceiveJsonInfo(message);
+    receiveJsonResponseBack();
+  });
+
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
     inputValue = e.currentTarget.value;
@@ -72,13 +81,16 @@ const UniversalBridge = () => {
       });
   };
 
-  const receiveJson = () => {
-    window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
-      let message = e.detail.message;
-      console.log(message);
-      receiveJsonInfo = message;
-      setReceiveJsonInfo(message);
-    });
+  const receiveJsonResponseBack = () => {
+    const responseReceiveJson = { content: 'Json received successfully' };
+    MiniApp.universalBridge
+      .sendJsonToHostapp(responseReceiveJson)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((miniAppError) => {
+        console.error('Receive Json Response Error: ', miniAppError);
+      });
   };
 
   return (
@@ -109,7 +121,7 @@ const UniversalBridge = () => {
             onClick={sendJson}
             variant="contained"
           >
-            Send Json to HostApp
+            Send Json
           </Button>
         </CardActions>
         <hr />
@@ -120,7 +132,6 @@ const UniversalBridge = () => {
           <TextField
             type="text"
             className={classes.textfield}
-            onChange={handleInput}
             placeholder="Received Json info here..."
             value={receiveJsonInfo}
             variant="outlined"
