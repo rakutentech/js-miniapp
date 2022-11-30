@@ -36,24 +36,25 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     paddingBottom: 0,
   },
-  textfield: {
+  sendInput: {
     width: '90%',
-    maxWidth: 300,
     marginTop: 10,
     marginBottom: 10,
     background: 'white',
-    '& input': {
-      color: theme.color.primary,
-      lineHeight: '1.5em',
-      fontSize: '1.2em',
-    },
+  },
+  receiveInput: {
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 10,
+    disabled: 'disabled',
+    caretColor: 'transparent',
   },
 }));
 
 const UniversalBridge = () => {
   const classes = useStyles();
   const defaultJsonValue = '{"data":"This is a sample json information"}';
-  let inputValue = defaultJsonValue;
+  let [inputValue, setInputValue] = useState(defaultJsonValue);
   let [receiveJsonInfo, setReceiveJsonInfo] = useState('');
 
   window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
@@ -65,7 +66,11 @@ const UniversalBridge = () => {
 
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
-    inputValue = e.currentTarget.value;
+    setInputValue(e.currentTarget.value);
+  };
+
+  const clearSendInput = () => {
+    setInputValue('');
   };
 
   const sendJson = () => {
@@ -74,9 +79,11 @@ const UniversalBridge = () => {
       .sendJsonToHostapp(info)
       .then((success) => {
         console.log(success);
+        window.alert(success);
       })
       .catch((miniAppError) => {
-        console.error('Send Json Error: ', miniAppError);
+        console.error(miniAppError);
+        window.alert(miniAppError);
       });
   };
 
@@ -84,15 +91,15 @@ const UniversalBridge = () => {
     <div className={classes.scrollable}>
       <GreyCard className={classes.card}>
         <CardContent className={classes.content}>
-          <p>Send Json to HostApp</p>
+          <p>Send JSON/String to HostApp</p>
         </CardContent>
         <CardContent className={classes.content}>
           <TextField
             type="text"
-            className={classes.textfield}
+            className={classes.sendInput}
             onChange={handleInput}
-            placeholder="Content"
-            defaultValue={defaultJsonValue}
+            placeholder="Input JSON/String here..."
+            value={inputValue}
             variant="outlined"
             color="primary"
             multiline="true"
@@ -110,16 +117,27 @@ const UniversalBridge = () => {
           >
             Send Json
           </Button>
+          <Button
+            className={classes.button}
+            onClick={clearSendInput}
+            variant="contained"
+          >
+            Clear
+          </Button>
         </CardActions>
-        <hr />
+        <hr
+          style={{
+            borderColor: 'primary',
+          }}
+        />
         <CardContent className={classes.content}>
-          <p>Received Json from HostApp</p>
+          <p>Receive JSON/String from HostApp</p>
         </CardContent>
         <CardContent className={classes.content}>
           <TextField
             type="text"
-            className={classes.textfield}
-            placeholder="Received Json info here..."
+            className={classes.receiveInput}
+            placeholder="Received JSON/String here"
             value={receiveJsonInfo}
             variant="outlined"
             color="primary"

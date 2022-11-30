@@ -1,11 +1,11 @@
 import { getBridge } from '../utils';
 
 /**
- * Interfaces to send and receive json string information to/from Host app.
+ * Interface to send JSON/String to Host app
  */
 export interface UniversalBridgeProvider {
   /**
-   * send json string information to HostApp.
+   * Send JSON/String information to HostApp.
    */
   sendJsonToHostapp(info: string): Promise<string>;
 }

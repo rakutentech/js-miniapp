@@ -687,7 +687,7 @@ export class MiniAppBridge {
 
   /**
    * Associating sendJsonToHostapp function to MiniAppBridge object.
-   * @param {info} The json string information to send to HostApp.
+   * @param {info} JSON/String information that you would like to send to HostApp.
    * @see {sendJsonToHostapp}
    */
   sendJsonToHostapp(info: string) {
