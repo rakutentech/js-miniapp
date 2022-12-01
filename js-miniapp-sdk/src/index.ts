@@ -39,7 +39,11 @@ import {
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
-import { MiniAppEvents, MiniAppKeyboardEvents } from './event-types';
+import {
+  MiniAppEvents,
+  MiniAppKeyboardEvents,
+  HostAppEvents,
+} from './event-types';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
@@ -71,6 +75,7 @@ export {
   ScopesNotSupportedError,
   MiniAppEvents,
   MiniAppKeyboardEvents,
+  HostAppEvents,
   SecureStorageFullError,
   SecureStorageBusyError,
   SecureStorageUnavailableError,
