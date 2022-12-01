@@ -485,6 +485,17 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
         });
     };
+    /**
+     * Associating sendJsonToHostapp function to MiniAppBridge object.
+     * @param {info} JSON/String information that you would like to send to HostApp.
+     * @see {sendJsonToHostapp}
+     */
+    MiniAppBridge.prototype.sendJsonToHostapp = function (info) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('sendJsonToHostapp', { jsonInfo: info }, function (success) { return resolve(success); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
