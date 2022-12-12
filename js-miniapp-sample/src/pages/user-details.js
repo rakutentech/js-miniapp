@@ -217,10 +217,15 @@ function UserDetails(props: UserDetailsProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
 
-  const buttonClassname = clsx({
-    [classes.buttonFailure]: state.isError,
-    [classes.buttonSuccess]: !state.isError,
-  });
+  const userDetailsButtonClassname = getButtonState(state.isError);
+  const pointsButtonClassname = getButtonState(state.isPointsError);
+
+  function getButtonState(isError: boolean) {
+    return clsx({
+      [classes.buttonFailure]: isError,
+      [classes.buttonSuccess]: !isError,
+    });
+  }
 
   function requestUserDetails() {
     const permissionsList = [
@@ -474,7 +479,7 @@ function UserDetails(props: UserDetailsProps) {
             variant="contained"
             color="primary"
             classes={{ root: classes.button }}
-            className={buttonClassname}
+            className={userDetailsButtonClassname}
             disabled={state.isLoading}
             data-testid="fetchUserButton"
           >
@@ -502,7 +507,7 @@ function UserDetails(props: UserDetailsProps) {
             variant="contained"
             color="primary"
             classes={{ root: classes.button }}
-            className={buttonClassname}
+            className={pointsButtonClassname}
             disabled={state.isPointsLoading}
             data-testid="fetchPointsButton"
           >
