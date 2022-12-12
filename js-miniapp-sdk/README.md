@@ -427,6 +427,72 @@ Please make sure that `capture` attribute is available, it will open device came
 </html>
 ```
 
+### In-App Purchases
+You can perform the in-app purchases for the products available for In-App Purchases associated with Google Play™ or Apple App Store™.
+
+#### Prepare products list
+This will retrieve the list of products details available for In-App Purchase associated with Google Play™ or Apple App Store™.
+Returns the list of products for inapp-purchases.
+
+```javascript
+import miniApp from 'js-miniapp-sdk';
+miniApp.purchases
+      .prepareProductsList()
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
+#### Purchase aproduct with product id
+This will request for the In-app Purchase of a product with product id associated with Google Play™ or Apple App Store™.
+Returns the PurchasedProduct object with transaction details.
+
+```javascript
+import miniApp from 'js-miniapp-sdk';
+miniApp.purchases
+      .purchaseProductWith(productId)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
+### Universal Bridge
+MiniApp users can send any JSON/String from MiniApp to HostApp as well as receive any JSON/String from HostApp to MiniApp.
+
+#### Send a JSON/String from MiniApp to HostApp
+Please use the following example in the MiniApp:
+
+```javascript
+import miniApp from 'js-miniapp-sdk';
+const inputValue = '{"data":"This is a sample json information"}';
+const info = { content: inputValue };
+miniApp.universalBridge
+      .sendJsonToHostapp(info)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
+#### Receive a JSON/String from HostApp to MiniApp
+Please use the following example in the MiniApp:
+
+```javascript
+import HostAppEvents from 'js-miniapp-sdk';
+window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
+  let message = e.detail.message;
+  console.log(message);
+});
+```
+
 ## Advanced Usage
 
 ### Errors management

@@ -7,7 +7,17 @@ export enum MiniAppEvents {
   RESUME = 'miniappresume',
 }
 
+/**
+ * Enum for supported keyboard event types
+ */
 export enum MiniAppKeyboardEvents {
   KEYBOARDSHOWN = 'miniappkeyboardshown',
   KEYBOARDHIDDEN = 'miniappkeyboardhidden',
+}
+
+/**
+ * Enum for supported HostApp event types
+ */
+export enum HostAppEvents {
+  RECEIVE_JSON_INFO = 'miniappreceivejsoninfo',
 }

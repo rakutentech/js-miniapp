@@ -13,8 +13,14 @@ import {
   ScopesNotSupportedError,
   AuthorizationFailureError,
   MiniAppError,
+  CloseAlertInfo,
+  MiniAppSecureStorageSize,
+  MiniAppSecureStorageKeyValues,
+  Platform,
+  HostEnvironmentInfo,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
+import miniAppInstance from '../src';
 
 const sandbox = sinon.createSandbox();
 beforeEach(() => {
@@ -42,11 +48,22 @@ window.MiniAppBridge = {
   getContacts: sandbox.stub(),
   getAccessToken: sandbox.stub(),
   getPoints: sandbox.stub(),
+  getHostEnvironmentInfo: sandbox.stub(),
   setScreenOrientation: sandbox.stub(),
   sendMessageToContact: sandbox.stub(),
   sendMessageToContactId: sandbox.stub(),
   sendMessageToMultipleContacts: sandbox.stub(),
   downloadFile: sandbox.stub(),
+  prepareProductsList: sandbox.stub(),
+  purchaseProductWith: sandbox.stub(),
+  setCloseAlert: sandbox.stub(),
+  clearSecureStorage: sandbox.stub(),
+  getSecureStorageSize: sandbox.stub(),
+  setSecureStorage: sandbox.stub(),
+  getSecureStorageItem: sandbox.stub(),
+  removeSecureStorageItems: sandbox.stub(),
+  isSecureStorageReady: sandbox.stub(),
+  sendJsonToHostapp: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -68,6 +85,12 @@ describe('getUniqueId', () => {
   });
 });
 */
+
+describe('miniAppInstance', () => {
+  it('miniAppInstance should be instance of MiniApp once index miniAppInstance is declared', () => {
+    return expect(miniAppInstance).to.be.instanceOf(MiniApp);
+  });
+});
 
 describe('getMessagingUniqueId', () => {
   it('should retrieve the unique id from the Mini App Bridge', () => {
@@ -375,6 +398,40 @@ describe('getAccessToken', () => {
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.user.getPoints()).to.eventually.equal(response);
     });
+
+    it('should retrieve Points from MiniApp when request is successful', () => {
+      const response = [
+        {
+          standard: 10,
+          term: 20,
+          cash: 30,
+        },
+      ];
+
+      window.MiniAppBridge.getPoints.resolves(response);
+      return expect(miniApp.getPoints()).to.eventually.equal(response);
+    });
+  });
+
+  describe('getHostEnvironmentInfo', () => {
+    it('should retrieve HostEnvironmentInfo once getHostEnvironmentInfo is called', () => {
+      const platform: Platform = Platform.ANDROID;
+      const hostEnvironmentInfo: HostEnvironmentInfo = {
+        platform: platform as Platform,
+        platformVersion: '',
+        hostVersion: '',
+        sdkVersion: '',
+        hostLocale: '',
+      };
+
+      window.MiniAppBridge.getHostEnvironmentInfo.resolves(hostEnvironmentInfo);
+      window.MiniAppBridge.platform = platform;
+
+      expect(miniApp.getPlatform()).to.equal(platform);
+      return expect(miniApp.getHostEnvironmentInfo()).to.eventually.equal(
+        hostEnvironmentInfo
+      );
+    });
   });
 
   it('should retrieve AudienceNotSupportedError response from the MiniAppBridge once there is an audience error', () => {
@@ -547,6 +604,266 @@ describe('downloadFile', () => {
     window.MiniAppBridge.downloadFile.resolves(error);
     expect(
       miniApp.downloadFile('test.jpg', 'https://rakuten.co.jp', {})
+    ).to.eventually.equal(error);
+  });
+});
+
+describe('prepareProductsList', () => {
+  it('should retrieve the list of products available for purchase', () => {
+    const response = [
+      {
+        title: 'MyApp_A',
+        description: 'This is app A for purchase',
+        id: 'com.rakuten.myappa',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+      {
+        title: 'MyApp_B',
+        description: 'This is app B for purchase',
+        id: 'com.rakuten.myappb',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+    ];
+
+    window.MiniAppBridge.prepareProductsList.resolves(response);
+    return expect(miniApp.purchases.prepareProductsList()).to.eventually.equal(
+      response
+    );
+  });
+});
+
+describe('purchaseProductWith', () => {
+  it('should Purchases the app with given id', () => {
+    const response = {
+      product: {
+        title: 'MyApp_A',
+        description: 'This is app A for purchase',
+        id: 'com.rakuten.myappa',
+        price: {
+          currencyCode: 'yen',
+          price: '100',
+        },
+      },
+      transactionId: 'transction_id_a',
+      transactionDate: '2022/11/23',
+    };
+    const productId = 'com.rakuten.myappa';
+
+    window.MiniAppBridge.purchaseProductWith.resolves(response);
+    return expect(
+      miniApp.purchases.purchaseProductWith(productId)
+    ).to.eventually.equal(response);
+  });
+});
+
+describe('getPlatform', () => {
+  it('should retrieve bridge platform name when getPlatform is called', () => {
+    const response = 'android';
+
+    window.MiniAppBridge.platform = response;
+    return expect(miniApp.getPlatform()).to.equal(response);
+  });
+});
+
+function createCloseAlertInfo(): CloseAlertInfo {
+  return {
+    title: 'title',
+    description: 'description',
+    shouldDisplay: false,
+  };
+}
+
+describe('secureStorage', () => {
+  it('should call secureStorageService clear when clearSecureStorage is called', () => {
+    const response = undefined;
+
+    window.MiniAppBridge.clearSecureStorage.resolves(response);
+
+    return expect(miniApp.secureStorageService.clear()).to.eventually.equal(
+      response
+    );
+  });
+
+  it('should call secureStorageService size when getSecureStorageSize is called', () => {
+    const response: MiniAppSecureStorageSize = { used: 100, max: 5000 };
+
+    window.MiniAppBridge.getSecureStorageSize.resolves(response);
+    return expect(miniApp.secureStorageService.size()).to.eventually.equal(
+      response
+    );
+  });
+
+  it('should call secureStorageService setItems when setSecureStorage is called ', () => {
+    const response = undefined;
+    const values: MiniAppSecureStorageKeyValues = { ['key']: 'value' };
+
+    window.MiniAppBridge.setSecureStorage.resolves(response);
+    return expect(
+      miniApp.secureStorageService.setItems(values)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve miniAppError when calls setSecureStorage has an error', () => {
+    const error = new MiniAppError({});
+    const values: MiniAppSecureStorageKeyValues = { ['key']: 'value' };
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.setSecureStorage.resolves(error);
+    return expect(
+      miniApp.secureStorageService.setItems(values)
+    ).to.eventually.equal(error);
+  });
+
+  it('should call secureStorageService getItem when getSecureStorageItem is called', () => {
+    const response = '';
+    const key = 'key';
+
+    window.MiniAppBridge.getSecureStorageItem.resolves(response);
+    return expect(
+      miniApp.secureStorageService.getItem(key)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve miniAppError when calls getSecureStorageItem has an error', () => {
+    const error = new MiniAppError({});
+    const key = 'key';
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.getSecureStorageItem.resolves(error);
+    return expect(
+      miniApp.secureStorageService.getItem(key)
+    ).to.eventually.equal(error);
+  });
+
+  it('should call secureStorageService removeItems when removeSecureStorageItems is called', () => {
+    const response = undefined;
+    const key: [string] = ['key'];
+
+    window.MiniAppBridge.removeSecureStorageItems.resolves(response);
+    return expect(
+      miniApp.secureStorageService.removeItems(key)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve miniAppError when calls removeSecureStorageItems has an error', () => {
+    const error = new MiniAppError({});
+    const key: [string] = ['key'];
+
+    window.MiniAppBridge.removeSecureStorageItems.resolves(error);
+    return expect(
+      miniApp.secureStorageService.removeItems(key)
+    ).to.eventually.equal(error);
+  });
+
+  it('should call secureStorageService onReady when bridge isSecureStorageReady is true', () => {
+    let isCalled = false;
+    const onReady = function onReady() {
+      isCalled = true;
+    };
+
+    window.MiniAppBridge.isSecureStorageReady = true;
+    miniApp.secureStorageService.onReady(onReady);
+    return expect(isCalled).to.equal(true);
+  });
+
+  it('should call window addEventListener when bridge isSecureStorageReady is false', () => {
+    let isCalled = false;
+    function onReady() {
+      isCalled = true;
+    }
+
+    window.addEventListener = sandbox.spy();
+
+    window.MiniAppBridge.isSecureStorageReady = false;
+    miniApp.secureStorageService.onReady(onReady);
+    return expect(window.addEventListener.calledOnce).to.be.true;
+  });
+
+  it('should call window addEventListener when bridge secureStorageLoadError is null', () => {
+    let isCalled = false;
+    function onReady() {
+      isCalled = true;
+    }
+
+    window.addEventListener = sandbox.spy();
+
+    miniApp.secureStorageService.onLoadError(onReady);
+    return expect(window.addEventListener.calledOnce).to.be.true;
+  });
+
+  it('should call window addEventListener when bridge secureStorageError is null', () => {
+    const onLoadError = (error: MiniAppError) => {};
+
+    window.addEventListener = sandbox.spy();
+
+    miniApp.secureStorageService.onLoadError(onLoadError);
+    return expect(window.addEventListener.calledOnce).to.be.true;
+  });
+
+  it('should call window addEventListener when bridge has a secureStorageError', () => {
+    const error = new MiniAppError({});
+    const key: [string] = ['key'];
+    let isCalled = false;
+
+    const onLoadError = (error: MiniAppError) => {
+      isCalled = true;
+    };
+
+    window.MiniAppBridge.secureStorageLoadError = error;
+    miniApp.secureStorageService.onLoadError(onLoadError);
+    return expect(isCalled).equal(true);
+  });
+});
+
+describe('setCloseAlert', () => {
+  it('should call bridge setCloseAlert when setCloseAlert is called', () => {
+    const response = undefined;
+
+    const alertInfo: CloseAlertInfo = createCloseAlertInfo();
+    window.MiniAppBridge.setCloseAlert.resolves(response);
+    expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(response);
+  });
+
+  it('should retrieve miniAppError when calls setCloseAlert has an error', () => {
+    const error = new MiniAppError({});
+    const alertInfo: CloseAlertInfo = createCloseAlertInfo();
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.setCloseAlert.resolves(error);
+
+    return expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(error);
+  });
+});
+
+describe('sendJsonToHostapp', () => {
+  it('should retrieve null from the MiniAppBridge once sendJsonToHostapp call is successful', () => {
+    const jsonToHostapp = 'test content';
+    const response = null;
+
+    window.MiniAppBridge.sendJsonToHostapp.resolves(response);
+    return expect(
+      miniApp.universalBridge.sendJsonToHostapp(jsonToHostapp)
+    ).to.eventually.equal(response);
+  });
+  it('should retrive error response from the MiniAppBridge once there is errors', () => {
+    const jsonToHostapp = 'test content';
+    const error = 'Bridge error';
+
+    window.MiniAppBridge.sendJsonToHostapp.resolves(error);
+    return expect(
+      miniApp.universalBridge.sendJsonToHostapp(jsonToHostapp)
     ).to.eventually.equal(error);
   });
 });

@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     width: '90%',
     marginTop: 10,
     marginBottom: 10,
+    background: 'white',
   },
 }));
 

@@ -33,15 +33,23 @@ import {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
+  Product,
+  ProductPrice,
+  PurchasedProduct,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
-import { MiniAppEvents, MiniAppKeyboardEvents } from './event-types';
+import {
+  MiniAppEvents,
+  MiniAppKeyboardEvents,
+  HostAppEvents,
+} from './event-types';
 
 /** @internal */
 const miniAppInstance = new MiniApp();
 
 export default miniAppInstance;
+
 export {
   CustomPermission,
   CustomPermissionName,
@@ -67,10 +75,14 @@ export {
   ScopesNotSupportedError,
   MiniAppEvents,
   MiniAppKeyboardEvents,
+  HostAppEvents,
   SecureStorageFullError,
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
+  Product,
+  ProductPrice,
+  PurchasedProduct,
 };
