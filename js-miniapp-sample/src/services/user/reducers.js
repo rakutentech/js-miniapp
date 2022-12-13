@@ -1,5 +1,5 @@
-import { combineReducers } from 'redux';
 import { Points } from 'js-miniapp-sdk';
+import { combineReducers } from 'redux';
 
 import type {
   UserNameSuccessAction,

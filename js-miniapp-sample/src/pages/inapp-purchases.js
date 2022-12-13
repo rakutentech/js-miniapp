@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -8,6 +7,8 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
+import MiniApp from 'js-miniapp-sdk';
+
 
 import GreyCard from '../components/GreyCard';
 

@@ -1,8 +1,9 @@
+import { HostEnvironmentInfo } from 'js-miniapp-sdk';
+
 import type {
   RequestHostInfoSuccessAction,
   OnStorageReadySuccessAction,
 } from './actions';
-import { HostEnvironmentInfo } from 'js-miniapp-sdk';
 import {
   REQUEST_HOST_ENVIRONMENT_INFO_SUCCESS,
   ON_SECURE_STORAGE_READY_SUCCESS,

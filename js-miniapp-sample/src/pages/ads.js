@@ -1,5 +1,4 @@
 import React, { useReducer, useState } from 'react';
-import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -11,6 +10,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import MiniApp from 'js-miniapp-sdk';
+
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
