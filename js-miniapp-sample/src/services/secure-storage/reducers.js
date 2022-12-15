@@ -15,7 +15,6 @@ import {
   SET_SECURE_STORAGE_SUCCESS,
 } from './types';
 
-
 const defaultSetItems = null;
 const setItemsReducer = (
   state: ?string = defaultSetItems,

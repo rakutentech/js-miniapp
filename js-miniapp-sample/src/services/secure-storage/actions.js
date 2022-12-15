@@ -14,7 +14,6 @@ import {
   GET_SIZE_SECURE_STORAGE_FAILURE,
 } from './types';
 
-
 type SetItemsSuccessAction = { type: string };
 type GetItemSuccessAction = { type: string, item: string };
 type RemoveItemsSuccessAction = { type: string };

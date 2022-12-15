@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core';
 import { MiniAppEvents, MiniAppKeyboardEvents } from 'js-miniapp-sdk';
 
-
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({

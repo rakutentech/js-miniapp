@@ -9,7 +9,6 @@ import {
   onSecureStorageReady,
 } from '../services/landing/actions';
 
-
 type LandingProps = {
   platform: ?string,
   platformVersion: ?string,

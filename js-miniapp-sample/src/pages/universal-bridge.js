@@ -10,7 +10,6 @@ import {
 import MiniApp from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 
-
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
