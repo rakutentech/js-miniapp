@@ -162,7 +162,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.getMessagingUniqueId = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getUniqueId', null, function (id) { return resolve(id); }, function (error) { return reject(error); });
+            return _this.executor.exec('getMessagingUniqueId', null, function (id) { return resolve(id); }, function (error) { return reject(error); });
         });
     };
     /**
