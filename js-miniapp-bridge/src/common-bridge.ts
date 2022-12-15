@@ -211,7 +211,7 @@ export class MiniAppBridge {
   getMessagingUniqueId() {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
-        'getUniqueId',
+        'getMessagingUniqueId',
         null,
         id => resolve(id),
         error => reject(error)
