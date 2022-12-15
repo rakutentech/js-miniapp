@@ -173,7 +173,7 @@ jobs:
   build-sample: # builds  & tests the sample app against latest sdk build.
     working_directory: ~/js-miniapp-sample
     docker:
-      - image: circleci/node:12.16.2
+      - image: circleci/node:14.14
       # TODO get the sdk build from saved workspace
     environment:
       PUBLIC_URL: .
