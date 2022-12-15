@@ -4,12 +4,12 @@
   "description": "Mini App JavaScript Bridge",
   "dependencies": {},
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "@types/node": "^10.0.3",
     "@types/sinon": "^9.0.0",
-    "browserify": "^16.5.1",
+    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "gts": "^1.1.2",
@@ -18,7 +18,7 @@
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
-    "source-map-support": "^0.5.16",
+    "source-map-support": "^0.5.21",
     "ts-node": "^8.8.1",
     "tslint": "^6.1.0",
     "typescript": "^4.9.4"
