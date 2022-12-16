@@ -74,7 +74,7 @@ const UriSchemes = () => {
   );
   const [externalUrl, setExternalUrl] = useState('');
 
-  function validateParams(params:string) {
+  function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
   }
 
