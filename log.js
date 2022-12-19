@@ -7,7 +7,7 @@ var AndroidSDKLogger = /** @class */ (function () {
     function AndroidSDKLogger() {
     }
     AndroidSDKLogger.prototype.log = function (emoji, type, args) {
-        window.MiniAppAndroid.postMessage(emoji + " console." + type + ": " + Object.values(args)
+        window.MiniAppAndroid.postMessage("".concat(emoji, " console.").concat(type, ": ").concat(Object.values(args)
             .map(function (v) {
             return typeof v === 'undefined'
                 ? 'undefined'
@@ -16,7 +16,7 @@ var AndroidSDKLogger = /** @class */ (function () {
                     : v.toString();
         })
             .map(function (v) { return v.substring(0, 3000); }) // Limit msg to 3000 chars
-            .join(', '));
+            .join(', ')));
     };
     return AndroidSDKLogger;
 }());
@@ -26,6 +26,7 @@ window.MiniAppSDKLogger = new common_log_1.MiniAppSDKLogger(androidLogger);
 },{"../common-log":2}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MiniAppSDKLogger = exports.getLogger = void 0;
 /** @internal */
 function getLogger() {
     // tslint:disable:no-any
