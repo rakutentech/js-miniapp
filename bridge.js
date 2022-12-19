@@ -13,6 +13,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MiniAppBridge = exports.mabKeyboardEventQueue = exports.mabCustomEventQueue = exports.mabMessageQueue = void 0;
 var secure_storage_1 = require("./types/secure-storage");
 var token_data_1 = require("./types/token-data");
 var error_types_1 = require("./types/error-types");
@@ -33,7 +34,7 @@ var MiniAppBridge = /** @class */ (function () {
         this.platform = executor.getPlatform();
         window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
         window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
-            return (_this.secureStorageLoadError = error_types_1.parseMiniAppError(e.detail.message));
+            return (_this.secureStorageLoadError = (0, error_types_1.parseMiniAppError)(e.detail.message));
         });
     }
     /**
@@ -163,7 +164,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.showInterstitialAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('showAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (closeSuccess) { return resolve(closeSuccess); }, function (error) { return reject(error); });
+            return _this.executor.exec('showAd', { adType: 0 /* AdTypes.INTERSTITIAL */, adUnitId: id }, function (closeSuccess) { return resolve(closeSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -175,7 +176,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.loadInterstitialAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('loadAd', { adType: 0 /* INTERSTITIAL */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
+            return _this.executor.exec('loadAd', { adType: 0 /* AdTypes.INTERSTITIAL */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -187,7 +188,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.loadRewardedAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('loadAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
+            return _this.executor.exec('loadAd', { adType: 1 /* AdTypes.REWARDED */, adUnitId: id }, function (loadSuccess) { return resolve(loadSuccess); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -197,7 +198,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.showRewardedAd = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('showAd', { adType: 1 /* REWARDED */, adUnitId: id }, function (rewardResponse) { return resolve(JSON.parse(rewardResponse)); }, function (error) { return reject(error); });
+            return _this.executor.exec('showAd', { adType: 1 /* AdTypes.REWARDED */, adUnitId: id }, function (rewardResponse) { return resolve(JSON.parse(rewardResponse)); }, function (error) { return reject(error); });
         });
     };
     /**
@@ -279,7 +280,7 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('getAccessToken', { audience: audience, scopes: scopes }, function (tokenData) {
                 var nativeTokenData = JSON.parse(tokenData);
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
-            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -365,7 +366,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.getPoints = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('getPoints', null, function (points) { return resolve(JSON.parse(points)); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.getHostEnvironmentInfo = function () {
@@ -386,31 +387,31 @@ var MiniAppBridge = /** @class */ (function () {
                 else {
                     resolve(null);
                 }
-            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.setSecureStorage = function (items) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('setSecureStorageItems', { secureStorageItems: items }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('setSecureStorageItems', { secureStorageItems: items }, function (success) { return resolve(undefined); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.getSecureStorageItem = function (key) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getSecureStorageItem', { secureStorageKey: key }, function (responseData) { return resolve(responseData); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('getSecureStorageItem', { secureStorageKey: key }, function (responseData) { return resolve(responseData); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.removeSecureStorageItems = function (keys) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('removeSecureStorageItems', { secureStorageKeyList: keys }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('removeSecureStorageItems', { secureStorageKeyList: keys }, function (success) { return resolve(undefined); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.clearSecureStorage = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('clearSecureStorage', null, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('clearSecureStorage', null, function (success) { return resolve(undefined); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     MiniAppBridge.prototype.getSecureStorageSize = function () {
@@ -418,7 +419,7 @@ var MiniAppBridge = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getSecureStorageSize', null, function (responseData) {
                 resolve(JSON.parse(responseData));
-            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -428,7 +429,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.setCloseAlert = function (alertInfo) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('setCloseAlert', { closeAlertInfo: alertInfo }, function (success) { return resolve(undefined); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('setCloseAlert', { closeAlertInfo: alertInfo }, function (success) { return resolve(undefined); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -441,7 +442,7 @@ var MiniAppBridge = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('prepareProductsList', null, function (productsList) {
                 resolve(JSON.parse(productsList));
-            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -454,7 +455,7 @@ var MiniAppBridge = /** @class */ (function () {
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('purchaseProductWith', { product_id: id }, function (purchasedProduct) {
                 resolve(JSON.parse(purchasedProduct));
-            }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -465,7 +466,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.sendJsonToHostapp = function (info) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendJsonToHostapp', { jsonInfo: info }, function (success) { return resolve(success); }, function (error) { return reject(error_types_1.parseMiniAppError(error)); });
+            return _this.executor.exec('sendJsonToHostapp', { jsonInfo: info }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     return MiniAppBridge;
@@ -558,16 +559,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseAuthError = exports.AuthorizationFailureError = exports.ScopesNotSupportedError = exports.AudienceNotSupportedError = void 0;
 var mini_app_error_1 = require("./mini-app-error");
 var MiniAppAuthErrorType;
 (function (MiniAppAuthErrorType) {
@@ -631,16 +635,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseDownloadError = exports.DownloadHttpError = exports.SaveFailureError = exports.InvalidUrlError = exports.DownloadFailedError = void 0;
 var mini_app_error_1 = require("./mini-app-error");
 var MiniAppDownloadErrorType;
 (function (MiniAppDownloadErrorType) {
@@ -732,28 +739,29 @@ exports.parseDownloadError = parseDownloadError;
 },{"./mini-app-error":6}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
 var auth_errors_1 = require("./auth-errors");
-exports.AuthorizationFailureError = auth_errors_1.AuthorizationFailureError;
-exports.AudienceNotSupportedError = auth_errors_1.AudienceNotSupportedError;
-exports.ScopesNotSupportedError = auth_errors_1.ScopesNotSupportedError;
+Object.defineProperty(exports, "AuthorizationFailureError", { enumerable: true, get: function () { return auth_errors_1.AuthorizationFailureError; } });
+Object.defineProperty(exports, "AudienceNotSupportedError", { enumerable: true, get: function () { return auth_errors_1.AudienceNotSupportedError; } });
+Object.defineProperty(exports, "ScopesNotSupportedError", { enumerable: true, get: function () { return auth_errors_1.ScopesNotSupportedError; } });
 var download_file_errors_1 = require("./download-file-errors");
-exports.DownloadFailedError = download_file_errors_1.DownloadFailedError;
-exports.DownloadHttpError = download_file_errors_1.DownloadHttpError;
-exports.InvalidUrlError = download_file_errors_1.InvalidUrlError;
-exports.SaveFailureError = download_file_errors_1.SaveFailureError;
+Object.defineProperty(exports, "DownloadFailedError", { enumerable: true, get: function () { return download_file_errors_1.DownloadFailedError; } });
+Object.defineProperty(exports, "DownloadHttpError", { enumerable: true, get: function () { return download_file_errors_1.DownloadHttpError; } });
+Object.defineProperty(exports, "InvalidUrlError", { enumerable: true, get: function () { return download_file_errors_1.InvalidUrlError; } });
+Object.defineProperty(exports, "SaveFailureError", { enumerable: true, get: function () { return download_file_errors_1.SaveFailureError; } });
 var secure_storage_errors_1 = require("./secure-storage-errors");
-exports.SecureStorageFullError = secure_storage_errors_1.SecureStorageFullError;
-exports.SecureStorageBusyError = secure_storage_errors_1.SecureStorageBusyError;
-exports.SecureStorageUnavailableError = secure_storage_errors_1.SecureStorageUnavailableError;
-exports.SecureStorageIOError = secure_storage_errors_1.SecureStorageIOError;
+Object.defineProperty(exports, "SecureStorageFullError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageFullError; } });
+Object.defineProperty(exports, "SecureStorageBusyError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageBusyError; } });
+Object.defineProperty(exports, "SecureStorageUnavailableError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageUnavailableError; } });
+Object.defineProperty(exports, "SecureStorageIOError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageIOError; } });
 var mini_app_error_1 = require("./mini-app-error");
-exports.MiniAppError = mini_app_error_1.MiniAppError;
+Object.defineProperty(exports, "MiniAppError", { enumerable: true, get: function () { return mini_app_error_1.MiniAppError; } });
 function parseMiniAppError(jsonString) {
     try {
         var json = JSON.parse(jsonString);
-        return (auth_errors_1.parseAuthError(json) ||
-            download_file_errors_1.parseDownloadError(json) ||
-            secure_storage_errors_1.parseStorageError(json) ||
+        return ((0, auth_errors_1.parseAuthError)(json) ||
+            (0, download_file_errors_1.parseDownloadError)(json) ||
+            (0, secure_storage_errors_1.parseStorageError)(json) ||
             new mini_app_error_1.MiniAppError(json));
     }
     catch (e) {
@@ -772,16 +780,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MiniAppError = void 0;
 /**
  * This class is a representation of an error sent from MiniApp mobile SDK
  */
@@ -805,16 +816,19 @@ var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseStorageError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = void 0;
 var mini_app_error_1 = require("./mini-app-error");
 var MiniAppStorageErrorType;
 (function (MiniAppStorageErrorType) {
@@ -892,6 +906,7 @@ exports.parseStorageError = parseStorageError;
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Platform = void 0;
 /** Device platform. */
 var Platform;
 (function (Platform) {
@@ -902,6 +917,7 @@ var Platform;
 },{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MiniAppSecureStorageEvents = void 0;
 var MiniAppSecureStorageEvents;
 (function (MiniAppSecureStorageEvents) {
     MiniAppSecureStorageEvents["onReady"] = "miniappsecurestorageready";
@@ -911,6 +927,7 @@ var MiniAppSecureStorageEvents;
 },{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AccessTokenScopes = exports.AccessTokenData = void 0;
 /** Token data type. */
 var AccessTokenData = /** @class */ (function () {
     function AccessTokenData(baseToken) {

@@ -1,6 +1,7 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MiniAppSDKLogger = exports.getLogger = void 0;
 /** @internal */
 function getLogger() {
     // tslint:disable:no-any
@@ -105,7 +106,7 @@ var IOSSDKLogger = /** @class */ (function () {
     function IOSSDKLogger() {
     }
     IOSSDKLogger.prototype.log = function (emoji, type, args) {
-        window.webkit.messageHandlers.MiniAppLogging.postMessage(emoji + " console." + type + ": " + Object.values(args)
+        window.webkit.messageHandlers.MiniAppLogging.postMessage("".concat(emoji, " console.").concat(type, ": ").concat(Object.values(args)
             .map(function (v) {
             return typeof v === 'undefined'
                 ? 'undefined'
@@ -114,7 +115,7 @@ var IOSSDKLogger = /** @class */ (function () {
                     : v.toString();
         })
             .map(function (v) { return v.substring(0, 3000); }) // Limit msg to 3000 chars
-            .join(', '));
+            .join(', ')));
     };
     return IOSSDKLogger;
 }());
