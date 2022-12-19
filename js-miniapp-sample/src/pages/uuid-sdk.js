@@ -7,11 +7,11 @@ import {
   makeStyles,
   Snackbar,
 } from '@material-ui/core';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
 import { setMessagingUniqueId, setMauid } from '../services/uuid/actions';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const useStyles = makeStyles((theme) => ({
   card: {

@@ -1,13 +1,5 @@
 import { combineReducers } from 'redux';
 
-import {
-  CLEAR_SECURE_STORAGE_SUCCESS,
-  GET_SECURE_STORAGE_SUCCESS,
-  GET_SIZE_SECURE_STORAGE_SUCCESS,
-  REMOVE_ITEMS_STORAGE_SUCCESS,
-  SET_SECURE_STORAGE_SUCCESS,
-} from './types';
-
 import type {
   SetItemsSuccessAction,
   GetItemSuccessAction,
@@ -15,6 +7,13 @@ import type {
   SizeSuccessAction,
   ClearSuccessAction,
 } from './actions';
+import {
+  CLEAR_SECURE_STORAGE_SUCCESS,
+  GET_SECURE_STORAGE_SUCCESS,
+  GET_SIZE_SECURE_STORAGE_SUCCESS,
+  REMOVE_ITEMS_STORAGE_SUCCESS,
+  SET_SECURE_STORAGE_SUCCESS,
+} from './types';
 
 const defaultSetItems = null;
 const setItemsReducer = (

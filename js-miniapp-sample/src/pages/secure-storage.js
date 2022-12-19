@@ -1,3 +1,5 @@
+import React, { useReducer, useState, Fragment } from 'react';
+
 import {
   Button,
   CircularProgress,
@@ -14,8 +16,8 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import { MiniAppError, MiniAppSecureStorageSize } from 'js-miniapp-sdk';
-import React, { useReducer, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
+
 import {
   clear,
   getItem,
@@ -614,13 +616,16 @@ function SecureStorageComponent(props: SecureStorageProps) {
             {state.error}
           </Typography>
         )}
-        {!state.isLoading && !state.isError && state.isSuccess && props.size && (
-          <Typography variant="body1" className={classes.red}>
-            <div>Maximum Size: {props.size.max}</div>
-            <div>Used Space: {props.size.used}</div>
-            <div>Available: {props.size.max - props.size.used}</div>
-          </Typography>
-        )}
+        {!state.isLoading &&
+          !state.isError &&
+          state.isSuccess &&
+          props.size && (
+            <Typography variant="body1" className={classes.red}>
+              <div>Maximum Size: {props.size.max}</div>
+              <div>Used Space: {props.size.used}</div>
+              <div>Available: {props.size.max - props.size.used}</div>
+            </Typography>
+          )}
         {!state.isLoading && !state.isError && state.isStorageCleaned && (
           <Typography variant="body1" className={classes.red}>
             Storage Cleared Successfully

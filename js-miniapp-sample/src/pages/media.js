@@ -1,12 +1,13 @@
 // @flow
 import React, { useState } from 'react';
+
+import ReactPlayerLoader from '@brightcove/react-player-loader';
 import {
   Button,
   CardContent,
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import ReactPlayerLoader from '@brightcove/react-player-loader';
 import MiniApp from 'js-miniapp-sdk';
 import { ScreenOrientation } from 'js-miniapp-sdk';
 

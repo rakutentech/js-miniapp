@@ -3,13 +3,13 @@
   "version": "1.15.0",
   "description": "Mini App Sample for JavaScript SDK",
   "dependencies": {
-    "@brightcove/react-player-loader": "^1.4.1",
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@brightcove/react-player-loader": "^1.4.2",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
-    "@mui/material": "^5.8.1",
+    "@mui/material": "^5.10.17",
     "bowser": "^2.11.0",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.0.4",
@@ -19,7 +19,7 @@
     "react-scripts": "3.4.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "semver": "^7.3.5"
+    "semver": "^7.3.8"
   },
   "scripts": {
     "format": "prettier --config ./prettier.config.js --write 'src/**/*.js'",
@@ -41,14 +41,14 @@
     "iOS>=11"
   ],
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint": "^8.29.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-react": "^7.31.11",
     "flow-bin": "^0.121.0",
     "flow-typed": "^3.7.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.1.1",
-    "prettier": "^2.6.2"
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1"
   },
   "husky": {
     "hooks": {

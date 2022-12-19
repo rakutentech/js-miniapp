@@ -74,7 +74,7 @@ const UriSchemes = () => {
   );
   const [externalUrl, setExternalUrl] = useState('');
 
-  function validateParams(params) {
+  function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
   }
 
@@ -95,7 +95,7 @@ const UriSchemes = () => {
     onOpenUrl(url);
   }
 
-  function onOpenUrl(url) {
+  function onOpenUrl(url: URL) {
     window.location.href = url;
   }
 

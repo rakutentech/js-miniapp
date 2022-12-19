@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+
 import { CardContent, makeStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+
 import GreyCard from '../components/GreyCard';
 import {
   setHostEnvironmentInfo,
   onSecureStorageReady,
 } from '../services/landing/actions';
-
-import { connect } from 'react-redux';
 
 type LandingProps = {
   platform: ?string,

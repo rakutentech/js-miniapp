@@ -1,10 +1,11 @@
-import { SET_MESSAGE_TYPES } from './types';
-import type { SetMessageTypeAction } from './types';
 import MiniApp, {
   CustomPermissionStatus,
   CustomPermissionName,
 } from 'js-miniapp-sdk';
 import { MessageToContact } from 'js-miniapp-sdk';
+
+import { SET_MESSAGE_TYPES } from './types';
+import type { SetMessageTypeAction } from './types';
 
 const getMessageTypeList = (): SetMessageTypeAction => {
   return {

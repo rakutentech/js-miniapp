@@ -1,4 +1,5 @@
 import React, { useState, useReducer } from 'react';
+
 import {
   Button,
   Container,
@@ -7,10 +8,9 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-
+import { red } from '@material-ui/core/colors';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { red } from '@material-ui/core/colors';
 import MiniApp, { CloseAlertInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({

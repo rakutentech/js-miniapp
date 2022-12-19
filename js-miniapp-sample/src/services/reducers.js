@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 
-import MessageReducer from './message/reducers';
+import { FileDownloadReducer } from './filedownload/reducers';
 import HomeStateReducer from './home/reducers';
-import { grantedPermissionsReducer } from './permissions/reducers';
-import userReducer from './user/reducers';
-import { UUIDReducer } from './uuid/reducers';
 import {
   HostEnvironmentInfoReducer,
   SecureStorageStatusReducer,
 } from './landing/reducers';
-import { FileDownloadReducer } from './filedownload/reducers';
+import MessageReducer from './message/reducers';
+import { grantedPermissionsReducer } from './permissions/reducers';
 import storageReducer from './secure-storage/reducers';
+import userReducer from './user/reducers';
+import { UUIDReducer } from './uuid/reducers';
 
 export default combineReducers({
   message: MessageReducer,
