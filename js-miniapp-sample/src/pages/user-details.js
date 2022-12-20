@@ -402,6 +402,14 @@ function UserDetails(props: UserDetailsProps) {
                           <span>{'Email: ' + contact.email}</span>
                         )}
                       </Typography>
+                      <Typography>
+                        {contact.allEmailList &&
+                          contact.allEmailList.length > 0 && (
+                            <span>
+                              {'Email list: ' + contact.allEmailList.join(', ')}
+                            </span>
+                          )}
+                      </Typography>
                     </React.Fragment>
                   }
                 />
