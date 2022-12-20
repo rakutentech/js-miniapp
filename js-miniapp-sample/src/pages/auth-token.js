@@ -251,7 +251,7 @@ function AuthToken(props: AuthTokenProps) {
           )}
           {!state.isLoading && state.isError && (
             <Typography variant="body1" className={classes.red}>
-              Unable to retrieve Access token. Please check your internet connection.
+              Something went wrong, please try again later.
             </Typography>
           )}
           <div>{AccessToken()}</div>
