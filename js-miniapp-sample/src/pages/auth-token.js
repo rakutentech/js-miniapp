@@ -142,15 +142,17 @@ function AuthToken(props: AuthTokenProps) {
           'We would like to get the Access token details to share with this Mini app',
       },
     ];
-
     props
       .requestPermissions(permissionsList)
-      .then((permissions) =>
-        permissions
+      .then((permissions) => {      
+        if(permissions) {
+          permissions
           .filter(
             (permission) => permission.status === CustomPermissionStatus.ALLOWED
           )
           .map((permission) => permission.name)
+        }
+      }
       )
       .then((permissions) =>
         Promise.all([
@@ -249,7 +251,7 @@ function AuthToken(props: AuthTokenProps) {
           )}
           {!state.isLoading && state.isError && (
             <Typography variant="body1" className={classes.red}>
-              {state.error}
+              Unable to retrieve Access token. Please check your internet connection.
             </Typography>
           )}
           <div>{AccessToken()}</div>
