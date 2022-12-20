@@ -100,7 +100,7 @@ const UniversalBridge = () => {
       });
   };
 
-  const ShowSendJsonStatus = () => {
+  const showSendJsonStatus = () => {
     if (sendJsonStatus === '') {
       return <div></div>;
     }
@@ -124,7 +124,7 @@ const UniversalBridge = () => {
       <GreyCard className={classes.card}>
         <CardContent className={classes.content}>
           <p>Send JSON/String to HostApp</p>
-          {ShowSendJsonStatus()}
+          <div>{showSendJsonStatus()}</div>
         </CardContent>
         <CardContent className={classes.content}>
           <TextField
