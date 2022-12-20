@@ -144,16 +144,16 @@ function AuthToken(props: AuthTokenProps) {
     ];
     props
       .requestPermissions(permissionsList)
-      .then((permissions) => {      
-        if(permissions) {
+      .then((permissions) => {
+        if (permissions) {
           permissions
-          .filter(
-            (permission) => permission.status === CustomPermissionStatus.ALLOWED
-          )
-          .map((permission) => permission.name)
+            .filter(
+              (permission) =>
+                permission.status === CustomPermissionStatus.ALLOWED
+            )
+            .map((permission) => permission.name);
         }
-      }
-      )
+      })
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
