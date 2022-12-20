@@ -4,11 +4,10 @@ import {
   Avatar,
   Button,
   CardHeader,
+  Container,
   CircularProgress,
   FormGroup,
   Typography,
-  CardContent,
-  CardActions,
   List,
   ListItem,
   ListItemAvatar,
@@ -18,6 +17,10 @@ import {
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import TabContext from '@material-ui/lab/TabContext';
+import TabList from '@material-ui/lab/TabList';
+import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import {
   CustomPermission,
@@ -29,7 +32,6 @@ import {
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
-import GreyCard from '../components/GreyCard';
 import { requestCustomPermissions } from '../services/permissions/actions';
 import {
   requestContactList,
@@ -53,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
     background: theme.color.secondary,
     width: '85vw',
     maxWidth: 500,
+  },
+  wrapperContainer: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    paddingLeft: 0,
   },
   wrapper: {
     position: 'relative',
@@ -116,10 +124,17 @@ const useStyles = makeStyles((theme) => ({
   profilePhoto: {
     height: 100,
     width: 100,
-    marginBottom: 20,
+  },
+  profilePhotoOuter: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  userProfile: {
+    maxHeight: 125,
+    overflow: 'auto',
   },
   contactsList: {
-    maxHeight: 125,
+    maxHeight: 320,
     overflow: 'auto',
   },
   red: {
@@ -128,18 +143,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const initialState = {
-  isLoading: false,
-  isError: false,
-  hasRequestedPermissions: false,
+  isNamePhotoLoading: false,
+  isNamePhottoError: false,
+  hasRequestedNamePhotoPermissions: false,
+  isContactsLoading: false,
+  isContactsError: false,
+  hasRequestedContactsPermissions: false,
   isPointsLoading: false,
   isPointsError: false,
   hasRequestedPointPermissions: false,
 };
 
 type State = {
-  isLoading: ?boolean,
-  isError: ?boolean,
-  hasRequestedPermissions: boolean,
+  isNamePhotoLoading: ?boolean,
+  isNamePhotoError: ?boolean,
+  hasRequestedNamePhotoPermissions: boolean,
+  isContactsLoading: ?boolean,
+  isContactsError: ?boolean,
+  hasRequestedContactsPermissions: boolean,
   isPointsLoading: ?boolean,
   isPointsError: ?boolean,
   hasRequestedPointPermissions: boolean,
@@ -151,27 +172,46 @@ type Action = {
 
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'FETCH_INIT':
+    case 'NAME_PHOTO_FETCH_INIT':
       return {
         ...state,
-        isLoading: true,
-        isError: false,
-        hasRequestedPermissions: false,
+        isNamePhotoLoading: true,
+        isNamePhotoError: false,
+        hasRequestedNamePhotoPermissions: false,
       };
-    case 'FETCH_SUCCESS':
+    case 'NAME_PHOTO_FETCH_SUCCESS':
       return {
         ...state,
-        isLoading: false,
-        isError: false,
-        hasRequestedPermissions: true,
+        isNamePhotoLoading: false,
+        isNamePhotoError: false,
+        hasRequestedNamePhotoPermissions: true,
       };
-    case 'FETCH_FAILURE':
+    case 'NAME_PHOTO_FETCH_FAILURE':
       return {
         ...initialState,
-        isLoading: false,
-        isError: true,
+        isNamePhotoLoading: false,
+        isNamePhotoError: true,
       };
-
+    case 'CONTACTS_FETCH_INIT':
+      return {
+        ...state,
+        isContactsLoading: true,
+        isContactsError: false,
+        hasRequestedContactsPermissions: false,
+      };
+    case 'CONTACTS_FETCH_SUCCESS':
+      return {
+        ...state,
+        isContactsLoading: false,
+        isContactsError: false,
+        hasRequestedContactsPermissions: true,
+      };
+    case 'CONTACTS_FETCH_FAILURE':
+      return {
+        ...initialState,
+        isContactsLoading: false,
+        isContactsError: true,
+      };
     case 'POINTS_FETCH_INIT':
       return {
         ...state,
@@ -192,7 +232,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isPointsLoading: false,
         isPointsError: true,
       };
-
     default:
       throw Error('Unknown action type');
   }
@@ -217,7 +256,8 @@ function UserDetails(props: UserDetailsProps) {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
 
-  const userDetailsButtonClassname = getButtonState(state.isError);
+  const namePhotoButtonClassname = getButtonState(state.isNamePhotoError);
+  const contactsButtonClassname = getButtonState(state.isContactsError);
   const pointsButtonClassname = getButtonState(state.isPointsError);
 
   function getButtonState(isError: boolean) {
@@ -227,7 +267,7 @@ function UserDetails(props: UserDetailsProps) {
     });
   }
 
-  function requestUserDetails() {
+  function requestNamePhoto() {
     const permissionsList = [
       {
         name: CustomPermissionName.USER_NAME,
@@ -238,10 +278,6 @@ function UserDetails(props: UserDetailsProps) {
         name: CustomPermissionName.PROFILE_PHOTO,
         description:
           'We would like to display your Profile Photo on your profile page.',
-      },
-      {
-        name: CustomPermissionName.CONTACT_LIST,
-        description: 'We would like to send messages to your contacts.',
       },
     ];
 
@@ -256,15 +292,37 @@ function UserDetails(props: UserDetailsProps) {
           hasPermission(CustomPermissionName.PROFILE_PHOTO, permissions)
             ? props.getProfilePhoto()
             : null,
+        ])
+      )
+      .then(() => dispatch({ type: 'NAME_PHOTO_FETCH_SUCCESS' }))
+      .catch((e) => {
+        console.error(e);
+        dispatch({ type: 'NAME_PHOTO_FETCH_FAILURE' });
+      });
+  }
+
+  function requestContacts() {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.CONTACT_LIST,
+        description: 'We would like to send messages to your contacts.',
+      },
+    ];
+
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) => filterAllowedPermissions(permissions))
+      .then((permissions) =>
+        Promise.all([
           hasPermission(CustomPermissionName.CONTACT_LIST, permissions)
             ? props.getContacts()
             : null,
         ])
       )
-      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+      .then(() => dispatch({ type: 'CONTACTS_FETCH_SUCCESS' }))
       .catch((e) => {
         console.error(e);
-        dispatch({ type: 'FETCH_FAILURE' });
+        dispatch({ type: 'CONTACTS_FETCH_FAILURE' });
       });
   }
 
@@ -302,204 +360,177 @@ function UserDetails(props: UserDetailsProps) {
       .map((permission) => permission.name);
   }
 
-  function handleClick(e) {
-    if (!state.isLoading) {
+  function handleNamePhotoClick(e) {
+    if (!state.isNamePhotoLoading) {
       e.preventDefault();
-      dispatch({ type: 'FETCH_INIT' });
-      requestUserDetails();
+      dispatch({ type: 'NAME_PHOTO_FETCH_INIT' });
+      requestNamePhoto();
+    }
+  }
+
+  function handleContactsClick(e) {
+    if (!state.isContactsLoading) {
+      e.preventDefault();
+      dispatch({ type: 'CONTACTS_FETCH_INIT' });
+      requestContacts();
     }
   }
 
   function handlePointsClick(e) {
-    if (!state.isLoading) {
+    if (!state.isPointsLoading) {
       e.preventDefault();
       dispatch({ type: 'POINTS_FETCH_INIT' });
       requestPoints();
     }
   }
 
-  function ProfilePhoto() {
-    const hasDeniedPermission =
-      state.hasRequestedPermissions &&
+  function CardNamePhotoActionsForm() {
+    const hasPhotoDeniedPermission =
+      state.hasRequestedNamePhotoPermissions &&
       !hasPermission(CustomPermissionName.PROFILE_PHOTO);
 
-    return [
-      hasDeniedPermission ? (
-        <ListItemText
-          primary='"Profile Photo" permission not granted.'
-          className={classes.red}
-          key="avatar-error"
-        />
-      ) : null,
-      <Avatar
-        src={props.profilePhoto}
-        className={classes.profilePhoto}
-        key="avatar"
-      />,
-    ];
-  }
-
-  function UserDetails() {
-    const hasDeniedPermission =
-      state.hasRequestedPermissions &&
+    const hasNameDeniedPermission =
+      state.hasRequestedNamePhotoPermissions &&
       !hasPermission(CustomPermissionName.USER_NAME);
 
     return (
-      <Paper className={classes.paper}>
-        <CardHeader subheader="User Details" />
-        <TextField
-          variant="outlined"
-          disabled={true}
-          className={classes.formInput}
-          id="input-name"
-          error={state.isError || hasDeniedPermission}
-          label={'Name'}
-          value={
-            hasDeniedPermission
-              ? '"User Name" permission not granted.'
-              : props.userName || ' '
-          }
-        />
-      </Paper>
-    );
-  }
-
-  function ContactList() {
-    const hasDeniedPermision =
-      state.hasRequestedPermissions &&
-      !hasPermission(CustomPermissionName.CONTACT_LIST);
-
-    return (
-      <Paper className={classes.paper}>
-        <CardHeader subheader="Contact List" />
-        <List className={classes.contactsList}>
-          {hasDeniedPermision && (
-            <ListItem>
-              <ListItemText
-                primary='"Contacts" permission not granted.'
-                className={classes.red}
-              />
-            </ListItem>
-          )}
-          {!hasDeniedPermision &&
-            props.contactList &&
-            props.contactList.map((contact) => (
-              <ListItem divider>
-                <ListItemAvatar>
-                  <Avatar className={classes.contactIcon} />
-                </ListItemAvatar>
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <Paper className={classes.paper}>
+          <List className={classes.userProfile}>
+            {hasPhotoDeniedPermission && (
+              <ListItem>
                 <ListItemText
-                  primary={contact.id}
-                  secondary={
-                    <React.Fragment>
-                      <Typography>
-                        {contact.name && contact.name !== '' && (
-                          <span>{'Name: ' + contact.name}</span>
-                        )}
-                      </Typography>
-                      <Typography>
-                        {contact.email && contact.email !== '' && (
-                          <span>{'Email: ' + contact.email}</span>
-                        )}
-                      </Typography>
-                      <Typography>
-                        {contact.allEmailList &&
-                          contact.allEmailList.length > 0 && (
-                            <span>
-                              {'Email list: ' + contact.allEmailList.join(', ')}
-                            </span>
-                          )}
-                      </Typography>
-                    </React.Fragment>
-                  }
+                  primary='"Profile Photo" permission not granted.'
+                  className={classes.red}
+                  key="avatar-error"
                 />
               </ListItem>
-            ))}
-        </List>
-      </Paper>
+            )}
+            {!hasPhotoDeniedPermission && (
+              <div className={classes.profilePhotoOuter}>
+                <Avatar
+                  src={props.profilePhoto}
+                  className={classes.profilePhoto}
+                  key="avatar"
+                />
+              </div>
+            )}
+          </List>
+          <CardHeader subheader="User Details" />
+          <TextField
+            variant="outlined"
+            disabled={true}
+            className={classes.formInput}
+            id="input-name"
+            error={state.isNamePhotoError || hasNameDeniedPermission}
+            label={'User Name'}
+            value={
+              hasNameDeniedPermission
+                ? '"User Name" permission not granted.'
+                : props.userName || ' '
+            }
+          />
+        </Paper>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handleNamePhotoClick}
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
+            className={namePhotoButtonClassname}
+            disabled={state.isNamePhotoLoading}
+            data-testid="fetchNamePhotoButton"
+          >
+            Fetch User Name and Photo
+          </Button>
+          {state.isNamePhotoLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
+          )}
+        </div>
+        {state.isNamePhotoError && (
+          <Typography variant="body1" className={classes.error}>
+            Error fetching the user name and photo
+          </Typography>
+        )}
+      </FormGroup>
     );
   }
 
-  function PointBalance() {
-    const hasDeniedPermission =
-      state.hasRequestedPointPermissions &&
-      !hasPermission(CustomPermissionName.POINTS);
+  function CardContactsActionsForm() {
+    const hasDeniedPermision =
+      state.hasRequestedContactsPermissions &&
+      !hasPermission(CustomPermissionName.CONTACT_LIST);
 
-    return (
-      <Paper className={classes.paper}>
-        <CardHeader subheader="Points" />
-        <TextField
-          variant="outlined"
-          disabled={true}
-          className={classes.formInput}
-          id="input-points-standard"
-          error={state.isPointsError || hasDeniedPermission}
-          label={'Points (Standard)'}
-          value={
-            hasDeniedPermission
-              ? '"Points" permission not granted.'
-              : props.points !== undefined &&
-                props.points.standard !== undefined
-              ? props.points.standard.toString()
-              : '-'
-          }
-        />
-        <TextField
-          variant="outlined"
-          disabled={true}
-          className={classes.formInput}
-          id="input-points-term"
-          error={state.isPointsError || hasDeniedPermission}
-          label={'Points (Time-Limited)'}
-          value={
-            hasDeniedPermission
-              ? '"Points" permission not granted.'
-              : props.points !== undefined && props.points.term !== undefined
-              ? props.points.term.toString()
-              : '-'
-          }
-        />
-        <TextField
-          variant="outlined"
-          disabled={true}
-          className={classes.formInput}
-          id="input-points-cash"
-          error={state.isPointsError || hasDeniedPermission}
-          label={'Points (Rakuten Cash)'}
-          value={
-            hasDeniedPermission
-              ? '"Points" permission not granted.'
-              : props.points !== undefined && props.points.cash !== undefined
-              ? props.points.cash.toString()
-              : '-'
-          }
-        />
-      </Paper>
-    );
-  }
-
-  function CardActionsForm() {
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <div className={classes.wrapper}>
           <Button
-            onClick={handleClick}
+            onClick={handleContactsClick}
             variant="contained"
             color="primary"
             classes={{ root: classes.button }}
-            className={userDetailsButtonClassname}
-            disabled={state.isLoading}
-            data-testid="fetchUserButton"
+            className={contactsButtonClassname}
+            disabled={state.isContactsLoading}
+            data-testid="fetchContactsButton"
           >
-            Fetch User Details
+            Fetch Contacts
           </Button>
-          {state.isLoading && (
+          {state.isContactsLoading && (
             <CircularProgress size={20} className={classes.buttonProgress} />
           )}
         </div>
-        {state.isError && (
+        <Paper className={classes.paper}>
+          <CardHeader subheader="Contact List" />
+          <List className={classes.contactsList}>
+            {hasDeniedPermision && (
+              <ListItem>
+                <ListItemText
+                  primary='"Contacts" permission not granted.'
+                  className={classes.red}
+                />
+              </ListItem>
+            )}
+            {!hasDeniedPermision &&
+              props.contactList &&
+              props.contactList.map((contact) => (
+                <ListItem divider>
+                  <ListItemAvatar>
+                    <Avatar className={classes.contactIcon} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={contact.id}
+                    secondary={
+                      <React.Fragment>
+                        <Typography>
+                          {contact.name && contact.name !== '' && (
+                            <span>{'Name: ' + contact.name}</span>
+                          )}
+                        </Typography>
+                        <Typography>
+                          {contact.email && contact.email !== '' && (
+                            <span>{'Email: ' + contact.email}</span>
+                          )}
+                        </Typography>
+                        <Typography>
+                          {contact.allEmailList &&
+                            contact.allEmailList.length > 0 && (
+                              <span>
+                                {'Email list: ' +
+                                  contact.allEmailList.join(', ')}
+                              </span>
+                            )}
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                </ListItem>
+              ))}
+          </List>
+        </Paper>
+
+        {state.isContactsError && (
           <Typography variant="body1" className={classes.error}>
-            Error fetching the User Details
+            Error fetching the contacts
           </Typography>
         )}
       </FormGroup>
@@ -507,8 +538,62 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardPointActionsForm() {
+    const hasDeniedPermission =
+      state.hasRequestedPointPermissions &&
+      !hasPermission(CustomPermissionName.POINTS);
+
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
+        <Paper className={classes.paper}>
+          <CardHeader subheader="Points" />
+          <TextField
+            variant="outlined"
+            disabled={true}
+            className={classes.formInput}
+            id="input-points-standard"
+            error={state.isPointsError || hasDeniedPermission}
+            label={'Points (Standard)'}
+            value={
+              hasDeniedPermission
+                ? '"Points" permission not granted.'
+                : props.points !== undefined &&
+                  props.points.standard !== undefined
+                ? props.points.standard.toString()
+                : '-'
+            }
+          />
+          <TextField
+            variant="outlined"
+            disabled={true}
+            className={classes.formInput}
+            id="input-points-term"
+            error={state.isPointsError || hasDeniedPermission}
+            label={'Points (Time-Limited)'}
+            value={
+              hasDeniedPermission
+                ? '"Points" permission not granted.'
+                : props.points !== undefined && props.points.term !== undefined
+                ? props.points.term.toString()
+                : '-'
+            }
+          />
+          <TextField
+            variant="outlined"
+            disabled={true}
+            className={classes.formInput}
+            id="input-points-cash"
+            error={state.isPointsError || hasDeniedPermission}
+            label={'Points (Rakuten Cash)'}
+            value={
+              hasDeniedPermission
+                ? '"Points" permission not granted.'
+                : props.points !== undefined && props.points.cash !== undefined
+                ? props.points.cash.toString()
+                : '-'
+            }
+          />
+        </Paper>
+
         <div className={classes.wrapper}>
           <Button
             onClick={handlePointsClick}
@@ -539,36 +624,29 @@ function UserDetails(props: UserDetailsProps) {
     return permissionList.indexOf(permission) > -1;
   }
 
-  return (
-    <div className={classes.scrollable}>
-      <GreyCard className={classes.card}>
-        <CardContent>
-          <div
-            className={classes.dataFormsWrapper}
-            data-testid="dataFormsWrapper"
-          >
-            {ProfilePhoto()}
-            {UserDetails()}
-            {ContactList()}
-          </div>
-        </CardContent>
-        <CardActions classes={{ root: classes.rootCardActions }}>
-          {CardActionsForm()}
-        </CardActions>
+  const [value, setValue] = React.useState('1');
 
-        <CardContent>
-          <div
-            className={classes.dataFormsWrapper}
-            data-testid="pointDataFormsWrapper"
-          >
-            {PointBalance()}
-          </div>
-        </CardContent>
-        <CardActions classes={{ root: classes.rootCardActions }}>
-          {CardPointActionsForm()}
-        </CardActions>
-      </GreyCard>
-    </div>
+  const handleChange = (event: Event, newValue: string) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Container className={classes.wrapperContainer}>
+      <TabContext value={value}>
+        <TabList
+          variant="scrollable"
+          onChange={handleChange}
+          aria-label="user details tabs"
+        >
+          <Tab label="Profile" value="1" />
+          <Tab label="Contacts" value="2" />
+          <Tab label="Points" value="3" />
+        </TabList>
+        <TabPanel value="1">{CardNamePhotoActionsForm()}</TabPanel>
+        <TabPanel value="2">{CardContactsActionsForm()}</TabPanel>
+        <TabPanel value="3">{CardPointActionsForm()}</TabPanel>
+      </TabContext>
+    </Container>
   );
 }
 
