@@ -142,16 +142,18 @@ function AuthToken(props: AuthTokenProps) {
           'We would like to get the Access token details to share with this Mini app',
       },
     ];
-
     props
       .requestPermissions(permissionsList)
-      .then((permissions) =>
-        permissions
-          .filter(
-            (permission) => permission.status === CustomPermissionStatus.ALLOWED
-          )
-          .map((permission) => permission.name)
-      )
+      .then((permissions) => {
+        if (permissions) {
+          permissions
+            .filter(
+              (permission) =>
+                permission.status === CustomPermissionStatus.ALLOWED
+            )
+            .map((permission) => permission.name);
+        }
+      })
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
@@ -249,7 +251,7 @@ function AuthToken(props: AuthTokenProps) {
           )}
           {!state.isLoading && state.isError && (
             <Typography variant="body1" className={classes.red}>
-              {state.error}
+              Something went wrong, please try again later.
             </Typography>
           )}
           <div>{AccessToken()}</div>
