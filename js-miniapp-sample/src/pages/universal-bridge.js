@@ -6,11 +6,14 @@ import {
   CardContent,
   CardActions,
   makeStyles,
+  Typography,
 } from '@material-ui/core';
 import MiniApp from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
+
+import { red, green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -49,6 +52,15 @@ const useStyles = makeStyles((theme) => ({
     disabled: 'disabled',
     caretColor: 'transparent',
   },
+  success: {
+    color: green[500],
+    marginTop: 20,
+    textAlign: 'center',
+    wordBreak: 'break-all',
+  },
+  faliure: {
+    color: red[500],
+  },
 }));
 
 const UniversalBridge = () => {
@@ -56,6 +68,7 @@ const UniversalBridge = () => {
   const defaultJsonValue = '{"data":"This is a sample json information"}';
   let [inputValue, setInputValue] = useState(defaultJsonValue);
   let [receiveJsonInfo, setReceiveJsonInfo] = useState('');
+  let [sendJsonStatus, setSendJsonStatus] = useState('');
 
   window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
     let message = e.detail.message;
@@ -79,12 +92,31 @@ const UniversalBridge = () => {
       .sendJsonToHostapp(info)
       .then((success) => {
         console.log(success);
-        window.alert(success);
+        setSendJsonStatus('SUCCESS');
       })
       .catch((miniAppError) => {
         console.error(miniAppError);
-        window.alert(miniAppError);
+        setSendJsonStatus(miniAppError.message);
       });
+  };
+
+  const showSendJsonStatus = () => {
+    if (sendJsonStatus === '') {
+      return <div></div>;
+    }
+    if (sendJsonStatus === 'SUCCESS') {
+      return (
+        <Typography variant="body2" className={classes.success}>
+          "{sendJsonStatus}"
+        </Typography>
+      );
+    } else {
+      return (
+        <Typography variant="body2" className={classes.red}>
+          "Error: {sendJsonStatus}"
+        </Typography>
+      );
+    }
   };
 
   return (
@@ -92,6 +124,7 @@ const UniversalBridge = () => {
       <GreyCard className={classes.card}>
         <CardContent className={classes.content}>
           <p>Send JSON/String to HostApp</p>
+          <div>{showSendJsonStatus()}</div>
         </CardContent>
         <CardContent className={classes.content}>
           <TextField
