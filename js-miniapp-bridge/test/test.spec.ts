@@ -623,7 +623,7 @@ describe('getContacts', () => {
   it('will return the close status string response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     const response =
-      '[{"id":"id_contact","name":"Cory","email":"cory@miniapp.com"},{"id":"id_contact2","name":"Alam"},{"id":"id_contact3"}]';
+      '[{"id":"id_contact","name":"Cory","email":"cory@miniapp.com","allEmailList":["another1@miniapp.com", "another2@miniapp.com"]},{"id":"id_contact2","name":"Alam"},{"id":"id_contact3"}]';
     mockExecutor.exec.callsArgWith(2, response);
 
     const expected = [
@@ -631,6 +631,7 @@ describe('getContacts', () => {
         id: 'id_contact',
         name: 'Cory',
         email: 'cory@miniapp.com',
+        allEmailList: ['another1@miniapp.com', 'another2@miniapp.com'],
       },
       {
         id: 'id_contact2',
