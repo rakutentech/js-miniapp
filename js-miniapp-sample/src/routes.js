@@ -44,11 +44,59 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 
+const homeNavLink = { navLink: '/', label: 'Home' };
+const landingNavLink = { navLink: '/landing', label: 'Home' };
+const localStorageNavLink = { navLink: '/local_storage', label: 'Local Storage' };
+const fetchUniqueIdNavLink = { navLink: '/fetch_id', label: 'Fetch Unique ID from SDK' };
+const inAppPurchaseNavLink = { navLink: '/inapp_purchases', label: 'InApp Purchases' };
+const deviceLocationNavLink = { navLink: '/device_location', label: 'Device Location' };
+const authTokenNavLink = { navLink: '/auth_token', label: 'Auth token from Mobile' };
+const userDetailNavLink = { navLink: '/user_detail', label: 'User Details' };
+const messageNavLink = { navLink: '/chatbot', label: 'Message' };
+const windowActionNavLink = { navLink: '/window_actions', label: 'Window Actions' };
+const uriSchemesNavLink = { navLink: '/uri_schemes', label: 'URI Schemes' };
+const eventListenerNavLink = { navLink: '/event_listener', label: 'Event Listener' };
+const mediaNavLink = { navLink: '/media', label: 'Media' };
+const shareNavLink = { navLink: '/share', label: 'Share' };
+const adsNavLink = { navLink: '/ads', label: 'Ads' };
+const cameraNavLink = { navLink: '/camera', label: 'Camera' };
+const fileDownloadNavLink = { navLink: '/file_download', label: 'File Download' };
+const fileUploadNavLink = { navLink: '/file_upload', label: 'File Upload' };
+const gifsNavLink = { navLink: '/gifs', label: "GIF's & WebP" };
+const secureStorageNavLink = { navLink: '/secure-storage', label: 'SecureStorage' };
+const closeAlertNavLink = { navLink: '/close-confirm-alert', label: 'Close Alert' };
+const universalBridgeNavLink = { navLink: '/universal-bridge', label: 'Universal Bridge' };
+
+const navLinks = [
+  homeNavLink,
+  landingNavLink,
+  localStorageNavLink,
+  fetchUniqueIdNavLink,
+  inAppPurchaseNavLink,
+  deviceLocationNavLink,
+  authTokenNavLink,
+  userDetailNavLink,
+  messageNavLink,
+  windowActionNavLink,
+  uriSchemesNavLink,
+  eventListenerNavLink,
+  mediaNavLink,
+  shareNavLink,
+  adsNavLink,
+  cameraNavLink,
+  fileDownloadNavLink,
+  fileUploadNavLink,
+  gifsNavLink,
+  secureStorageNavLink,
+  closeAlertNavLink,
+  universalBridgeNavLink,
+];
+
 const homeItem = [
   {
     icon: <HomeIcon />,
-    label: 'Home',
-    navLink: '/landing',
+    label: landingNavLink.label,
+    navLink: landingNavLink.navLink,
     element: <Landing />,
   },
 ];
@@ -56,122 +104,122 @@ const homeItem = [
 const appItems = [
   {
     icon: <StorageIcon />,
-    label: 'Local Storage',
-    navLink: '/local_storage',
+    label: localStorageNavLink.label,
+    navLink: localStorageNavLink.navLink,
     element: <LocalStorage />,
   },
   {
     icon: <FingerprintIcon />,
-    label: 'Fetch Unique ID from SDK',
-    navLink: '/fetch_id',
+    label: fetchUniqueIdNavLink.label,
+    navLink: fetchUniqueIdNavLink.navLink,
     element: <UuidFetcher />,
   },
   {
     icon: <ShoppingCartIcon />,
-    label: 'InApp Purchases',
-    navLink: '/inapp_purchases',
+    label: inAppPurchaseNavLink.label,
+    navLink: inAppPurchaseNavLink.navLink,
     element: <Purchases />,
   },
   {
     icon: <LocationOnIcon />,
-    label: 'Device Location',
-    navLink: '/device_location',
+    label: deviceLocationNavLink.label,
+    navLink: deviceLocationNavLink.navLink,
     element: <WebLocation />,
   },
   {
     icon: <VpnKeyIcon />,
-    label: 'Auth token from Mobile',
-    navLink: '/auth_token',
+    label: authTokenNavLink.label,
+    navLink: authTokenNavLink.navLink,
     element: <AuthToken />,
   },
   {
     icon: <PersonIcon />,
-    label: 'User Details',
-    navLink: '/user_detail',
+    label: userDetailNavLink.label,
+    navLink: userDetailNavLink.navLink,
     element: <UserDetails />,
   },
   {
     icon: <ChatIcon />,
-    label: 'Message',
-    navLink: '/chatbot',
+    label: messageNavLink.label,
+    navLink: messageNavLink.navLink,
     element: <TalkToChatBot />,
   },
   {
     icon: <LaptopWindowsIcon />,
-    label: 'Window Actions',
-    navLink: '/window_actions',
+    label: windowActionNavLink.label,
+    navLink: windowActionNavLink.navLink,
     element: <WindowActions />,
   },
   {
     icon: <LinkIcon />,
-    label: 'URI Schemes',
-    navLink: '/uri_schemes',
+    label: uriSchemesNavLink.label,
+    navLink: uriSchemesNavLink.navLink,
     element: <UriSchemes />,
   },
   {
     icon: <EventIcon />,
-    label: 'Event Listener',
-    navLink: '/event_listener',
+    label: eventListenerNavLink.label,
+    navLink: eventListenerNavLink.navLink,
     element: <EventListener />,
   },
   {
     icon: <MediaIcon />,
-    label: 'Media',
-    navLink: '/media',
+    label: mediaNavLink.label,
+    navLink: mediaNavLink.navLink,
     element: <Media />,
   },
   {
     icon: <ShareIcon />,
-    label: 'Share',
-    navLink: '/share',
+    label: shareNavLink.label,
+    navLink: shareNavLink.navLink,
     element: <Share />,
   },
   {
     icon: <AdsIcon />,
-    label: 'Ads',
-    navLink: '/ads',
+    label: adsNavLink.label,
+    navLink: adsNavLink.navLink,
     element: <Ads />,
   },
   {
     icon: <PhotoCamera />,
-    label: 'Camera',
-    navLink: '/camera',
+    label: cameraNavLink.label,
+    navLink: cameraNavLink.navLink,
     element: <Camera />,
   },
   {
     icon: <CloudDownloadIcon />,
-    label: 'File Download',
-    navLink: '/file_download',
+    label: fileDownloadNavLink.label,
+    navLink: fileDownloadNavLink.navLink,
     element: <FileDownload />,
   },
   {
     icon: <AttachFileIcon />,
-    label: 'File Upload',
-    navLink: '/file_upload',
+    label: fileUploadNavLink.label,
+    navLink: fileUploadNavLink.navLink,
     element: <FileUploader />,
   },
   {
     icon: <GifIcon />,
-    label: "GIF's & WebP",
-    navLink: '/gifs',
+    label: gifsNavLink.label,
+    navLink: gifsNavLink.navLink,
     element: <GifPage />,
   },
   {
     icon: <SecurityIcon />,
-    label: 'SecureStorage',
-    navLink: '/secure-storage',
+    label: secureStorageNavLink.label,
+    navLink: secureStorageNavLink.navLink,
     element: <SecureStorageComponent />,
   },
   {
     icon: <NotificationImportantOutlinedIcon />,
-    label: 'Close Alert',
-    navLink: '/close-confirm-alert',
+    label: closeAlertNavLink.label,
+    navLink: closeAlertNavLink.navLink,
     element: <CloseConfirmAlert />,
   },
   {
     icon: <SendIcon />,
-    label: 'Universal Bridge',
-    navLink: '/universal-bridge',
+    label: universalBridgeNavLink.label,
+    navLink: universalBridgeNavLink.navLink,
     element: <UniversalBridge />,
   },
 ];
@@ -180,4 +228,4 @@ const navItems: Object[] = homeItem.concat(
   appItems.sort((a, b) => a.label.localeCompare(b.label))
 );
 
-export { navItems };
+export { navItems, navLinks };

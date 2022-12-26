@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { connect } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import { navLinks } from '../routes';
 import Drawer from './Drawer';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type ToolBarProps = {
-  title: string,
   showDrawer: Boolean,
   actions: any,
   onShrinkToggle: Function,
@@ -37,6 +37,11 @@ const ToolBar = (props: ToolBarProps) => {
   const classes = useStyles();
   const [showDrawerState, setDrawer] = useState(props.showDrawer ?? false);
 
+  const location = useLocation();
+  const [title, setTitle] = useState('');
+  useEffect(() => {
+    setTitle(navLinks.find((item) => item.navLink === location.pathname).label);
+  }, [location.pathname]);
   useEffect(
     () => {
       setDrawer(props.showDrawer);
@@ -84,7 +89,7 @@ const ToolBar = (props: ToolBarProps) => {
             )}
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {props.title}
+            {title}
           </Typography>
           <div className="actions">{props.actions}</div>
         </Toolbar>
@@ -112,7 +117,7 @@ function withRouter(Component) {
 }
 
 const mapStateToProps = (state, props) => {
-  return { ...props, title: state.home.title };
+  return { ...props };
 };
 
 export default connect(mapStateToProps)(withRouter(ToolBar));
