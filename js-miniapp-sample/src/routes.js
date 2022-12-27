@@ -44,6 +44,12 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 
+//default root location when using ios
+const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
+//default root location when using android
+const androidHomeNavLink = { navLink: '/miniapp/index.html', label: 'Home' }
+//default supposed root location
+//todo fix this
 const homeNavLink = { navLink: '/', label: 'Home' };
 const landingNavLink = { navLink: '/landing', label: 'Home' };
 const localStorageNavLink = { navLink: '/local_storage', label: 'Local Storage' };
@@ -68,6 +74,8 @@ const closeAlertNavLink = { navLink: '/close-confirm-alert', label: 'Close Alert
 const universalBridgeNavLink = { navLink: '/universal-bridge', label: 'Universal Bridge' };
 
 const navLinks = [
+  iosHomeNavLink,
+  androidHomeNavLink,
   homeNavLink,
   landingNavLink,
   localStorageNavLink,

@@ -40,7 +40,8 @@ const ToolBar = (props: ToolBarProps) => {
   const location = useLocation();
   const [title, setTitle] = useState('');
   useEffect(() => {
-    setTitle(navLinks.find((item) => item.navLink === location.pathname).label);
+    const navLinkLabel: { navLink: string, label: string } = navLinks.find((item) => item.navLink === location.pathname) ?? { navLink: location.pathname, label: 'Sample MiniApp' };
+    setTitle(navLinkLabel.label);
   }, [location.pathname]);
   useEffect(
     () => {
