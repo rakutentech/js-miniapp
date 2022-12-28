@@ -7,7 +7,7 @@ import {
   SecureStorageStatusReducer,
 } from './landing/reducers';
 import MessageReducer from './message/reducers';
-import { grantedPermissionsReducer } from './permissions/reducers';
+import { PermissionsReducer } from './permissions/reducers';
 import storageReducer from './secure-storage/reducers';
 import userReducer from './user/reducers';
 import { UUIDReducer } from './uuid/reducers';
@@ -15,7 +15,7 @@ import { UUIDReducer } from './uuid/reducers';
 export default combineReducers({
   message: MessageReducer,
   home: HomeStateReducer,
-  permissions: grantedPermissionsReducer,
+  permissions: PermissionsReducer,
   user: userReducer,
   uuid: UUIDReducer,
   info: HostEnvironmentInfoReducer,

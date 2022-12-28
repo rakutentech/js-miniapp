@@ -6,7 +6,6 @@ import {
   FormGroup,
   Typography,
   CardContent,
-  ListItemText,
   FormControl,
   TextField,
 } from '@material-ui/core';
@@ -19,6 +18,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   AccessTokenData,
+  MiniAppError,
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
@@ -70,37 +70,45 @@ const useStyles = makeStyles((theme) => ({
 const initialState = {
   isLoading: false,
   isError: false,
-  hasRequestedPermissions: false,
   error: null,
+  permissionDenied: false,
 };
 
 const dataFetchReducer = (state, action) => {
   switch (action.type) {
-    case 'FETCH_INIT':
+    case 'TOKEN_FETCH_INIT':
       return {
         ...state,
         isLoading: true,
         isError: false,
-        hasRequestedPermissions: false,
         error: null,
+        permissionDenied: false,
       };
-    case 'FETCH_SUCCESS':
+    case 'TOKEN_FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        hasRequestedPermissions: true,
         error: null,
+        permissionDenied: false,
       };
-    case 'FETCH_FAILURE':
+    case 'TOKEN_FETCH_FAILURE':
       return {
         ...state,
         isLoading: false,
         isError: true,
         error:
-          (typeof action.miniAppError == 'string'
-            ? action.miniAppError
-            : action.miniAppError.message) || '',
+          (typeof action.error == 'string'
+            ? action.error
+            : action.error.message) || '',
+      };
+    case 'PERMISSION_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+        permissionDenied: true,
       };
     default:
       throw new Error();
@@ -110,6 +118,7 @@ const dataFetchReducer = (state, action) => {
 type AuthTokenProps = {
   permissions: CustomPermissionName[],
   accessToken: AccessTokenData,
+  error: MiniAppError,
   getAccessToken: (audience: string, scopes: string[]) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
@@ -134,7 +143,7 @@ function AuthToken(props: AuthTokenProps) {
     setScope({ ...scope, scopes: event.target.value.split(', ') });
   };
 
-  function requestAccessTokenPermission() {
+  function requestAccessTokenPermissions() {
     const permissionsList = [
       {
         name: CustomPermissionName.ACCESS_TOKEN,
@@ -152,19 +161,17 @@ function AuthToken(props: AuthTokenProps) {
                 permission.status === CustomPermissionStatus.ALLOWED
             )
             .map((permission) => permission.name);
+          if (!hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)) {
+            requestAccessToken();
+          } else {
+            dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
+          }
+        } else {
+          dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
         }
       })
-      .then((permissions) =>
-        Promise.all([
-          hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
-            ? props.getAccessToken(scope.audience, scope.scopes)
-            : null,
-        ])
-      )
-      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
-      .catch((miniAppError) => {
-        console.error(miniAppError);
-        dispatch({ type: 'FETCH_FAILURE', miniAppError });
+      .catch((error) => {
+        dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
       });
   }
 
@@ -173,11 +180,22 @@ function AuthToken(props: AuthTokenProps) {
     return permissionList.indexOf(permission) > -1;
   }
 
+  function requestAccessToken() {
+    props
+      .getAccessToken(scope.audience, scope.scopes)
+      .then((permissions) => {
+        dispatch({ type: 'TOKEN_FETCH_SUCCESS' });
+      })
+      .catch((e) => {
+        dispatch({ type: 'TOKEN_FETCH_FAILURE' , error: e});
+      });
+  }
+
   function handleClick(e) {
     if (!state.isLoading) {
       e.preventDefault();
-      dispatch({ type: 'FETCH_INIT' });
-      requestAccessTokenPermission();
+      dispatch({ type: 'TOKEN_FETCH_INIT' });
+      requestAccessTokenPermissions();
     }
   }
 
@@ -199,19 +217,6 @@ function AuthToken(props: AuthTokenProps) {
         )}
       </div>
     );
-  }
-
-  function AccessToken() {
-    const hasDeniedPermission =
-      state.hasRequestedPermissions &&
-      !hasPermission(CustomPermissionName.ACCESS_TOKEN);
-
-    return hasDeniedPermission ? (
-      <ListItemText
-        primary="Access Token permission is denied by the user."
-        className={classes.red}
-      />
-    ) : null;
   }
 
   return (
@@ -239,30 +244,41 @@ function AuthToken(props: AuthTokenProps) {
             </FormControl>
           </Fragment>
           {ButtonWrapper()}
-          {!state.isLoading && !state.isError && props.accessToken && (
-            <Typography variant="body1" className={classes.success}>
-              Token: {props.accessToken.token}
-            </Typography>
-          )}
-          {!state.isLoading && !state.isError && props.accessToken && (
-            <Typography variant="body1" className={classes.success}>
-              Valid until: {displayDate(props.accessToken.validUntil)}
-            </Typography>
-          )}
-          {!state.isLoading && state.isError && (
+          {!state.isLoading &&
+            !state.isError &&
+            !state.permissionDenied &&
+            props.accessToken && (
+              <Typography variant="body1" className={classes.success}>
+                Token: {props.accessToken.token}
+              </Typography>
+            )}
+          {!state.isLoading &&
+            !state.isError &&
+            !state.permissionDenied &&
+            props.accessToken && (
+              <Typography variant="body1" className={classes.success}>
+                Valid until: {displayDate(props.accessToken.validUntil)}
+              </Typography>
+            )}
+          {!state.isLoading && state.isError && !state.permissionDenied && (
             <Typography variant="body1" className={classes.red}>
-              Something went wrong, please try again later.
+              {state.error}
             </Typography>
           )}
-          <div>{AccessToken()}</div>
+          {!state.isLoading && state.permissionDenied && (
+            <Typography variant="body1" className={classes.red}>
+              ACCESS_TOKEN Permission is denied by the user
+            </Typography>
+          )}
         </FormGroup>
       </CardContent>
     </GreyCard>
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   return {
+    ...props,
     permissions: state.permissions,
     accessToken: state.user.accessToken,
     error: state.error,
