@@ -143,7 +143,7 @@ function AuthToken(props: AuthTokenProps) {
     setScope({ ...scope, scopes: event.target.value.split(', ') });
   };
 
-  function requestAccessTokenPermissions() {
+  function requestAccessTokenPermission() {
     const permissionsList = [
       {
         name: CustomPermissionName.ACCESS_TOKEN,
@@ -187,7 +187,7 @@ function AuthToken(props: AuthTokenProps) {
         dispatch({ type: 'TOKEN_FETCH_SUCCESS' });
       })
       .catch((e) => {
-        dispatch({ type: 'TOKEN_FETCH_FAILURE' , error: e});
+        dispatch({ type: 'TOKEN_FETCH_FAILURE', error: e });
       });
   }
 
@@ -195,7 +195,7 @@ function AuthToken(props: AuthTokenProps) {
     if (!state.isLoading) {
       e.preventDefault();
       dispatch({ type: 'TOKEN_FETCH_INIT' });
-      requestAccessTokenPermissions();
+      requestAccessTokenPermission();
     }
   }
 
