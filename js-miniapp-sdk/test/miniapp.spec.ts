@@ -831,7 +831,9 @@ describe('setCloseAlert', () => {
 
     const alertInfo: CloseAlertInfo = createCloseAlertInfo();
     window.MiniAppBridge.setCloseAlert.resolves(response);
-    expect(miniApp.miniappUtils.setCloseAlert(alertInfo)).to.eventually.equal(response);
+    expect(miniApp.miniappUtils.setCloseAlert(alertInfo)).to.eventually.equal(
+      response
+    );
   });
 
   it('should retrieve miniAppError when calls setCloseAlert has an error', () => {
@@ -843,7 +845,9 @@ describe('setCloseAlert', () => {
 
     window.MiniAppBridge.setCloseAlert.resolves(error);
 
-    return expect(miniApp.miniappUtils.setCloseAlert(alertInfo)).to.eventually.equal(error);
+    return expect(
+      miniApp.miniappUtils.setCloseAlert(alertInfo)
+    ).to.eventually.equal(error);
   });
 });
 

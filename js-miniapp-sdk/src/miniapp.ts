@@ -10,6 +10,7 @@ import {
   Points,
   DownloadFileHeaders,
   HostEnvironmentInfo,
+  CloseAlertInfo,
   Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
@@ -104,6 +105,11 @@ interface MiniAppFeatures {
     url: string,
     headers?: DownloadFileHeaders
   ): Promise<string>;
+
+  /**
+   * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
+   */
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<string>;
 }
 
 /**
@@ -190,22 +196,22 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     ];
 
     return this.requestCustomPermissions(locationPermission)
-      .then((permission) =>
+      .then(permission =>
         permission.find(
-          (result) =>
+          result =>
             result.status === CustomPermissionStatus.ALLOWED ||
             // Case where older Android SDK doesn't support the Location custom permission
             result.status === CustomPermissionStatus.PERMISSION_NOT_AVAILABLE
         )
       )
-      .catch((error) =>
+      .catch(error =>
         // Case where older iOS SDK doesn't support the Location custom permission
         typeof error === 'string' &&
         error.startsWith('invalidCustomPermissionsList')
           ? Promise.resolve(true)
           : Promise.reject(error)
       )
-      .then((hasPermission) =>
+      .then(hasPermission =>
         hasPermission
           ? this.requestPermission(DevicePermission.LOCATION)
           : Promise.reject('User denied location permission to this mini app.')
@@ -217,7 +223,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   ): Promise<CustomPermissionResult[]> {
     return getBridge()
       .requestCustomPermissions(permissions)
-      .then((permissionResult) => permissionResult.permissions);
+      .then(permissionResult => permissionResult.permissions);
   }
 
   loadInterstitialAd(id: string): Promise<string> {
@@ -259,7 +265,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo> {
     return getBridge()
       .getHostEnvironmentInfo()
-      .then((info) => {
+      .then(info => {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
@@ -271,5 +277,12 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     headers: DownloadFileHeaders = {}
   ): Promise<string> {
     return getBridge().downloadFile(filename, url, headers);
+  }
+
+  /**
+   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
+   */
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
+    return getBridge().setCloseAlert(alertInfo);
   }
 }
