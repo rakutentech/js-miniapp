@@ -44,7 +44,7 @@ navigator.geolocation.getCurrentPosition = (success, error, options) => {
   return iOSExecutor.exec(
     'getCurrentPosition',
     { locationOptions: options },
-    value => {
+    (value) => {
       try {
         const parsedData = JSON.parse(value);
         success(parsedData);
@@ -56,6 +56,6 @@ navigator.geolocation.getCurrentPosition = (success, error, options) => {
         });
       }
     },
-    error => console.error(error)
+    (error) => console.error(error)
   );
 };

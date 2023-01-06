@@ -101,7 +101,7 @@ export class MiniAppBridge {
    */
   execSuccessCallback(messageId, value) {
     const queueObj = mabMessageQueue.filter(
-      callback => callback.id === messageId
+      (callback) => callback.id === messageId
     )[0];
     if (value) {
       queueObj.onSuccess(value);
@@ -120,7 +120,7 @@ export class MiniAppBridge {
    */
   execErrorCallback(messageId, errorMessage) {
     const queueObj = mabMessageQueue.filter(
-      callback => callback.id === messageId
+      (callback) => callback.id === messageId
     )[0];
     if (!errorMessage) {
       errorMessage = 'Unknown Error';
@@ -140,7 +140,7 @@ export class MiniAppBridge {
       detail: { message: value },
     });
     let queueObj = mabCustomEventQueue.filter(
-      customEvent => customEvent === event
+      (customEvent) => customEvent === event
     )[0];
     if (!queueObj) {
       if (eventType === event.type) {
@@ -178,7 +178,7 @@ export class MiniAppBridge {
       },
     });
     let queueObj = mabKeyboardEventQueue.filter(
-      customEvent => customEvent === event
+      (customEvent) => customEvent === event
     )[0];
     if (!queueObj) {
       if (eventType === event.type) {
@@ -199,8 +199,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUniqueId',
         null,
-        id => resolve(id),
-        error => reject(error)
+        (id) => resolve(id),
+        (error) => reject(error)
       );
     });
   }
@@ -213,8 +213,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getMessagingUniqueId',
         null,
-        id => resolve(id),
-        error => reject(error)
+        (id) => resolve(id),
+        (error) => reject(error)
       );
     });
   }
@@ -227,8 +227,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getMauid',
         null,
-        id => resolve(id),
-        error => reject(error)
+        (id) => resolve(id),
+        (error) => reject(error)
       );
     });
   }
@@ -242,8 +242,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'requestPermission',
         { permission: permissionType },
-        success => resolve(success),
-        error => reject(error)
+        (success) => resolve(success),
+        (error) => reject(error)
       );
     });
   }
@@ -257,8 +257,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        closeSuccess => resolve(closeSuccess),
-        error => reject(error)
+        (closeSuccess) => resolve(closeSuccess),
+        (error) => reject(error)
       );
     });
   }
@@ -274,8 +274,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.INTERSTITIAL, adUnitId: id },
-        loadSuccess => resolve(loadSuccess),
-        error => reject(error)
+        (loadSuccess) => resolve(loadSuccess),
+        (error) => reject(error)
       );
     });
   }
@@ -291,8 +291,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'loadAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        loadSuccess => resolve(loadSuccess),
-        error => reject(error)
+        (loadSuccess) => resolve(loadSuccess),
+        (error) => reject(error)
       );
     });
   }
@@ -306,8 +306,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'showAd',
         { adType: AdTypes.REWARDED, adUnitId: id },
-        rewardResponse => resolve(JSON.parse(rewardResponse) as Reward),
-        error => reject(error)
+        (rewardResponse) => resolve(JSON.parse(rewardResponse) as Reward),
+        (error) => reject(error)
       );
     });
   }
@@ -329,8 +329,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'requestCustomPermissions',
         { permissions: permissionTypes },
-        success => resolve(JSON.parse(success)),
-        error => reject(error)
+        (success) => resolve(JSON.parse(success)),
+        (error) => reject(error)
       );
     });
   }
@@ -345,8 +345,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'shareInfo',
         { shareInfo: info },
-        success => resolve(success),
-        error => reject(error)
+        (success) => resolve(success),
+        (error) => reject(error)
       );
     });
   }
@@ -362,8 +362,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUserName',
         null,
-        userName => resolve(userName),
-        error => reject(error)
+        (userName) => resolve(userName),
+        (error) => reject(error)
       );
     });
   }
@@ -379,8 +379,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getProfilePhoto',
         null,
-        profilePhoto => resolve(profilePhoto),
-        error => reject(error)
+        (profilePhoto) => resolve(profilePhoto),
+        (error) => reject(error)
       );
     });
   }
@@ -396,8 +396,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getContacts',
         null,
-        contacts => resolve(JSON.parse(contacts) as Contact[]),
-        error => reject(error)
+        (contacts) => resolve(JSON.parse(contacts) as Contact[]),
+        (error) => reject(error)
       );
     });
   }
@@ -415,11 +415,11 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getAccessToken',
         { audience, scopes },
-        tokenData => {
+        (tokenData) => {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
           resolve(new AccessTokenData(nativeTokenData));
         },
-        error => reject(parseMiniAppError(error))
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -433,8 +433,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'setScreenOrientation',
         { action: screenAction },
-        success => resolve(success),
-        error => reject(error)
+        (success) => resolve(success),
+        (error) => reject(error)
       );
     });
   }
@@ -456,14 +456,14 @@ export class MiniAppBridge {
             bannerMessage: trimBannerText(message.bannerMessage),
           },
         },
-        contactId => {
+        (contactId) => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
           } else {
             resolve(null);
           }
         },
-        error => reject(error)
+        (error) => reject(error)
       );
     });
   }
@@ -485,14 +485,14 @@ export class MiniAppBridge {
             bannerMessage: trimBannerText(message.bannerMessage),
           },
         },
-        contactId => {
+        (contactId) => {
           if (contactId !== 'null' && contactId !== null) {
             resolve(contactId);
           } else {
             resolve(null);
           }
         },
-        error => reject(error)
+        (error) => reject(error)
       );
     });
   }
@@ -514,14 +514,14 @@ export class MiniAppBridge {
             bannerMessage: trimBannerText(message.bannerMessage),
           },
         },
-        contactIds => {
+        (contactIds) => {
           if (contactIds !== 'null' && contactIds !== null) {
             resolve(JSON.parse(contactIds) as string[]);
           } else {
             resolve(null);
           }
         },
-        error => reject(error)
+        (error) => reject(error)
       );
     });
   }
@@ -535,8 +535,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getPoints',
         null,
-        points => resolve(JSON.parse(points) as Points),
-        error => reject(parseMiniAppError(error))
+        (points) => resolve(JSON.parse(points) as Points),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -546,12 +546,12 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getHostEnvironmentInfo',
         null,
-        info =>
+        (info) =>
           resolve({
             ...JSON.parse(info),
             platform: this.platform,
           } as HostEnvironmentInfo),
-        error => reject(error)
+        (error) => reject(error)
       );
     });
   }
@@ -565,14 +565,14 @@ export class MiniAppBridge {
       return this.executor.exec(
         'downloadFile',
         { filename, url, headers },
-        id => {
+        (id) => {
           if (id !== 'null' && id !== null) {
             resolve(id);
           } else {
             resolve(null);
           }
         },
-        error => reject(parseMiniAppError(error))
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -582,8 +582,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'setSecureStorageItems',
         { secureStorageItems: items },
-        success => resolve(undefined),
-        error => reject(parseMiniAppError(error))
+        (success) => resolve(undefined),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -593,8 +593,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getSecureStorageItem',
         { secureStorageKey: key },
-        responseData => resolve(responseData),
-        error => reject(parseMiniAppError(error))
+        (responseData) => resolve(responseData),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -604,8 +604,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'removeSecureStorageItems',
         { secureStorageKeyList: keys },
-        success => resolve(undefined),
-        error => reject(parseMiniAppError(error))
+        (success) => resolve(undefined),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -615,8 +615,8 @@ export class MiniAppBridge {
       return this.executor.exec(
         'clearSecureStorage',
         null,
-        success => resolve(undefined),
-        error => reject(parseMiniAppError(error))
+        (success) => resolve(undefined),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -626,10 +626,10 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getSecureStorageSize',
         null,
-        responseData => {
+        (responseData) => {
           resolve(JSON.parse(responseData) as MiniAppSecureStorageSize);
         },
-        error => reject(parseMiniAppError(error))
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -639,12 +639,12 @@ export class MiniAppBridge {
    * @see {setCloseAlert}
    */
   setCloseAlert(alertInfo: CloseAlertInfo) {
-    return new Promise<undefined>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'setCloseAlert',
         { closeAlertInfo: alertInfo },
-        success => resolve(undefined),
-        error => reject(parseMiniAppError(error))
+        (success) => resolve(success),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -659,10 +659,10 @@ export class MiniAppBridge {
       return this.executor.exec(
         'prepareProductsList',
         null,
-        productsList => {
+        (productsList) => {
           resolve(JSON.parse(productsList) as Product[]);
         },
-        error => reject(parseMiniAppError(error))
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -677,10 +677,10 @@ export class MiniAppBridge {
       return this.executor.exec(
         'purchaseProductWith',
         { product_id: id },
-        purchasedProduct => {
+        (purchasedProduct) => {
           resolve(JSON.parse(purchasedProduct) as PurchasedProduct);
         },
-        error => reject(parseMiniAppError(error))
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -695,8 +695,26 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendJsonToHostapp',
         { jsonInfo: info },
-        success => resolve(success),
-        error => reject(parseMiniAppError(error))
+        (success) => resolve(success),
+        (error) => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Associating closeMiniApp function to MiniAppBridge object.
+   * @param {withConfirmation} boolean value which will be used by the host app to show/hide close confirmation alert
+   * which should be set using `setCloseAlert` method in prior before calling this interface
+   * @see {closeMiniApp}
+   */
+  closeMiniApp(withConfirmation: boolean) {
+    console.log("closeMiniApp BRIDGE")
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'closeMiniApp',
+        { withConfirmationAlert: withConfirmation },
+        (success) => resolve(success),
+        (error) => reject(parseMiniAppError(error))
       );
     });
   }
@@ -718,7 +736,7 @@ function removeFromMessageQueue(queueObj) {
 function removeFromEventQueue(queueObj) {
   const eventObjIndex = mabCustomEventQueue.indexOf(
     mabCustomEventQueue.filter(
-      customEvent => customEvent.type === queueObj.type
+      (customEvent) => customEvent.type === queueObj.type
     )[0]
   );
   if (eventObjIndex !== -1) {
@@ -729,7 +747,7 @@ function removeFromEventQueue(queueObj) {
 function removeFromKeyboardEventQueue(queueObj) {
   const eventObjIndex = mabKeyboardEventQueue.indexOf(
     mabKeyboardEventQueue.filter(
-      customEvent => customEvent.type === queueObj.type
+      (customEvent) => customEvent.type === queueObj.type
     )[0]
   );
   if (eventObjIndex !== -1) {

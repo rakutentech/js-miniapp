@@ -4,7 +4,7 @@ import {
   MiniAppError,
   Points,
 } from '../../../js-miniapp-bridge/src';
-import { getBridge } from '../utils';
+import { getBridge } from '../sdkbridge';
 
 /**
  * Interfaces to retrieve User profile related information.
