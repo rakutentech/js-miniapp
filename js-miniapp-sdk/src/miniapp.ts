@@ -10,16 +10,17 @@ import {
   Points,
   DownloadFileHeaders,
   HostEnvironmentInfo,
-  Platform as HostPlatform,
   CloseAlertInfo,
+  Platform as HostPlatform,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
-import { getBridge } from './utils';
+import { getBridge } from './sdkbridge';
 import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
 import { Purchases } from './modules/inapp-purchases';
 import { UniversalBridge } from './modules/universal-bridge';
+import { MiniAppUtils } from './modules/utils';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -108,7 +109,7 @@ interface MiniAppFeatures {
   /**
    * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
    */
-  setCloseAlert(alertInfo: CloseAlertInfo): Promise<undefined>;
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<string>;
 }
 
 /**
@@ -165,6 +166,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   secureStorageService = new SecureStorageService();
   purchases = new Purchases();
   universalBridge = new UniversalBridge();
+  miniappUtils = new MiniAppUtils();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
@@ -277,7 +279,10 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge().downloadFile(filename, url, headers);
   }
 
-  setCloseAlert(alertInfo: CloseAlertInfo): Promise<undefined> {
+  /**
+   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
+   */
+  setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
   }
 }

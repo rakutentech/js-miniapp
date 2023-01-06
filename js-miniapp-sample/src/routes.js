@@ -47,31 +47,64 @@ import WindowActions from './pages/window-actions';
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
 //default root location when using android
-const androidHomeNavLink = { navLink: '/miniapp/index.html', label: 'Home' }
+const androidHomeNavLink = { navLink: '/miniapp/index.html', label: 'Home' };
 //default supposed root location
 //todo fix this
 const homeNavLink = { navLink: '/', label: 'Home' };
 const landingNavLink = { navLink: '/landing', label: 'Home' };
-const localStorageNavLink = { navLink: '/local_storage', label: 'Local Storage' };
-const fetchUniqueIdNavLink = { navLink: '/fetch_id', label: 'Fetch Unique ID from SDK' };
-const inAppPurchaseNavLink = { navLink: '/inapp_purchases', label: 'InApp Purchases' };
-const deviceLocationNavLink = { navLink: '/device_location', label: 'Device Location' };
-const authTokenNavLink = { navLink: '/auth_token', label: 'Auth token from Mobile' };
+const localStorageNavLink = {
+  navLink: '/local_storage',
+  label: 'Local Storage',
+};
+const fetchUniqueIdNavLink = {
+  navLink: '/fetch_id',
+  label: 'Fetch Unique ID',
+};
+const inAppPurchaseNavLink = {
+  navLink: '/inapp_purchases',
+  label: 'InApp Purchases',
+};
+const deviceLocationNavLink = {
+  navLink: '/device_location',
+  label: 'Device Location',
+};
+const authTokenNavLink = {
+  navLink: '/auth_token',
+  label: 'Auth token',
+};
 const userDetailNavLink = { navLink: '/user_detail', label: 'User Details' };
 const messageNavLink = { navLink: '/chatbot', label: 'Message' };
-const windowActionNavLink = { navLink: '/window_actions', label: 'Window Actions' };
+const windowActionNavLink = {
+  navLink: '/window_actions',
+  label: 'Window Actions',
+};
 const uriSchemesNavLink = { navLink: '/uri_schemes', label: 'URI Schemes' };
-const eventListenerNavLink = { navLink: '/event_listener', label: 'Event Listener' };
+const eventListenerNavLink = {
+  navLink: '/event_listener',
+  label: 'Event Listener',
+};
 const mediaNavLink = { navLink: '/media', label: 'Media' };
 const shareNavLink = { navLink: '/share', label: 'Share' };
 const adsNavLink = { navLink: '/ads', label: 'Ads' };
 const cameraNavLink = { navLink: '/camera', label: 'Camera' };
-const fileDownloadNavLink = { navLink: '/file_download', label: 'File Download' };
+const fileDownloadNavLink = {
+  navLink: '/file_download',
+  label: 'File Download',
+};
 const fileUploadNavLink = { navLink: '/file_upload', label: 'File Upload' };
 const gifsNavLink = { navLink: '/gifs', label: "GIF's & WebP" };
-const secureStorageNavLink = { navLink: '/secure-storage', label: 'SecureStorage' };
-const closeAlertNavLink = { navLink: '/close-confirm-alert', label: 'Close Alert' };
-const universalBridgeNavLink = { navLink: '/universal-bridge', label: 'Universal Bridge' };
+const secureStorageNavLink = {
+  navLink: '/secure-storage',
+  label: 'SecureStorage',
+};
+const closeAlertNavLink = {
+  navLink: '/close-confirm-alert',
+  label: 'Close Feature',
+};
+const universalBridgeNavLink = {
+  navLink: '/universal-bridge',
+  label: 'Universal Bridge',
+};
 
 const navLinks = [
   iosHomeNavLink,

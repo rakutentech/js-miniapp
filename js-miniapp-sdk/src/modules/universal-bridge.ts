@@ -1,4 +1,4 @@
-import { getBridge } from '../utils';
+import { getBridge } from '../sdkbridge';
 
 /**
  * Interface to send JSON/String to Host app

@@ -639,11 +639,11 @@ export class MiniAppBridge {
    * @see {setCloseAlert}
    */
   setCloseAlert(alertInfo: CloseAlertInfo) {
-    return new Promise<undefined>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'setCloseAlert',
         { closeAlertInfo: alertInfo },
-        success => resolve(undefined),
+        success => resolve(success),
         error => reject(parseMiniAppError(error))
       );
     });
@@ -695,6 +695,23 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendJsonToHostapp',
         { jsonInfo: info },
+        success => resolve(success),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Associating closeMiniApp function to MiniAppBridge object.
+   * @param {withConfirmation} boolean value which will be used by the host app to show/hide close confirmation alert
+   * which should be set using `setCloseAlert` method in prior before calling this interface
+   * @see {closeMiniApp}
+   */
+  closeMiniApp(withConfirmation: boolean) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'closeMiniApp',
+        { withConfirmationAlert: withConfirmation },
         success => resolve(success),
         error => reject(parseMiniAppError(error))
       );

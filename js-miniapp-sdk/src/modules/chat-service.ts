@@ -1,5 +1,5 @@
 import { MessageToContact } from '../../../js-miniapp-bridge/src';
-import { getBridge } from '../utils';
+import { getBridge } from '../sdkbridge';
 
 interface ChatServiceProvider {
   /**

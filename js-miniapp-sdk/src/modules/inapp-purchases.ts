@@ -1,5 +1,5 @@
 import { Product, PurchasedProduct } from '../../../js-miniapp-bridge/src';
-import { getBridge } from '../utils';
+import { getBridge } from '../sdkbridge';
 
 interface PurchaseProvider {
   /**

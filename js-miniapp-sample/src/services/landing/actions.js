@@ -32,7 +32,6 @@ const onSecureStorageReady = (): Function => {
   return (dispatch) => {
     return new Promise((resolve) => {
       MiniApp.secureStorageService.onReady(() => {
-        console.log('onSecureStorageReady SuccessAction: ');
         dispatch({
           type: ON_SECURE_STORAGE_READY_SUCCESS,
         });
@@ -40,7 +39,6 @@ const onSecureStorageReady = (): Function => {
       });
 
       MiniApp.secureStorageService.onLoadError((error) => {
-        console.log('onSecureStorageReady Error: ', error);
         dispatch({
           type: ON_SECURE_STORAGE_READY_FAILURE,
           error: error,

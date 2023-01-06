@@ -64,6 +64,7 @@ window.MiniAppBridge = {
   removeSecureStorageItems: sandbox.stub(),
   isSecureStorageReady: sandbox.stub(),
   sendJsonToHostapp: sandbox.stub(),
+  closeMiniApp: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -831,7 +832,9 @@ describe('setCloseAlert', () => {
 
     const alertInfo: CloseAlertInfo = createCloseAlertInfo();
     window.MiniAppBridge.setCloseAlert.resolves(response);
-    expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(response);
+    expect(miniApp.miniappUtils.setCloseAlert(alertInfo)).to.eventually.equal(
+      response
+    );
   });
 
   it('should retrieve miniAppError when calls setCloseAlert has an error', () => {
@@ -843,7 +846,9 @@ describe('setCloseAlert', () => {
 
     window.MiniAppBridge.setCloseAlert.resolves(error);
 
-    return expect(miniApp.setCloseAlert(alertInfo)).to.eventually.equal(error);
+    return expect(
+      miniApp.miniappUtils.setCloseAlert(alertInfo)
+    ).to.eventually.equal(error);
   });
 });
 
@@ -865,5 +870,28 @@ describe('sendJsonToHostapp', () => {
     return expect(
       miniApp.universalBridge.sendJsonToHostapp(jsonToHostapp)
     ).to.eventually.equal(error);
+  });
+});
+
+describe('closeMiniApp', () => {
+  it('should call bridge closeMiniApp when closeMiniApp is called', () => {
+    const response = null;
+    window.MiniAppBridge.closeMiniApp.resolves(response);
+    expect(miniApp.miniappUtils.closeMiniApp(true)).to.eventually.equal(
+      response
+    );
+  });
+
+  it('should retrieve miniAppError when calls closeMiniApp has an error', () => {
+    const error = new MiniAppError({});
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.closeMiniApp.resolves(error);
+
+    return expect(miniApp.miniappUtils.closeMiniApp(true)).to.eventually.equal(
+      error
+    );
   });
 });
