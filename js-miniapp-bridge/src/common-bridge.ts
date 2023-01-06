@@ -708,7 +708,6 @@ export class MiniAppBridge {
    * @see {closeMiniApp}
    */
   closeMiniApp(withConfirmation: boolean) {
-    console.log('closeMiniApp BRIDGE');
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'closeMiniApp',

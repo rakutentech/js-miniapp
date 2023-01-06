@@ -284,7 +284,7 @@ function CloseConfirmAlert() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => closeAlert()}
+              onClick={closeAlert}
             >
               Save
             </Button>
@@ -327,7 +327,7 @@ function CloseConfirmAlert() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => closeMiniApp()}
+              onClick={closeMiniApp}
             >
               Close Mini App
             </Button>

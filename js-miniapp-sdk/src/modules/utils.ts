@@ -22,11 +22,9 @@ export interface MiniAppUtilsProvider {
 /** @internal */
 export class MiniAppUtils implements MiniAppUtilsProvider {
   closeMiniApp(withConfirmation: boolean): Promise<string> {
-    console.log('MiniAppUtils-closeMiniApp', withConfirmation);
     return getBridge().closeMiniApp(withConfirmation);
   }
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
-    console.log('MiniAppUtils-setCloseAlert');
     return getBridge().setCloseAlert(alertInfo);
   }
 }
