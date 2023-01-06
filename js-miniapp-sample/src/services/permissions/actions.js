@@ -1,6 +1,7 @@
 import MiniApp, {
   CustomPermission,
   CustomPermissionResult,
+  MiniAppError,
 } from 'js-miniapp-sdk';
 
 import {
@@ -8,9 +9,10 @@ import {
   REQUEST_PERMISSIONS_FAILURE,
 } from './types';
 
-type PermissionsSuccessAction = {
+type PermissionsAction = {
   type: String,
   permissions: CustomPermissionResult[],
+  error: MiniAppError
 };
 
 const requestCustomPermissions = (
@@ -26,13 +28,14 @@ const requestCustomPermissions = (
 
         return permissions;
       })
-      .catch((_) => {
+      .catch((e) => {
         dispatch({
           type: REQUEST_PERMISSIONS_FAILURE,
+          error: e,
         });
       });
   };
 };
 
 export { requestCustomPermissions };
-export type { PermissionsSuccessAction };
+export type { PermissionsAction };
