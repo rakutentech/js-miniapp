@@ -429,7 +429,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.setCloseAlert = function (alertInfo) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('setCloseAlert', { closeAlertInfo: alertInfo }, function (success) { return resolve(undefined); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+            return _this.executor.exec('setCloseAlert', { closeAlertInfo: alertInfo }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
@@ -467,6 +467,18 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('sendJsonToHostapp', { jsonInfo: info }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * Associating closeMiniApp function to MiniAppBridge object.
+     * @param {withConfirmation} boolean value which will be used by the host app to show/hide close confirmation alert
+     * which should be set using `setCloseAlert` method in prior before calling this interface
+     * @see {closeMiniApp}
+     */
+    MiniAppBridge.prototype.closeMiniApp = function (withConfirmation) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('closeMiniApp', { withConfirmationAlert: withConfirmation }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     return MiniAppBridge;
