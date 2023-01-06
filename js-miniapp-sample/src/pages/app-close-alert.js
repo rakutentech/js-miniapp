@@ -281,11 +281,7 @@ function CloseConfirmAlert() {
         </Grid>
         <Grid className={classes.grid} align="center">
           <div className={classes.contentSection}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={closeAlert}
-            >
+            <Button variant="contained" color="primary" onClick={closeAlert}>
               Save
             </Button>
           </div>
@@ -324,11 +320,7 @@ function CloseConfirmAlert() {
         </Grid>
         <Grid className={classes.grid} align="center">
           <div className={classes.contentSection}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={closeMiniApp}
-            >
+            <Button variant="contained" color="primary" onClick={closeMiniApp}>
               Close Mini App
             </Button>
           </div>
