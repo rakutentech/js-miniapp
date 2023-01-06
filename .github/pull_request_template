@@ -6,4 +6,4 @@ Explain your rationale of technical decisions you made (unless discussed before)
 Add links to github/jira issues, design documents and other relevant resources (e.g. previous discussions, platform/tool documentation etc.)
 
 # Checklist
-- [ ] I have completed all steps in the [Contribution Checklist](../.github/CONTRIBUTING.md#checklist)
+- [ ] I have completed all steps in the [Contribution Checklist](../blob/master.github/CONTRIBUTING.md#checklist)

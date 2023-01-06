@@ -1,13 +1,23 @@
 import { CustomPermissionName, CustomPermissionStatus } from 'js-miniapp-sdk';
 
-import type { PermissionsSuccessAction } from './actions';
-import { REQUEST_PERMISSIONS_SUCCESS } from './types';
+import type { PermissionsAction } from './actions';
+import { REQUEST_PERMISSIONS_SUCCESS, REQUEST_PERMISSIONS_FAILURE } from './types';
 
-const defaultState: CustomPermissionName[] = [];
+type PermissionsState = {
+  type: REQUEST_PERMISSIONS_FAILURE,
+  permissions: CustomPermissionResult[],
+  error: MiniAppError
+};
 
-const grantedPermissionsReducer = (
+const defaultState: PermissionsState = {
+  type: undefined,
+  permissions: [],
+  error: null
+};
+
+const PermissionsReducer = (
   state: CustomPermissionName[] = defaultState,
-  action: PermissionsSuccessAction
+  action: PermissionsAction
 ): CustomPermissionName[] => {
   switch (action.type) {
     case REQUEST_PERMISSIONS_SUCCESS:
@@ -17,15 +27,23 @@ const grantedPermissionsReducer = (
       const allowed = action.permissions
         .filter((it) => it.status === CustomPermissionStatus.ALLOWED)
         .map((it) => it.name);
-
-      const array = state
+      const array = state.permissions
         .concat(allowed)
         .filter((permission) => denied.indexOf(permission) <= -1);
 
-      return Array.from(new Set(array));
+      return {
+        type: REQUEST_PERMISSIONS_SUCCESS,
+        permissions: array,
+        error: action.error,
+      };
+    case REQUEST_PERMISSIONS_FAILURE:
+      return {
+        ...defaultState,
+        error: action.error,
+      };
     default:
       return state;
   }
 };
 
-export { grantedPermissionsReducer };
+export { PermissionsReducer };
