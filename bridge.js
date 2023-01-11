@@ -433,32 +433,6 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * This will retrieve the list of products details available for In-App Purchases associated with Google Play™ or Apple App Store™.
-     * @returns List of products for inapp-purchases
-     * @see {getProducts}
-     */
-    MiniAppBridge.prototype.prepareProductsList = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            return _this.executor.exec('prepareProductsList', null, function (productsList) {
-                resolve(JSON.parse(productsList));
-            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
-        });
-    };
-    /**
-     * This will request for the In-app Purchase of a product with product id associated with Google Play™ or Apple App Store™.
-     * @param id Product id of the product to be purchased.
-     * @returns Purchased product details and the transaction details of the purchase.
-     */
-    MiniAppBridge.prototype.purchaseProductWith = function (id) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            return _this.executor.exec('purchaseProductWith', { product_id: id }, function (purchasedProduct) {
-                resolve(JSON.parse(purchasedProduct));
-            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
-        });
-    };
-    /**
      * Associating sendJsonToHostapp function to MiniAppBridge object.
      * @param {info} JSON/String information that you would like to send to HostApp.
      * @see {sendJsonToHostapp}
