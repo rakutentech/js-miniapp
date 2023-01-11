@@ -1,10 +1,12 @@
 ## CHANGELOG
+
 ### 1.16.0 (TBD)
-- **Feature:** Added In-app purchases related interfaces. `prepareProductsList()` , `purchaseProductWith(id: string)`. These interfaces can be used to prepare the list of products and make a in-app purchase with product id from associated with Google Play™ or Apple App Store™.
 - **Feature:** Added Universal Bridge related interface e.g. `sendJsonToHostapp` to send any JSON/String to the HostApp. Also, added support with `HostAppEvents` to receive any JSON/String to MiniApp from the HostApp.
 - **Feature:** Added `allEmailList` property in `Contact` to support multiple email address of a specific contact.
 - **Feature:** Added `closeMiniApp(withConfirmation: boolean)` interface which will help the miniapp to close on its own, provided Native Host application allows them to close.
 - **Update:** Moved `setCloseAlert(alertInfo: CloseAlertInfo)` interface to a MiniApp.miniappUtils object
+
+---
 
 ### 1.15.0 (2022-06-24)
 - **Feature:** Added `setCloseAlert(alertInfo: CloseAlertInfo)` interface support to Mini Apps share info about Close confirm alert

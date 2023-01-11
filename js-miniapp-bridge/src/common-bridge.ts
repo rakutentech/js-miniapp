@@ -26,7 +26,6 @@ import {
 import { ShareInfoType } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
-import { Product, PurchasedProduct } from './types/inapp-purchases';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -644,42 +643,6 @@ export class MiniAppBridge {
         'setCloseAlert',
         { closeAlertInfo: alertInfo },
         success => resolve(success),
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  /**
-   * This will retrieve the list of products details available for In-App Purchases associated with Google Play™ or Apple App Store™.
-   * @returns List of products for inapp-purchases
-   * @see {getProducts}
-   */
-  prepareProductsList() {
-    return new Promise<Product[]>((resolve, reject) => {
-      return this.executor.exec(
-        'prepareProductsList',
-        null,
-        productsList => {
-          resolve(JSON.parse(productsList) as Product[]);
-        },
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  /**
-   * This will request for the In-app Purchase of a product with product id associated with Google Play™ or Apple App Store™.
-   * @param id Product id of the product to be purchased.
-   * @returns Purchased product details and the transaction details of the purchase.
-   */
-  purchaseProductWith(id: string) {
-    return new Promise<PurchasedProduct>((resolve, reject) => {
-      return this.executor.exec(
-        'purchaseProductWith',
-        { product_id: id },
-        purchasedProduct => {
-          resolve(JSON.parse(purchasedProduct) as PurchasedProduct);
-        },
         error => reject(parseMiniAppError(error))
       );
     });
