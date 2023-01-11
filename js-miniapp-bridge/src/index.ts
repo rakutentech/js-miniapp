@@ -44,11 +44,6 @@ import {
   MiniAppSecureStorageSize,
   MiniAppSecureStorageEvents,
 } from './types/secure-storage';
-import {
-  Product,
-  ProductPrice,
-  PurchasedProduct,
-} from './types/inapp-purchases';
 
 export {
   MiniAppBridge,
@@ -85,7 +80,4 @@ export {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
-  Product,
-  PurchasedProduct,
-  ProductPrice,
 };

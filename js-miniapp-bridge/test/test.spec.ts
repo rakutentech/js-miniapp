@@ -58,68 +58,6 @@ beforeEach(() => {
   sandbox.restore();
 });
 
-describe('prepareProductsList', () => {
-  it('will list the products', () => {
-    const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    const response =
-      '[{"title": "MyApp_A","description": "This is app A for purchase","id": "com.rakuten.myappa","price": {"currencyCode": "yen","price": "100"}},{"title": "MyApp_B","description": "This is app B for purchase","id": "com.rakuten.myappb","price":{"currencyCode":"yen","price":"100"}}]';
-    mockExecutor.exec.callsArgWith(2, response);
-
-    const expected = [
-      {
-        title: 'MyApp_A',
-        description: 'This is app A for purchase',
-        id: 'com.rakuten.myappa',
-        price: {
-          currencyCode: 'yen',
-          price: '100',
-        },
-      },
-      {
-        title: 'MyApp_B',
-        description: 'This is app B for purchase',
-        id: 'com.rakuten.myappb',
-        price: {
-          currencyCode: 'yen',
-          price: '100',
-        },
-      },
-    ];
-
-    return expect(bridge.prepareProductsList()).to.eventually.deep.equal(
-      expected
-    );
-  });
-});
-
-describe('purchaseProductWith', () => {
-  it('will purchase product with id', () => {
-    const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    const response =
-      '[{"product": {"title": "MyApp_A","description": "This is app A for purchase","id": "com.rakuten.myappa","price": {"currencyCode": "yen","price": "100"}},"transactionId": "transction_id_a","transactionDate": "2022/11/23"}]';
-    mockExecutor.exec.callsArgWith(2, response);
-    const expected = [
-      {
-        product: {
-          title: 'MyApp_A',
-          description: 'This is app A for purchase',
-          id: 'com.rakuten.myappa',
-          price: {
-            currencyCode: 'yen',
-            price: '100',
-          },
-        },
-        transactionId: 'transction_id_a',
-        transactionDate: '2022/11/23',
-      },
-    ];
-    const productId = 'com.rakuten.myappa';
-    return expect(
-      bridge.purchaseProductWith(productId)
-    ).to.eventually.deep.equal(expected);
-  });
-});
-
 describe('execSuccessCallback', () => {
   describe('when called with valid value', () => {
     it('will return success promise with uniqueId value', () => {

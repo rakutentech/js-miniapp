@@ -18,7 +18,6 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
@@ -30,7 +29,6 @@ import EventListener from './pages/event-listener';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
-import Purchases from './pages/inapp-purchases';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import Media from './pages/media';
@@ -59,10 +57,6 @@ const localStorageNavLink = {
 const fetchUniqueIdNavLink = {
   navLink: '/fetch_id',
   label: 'Fetch Unique ID',
-};
-const inAppPurchaseNavLink = {
-  navLink: '/inapp_purchases',
-  label: 'InApp Purchases',
 };
 const deviceLocationNavLink = {
   navLink: '/device_location',
@@ -113,7 +107,6 @@ const navLinks = [
   landingNavLink,
   localStorageNavLink,
   fetchUniqueIdNavLink,
-  inAppPurchaseNavLink,
   deviceLocationNavLink,
   authTokenNavLink,
   userDetailNavLink,
@@ -154,12 +147,6 @@ const appItems = [
     label: fetchUniqueIdNavLink.label,
     navLink: fetchUniqueIdNavLink.navLink,
     element: <UuidFetcher />,
-  },
-  {
-    icon: <ShoppingCartIcon />,
-    label: inAppPurchaseNavLink.label,
-    navLink: inAppPurchaseNavLink.navLink,
-    element: <Purchases />,
   },
   {
     icon: <LocationOnIcon />,
