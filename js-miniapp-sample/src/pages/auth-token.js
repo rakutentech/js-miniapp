@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
 const initialState = {
   isLoading: false,
+  isSuccess: false,
   isError: false,
   error: null,
   permissionDenied: false,
@@ -80,6 +81,7 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: true,
+        isSuccess: false,
         isError: false,
         error: null,
         permissionDenied: false,
@@ -88,6 +90,7 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
+        isSuccess: true,
         isError: false,
         error: null,
         permissionDenied: false,
@@ -96,6 +99,7 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
+        isSuccess: false,
         isError: true,
         error:
           (typeof action.error == 'string'
@@ -106,6 +110,7 @@ const dataFetchReducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
+        isSuccess: false,
         isError: false,
         error: null,
         permissionDenied: true,
@@ -245,20 +250,18 @@ function AuthToken(props: AuthTokenProps) {
           </Fragment>
           {ButtonWrapper()}
           {!state.isLoading &&
+            state.isSuccess &&
             !state.isError &&
             !state.permissionDenied &&
             props.accessToken && (
-              <Typography variant="body1" className={classes.success}>
-                Token: {props.accessToken.token}
-              </Typography>
-            )}
-          {!state.isLoading &&
-            !state.isError &&
-            !state.permissionDenied &&
-            props.accessToken && (
-              <Typography variant="body1" className={classes.success}>
-                Valid until: {displayDate(props.accessToken.validUntil)}
-              </Typography>
+              <div>
+                <Typography variant="body1" className={classes.success}>
+                  Token: {props.accessToken.token}
+                </Typography>
+                <Typography variant="body1" className={classes.success}>
+                  Valid until: {displayDate(props.accessToken.validUntil)}
+                </Typography>
+              </div>
             )}
           {!state.isLoading && state.isError && !state.permissionDenied && (
             <Typography variant="body1" className={classes.red}>

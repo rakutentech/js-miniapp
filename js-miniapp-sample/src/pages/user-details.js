@@ -287,10 +287,10 @@ function UserDetails(props: UserDetailsProps) {
       .then((permissions) =>
         Promise.all([
           hasPermission(CustomPermissionName.USER_NAME, permissions)
-            ? props.getUserName()
+            ? fetchUsername()
             : null,
           hasPermission(CustomPermissionName.PROFILE_PHOTO, permissions)
-            ? props.getProfilePhoto()
+            ? fetchProfilePhoto()
             : null,
         ])
       )
@@ -298,6 +298,28 @@ function UserDetails(props: UserDetailsProps) {
       .catch((e) => {
         console.error(e);
         dispatch({ type: 'NAME_PHOTO_FETCH_FAILURE' });
+      });
+  }
+
+  function fetchUsername() {
+    props
+      .getUserName()
+      .then((string) => {
+        dispatch({ type: 'NAME_PHOTO_FETCH_SUCCESS' });
+      })
+      .catch((e) => {
+        dispatch({ type: 'NAME_PHOTO_FETCH_FAILURE', error: e });
+      });
+  }
+
+  function fetchProfilePhoto() {
+    props
+      .getProfilePhoto()
+      .then((permissions) => {
+        dispatch({ type: 'NAME_PHOTO_FETCH_SUCCESS' });
+      })
+      .catch((e) => {
+        dispatch({ type: 'NAME_PHOTO_FETCH_FAILURE', error: e });
       });
   }
 
@@ -387,11 +409,11 @@ function UserDetails(props: UserDetailsProps) {
   function CardNamePhotoActionsForm() {
     const hasPhotoDeniedPermission =
       state.hasRequestedNamePhotoPermissions &&
-      !hasPermission(CustomPermissionName.PROFILE_PHOTO);
+      hasPermission(CustomPermissionName.PROFILE_PHOTO);
 
     const hasNameDeniedPermission =
       state.hasRequestedNamePhotoPermissions &&
-      !hasPermission(CustomPermissionName.USER_NAME);
+      hasPermission(CustomPermissionName.USER_NAME);
 
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
@@ -459,7 +481,7 @@ function UserDetails(props: UserDetailsProps) {
   function CardContactsActionsForm() {
     const hasDeniedPermision =
       state.hasRequestedContactsPermissions &&
-      !hasPermission(CustomPermissionName.CONTACT_LIST);
+      hasPermission(CustomPermissionName.CONTACT_LIST);
 
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
@@ -540,7 +562,7 @@ function UserDetails(props: UserDetailsProps) {
   function CardPointActionsForm() {
     const hasDeniedPermission =
       state.hasRequestedPointPermissions &&
-      !hasPermission(CustomPermissionName.POINTS);
+      hasPermission(CustomPermissionName.POINTS);
 
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
@@ -621,7 +643,10 @@ function UserDetails(props: UserDetailsProps) {
 
   function hasPermission(permission, permissionList: ?(string[])) {
     permissionList = permissionList || props.permissions || [];
-    return permissionList.indexOf(permission) > -1;
+    if (permissionList.indexOf !== undefined) {
+      return permissionList.indexOf(permission) > -1;
+    }
+    return false;
   }
 
   const [value, setValue] = React.useState('1');
