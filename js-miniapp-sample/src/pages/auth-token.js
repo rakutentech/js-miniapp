@@ -259,7 +259,7 @@ function AuthToken(props: AuthTokenProps) {
                   Token: {props.accessToken.token}
                 </Typography>
                 <Typography variant="body1" className={classes.success}>
-                  Token: {props.accessToken.token}
+                  Valid until: {displayDate(props.accessToken.validUntil)}
                 </Typography>
               </div>
             )}
