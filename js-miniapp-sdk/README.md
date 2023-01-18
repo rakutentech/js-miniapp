@@ -2,12 +2,14 @@
 
 The Mini App SDK for JavaScript can be used to access Android/iOS device and App specific features from a Mini App. It is intended to be used in conjunction with the [Android Mini App SDK](https://github.com/rakutentech/android-miniapp) and [iOS Mini App SDK](https://github.com/rakutentech/ios-miniapp).
 
-## Table of Contents
+[JS SDK Developer documentation](https://rakutentech.github.io/js-miniapp/docs/v1.15/)
 
-- [Getting started](#getting-started)
-- [Mini App Manifest](#mini-app-manifest)
-- [Mini App features](#mini-app-features)
-- [Troubleshooting & FAQs](#troubleshooting--faqs)
+## Table of Contents
+{:.no_toc}
+
+* Table of contents
+{:toc}
+
 
 ## Getting Started
 
@@ -130,11 +132,14 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Requesting User details](#requesting-user-details)
 - [Set Screen orientation](#set-screen-orientation)
 - [Send Message](#send-message)
-- [Universal Bridge](#universal-bridge)
-- [Set Close alert info]
-- [Close Mini app]
+- [Set Close alert info](#set-close-alert-available-from-v1150)
+- [Universal Bridge](#universal-bridge-available-from-v1160)
+- [Close Mini app](#close-miniapp-available-from-v1160)
 
 ### Retrieve a unique ID
+
+<dl>
+<dd>
 
 **API:** [MiniAppFeatures.getUniqueId](api/interfaces/miniappfeatures.md#getuniqueid)
 
@@ -151,7 +156,13 @@ miniApp
   });
 ```
 
+</dl>
+</dd>
+
 ### Request Permissions
+
+<dl>
+<dd>
 
 There must be permission requests from miniapp to access some mobile components and data. Users can revoke a permission at any time, so you must always request the permission every time before you use the associated API. Note that accepted permissions are cached, so if a User has already accepted a permission then they will not be shown the permission dialog again unless they manually revoke the permission.
 
@@ -268,7 +279,13 @@ miniApp
   });
 ```
 
+</dl>
+</dd>
+
 ### Show Ads
+
+<dl>
+<dd>
 
 **API:** [Ad.loadInterstitialAd](api/interfaces/ad.md#loadinterstitialad),
 [Ad.loadRewardedAd](api/interfaces/ad.md#loadrewardedad),
@@ -313,6 +330,8 @@ miniApp
   })
   .catch(error => console.error(response));
 ```
+</dl>
+</dd>
 
 ## Events
 
@@ -322,7 +341,7 @@ Mini app can listen to the following events that will be sent/triggered by the H
 
 ### <b><u>Mini App Events</u></b>
 
-**API:** [MiniAppEvents](src/event-types/index.ts)
+**API:** [MiniAppEvents](api/enums/MiniAppEvents.md)
 
 These `MiniAppEvents` events are more live Mini app life cycle events that will be broadcast when a event occurs
 
@@ -342,7 +361,7 @@ These `MiniAppEvents` events are more live Mini app life cycle events that will 
   </details>
 
 ### <b><u>Keyboard events</u></b>
-**API:** [MiniAppKeyboardEvents](src/event-types/index.ts)
+**API:** [MiniAppKeyboardEvents](api/enums/MiniAppKeyboardEvents.md)
 
 These `MiniAppKeyboardEvents` events will be triggered when a keyboard is shown or dismissed
 
@@ -360,8 +379,8 @@ These `MiniAppKeyboardEvents` events will be triggered when a keyboard is shown 
 
   </details>
 
-### <b><u>Host app events</u></b>
-**API:** [HostAppEvents](src/event-types/index.ts)
+### <b><u>Host app events</u></b> <small style="color:green;font-size: 12px">Available from v1.16.0</small>
+**API:** [HostAppEvents](api/enums/HostAppEvents.md)
 
 These `HostAppEvents` will be triggered when the host app wants to notify something to the Mini app
 
@@ -605,7 +624,31 @@ Please make sure that `capture` attribute is available, it will open device came
 </dl>
 </dd>
 
-## Universal Bridge
+
+## Set Close alert <small style="color:green;font-size: 12px">Available from v1.15.0</small>
+<dl>
+<dd>
+When a Mini app is closed, you can set the close confirmation popup which the host app can show before closing the miniapp. Host app can decide whether to show/hide the confirmation popup before closing the miniapp.
+
+
+  ```javascript
+  const alertInfo: CloseAlertInfo = {
+    shouldDisplay: true,
+    title: "Info",
+    description: "Would you like to close the miniapp?",
+  };
+  MiniApp.miniappUtils
+    .setCloseAlert(alertInfo)
+    .then(() => {
+    })
+    .catch((error) => {
+    });
+  });
+  ```
+</dl>
+</dd>
+
+## Universal Bridge <small style="color:green;font-size: 12px">Available from v1.16.0</small>
 
 <dl>
 <dd>
@@ -645,29 +688,19 @@ window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function(e) {
 </dl>
 </dd>
 
-## Set Close alert
+
+
+## Close miniapp <small style="color:green;font-size: 12px">Available from v1.16.0</small>
 <dl>
 <dd>
-When a Mini app is closed, you can set the close confirmation popup which the host app can show before closing the miniapp
-
+When the miniapp want's to close, they can use this interface to close by itself. Calling this interface, it would let know the host app know that the miniapp wants to close. Host app can decide if it can proceed with the flow.
 
   ```javascript
-  const alertInfo: CloseAlertInfo = {
-    shouldDisplay: true,
-    title: "Info",
-    description: "Would you like to close the miniapp?",
-  };
-  MiniApp.miniappUtils
-    .setCloseAlert(alertInfo)
-    .then(() => {
-    })
-    .catch((error) => {
-    });
-  });
+MiniApp.miniappUtils.closeMiniApp(true).catch((error) => {
+});
   ```
 </dl>
 </dd>
-
 
 ## Advanced Usage
 
