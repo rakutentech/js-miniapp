@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.16.0 (TBD)
+### 1.16.0 (2023-01-30)
 - **Feature:** Added Universal Bridge related interface e.g. `sendJsonToHostapp` to send any JSON/String to the HostApp. Also, added support with `HostAppEvents` to receive any JSON/String to MiniApp from the HostApp.
 - **Feature:** Added `allEmailList` property in `Contact` to support multiple email address of a specific contact.
 - **Feature:** Added `closeMiniApp(withConfirmation: boolean)` interface which will help the miniapp to close on its own, provided Native Host application allows them to close.
