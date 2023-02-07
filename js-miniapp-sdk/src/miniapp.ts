@@ -20,7 +20,7 @@ import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
-import { Purchases } from './modules/inapp-purchases';
+import { Purchases } from './modules/in-app-purchase';
 
 /**
  * A module layer for webapps and mobile native interaction.

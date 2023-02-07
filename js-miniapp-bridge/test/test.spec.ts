@@ -1057,7 +1057,7 @@ describe('purchaseProductWith', () => {
           },
         },
         transactionId: 'transction_id_a',
-        transactionDate: '2022/11/23',
+        transactionDate: '2023/02/08',
       },
     ];
     const productId = 'com.rakuten.myappa';
