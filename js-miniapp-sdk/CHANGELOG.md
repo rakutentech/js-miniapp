@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.17.0 (2023-xx-xx)
+- **Feature:** Added In-app purchases related interfaces. `getAllProducts()` , `purchaseProductWith(id: string)`, `consumePurchaseWith(id: string, transactionId: string)`. These interfaces can be used to prepare the list of products and make a in-app purchase with product id from associated with Mini App platform.
+
+---
+
 ### 1.16.0 (2023-01-30)
 - **Feature:** Added Universal Bridge related interface e.g. `sendJsonToHostapp` to send any JSON/String to the HostApp. Also, added support with `HostAppEvents` to receive any JSON/String to MiniApp from the HostApp.
 - **Feature:** Added `allEmailList` property in `Contact` to support multiple email address of a specific contact.

@@ -20,6 +20,7 @@ import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
+import { Purchases } from './modules/inapp-purchases';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -165,6 +166,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   secureStorageService = new SecureStorageService();
   universalBridge = new UniversalBridge();
   miniappUtils = new MiniAppUtils();
+  purchases = new Purchases();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
