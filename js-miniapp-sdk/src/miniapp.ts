@@ -166,7 +166,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   secureStorageService = new SecureStorageService();
   universalBridge = new UniversalBridge();
   miniappUtils = new MiniAppUtils();
-  purchases = new Purchases();
+  purchaseService = new Purchases();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

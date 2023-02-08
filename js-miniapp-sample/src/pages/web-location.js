@@ -15,6 +15,12 @@ import GreyCard from '../components/GreyCard';
 import useGeoLocation from '../hooks/useGeoLocation';
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '40px',
+  },
   content: {
     height: '50%',
     justifyContent: 'center',
@@ -63,7 +69,7 @@ const Location = (props: any) => {
   const [state, watch, unwatch] = useGeoLocation();
 
   return (
-    <GreyCard>
+    <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         {state.error && <div>Error: {state.error}</div>}
 

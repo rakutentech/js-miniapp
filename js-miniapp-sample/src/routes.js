@@ -18,6 +18,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 
@@ -29,6 +30,7 @@ import EventListener from './pages/event-listener';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
+import { PurchaseComponent } from './pages/in-app-purchase';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import Media from './pages/media';
@@ -98,6 +100,10 @@ const closeAlertNavLink = {
 const universalBridgeNavLink = {
   navLink: '/universal-bridge',
   label: 'Universal Bridge',
+};
+const inAppPurchaseNavLink = {
+  navLink: '/in-app-purchase',
+  label: 'Purchase',
 };
 
 const navLinks = [
@@ -249,6 +255,12 @@ const appItems = [
     label: universalBridgeNavLink.label,
     navLink: universalBridgeNavLink.navLink,
     element: <UniversalBridge />,
+  },
+  {
+    icon: <ShoppingCartIcon />,
+    label: inAppPurchaseNavLink.label,
+    navLink: inAppPurchaseNavLink.navLink,
+    element: <PurchaseComponent />,
   },
 ];
 

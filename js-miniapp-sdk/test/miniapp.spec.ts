@@ -866,7 +866,7 @@ describe('getAllProducts', () => {
     ];
 
     window.MiniAppBridge.getAllProducts.resolves(response);
-    return expect(miniApp.purchases.getAllProducts()).to.eventually.equal(
+    return expect(miniApp.purchaseService.getAllProducts()).to.eventually.equal(
       response
     );
   });
@@ -891,7 +891,7 @@ describe('purchaseProductWith', () => {
 
     window.MiniAppBridge.purchaseProductWith.resolves(response);
     return expect(
-      miniApp.purchases.purchaseProductWith(productId)
+      miniApp.purchaseService.purchaseProductWith(productId)
     ).to.eventually.equal(response);
   });
 });

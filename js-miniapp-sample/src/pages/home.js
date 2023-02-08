@@ -9,8 +9,8 @@ import {
 import clsx from 'clsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import ToolBar from '../components/ToolBar';
 import { navItems } from './../routes';
+import ToolBar from '../components/ToolBar';
 
 const DRAWER_WIDTH = '250px';
 const DRAWER_SHRINKED_WIDTH = '70px';
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'initial',
     alignItems: 'center',
   },
   drawerClosed: {

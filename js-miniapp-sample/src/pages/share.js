@@ -12,6 +12,9 @@ import MiniApp from 'js-miniapp-sdk';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    marginTop: '40px',
+  },
   content: {
     height: '50%',
     justifyContent: 'center',
@@ -59,7 +62,7 @@ function Share() {
   };
 
   return (
-    <GreyCard>
+    <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         <TextField
           type="text"

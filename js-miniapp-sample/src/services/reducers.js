@@ -8,6 +8,7 @@ import {
 } from './landing/reducers';
 import MessageReducer from './message/reducers';
 import { PermissionsReducer } from './permissions/reducers';
+import { PurchaseProductReducer } from './purchase/reducers';
 import storageReducer from './secure-storage/reducers';
 import userReducer from './user/reducers';
 import { UUIDReducer } from './uuid/reducers';
@@ -22,4 +23,5 @@ export default combineReducers({
   file: FileDownloadReducer,
   secureStorage: storageReducer,
   secureStorageStatus: SecureStorageStatusReducer,
+  purchaseProduct: PurchaseProductReducer,
 });

@@ -28,6 +28,12 @@ import { requestCustomPermissions } from '../services/permissions/actions';
 import { requestAccessToken } from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '40px',
+  },
   wrapper: {
     position: 'relative',
     marginTop: 20,
@@ -225,7 +231,7 @@ function AuthToken(props: AuthTokenProps) {
   }
 
   return (
-    <GreyCard height="auto">
+    <GreyCard height="auto" className={classes.card}>
       <CardContent>
         <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
           <Fragment>
