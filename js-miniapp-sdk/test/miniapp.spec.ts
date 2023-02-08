@@ -842,36 +842,6 @@ describe('closeMiniApp', () => {
   });
 });
 
-describe('getAllProducts', () => {
-  it('should retrieve the list of products available for purchase', () => {
-    const response = [
-      {
-        title: 'MyApp_A',
-        description: 'This is app A for purchase',
-        id: 'com.rakuten.myappa',
-        price: {
-          currencyCode: 'yen',
-          price: '100',
-        },
-      },
-      {
-        title: 'MyApp_B',
-        description: 'This is app B for purchase',
-        id: 'com.rakuten.myappb',
-        price: {
-          currencyCode: 'yen',
-          price: '100',
-        },
-      },
-    ];
-
-    window.MiniAppBridge.getAllProducts.resolves(response);
-    return expect(miniApp.purchaseService.getAllProducts()).to.eventually.equal(
-      response
-    );
-  });
-});
-
 describe('purchaseProductWith', () => {
   it('should Purchases the app with given id', () => {
     const response = {

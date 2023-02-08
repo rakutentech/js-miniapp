@@ -185,7 +185,9 @@ function PurchaseComponent(props: PurchaseProductProps) {
   function BuyProduct() {
     props
       .purchaseProductWith(inputValue)
-      .then(() => dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null }))
+      .then(() =>
+        dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null })
+      )
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
         dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
@@ -202,7 +204,9 @@ function PurchaseComponent(props: PurchaseProductProps) {
   function ConsumeProduct() {
     props
       .purchaseProductWith(inputValue)
-      .then(() => dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null }))
+      .then(() =>
+        dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null })
+      )
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
         dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
@@ -354,8 +358,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getAllProducts: () => dispatch(getAllProductsAction()),
-    purchaseProductWith: (itemId: string) => dispatch(purchaseProductAction(itemId)),
-    consumeProductWith: (itemId: string, transactionId: string) => dispatch(consumeProductAction(itemId)),
+    purchaseProductWith: (itemId: string) =>
+      dispatch(purchaseProductAction(itemId)),
+    consumeProductWith: (itemId: string, transactionId: string) =>
+      dispatch(consumeProductAction(itemId)),
   };
 };
 
