@@ -122,21 +122,21 @@ type Action = {
 
 export const dataFetchReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'FETCH_INIT':
+    case 'PURCHASE_FETCH_INIT':
       return {
         ...state,
         isLoading: true,
         isError: false,
         error: null,
       };
-    case 'FETCH_SUCCESS':
+    case 'PURCHASE_FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
         error: null,
       };
-    case 'FETCH_FAILURE':
+    case 'PURCHASE_FETCH_FAILURE':
       return {
         ...initialState,
         isLoading: false,
@@ -177,7 +177,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
 
   function handlePurchaseClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
       BuyProduct();
     }
   }
@@ -185,16 +185,16 @@ function PurchaseComponent(props: PurchaseProductProps) {
   function BuyProduct() {
     props
       .purchaseProductWith(inputValue)
-      .then(() => dispatch({ type: 'FETCH_SUCCESS', miniAppError: null }))
+      .then(() => dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null }))
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
-        dispatch({ type: 'FETCH_FAILURE', miniAppError });
+        dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
       });
   }
 
   function handleConsumeClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
       ConsumeProduct();
     }
   }
@@ -202,10 +202,10 @@ function PurchaseComponent(props: PurchaseProductProps) {
   function ConsumeProduct() {
     props
       .purchaseProductWith(inputValue)
-      .then(() => dispatch({ type: 'FETCH_SUCCESS', miniAppError: null }))
+      .then(() => dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null }))
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
-        dispatch({ type: 'FETCH_FAILURE', miniAppError });
+        dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
       });
   }
 
