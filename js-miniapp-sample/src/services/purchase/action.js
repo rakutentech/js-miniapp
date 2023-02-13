@@ -57,7 +57,7 @@ const purchaseProductAction = (itemId: string): Function => {
 
 const consumeProductAction = (
   itemId: string,
-  transactionId: String
+  transactionId: string
 ): Function => {
   return (dispatch) => {
     return MiniApp.purchaseService
