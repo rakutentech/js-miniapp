@@ -230,7 +230,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
   }
 
   function TransactionDetails() {
-    var dateInfo = new Date(props.purchasedProduct.product.transactionDate);
+    const dateInfo = new Date(props.purchasedProduct.product.transactionDate);
     return (
       <React.Fragment>
         <Typography variant="h6">
