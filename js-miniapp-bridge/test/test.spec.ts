@@ -1043,7 +1043,7 @@ describe('purchaseProductWith', () => {
   it('will purchase product with id', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     const response =
-      '[{"product": {"title": "MyApp_A","description": "This is app A for purchase","id": "com.rakuten.myappa","price": {"currencyCode": "yen","price": "100"}},"transactionId": "transction_id_a","transactionDate": "2022/11/23"}]';
+      '[{"product": {"title": "MyApp_A","description": "This is app A for purchase","id": "com.rakuten.myappa","price": {"currencyCode": "yen","price": "100"}},"transactionId": "transction_id_a","transactionDate": "2023/02/14"}]';
     mockExecutor.exec.callsArgWith(2, response);
     const expected = [
       {
@@ -1057,7 +1057,7 @@ describe('purchaseProductWith', () => {
           },
         },
         transactionId: 'transction_id_a',
-        transactionDate: '2023/02/08',
+        transactionDate: '2023/02/14',
       },
     ];
     const productId = 'com.rakuten.myappa';

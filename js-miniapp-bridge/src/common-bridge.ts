@@ -82,15 +82,17 @@ export class MiniAppBridge {
     this.executor = executor;
     this.platform = executor.getPlatform();
 
-    window.addEventListener(
-      MiniAppSecureStorageEvents.onReady,
-      () => (this.isSecureStorageReady = true)
-    );
-    window.addEventListener(
-      MiniAppSecureStorageEvents.onLoadError,
-      (e: CustomEvent) =>
-        (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
-    );
+    if (window) {
+      window.addEventListener(
+        MiniAppSecureStorageEvents.onReady,
+        () => (this.isSecureStorageReady = true)
+      );
+      window.addEventListener(
+        MiniAppSecureStorageEvents.onLoadError,
+        (e: CustomEvent) =>
+          (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
+      );
+    }
   }
 
   /**
@@ -722,20 +724,20 @@ export class MiniAppBridge {
   /**
    * This will request to Consume the product that is purchased using purchaseProductWith API
    * @param id Product id of the product that is purchased.
-   * @returns 
+   * @returns
    */
   consumePurchaseWith(id: string, transactionId: string) {
-      return new Promise<MiniAppResponseInfo>((resolve, reject) => {
-        return this.executor.exec(
-          'purchaseProductWith',
-          { product_id: id, transaction_id: transactionId },
-          consumedInfo => {
-            resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);
-          },
-          error => reject(parseMiniAppError(error))
-        );
-      });
-    }
+    return new Promise<MiniAppResponseInfo>((resolve, reject) => {
+      return this.executor.exec(
+        'purchaseProductWith',
+        { product_id: id, transaction_id: transactionId },
+        consumedInfo => {
+          resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**
