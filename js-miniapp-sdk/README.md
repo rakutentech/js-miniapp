@@ -702,6 +702,52 @@ MiniApp.miniappUtils.closeMiniApp(true).catch((error) => {
 </dl>
 </dd>
 
+## In-App Purchases
+You can perform the in-app purchases for the products available for In-App Purchases associated with Google Play™.
+### Get all products list
+This will retrieve the list of products details available for In-App Purchase associated with Google Play™. 
+This will return only the list of products associated with Mini app in the platform
+```javascript
+import miniApp from 'js-miniapp-sdk';
+miniApp.purchases
+      .getAllProducts()
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+#### Purchase a product with product id
+This will request for the In-app Purchase of a product with product id associated with Google Play™.
+Returns the PurchasedProduct object with transaction details.
+```javascript
+import miniApp from 'js-miniapp-sdk';
+miniApp.purchases
+      .purchaseProductWith(productId)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
+#### Consume a purchase
+This will request to Consume the product that is purchased using the purchaseProductWith API
+Returns the PurchasedProduct object with transaction details.
+```javascript
+import miniApp from 'js-miniapp-sdk';
+miniApp.purchases
+      .consumePurchaseWith(productId, transactionId)
+      .then((success) => {
+        console.log(success);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+```
+
 ## Advanced Usage
 
 <dl>

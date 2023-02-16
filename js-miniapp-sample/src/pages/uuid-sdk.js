@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
     height: '250px',
+    marginTop: '40px',
   },
   content: {
     height: '16%',

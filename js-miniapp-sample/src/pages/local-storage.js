@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.color.primary,
     fontWeight: 'bold',
   },
+  card: {
+    marginTop: '40px',
+  },
   actions: {
     justifyContent: 'center',
     flexDirection: 'column',
@@ -62,7 +65,7 @@ function LocalStorage() {
   };
 
   return (
-    <GreyCard>
+    <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
         <TextField
           type="text"

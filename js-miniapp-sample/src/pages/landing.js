@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '40px',
   },
   content: {
     height: '25%',
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     minHeight: 40,
     margin: 0,
+  },
+  paddingTop50: {
+    marginTop: '50px',
   },
 }));
 

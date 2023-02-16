@@ -16,6 +16,7 @@ import GreyCard from '../components/GreyCard';
 const useStyles = makeStyles((theme) => ({
   card: {
     height: 'auto',
+    marginTop: '40px',
   },
   content: {
     justifyContent: 'center',

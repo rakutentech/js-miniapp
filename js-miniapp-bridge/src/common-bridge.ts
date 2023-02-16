@@ -26,6 +26,8 @@ import {
 import { ShareInfoType } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
+import { MiniAppResponseInfo } from './types/response-types/miniapp';
+import { Product, PurchasedProduct } from './types/in-app-purchase';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -80,15 +82,17 @@ export class MiniAppBridge {
     this.executor = executor;
     this.platform = executor.getPlatform();
 
-    window.addEventListener(
-      MiniAppSecureStorageEvents.onReady,
-      () => (this.isSecureStorageReady = true)
-    );
-    window.addEventListener(
-      MiniAppSecureStorageEvents.onLoadError,
-      (e: CustomEvent) =>
-        (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
-    );
+    if (window) {
+      window.addEventListener(
+        MiniAppSecureStorageEvents.onReady,
+        () => (this.isSecureStorageReady = true)
+      );
+      window.addEventListener(
+        MiniAppSecureStorageEvents.onLoadError,
+        (e: CustomEvent) =>
+          (this.secureStorageLoadError = parseMiniAppError(e.detail.message))
+      );
+    }
   }
 
   /**
@@ -676,6 +680,60 @@ export class MiniAppBridge {
         'closeMiniApp',
         { withConfirmationAlert: withConfirmation },
         success => resolve(success),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This will retrieve the list of products details available for In-App Purchases associated with Mini App in the Platform.
+   * @returns List of In-app purchase products
+   * @see {getAllProducts}
+   */
+  getAllProducts() {
+    return new Promise<Product[]>((resolve, reject) => {
+      return this.executor.exec(
+        'getAllProducts',
+        null,
+        productsList => {
+          resolve(JSON.parse(productsList) as Product[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This will request for the In-App Purchase of a product with product id associated with Mini App in the Platform.
+   * @param id Product id of the product to be purchased.
+   * @returns Purchased product details and the transaction details of the purchase.
+   */
+  purchaseProductWith(id: string) {
+    return new Promise<PurchasedProduct>((resolve, reject) => {
+      return this.executor.exec(
+        'purchaseProductWith',
+        { product_id: id },
+        purchasedProduct => {
+          resolve(JSON.parse(purchasedProduct) as PurchasedProduct);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This will request to Consume the product that is purchased using purchaseProductWith API
+   * @param id Product id of the product that is purchased.
+   * @returns
+   */
+  consumePurchaseWith(id: string, transactionId: string) {
+    return new Promise<MiniAppResponseInfo>((resolve, reject) => {
+      return this.executor.exec(
+        'purchaseProductWith',
+        { product_id: id, transaction_id: transactionId },
+        consumedInfo => {
+          resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);
+        },
         error => reject(parseMiniAppError(error))
       );
     });
