@@ -32,10 +32,12 @@ var MiniAppBridge = /** @class */ (function () {
         this.secureStorageLoadError = null;
         this.executor = executor;
         this.platform = executor.getPlatform();
-        window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
-        window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
-            return (_this.secureStorageLoadError = (0, error_types_1.parseMiniAppError)(e.detail.message));
-        });
+        if (window) {
+            window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
+            window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
+                return (_this.secureStorageLoadError = (0, error_types_1.parseMiniAppError)(e.detail.message));
+            });
+        }
     }
     /**
      * Success Callback method that will be called from native side
@@ -453,6 +455,45 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('closeMiniApp', { withConfirmationAlert: withConfirmation }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * This will retrieve the list of products details available for In-App Purchases associated with Mini App in the Platform.
+     * @returns List of In-app purchase products
+     * @see {getAllProducts}
+     */
+    MiniAppBridge.prototype.getAllProducts = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getAllProducts', null, function (productsList) {
+                resolve(JSON.parse(productsList));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * This will request for the In-App Purchase of a product with product id associated with Mini App in the Platform.
+     * @param id Product id of the product to be purchased.
+     * @returns Purchased product details and the transaction details of the purchase.
+     */
+    MiniAppBridge.prototype.purchaseProductWith = function (id) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('purchaseProductWith', { product_id: id }, function (purchasedProduct) {
+                resolve(JSON.parse(purchasedProduct));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * This will request to Consume the product that is purchased using purchaseProductWith API
+     * @param id Product id of the product that is purchased.
+     * @returns
+     */
+    MiniAppBridge.prototype.consumePurchaseWith = function (id, transactionId) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('purchaseProductWith', { product_id: id, transaction_id: transactionId }, function (consumedInfo) {
+                resolve(JSON.parse(consumedInfo));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     return MiniAppBridge;
