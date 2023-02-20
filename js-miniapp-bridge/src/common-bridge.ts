@@ -722,14 +722,14 @@ export class MiniAppBridge {
   }
 
   /**
-   * This will request to Consume the product that is purchased using purchaseProductWith API
+   * This will request to Consume the product that is purchased using consumePurchaseWith API
    * @param id Product id of the product that is purchased.
    * @returns
    */
   consumePurchaseWith(id: string, transactionId: string) {
     return new Promise<MiniAppResponseInfo>((resolve, reject) => {
       return this.executor.exec(
-        'purchaseProductWith',
+        'consumeProductWith',
         { product_id: id, transaction_id: transactionId },
         consumedInfo => {
           resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);

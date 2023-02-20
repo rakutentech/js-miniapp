@@ -203,7 +203,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
 
   function ConsumeProduct() {
     props
-      .purchaseProductWith(inputValue)
+      .consumePurchaseWith(inputValue)
       .then(() =>
         dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null })
       )
