@@ -512,14 +512,14 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
-     * This will request to Consume the product that is purchased using purchaseProductWith API
+     * This will request to Consume the product that is purchased using consumePurchaseWith API
      * @param id Product id of the product that is purchased.
      * @returns
      */
     MiniAppBridge.prototype.consumePurchaseWith = function (id, transactionId) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('purchaseProductWith', { product_id: id, transaction_id: transactionId }, function (consumedInfo) {
+            return _this.executor.exec('consumeProductWith', { product_id: id, transaction_id: transactionId }, function (consumedInfo) {
                 resolve(JSON.parse(consumedInfo));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
