@@ -45,8 +45,8 @@ import {
   MiniAppSecureStorageEvents,
 } from './types/secure-storage';
 import {
-  Product,
-  PurchasedProduct,
+  ProductInfo,
+  PurchasedProductInfo,
   ProductPrice,
 } from './types/in-app-purchase';
 
@@ -85,7 +85,7 @@ export {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
-  Product,
-  PurchasedProduct,
+  ProductInfo,
+  PurchasedProductInfo,
   ProductPrice,
 };

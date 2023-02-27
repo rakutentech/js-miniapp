@@ -12,7 +12,7 @@ import {
 type PermissionsAction = {
   type: String,
   permissions: CustomPermissionResult[],
-  error: MiniAppError
+  error: MiniAppError,
 };
 
 const requestCustomPermissions = (

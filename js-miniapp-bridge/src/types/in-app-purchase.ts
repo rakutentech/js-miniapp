@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductInfo {
   title: string;
   description: string;
   id: string;
@@ -10,8 +10,8 @@ export interface ProductPrice {
   price: string;
 }
 
-export interface PurchasedProduct {
-  product: Product;
+export interface PurchasedProductInfo {
+  product: ProductInfo;
   transactionId: string;
   transactionDate: string;
 }
