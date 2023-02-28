@@ -30,7 +30,7 @@ import EventListener from './pages/event-listener';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
-import { PurchaseComponent } from './pages/in-app-purchase';
+import { PurchaseProductComponent } from './pages/in-app-purchase';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import Media from './pages/media';
@@ -130,6 +130,7 @@ const navLinks = [
   secureStorageNavLink,
   closeAlertNavLink,
   universalBridgeNavLink,
+  inAppPurchaseNavLink,
 ];
 
 const homeItem = [
@@ -260,7 +261,7 @@ const appItems = [
     icon: <ShoppingCartIcon />,
     label: inAppPurchaseNavLink.label,
     navLink: inAppPurchaseNavLink.navLink,
-    element: <PurchaseComponent />,
+    element: <PurchaseProductComponent />,
   },
 ];
 
