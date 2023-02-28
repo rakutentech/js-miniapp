@@ -132,7 +132,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
   console.log('dataFetchReducer ACTION: ', action);
   console.log('dataFetchReducer Items: ', action.productInfo);
   switch (action.type) {
-    case 'PURCHASE_INIT':
+    case 'PURCHASE_FETCH_INIT':
       return {
         isLoading: true,
         isError: false,
@@ -153,6 +153,12 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isError: false,
         error: null,
         productInfo: action.productInfo,
+      };
+    case 'PURCHASE_PRODUCT_INIT':
+      return {
+        isLoading: true,
+        isError: false,
+        error: null,
       };
     case 'PURCHASE_PRODUCT_SUCCESS':
       return {
@@ -217,13 +223,15 @@ function PurchaseProductComponent() {
 
   function handlePurchaseClick(e) {
     if (!state.isLoading) {
-      productFetchDispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
+      productFetchDispatch({
+        type: 'PURCHASE_PRODUCT_INIT',
+        miniAppError: null,
+      });
       BuyProduct(e.currentTarget.value);
     }
   }
 
   function BuyProduct(productId: string) {
-    console.log('BuyProduct:', productId);
     MiniApp.purchaseService
       .purchaseProductWith(productId)
       .then((purchasedProduct) => {
@@ -245,29 +253,29 @@ function PurchaseProductComponent() {
 
   function handleConsumeClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
+      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
       ConsumeProduct(e.currentTarget.value);
     }
   }
 
   function ConsumeProduct(productId: string) {
     MiniApp.purchaseService
-    .consumePurchaseWith(productId)
-    .then((purchasedProduct) => {
-      console.log('SUCCESS - BuyProduct', purchasedProduct);
-      productFetchDispatch({
-        type: 'PURCHASE_PRODUCT_SUCCESS',
-        miniAppError: null,
-        productInfo: purchasedProduct,
+      .consumePurchaseWith(productId)
+      .then((purchasedProduct) => {
+        console.log('SUCCESS - BuyProduct', purchasedProduct);
+        productFetchDispatch({
+          type: 'PURCHASE_PRODUCT_SUCCESS',
+          miniAppError: null,
+          productInfo: purchasedProduct,
+        });
+      })
+      .catch((miniAppError) => {
+        console.log('Product Error: ', miniAppError);
+        productFetchDispatch({
+          type: 'PURCHASE_PRODUCT_FAILURE',
+          miniAppError,
+        });
       });
-    })
-    .catch((miniAppError) => {
-      console.log('Product Error: ', miniAppError);
-      productFetchDispatch({
-        type: 'PURCHASE_PRODUCT_FAILURE',
-        miniAppError,
-      });
-    });
   }
 
   function TransactionDetails() {
