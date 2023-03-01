@@ -712,7 +712,7 @@ export class MiniAppBridge {
     return new Promise<PurchasedProductInfo>((resolve, reject) => {
       return this.executor.exec(
         'purchaseProductWith',
-        { product_id: id },
+        { productId: id },
         purchasedProduct => {
           resolve(JSON.parse(purchasedProduct) as PurchasedProductInfo);
         },
@@ -730,7 +730,7 @@ export class MiniAppBridge {
     return new Promise<MiniAppResponseInfo>((resolve, reject) => {
       return this.executor.exec(
         'consumeProductWith',
-        { product_id: id, transaction_id: transactionId },
+        { productId: id, transactionId: transactionId },
         consumedInfo => {
           resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);
         },
