@@ -152,7 +152,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         error: null,
-        productInfo: action.productInfo,
+        productInfo: null,
       };
     case 'PURCHASE_PRODUCT_INIT':
       return {
