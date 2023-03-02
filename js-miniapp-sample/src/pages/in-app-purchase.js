@@ -226,7 +226,7 @@ function PurchaseProductComponent() {
 
   function handlePurchaseClick(e) {
     if (!state.isLoading) {
-      productFetchDispatch({
+      dispatch({
         type: 'PURCHASE_PRODUCT_INIT',
         miniAppError: null,
       });
@@ -247,7 +247,7 @@ function PurchaseProductComponent() {
       })
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
-        productFetchDispatch({
+        dispatch({
           type: 'PURCHASE_PRODUCT_FAILURE',
           miniAppError,
         });
@@ -266,7 +266,7 @@ function PurchaseProductComponent() {
       .consumePurchaseWith(productId)
       .then((purchasedProduct) => {
         console.log('SUCCESS - BuyProduct', purchasedProduct);
-        productFetchDispatch({
+        dispatch({
           type: 'PURCHASE_PRODUCT_SUCCESS',
           miniAppError: null,
           productInfo: purchasedProduct,
@@ -274,7 +274,7 @@ function PurchaseProductComponent() {
       })
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
-        productFetchDispatch({
+        dispatch({
           type: 'PURCHASE_PRODUCT_FAILURE',
           miniAppError,
         });
