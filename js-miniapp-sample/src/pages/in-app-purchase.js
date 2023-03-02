@@ -107,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
   purchaseButton: {
     margin: '15px',
   },
+  listItemStyle: {
+    overflowWrap: 'anywhere'
+  }
 }));
 
 export const initialState = {
@@ -313,6 +316,7 @@ function PurchaseProductComponent() {
               key={productInfo.id}
             >
               <ListItemText
+                className={classes.listItemStyle}
                 primary={'Title: ' + productInfo.title}
                 secondary={
                   <React.Fragment>
