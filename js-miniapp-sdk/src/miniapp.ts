@@ -196,22 +196,22 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     ];
 
     return this.requestCustomPermissions(locationPermission)
-      .then((permission) =>
+      .then(permission =>
         permission.find(
-          (result) =>
+          result =>
             result.status === CustomPermissionStatus.ALLOWED ||
             // Case where older Android SDK doesn't support the Location custom permission
             result.status === CustomPermissionStatus.PERMISSION_NOT_AVAILABLE
         )
       )
-      .catch((error) =>
+      .catch(error =>
         // Case where older iOS SDK doesn't support the Location custom permission
         typeof error === 'string' &&
         error.startsWith('invalidCustomPermissionsList')
           ? Promise.resolve(true)
           : Promise.reject(error)
       )
-      .then((hasPermission) =>
+      .then(hasPermission =>
         hasPermission
           ? this.requestPermission(DevicePermission.LOCATION)
           : Promise.reject('User denied location permission to this mini app.')
@@ -223,7 +223,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   ): Promise<CustomPermissionResult[]> {
     return getBridge()
       .requestCustomPermissions(permissions)
-      .then((permissionResult) => permissionResult.permissions);
+      .then(permissionResult => permissionResult.permissions);
   }
 
   loadInterstitialAd(id: string): Promise<string> {
@@ -265,7 +265,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getHostEnvironmentInfo(): Promise<HostEnvironmentInfo> {
     return getBridge()
       .getHostEnvironmentInfo()
-      .then((info) => {
+      .then(info => {
         info.platform = getBridge().platform as HostPlatform;
         return info;
       });
