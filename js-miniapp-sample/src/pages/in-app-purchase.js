@@ -108,8 +108,8 @@ const useStyles = makeStyles((theme) => ({
     margin: '15px',
   },
   listItemStyle: {
-    overflowWrap: 'anywhere'
-  }
+    overflowWrap: 'anywhere',
+  },
 }));
 
 export const initialState = {
