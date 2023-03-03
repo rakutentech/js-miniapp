@@ -244,6 +244,7 @@ function PurchaseProductComponent() {
           miniAppError: null,
           purchasedProduct: purchasedProduct,
         });
+        cachePurchasedProduct(purchasedProduct.product.id, purchasedProduct);
       })
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
@@ -254,16 +255,29 @@ function PurchaseProductComponent() {
       });
   }
 
+  function cachePurchasedProduct(key, value) {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }
+
   function handleConsumeClick(e) {
     if (!state.isLoading) {
       dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
-      ConsumeProduct(e.currentTarget.value);
+      ConsumeProduct(
+        e.currentTarget.value,
+        getTransactionId(e.currentTarget.value)
+      );
     }
   }
 
-  function ConsumeProduct(productId: string) {
+  function getTransactionId(productId: string) {
+    const purchasedProduct = window.localStorage.getItem(productId);
+    var productInfo = JSON.parse(purchasedProduct);
+    return productInfo.transactionId;
+  }
+
+  function ConsumeProduct(productId: string, transactionId: string) {
     MiniApp.purchaseService
-      .consumePurchaseWith(productId)
+      .consumePurchaseWith(productId, transactionId)
       .then((purchasedProduct) => {
         console.log('SUCCESS - BuyProduct', purchasedProduct);
         dispatch({
@@ -271,6 +285,7 @@ function PurchaseProductComponent() {
           miniAppError: null,
           productInfo: purchasedProduct,
         });
+        cachePurchasedProduct(productId, '');
       })
       .catch((miniAppError) => {
         console.log('Product Error: ', miniAppError);
