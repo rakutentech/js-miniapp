@@ -244,7 +244,10 @@ function PurchaseProductComponent() {
           miniAppError: null,
           purchasedProduct: purchasedProduct,
         });
-        cachePurchasedProduct(purchasedProduct.productInfo.id, purchasedProduct);
+        cachePurchasedProduct(
+          purchasedProduct.productInfo.id,
+          purchasedProduct
+        );
       })
       .catch((miniAppError) => {
         console.log('Buy Product Error: ', miniAppError);
@@ -398,9 +401,8 @@ function PurchaseProductComponent() {
                 </div>
               </div>
               {state.purchasedProductInfo &&
-                state.purchasedProductInfo.productInfo.id === productInfo.id && (
-                  <div>{TransactionDetails()}</div>
-                )}
+                state.purchasedProductInfo.productInfo.id ===
+                  productInfo.id && <div>{TransactionDetails()}</div>}
             </ListItem>
           ))}
       </React.Fragment>
