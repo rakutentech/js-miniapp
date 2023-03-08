@@ -11,16 +11,21 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
 
 import GreyCard from '../components/GreyCard';
-import { setMessagingUniqueId, setMauid } from '../services/uuid/actions';
+import {
+  setMessagingUniqueId,
+  setMauid,
+  setUniqueId,
+} from '../services/uuid/actions';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
-    height: '250px',
+    height: 'auto',
     marginTop: '40px',
+    display: 'grid'
   },
   content: {
-    height: '16%',
+    height: 'auto',
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
@@ -39,10 +44,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type UUIDProps = {
+  uniqueId: string,
   messagingUniqueId: string,
   mauid: string,
+  uniqueIdError: string,
   messagingUniqueIdError: string,
   mauidError: string,
+  getUniqueId: Function,
   getMessagingUniqueId: Function,
   getMauid: Function,
 };
@@ -65,11 +73,56 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        {props.messagingUniqueId ??
+        { props.uniqueId ??
+          props.uniqueIdError ??
+          'Not Available'}
+      </CardContent>
+      <CardActions className={classes.actions}>
+        <Button
+          data-testid="get-unique-id"
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={props.getUniqueId}
+        >
+          GET UNIQUE ID
+        </Button>
+        <CopyToClipboard
+          disabled={!props.uniqueId}
+          text={props.uniqueId}
+          onCopy={textCopied}
+        >
+          <Button
+            disabled={!props.uniqueId}
+            data-testid="clipboard-copy"
+            variant="contained"
+            color="primary"
+          >
+            Copy
+          </Button>
+        </CopyToClipboard>
+        <Snackbar
+          open={copyStatus.success}
+          autoHideDuration={3000}
+          onClose={() => {
+            setCopyStatus({ success: false, error: false });
+          }}
+          message="Copied to clipboard !!"
+        />
+        <Snackbar
+          open={copyStatus.error}
+          autoHideDuration={3000}
+          onClose={() => {
+            setCopyStatus({ success: false, error: false });
+          }}
+          message="Failed to copy!"
+        />
+      </CardActions>
+      <CardContent className={classes.content}>
+        { props.messagingUniqueId ??
           props.messagingUniqueIdError ??
           'Not Available'}
       </CardContent>
-
       <CardActions className={classes.actions}>
         <Button
           data-testid="get-messaging-unique-id"
@@ -148,6 +201,8 @@ const UuidFetcher = (props: UUIDProps) => {
 const mapStateToProps = (state, props) => {
   return {
     ...props,
+    uniqueId: state.uuid.uniqueId,
+    uniqueIdError: state.uuid.uniqueIdError,
     messagingUniqueId: state.uuid.messagingUniqueId,
     messagingUniqueIdError: state.uuid.messagingUniqueIdError,
     mauid: state.uuid.mauid,
@@ -157,6 +212,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getUniqueId: () => dispatch(setUniqueId()),
     getMessagingUniqueId: () => dispatch(setMessagingUniqueId()),
     getMauid: () => dispatch(setMauid()),
   };
