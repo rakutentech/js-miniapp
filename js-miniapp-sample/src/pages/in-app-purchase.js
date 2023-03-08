@@ -219,7 +219,7 @@ function PurchaseProductComponent() {
         });
       })
       .catch((miniAppError) => {
-        console.log('Product Error: ', miniAppError);
+        console.log('getAllProducts Error: ', miniAppError);
         productFetchDispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
       });
   }
@@ -244,10 +244,10 @@ function PurchaseProductComponent() {
           miniAppError: null,
           purchasedProduct: purchasedProduct,
         });
-        cachePurchasedProduct(purchasedProduct.product.id, purchasedProduct);
+        cachePurchasedProduct(purchasedProduct.productInfo.id, purchasedProduct);
       })
       .catch((miniAppError) => {
-        console.log('Product Error: ', miniAppError);
+        console.log('Buy Product Error: ', miniAppError);
         dispatch({
           type: 'PURCHASE_PRODUCT_FAILURE',
           miniAppError,
@@ -288,7 +288,7 @@ function PurchaseProductComponent() {
         cachePurchasedProduct(productId, '');
       })
       .catch((miniAppError) => {
-        console.log('Product Error: ', miniAppError);
+        console.log('Consume Product Error: ', miniAppError);
         dispatch({
           type: 'PURCHASE_PRODUCT_FAILURE',
           miniAppError,
@@ -352,9 +352,9 @@ function PurchaseProductComponent() {
                       {productInfo.id && productInfo.id !== '' && (
                         <span>
                           {'Price : ' +
-                            productInfo.price.price +
+                            productInfo.productPriceInfo.price +
                             ' ' +
-                            productInfo.price.currencyCode}
+                            productInfo.productPriceInfo.currencyCode}
                         </span>
                       )}
                     </Typography>
@@ -398,7 +398,7 @@ function PurchaseProductComponent() {
                 </div>
               </div>
               {state.purchasedProductInfo &&
-                state.purchasedProductInfo.product.id === productInfo.id && (
+                state.purchasedProductInfo.productInfo.id === productInfo.id && (
                   <div>{TransactionDetails()}</div>
                 )}
             </ListItem>

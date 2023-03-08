@@ -2,16 +2,14 @@ export interface ProductInfo {
   title: string;
   description: string;
   id: string;
-  price: ProductPrice;
+  productPriceInfo: ProductPrice;
 }
-
 export interface ProductPrice {
   currencyCode: string;
   price: string;
 }
-
 export interface PurchasedProductInfo {
-  product: ProductInfo;
+  productInfo: ProductInfo;
   transactionId: string;
   transactionDate: string;
 }
