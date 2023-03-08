@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: 'auto',
     marginTop: '40px',
-    display: 'grid'
+    display: 'grid',
   },
   content: {
     height: 'auto',
@@ -73,9 +73,7 @@ const UuidFetcher = (props: UUIDProps) => {
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
-        { props.uniqueId ??
-          props.uniqueIdError ??
-          'Not Available'}
+        {props.uniqueId ?? props.uniqueIdError ?? 'Not Available'}
       </CardContent>
       <CardActions className={classes.actions}>
         <Button
@@ -119,7 +117,7 @@ const UuidFetcher = (props: UUIDProps) => {
         />
       </CardActions>
       <CardContent className={classes.content}>
-        { props.messagingUniqueId ??
+        {props.messagingUniqueId ??
           props.messagingUniqueIdError ??
           'Not Available'}
       </CardContent>
