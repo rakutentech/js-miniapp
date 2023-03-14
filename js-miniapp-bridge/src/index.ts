@@ -38,6 +38,10 @@ import {
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
 } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
@@ -88,4 +92,8 @@ export {
   ProductInfo,
   PurchasedProductInfo,
   ProductPrice,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
 };

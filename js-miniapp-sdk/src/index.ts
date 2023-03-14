@@ -36,6 +36,10 @@ import {
   ProductInfo,
   ProductPrice,
   PurchasedProductInfo,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -84,4 +88,8 @@ export {
   ProductInfo,
   ProductPrice,
   PurchasedProductInfo,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
 };
