@@ -12,6 +12,8 @@ import {
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
 import MiniApp, { MiniAppError } from 'js-miniapp-sdk';
 
@@ -128,6 +130,7 @@ type Action = {
   miniAppError: MiniAppError,
   productInfo: ProductInfo[],
   purchasedProductInfo: PurchasedProductInfo,
+  consumeProductResponse: MiniAppResponseInfo,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
@@ -169,7 +172,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         error: null,
-        purchasedProductInfo: action.purchasedProductInfo,
+        purchasedProductInfo: action.purchasedProduct,
       };
     case 'PURCHASE_PRODUCT_FAILURE':
       return {
@@ -177,6 +180,26 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: true,
         purchasedProductInfo: null,
+        error:
+          (typeof action.miniAppError == 'string'
+            ? action.miniAppError
+            : action.miniAppError.message) || '',
+      };
+
+    case 'CONSUME_PRODUCT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+        consumeProductResponse: action.consumeProductResponse,
+      };
+    case 'CONSUME_PRODUCT_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+        consumeProductResponse: null,
         error:
           (typeof action.miniAppError == 'string'
             ? action.miniAppError
@@ -194,12 +217,21 @@ function PurchaseProductComponent() {
     dataFetchReducer,
     initialState
   );
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+
   const classes = useStyles();
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
     [classes.buttonSuccess]: !state.isError,
   });
+
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    setSnackBarOpen(false);
+  };
 
   function handleFetchClick(e) {
     if (!state.isLoading) {
@@ -281,27 +313,26 @@ function PurchaseProductComponent() {
   function ConsumeProduct(productId: string, transactionId: string) {
     MiniApp.purchaseService
       .consumePurchaseWith(productId, transactionId)
-      .then((purchasedProduct) => {
-        console.log('SUCCESS - BuyProduct', purchasedProduct);
+      .then((response) => {
+        console.log('SUCCESS - ConsumeProduct', response);
+        setSnackBarOpen(true);
         dispatch({
-          type: 'PURCHASE_PRODUCT_SUCCESS',
+          type: 'CONSUME_PRODUCT_SUCCESS',
           miniAppError: null,
-          productInfo: purchasedProduct,
+          consumeProductResponse: response,
         });
         cachePurchasedProduct(productId, '');
       })
       .catch((miniAppError) => {
         console.log('Consume Product Error: ', miniAppError);
         dispatch({
-          type: 'PURCHASE_PRODUCT_FAILURE',
+          type: 'CONSUME_PRODUCT_FAILURE',
           miniAppError,
         });
       });
   }
 
   function TransactionDetails() {
-    console.log('TransactionDetails: ', state);
-
     const dateInfo = new Date(state.purchasedProductInfo.transactionDate);
     return (
       <React.Fragment>
@@ -318,6 +349,23 @@ function PurchaseProductComponent() {
           Transaction Time: {dateInfo.toLocaleTimeString()}
           <br />
         </Typography>
+      </React.Fragment>
+    );
+  }
+
+  function ShowConsumedAlert() {
+    return (
+      <React.Fragment>
+        <Snackbar
+          open={snackBarOpen}
+          autoHideDuration={2000}
+          onClose={handleSnackBarClose}
+        >
+          <Alert severity="success" onClose={handleSnackBarClose}>
+            <AlertTitle>{state.consumeProductResponse.title}</AlertTitle>
+            {state.consumeProductResponse.description}
+          </Alert>
+        </Snackbar>
       </React.Fragment>
     );
   }
@@ -435,6 +483,9 @@ function PurchaseProductComponent() {
           <Typography variant="body1" className={classes.red}>
             {state.error}
           </Typography>
+        )}
+        {!state.isLoading && state.consumeProductResponse && (
+          <div>{ShowConsumedAlert()}</div>
         )}
       </FormGroup>
     );

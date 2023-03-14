@@ -42,6 +42,7 @@ import {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
@@ -96,4 +97,5 @@ export {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 };

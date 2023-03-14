@@ -23,6 +23,7 @@ import {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
   parseInAppPurchaseError,
 } from './in-app-purchase-errors';
 import { MiniAppError, MiniAppJson } from './mini-app-error';
@@ -64,5 +65,6 @@ export {
   PurchaseFailedError,
   ConsumeFailedError,
   ProductNotFoundError,
-  ProductPurchasedAlreadyError
+  ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError
 };

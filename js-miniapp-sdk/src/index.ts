@@ -40,6 +40,7 @@ import {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -92,4 +93,5 @@ export {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 };
