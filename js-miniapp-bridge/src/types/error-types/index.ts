@@ -66,5 +66,5 @@ export {
   ConsumeFailedError,
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
-  UserCancelledPurchaseError
+  UserCancelledPurchaseError,
 };
