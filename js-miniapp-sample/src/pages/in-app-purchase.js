@@ -203,7 +203,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         error:
           (typeof action.miniAppError == 'string'
             ? action.miniAppError
-            : action.miniAppError.message) || '',
+            : action.miniAppError.message) || 'Product is not purchased yet',
       };
 
     default:
@@ -311,7 +311,8 @@ function PurchaseProductComponent() {
   }
 
   function ConsumeProduct(productId: string, transactionId: string) {
-    MiniApp.purchaseService
+    if (transactionId !== null || transactionId !== undefined) {
+      MiniApp.purchaseService
       .consumePurchaseWith(productId, transactionId)
       .then((response) => {
         console.log('SUCCESS - ConsumeProduct', response);
@@ -330,6 +331,12 @@ function PurchaseProductComponent() {
           miniAppError,
         });
       });
+    } else {
+      dispatch({
+        type: 'CONSUME_PRODUCT_FAILURE'
+      });
+    }
+
   }
 
   function TransactionDetails() {
