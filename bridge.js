@@ -478,7 +478,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.purchaseProductWith = function (id) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('purchaseProductWith', { product_id: id }, function (purchasedProduct) {
+            return _this.executor.exec('purchaseProductWith', { productId: id }, function (purchasedProduct) {
                 resolve(JSON.parse(purchasedProduct));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
@@ -491,7 +491,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.consumePurchaseWith = function (id, transactionId) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('consumeProductWith', { product_id: id, transaction_id: transactionId }, function (consumedInfo) {
+            return _this.executor.exec('consumeProductWith', { productId: id, productTransactionId: transactionId }, function (consumedInfo) {
                 resolve(JSON.parse(consumedInfo));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
@@ -531,7 +531,7 @@ function trimBannerText(message, maxLength) {
         : message;
 }
 
-},{"./types/error-types":5,"./types/secure-storage":9,"./types/token-data":10}],2:[function(require,module,exports){
+},{"./types/error-types":6,"./types/secure-storage":10,"./types/token-data":11}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -580,7 +580,7 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
     }, function (error) { return console.error(error); });
 };
 
-},{"../common-bridge":1,"../types/platform":8}],3:[function(require,module,exports){
+},{"../common-bridge":1,"../types/platform":9}],3:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -656,7 +656,7 @@ function parseAuthError(json) {
 }
 exports.parseAuthError = parseAuthError;
 
-},{"./mini-app-error":6}],4:[function(require,module,exports){
+},{"./mini-app-error":7}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -763,10 +763,119 @@ function parseDownloadError(json) {
 }
 exports.parseDownloadError = parseDownloadError;
 
-},{"./mini-app-error":6}],5:[function(require,module,exports){
+},{"./mini-app-error":7}],5:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.parseInAppPurchaseError = exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = void 0;
+var mini_app_error_1 = require("./mini-app-error");
+var MiniAppInAppPurchaseErrorType;
+(function (MiniAppInAppPurchaseErrorType) {
+    MiniAppInAppPurchaseErrorType["PurchaseFailedError"] = "PurchaseFailedError";
+    MiniAppInAppPurchaseErrorType["ConsumeFailedError"] = "ConsumeFailedError";
+    MiniAppInAppPurchaseErrorType["ProductNotFoundError"] = "ProductNotFoundError";
+    MiniAppInAppPurchaseErrorType["ProductPurchasedAlreadyError"] = "ProductPurchasedAlreadyError";
+    MiniAppInAppPurchaseErrorType["UserCancelledPurchaseError"] = "UserCancelledPurchaseError";
+})(MiniAppInAppPurchaseErrorType || (MiniAppInAppPurchaseErrorType = {}));
+var PurchaseFailedError = /** @class */ (function (_super) {
+    __extends(PurchaseFailedError, _super);
+    function PurchaseFailedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, PurchaseFailedError.prototype);
+        _this.message = 'Product Purchase failed, please try again later';
+        return _this;
+    }
+    return PurchaseFailedError;
+}(mini_app_error_1.MiniAppError));
+exports.PurchaseFailedError = PurchaseFailedError;
+var ConsumeFailedError = /** @class */ (function (_super) {
+    __extends(ConsumeFailedError, _super);
+    function ConsumeFailedError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, ConsumeFailedError.prototype);
+        _this.message =
+            'Unable to consume the product, please make sure the product is purchased already';
+        return _this;
+    }
+    return ConsumeFailedError;
+}(mini_app_error_1.MiniAppError));
+exports.ConsumeFailedError = ConsumeFailedError;
+var ProductNotFoundError = /** @class */ (function (_super) {
+    __extends(ProductNotFoundError, _super);
+    function ProductNotFoundError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, ProductNotFoundError.prototype);
+        _this.message =
+            'Unable to find the ProductId. Please make sure that the productId is registered in Google Play';
+        return _this;
+    }
+    return ProductNotFoundError;
+}(mini_app_error_1.MiniAppError));
+exports.ProductNotFoundError = ProductNotFoundError;
+var ProductPurchasedAlreadyError = /** @class */ (function (_super) {
+    __extends(ProductPurchasedAlreadyError, _super);
+    function ProductPurchasedAlreadyError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, ProductPurchasedAlreadyError.prototype);
+        _this.message = 'This Product is purchased already';
+        return _this;
+    }
+    return ProductPurchasedAlreadyError;
+}(mini_app_error_1.MiniAppError));
+exports.ProductPurchasedAlreadyError = ProductPurchasedAlreadyError;
+var UserCancelledPurchaseError = /** @class */ (function (_super) {
+    __extends(UserCancelledPurchaseError, _super);
+    function UserCancelledPurchaseError(errorInput) {
+        var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
+        Object.setPrototypeOf(_this, UserCancelledPurchaseError.prototype);
+        _this.message = 'User cancelled the purchase';
+        return _this;
+    }
+    return UserCancelledPurchaseError;
+}(mini_app_error_1.MiniAppError));
+exports.UserCancelledPurchaseError = UserCancelledPurchaseError;
+function parseInAppPurchaseError(json) {
+    var errorType = MiniAppInAppPurchaseErrorType[json.type];
+    switch (errorType) {
+        case MiniAppInAppPurchaseErrorType.PurchaseFailedError:
+            return new PurchaseFailedError(json);
+        case MiniAppInAppPurchaseErrorType.ConsumeFailedError:
+            return new ConsumeFailedError(json);
+        case MiniAppInAppPurchaseErrorType.ProductNotFoundError:
+            return new ProductNotFoundError(json);
+        case MiniAppInAppPurchaseErrorType.ProductPurchasedAlreadyError:
+            return new ProductPurchasedAlreadyError(json);
+        case MiniAppInAppPurchaseErrorType.UserCancelledPurchaseError:
+            return new UserCancelledPurchaseError(json);
+        default:
+            return undefined;
+    }
+}
+exports.parseInAppPurchaseError = parseInAppPurchaseError;
+
+},{"./mini-app-error":7}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
+exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
 var auth_errors_1 = require("./auth-errors");
 Object.defineProperty(exports, "AuthorizationFailureError", { enumerable: true, get: function () { return auth_errors_1.AuthorizationFailureError; } });
 Object.defineProperty(exports, "AudienceNotSupportedError", { enumerable: true, get: function () { return auth_errors_1.AudienceNotSupportedError; } });
@@ -781,6 +890,12 @@ Object.defineProperty(exports, "SecureStorageFullError", { enumerable: true, get
 Object.defineProperty(exports, "SecureStorageBusyError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageBusyError; } });
 Object.defineProperty(exports, "SecureStorageUnavailableError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageUnavailableError; } });
 Object.defineProperty(exports, "SecureStorageIOError", { enumerable: true, get: function () { return secure_storage_errors_1.SecureStorageIOError; } });
+var in_app_purchase_errors_1 = require("./in-app-purchase-errors");
+Object.defineProperty(exports, "PurchaseFailedError", { enumerable: true, get: function () { return in_app_purchase_errors_1.PurchaseFailedError; } });
+Object.defineProperty(exports, "ConsumeFailedError", { enumerable: true, get: function () { return in_app_purchase_errors_1.ConsumeFailedError; } });
+Object.defineProperty(exports, "ProductNotFoundError", { enumerable: true, get: function () { return in_app_purchase_errors_1.ProductNotFoundError; } });
+Object.defineProperty(exports, "ProductPurchasedAlreadyError", { enumerable: true, get: function () { return in_app_purchase_errors_1.ProductPurchasedAlreadyError; } });
+Object.defineProperty(exports, "UserCancelledPurchaseError", { enumerable: true, get: function () { return in_app_purchase_errors_1.UserCancelledPurchaseError; } });
 var mini_app_error_1 = require("./mini-app-error");
 Object.defineProperty(exports, "MiniAppError", { enumerable: true, get: function () { return mini_app_error_1.MiniAppError; } });
 function parseMiniAppError(jsonString) {
@@ -789,6 +904,7 @@ function parseMiniAppError(jsonString) {
         return ((0, auth_errors_1.parseAuthError)(json) ||
             (0, download_file_errors_1.parseDownloadError)(json) ||
             (0, secure_storage_errors_1.parseStorageError)(json) ||
+            (0, in_app_purchase_errors_1.parseInAppPurchaseError)(json) ||
             new mini_app_error_1.MiniAppError(json));
     }
     catch (e) {
@@ -801,7 +917,7 @@ function parseMiniAppError(jsonString) {
 }
 exports.parseMiniAppError = parseMiniAppError;
 
-},{"./auth-errors":3,"./download-file-errors":4,"./mini-app-error":6,"./secure-storage-errors":7}],6:[function(require,module,exports){
+},{"./auth-errors":3,"./download-file-errors":4,"./in-app-purchase-errors":5,"./mini-app-error":7,"./secure-storage-errors":8}],7:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -837,7 +953,7 @@ var MiniAppError = /** @class */ (function (_super) {
 }(Error));
 exports.MiniAppError = MiniAppError;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -929,7 +1045,7 @@ function parseStorageError(json) {
 }
 exports.parseStorageError = parseStorageError;
 
-},{"./mini-app-error":6}],8:[function(require,module,exports){
+},{"./mini-app-error":7}],9:[function(require,module,exports){
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -941,7 +1057,7 @@ var Platform;
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiniAppSecureStorageEvents = void 0;
@@ -951,7 +1067,7 @@ var MiniAppSecureStorageEvents;
     MiniAppSecureStorageEvents["onLoadError"] = "miniappsecurestorageloaderror";
 })(MiniAppSecureStorageEvents = exports.MiniAppSecureStorageEvents || (exports.MiniAppSecureStorageEvents = {}));
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessTokenScopes = exports.AccessTokenData = void 0;
