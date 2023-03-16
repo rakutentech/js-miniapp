@@ -313,30 +313,29 @@ function PurchaseProductComponent() {
   function ConsumeProduct(productId: string, transactionId: string) {
     if (transactionId !== null || transactionId !== undefined) {
       MiniApp.purchaseService
-      .consumePurchaseWith(productId, transactionId)
-      .then((response) => {
-        console.log('SUCCESS - ConsumeProduct', response);
-        setSnackBarOpen(true);
-        dispatch({
-          type: 'CONSUME_PRODUCT_SUCCESS',
-          miniAppError: null,
-          consumeProductResponse: response,
+        .consumePurchaseWith(productId, transactionId)
+        .then((response) => {
+          console.log('SUCCESS - ConsumeProduct', response);
+          setSnackBarOpen(true);
+          dispatch({
+            type: 'CONSUME_PRODUCT_SUCCESS',
+            miniAppError: null,
+            consumeProductResponse: response,
+          });
+          cachePurchasedProduct(productId, '');
+        })
+        .catch((miniAppError) => {
+          console.log('Consume Product Error: ', miniAppError);
+          dispatch({
+            type: 'CONSUME_PRODUCT_FAILURE',
+            miniAppError,
+          });
         });
-        cachePurchasedProduct(productId, '');
-      })
-      .catch((miniAppError) => {
-        console.log('Consume Product Error: ', miniAppError);
-        dispatch({
-          type: 'CONSUME_PRODUCT_FAILURE',
-          miniAppError,
-        });
-      });
     } else {
       dispatch({
-        type: 'CONSUME_PRODUCT_FAILURE'
+        type: 'CONSUME_PRODUCT_FAILURE',
       });
     }
-
   }
 
   function TransactionDetails() {
