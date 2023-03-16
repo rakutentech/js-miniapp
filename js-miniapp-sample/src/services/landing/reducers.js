@@ -38,7 +38,7 @@ const SecureStorageStatusReducer = (
       return {
         isReady: false,
         error: action.error,
-        ...state
+        ...state,
       };
     default:
       return {

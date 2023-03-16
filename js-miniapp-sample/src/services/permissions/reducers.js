@@ -1,18 +1,21 @@
 import { CustomPermissionName, CustomPermissionStatus } from 'js-miniapp-sdk';
 
 import type { PermissionsAction } from './actions';
-import { REQUEST_PERMISSIONS_SUCCESS, REQUEST_PERMISSIONS_FAILURE } from './types';
+import {
+  REQUEST_PERMISSIONS_SUCCESS,
+  REQUEST_PERMISSIONS_FAILURE,
+} from './types';
 
 type PermissionsState = {
   type: REQUEST_PERMISSIONS_FAILURE,
   permissions: CustomPermissionResult[],
-  error: MiniAppError
+  error: MiniAppError,
 };
 
 const defaultState: PermissionsState = {
   type: undefined,
   permissions: [],
-  error: null
+  error: null,
 };
 
 const PermissionsReducer = (

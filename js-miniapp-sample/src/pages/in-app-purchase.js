@@ -2,27 +2,22 @@ import React, { useReducer } from 'react';
 
 import {
   Button,
-  CardHeader,
   CircularProgress,
   FormGroup,
   Typography,
   CardContent,
   CardActions,
-  TextField,
-  Paper,
+  ListItem,
+  ListItemText,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
-import { MiniAppError, PurchasedProductResponse } from 'js-miniapp-sdk';
-import { connect } from 'react-redux';
+import MiniApp, { MiniAppError } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
-import {
-  getAllProductsAction,
-  purchaseProductAction,
-  consumeProductAction,
-} from '../services/purchase/action';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -102,6 +97,21 @@ const useStyles = makeStyles((theme) => ({
   red: {
     color: red[500],
   },
+  displayInlineBlock: {
+    display: 'inline-block',
+  },
+  purchaseButtonContainer: {
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  purchaseButton: {
+    margin: '15px',
+  },
+  listItemStyle: {
+    overflowWrap: 'anywhere',
+  },
 }));
 
 export const initialState = {
@@ -118,13 +128,18 @@ type State = {
 type Action = {
   type: string,
   miniAppError: MiniAppError,
+  productInfo: ProductInfo[],
+  purchasedProductInfo: PurchasedProductInfo,
+  consumeProductResponse: MiniAppResponseInfo,
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
+  console.log('dataFetchReducer: ', state);
+  console.log('dataFetchReducer ACTION: ', action);
+  console.log('dataFetchReducer Items: ', action.productInfo);
   switch (action.type) {
     case 'PURCHASE_FETCH_INIT':
       return {
-        ...state,
         isLoading: true,
         isError: false,
         error: null,
@@ -135,16 +150,60 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         error: null,
+        productInfo: action.productInfo,
       };
     case 'PURCHASE_FETCH_FAILURE':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+        productInfo: null,
+      };
+    case 'PURCHASE_PRODUCT_INIT':
+      return {
+        isLoading: true,
+        isError: false,
+        error: null,
+      };
+    case 'PURCHASE_PRODUCT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+        purchasedProductInfo: action.purchasedProduct,
+      };
+    case 'PURCHASE_PRODUCT_FAILURE':
       return {
         ...initialState,
         isLoading: false,
         isError: true,
+        purchasedProductInfo: null,
         error:
           (typeof action.miniAppError == 'string'
             ? action.miniAppError
             : action.miniAppError.message) || '',
+      };
+
+    case 'CONSUME_PRODUCT_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        error: null,
+        consumeProductResponse: action.consumeProductResponse,
+      };
+    case 'CONSUME_PRODUCT_FAILURE':
+      return {
+        ...initialState,
+        isLoading: false,
+        isError: true,
+        consumeProductResponse: null,
+        error:
+          (typeof action.miniAppError == 'string'
+            ? action.miniAppError
+            : action.miniAppError.message) || 'Product is not purchased yet',
       };
 
     default:
@@ -152,129 +211,254 @@ export const dataFetchReducer = (state: State, action: Action) => {
   }
 };
 
-type PurchaseProductProps = {
-  purchasedProduct: PurchasedProductResponse,
-  purchaseProductWith: (itemId: string) => Promise<PurchasedProductResponse>,
-  consumeProductWith: (itemId: string) => Promise<MiniAppResponseInfo>,
-  purchaseError: MiniAppError,
-};
-
-function PurchaseComponent(props: PurchaseProductProps) {
+function PurchaseProductComponent() {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
+  const [productFetchState, productFetchDispatch] = useReducer(
+    dataFetchReducer,
+    initialState
+  );
+  const [snackBarOpen, setSnackBarOpen] = React.useState(false);
+
   const classes = useStyles();
-
-  let inputValue = '';
-
-  const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    inputValue = e.currentTarget.value;
-  };
 
   const buttonClassname = clsx({
     [classes.buttonFailure]: state.isError,
     [classes.buttonSuccess]: !state.isError,
   });
 
-  function handlePurchaseClick(e) {
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    setSnackBarOpen(false);
+  };
+
+  function handleFetchClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
-      BuyProduct();
+      productFetchDispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
+      getAllProducts();
     }
   }
 
-  function BuyProduct() {
-    props
-      .purchaseProductWith(inputValue)
-      .then(() =>
-        dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null })
-      )
+  function getAllProducts() {
+    MiniApp.purchaseService
+      .getAllProducts()
+      .then((products) => {
+        productFetchDispatch({
+          type: 'PURCHASE_FETCH_SUCCESS',
+          miniAppError: null,
+          productInfo: products,
+        });
+      })
       .catch((miniAppError) => {
-        console.log('Product Error: ', miniAppError);
-        dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
+        console.log('getAllProducts Error: ', miniAppError);
+        productFetchDispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
       });
+  }
+
+  function handlePurchaseClick(e) {
+    if (!state.isLoading) {
+      dispatch({
+        type: 'PURCHASE_PRODUCT_INIT',
+        miniAppError: null,
+      });
+      BuyProduct(e.currentTarget.value);
+    }
+  }
+
+  function BuyProduct(productId: string) {
+    MiniApp.purchaseService
+      .purchaseProductWith(productId)
+      .then((purchasedProduct) => {
+        console.log('SUCCESS - BuyProduct', purchasedProduct);
+        dispatch({
+          type: 'PURCHASE_PRODUCT_SUCCESS',
+          miniAppError: null,
+          purchasedProduct: purchasedProduct,
+        });
+        cachePurchasedProduct(
+          purchasedProduct.productInfo.id,
+          purchasedProduct
+        );
+      })
+      .catch((miniAppError) => {
+        console.log('Buy Product Error: ', miniAppError);
+        dispatch({
+          type: 'PURCHASE_PRODUCT_FAILURE',
+          miniAppError,
+        });
+      });
+  }
+
+  function cachePurchasedProduct(key, value) {
+    window.localStorage.setItem(key, JSON.stringify(value));
   }
 
   function handleConsumeClick(e) {
     if (!state.isLoading) {
-      dispatch({ type: 'PURCHASE_FETCH_INIT', miniAppError: null });
-      ConsumeProduct();
+      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
+      ConsumeProduct(
+        e.currentTarget.value,
+        getTransactionId(e.currentTarget.value)
+      );
     }
   }
 
-  function ConsumeProduct() {
-    props
-      .consumePurchaseWith(inputValue)
-      .then(() =>
-        dispatch({ type: 'PURCHASE_FETCH_SUCCESS', miniAppError: null })
-      )
-      .catch((miniAppError) => {
-        console.log('Product Error: ', miniAppError);
-        dispatch({ type: 'PURCHASE_FETCH_FAILURE', miniAppError });
-      });
+  function getTransactionId(productId: string) {
+    const purchasedProduct = window.localStorage.getItem(productId);
+    var productInfo = JSON.parse(purchasedProduct);
+    return productInfo.transactionId;
   }
 
-  function PurchaseProduct() {
-    return (
-      <Paper className={classes.paper}>
-        <CardHeader subheader="Purchase Product" />
-        <TextField
-          variant="outlined"
-          className={classes.formInput}
-          id="input-name"
-          error={state.isError}
-          label={'Item ID'}
-          onChange={handleInput}
-        />
-      </Paper>
-    );
+  function ConsumeProduct(productId: string, transactionId: string) {
+    if (transactionId !== null || transactionId !== undefined) {
+      MiniApp.purchaseService
+        .consumePurchaseWith(productId, transactionId)
+        .then((response) => {
+          console.log('SUCCESS - ConsumeProduct', response);
+          setSnackBarOpen(true);
+          dispatch({
+            type: 'CONSUME_PRODUCT_SUCCESS',
+            miniAppError: null,
+            consumeProductResponse: response,
+          });
+          cachePurchasedProduct(productId, '');
+        })
+        .catch((miniAppError) => {
+          console.log('Consume Product Error: ', miniAppError);
+          dispatch({
+            type: 'CONSUME_PRODUCT_FAILURE',
+            miniAppError,
+          });
+        });
+    } else {
+      dispatch({
+        type: 'CONSUME_PRODUCT_FAILURE',
+      });
+    }
   }
 
   function TransactionDetails() {
-    const dateInfo = new Date(props.purchasedProduct.product.transactionDate);
+    const dateInfo = new Date(state.purchasedProductInfo.transactionDate);
     return (
       <React.Fragment>
-        <Typography variant="h6">
-          Transaction - {props.purchasedProduct.status}
-        </Typography>
         <Typography
           variant="body1"
           className={classes.success}
           align="left"
-          style={{ paddingLeft: '10px' }}
+          style={{ overflowWrap: 'break-word' }}
         >
+          Transaction ID: {state.purchasedProductInfo.transactionId}
+          <br />
           Transaction Date: {dateInfo.toLocaleDateString()}
           <br />
           Transaction Time: {dateInfo.toLocaleTimeString()}
           <br />
-          Transaction ID: {props.purchasedProduct.product.transactionId}
         </Typography>
       </React.Fragment>
     );
   }
 
-  function ShowPurchasedProductDetails() {
+  function ShowConsumedAlert() {
     return (
       <React.Fragment>
-        <CardHeader />
-        {!state.isLoading && !state.isError && props.purchasedProduct && (
-          <Paper className={classes.paper}>
-            {TransactionDetails()}
-            <br />
-            <Typography variant="h6">Product Info</Typography>
-            <Typography
-              variant="body1"
-              className={classes.success}
-              align="left"
-              style={{ paddingLeft: '10px' }}
+        <Snackbar
+          open={snackBarOpen}
+          autoHideDuration={2000}
+          onClose={handleSnackBarClose}
+        >
+          <Alert severity="success" onClose={handleSnackBarClose}>
+            <AlertTitle>{state.consumeProductResponse.title}</AlertTitle>
+            {state.consumeProductResponse.description}
+          </Alert>
+        </Snackbar>
+      </React.Fragment>
+    );
+  }
+
+  function ShowProductDetails() {
+    console.log('ShowProductDetails: ', productFetchState);
+    return (
+      <React.Fragment>
+        {productFetchState.productInfo &&
+          productFetchState.productInfo.map((productInfo) => (
+            <ListItem
+              divider
+              className={classes.displayInlineBlock}
+              key={productInfo.id}
             >
-              ID: {props.purchasedProduct.product.productInfo.id} <br />
-              Title: {props.purchasedProduct.product.productInfo.title} <br />
-              Description:{' '}
-              {props.purchasedProduct.product.productInfo.description} <br />
-              <br />
-            </Typography>
-          </Paper>
-        )}
+              <ListItemText
+                className={classes.listItemStyle}
+                primary={'Title: ' + productInfo.title}
+                secondary={
+                  <React.Fragment>
+                    <Typography>
+                      {productInfo.description &&
+                        productInfo.description !== '' && (
+                          <span>
+                            {'Description: ' + productInfo.description}
+                          </span>
+                        )}
+                    </Typography>
+                    <Typography>
+                      {productInfo.id && productInfo.id !== '' && (
+                        <span>{'Product ID: ' + productInfo.id}</span>
+                      )}
+                    </Typography>
+                    <Typography>
+                      {productInfo.id && productInfo.id !== '' && (
+                        <span>
+                          {'Price : ' +
+                            productInfo.productPriceInfo.price +
+                            ' ' +
+                            productInfo.productPriceInfo.currencyCode}
+                        </span>
+                      )}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+              <div className={classes.purchaseButtonContainer}>
+                <div>
+                  <Button
+                    onClick={handlePurchaseClick}
+                    variant="contained"
+                    color="primary"
+                    classes={{ root: classes.button }}
+                    className={buttonClassname}
+                    disabled={state.isLoading}
+                    data-testid="buyProduct"
+                    value={productInfo.id}
+                  >
+                    Buy
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    onClick={handleConsumeClick}
+                    variant="contained"
+                    color="primary"
+                    classes={{ root: classes.button }}
+                    className={buttonClassname}
+                    disabled={state.isLoading}
+                    data-testid="consumeProduct"
+                    value={productInfo.id}
+                  >
+                    Consume
+                  </Button>
+                  {state.isLoading && (
+                    <CircularProgress
+                      size={20}
+                      className={classes.buttonProgress}
+                    />
+                  )}
+                </div>
+              </div>
+              {state.purchasedProductInfo &&
+                state.purchasedProductInfo.productInfo.id ===
+                  productInfo.id && <div>{TransactionDetails()}</div>}
+            </ListItem>
+          ))}
       </React.Fragment>
     );
   }
@@ -285,7 +469,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
         <div>
           <div className={classes.wrapper}>
             <Button
-              onClick={handlePurchaseClick}
+              onClick={handleFetchClick}
               variant="contained"
               color="primary"
               classes={{ root: classes.button }}
@@ -293,24 +477,7 @@ function PurchaseComponent(props: PurchaseProductProps) {
               disabled={state.isLoading}
               data-testid="buyProduct"
             >
-              Purchase
-            </Button>
-
-            {state.isLoading && (
-              <CircularProgress size={20} className={classes.buttonProgress} />
-            )}
-          </div>
-          <div className={classes.wrapper}>
-            <Button
-              onClick={handleConsumeClick}
-              variant="contained"
-              color="primary"
-              classes={{ root: classes.button }}
-              className={buttonClassname}
-              disabled={state.isLoading}
-              data-testid="buyProduct"
-            >
-              Consume
+              Fetch Products
             </Button>
 
             {state.isLoading && (
@@ -323,47 +490,25 @@ function PurchaseComponent(props: PurchaseProductProps) {
             {state.error}
           </Typography>
         )}
+        {!state.isLoading && state.consumeProductResponse && (
+          <div>{ShowConsumedAlert()}</div>
+        )}
       </FormGroup>
     );
   }
 
   return (
     <div className={classes.scrollable}>
+      <CardActions classes={{ root: classes.rootCardActions }}>
+        {PurchaseProductCardActionsForm()}
+      </CardActions>
       <GreyCard className={classes.card}>
-        <CardContent>
-          <div
-            className={classes.dataFormsWrapper}
-            data-testid="dataFormsWrapper"
-          >
-            {PurchaseProduct()}
-            {ShowPurchasedProductDetails()}
-          </div>
-        </CardContent>
-        <CardActions classes={{ root: classes.rootCardActions }}>
-          {PurchaseProductCardActionsForm()}
-        </CardActions>
+        {!productFetchState.isLoading && productFetchState.productInfo && (
+          <CardContent>{ShowProductDetails()}</CardContent>
+        )}
       </GreyCard>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  console.log('MapStateToProps: ', state);
-  return {
-    purchasedProduct: state.purchaseProduct,
-    purchaseError: state.error,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAllProducts: () => dispatch(getAllProductsAction()),
-    purchaseProductWith: (itemId: string) =>
-      dispatch(purchaseProductAction(itemId)),
-    consumeProductWith: (itemId: string, transactionId: string) =>
-      dispatch(consumeProductAction(itemId)),
-  };
-};
-
-export { PurchaseComponent };
-export default connect(mapStateToProps, mapDispatchToProps)(PurchaseComponent);
+export { PurchaseProductComponent };

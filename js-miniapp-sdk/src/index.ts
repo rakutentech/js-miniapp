@@ -33,9 +33,14 @@ import {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
-  Product,
+  ProductInfo,
   ProductPrice,
-  PurchasedProduct,
+  PurchasedProductInfo,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -81,7 +86,12 @@ export {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
-  Product,
+  ProductInfo,
   ProductPrice,
-  PurchasedProduct,
+  PurchasedProductInfo,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 };

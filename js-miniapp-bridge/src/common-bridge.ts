@@ -27,7 +27,7 @@ import { ShareInfoType } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
-import { Product, PurchasedProduct } from './types/in-app-purchase';
+import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -691,12 +691,12 @@ export class MiniAppBridge {
    * @see {getAllProducts}
    */
   getAllProducts() {
-    return new Promise<Product[]>((resolve, reject) => {
+    return new Promise<ProductInfo[]>((resolve, reject) => {
       return this.executor.exec(
         'getAllProducts',
         null,
         productsList => {
-          resolve(JSON.parse(productsList) as Product[]);
+          resolve(JSON.parse(productsList) as ProductInfo[]);
         },
         error => reject(parseMiniAppError(error))
       );
@@ -709,12 +709,12 @@ export class MiniAppBridge {
    * @returns Purchased product details and the transaction details of the purchase.
    */
   purchaseProductWith(id: string) {
-    return new Promise<PurchasedProduct>((resolve, reject) => {
+    return new Promise<PurchasedProductInfo>((resolve, reject) => {
       return this.executor.exec(
         'purchaseProductWith',
-        { product_id: id },
+        { productId: id },
         purchasedProduct => {
-          resolve(JSON.parse(purchasedProduct) as PurchasedProduct);
+          resolve(JSON.parse(purchasedProduct) as PurchasedProductInfo);
         },
         error => reject(parseMiniAppError(error))
       );
@@ -730,7 +730,7 @@ export class MiniAppBridge {
     return new Promise<MiniAppResponseInfo>((resolve, reject) => {
       return this.executor.exec(
         'consumeProductWith',
-        { product_id: id, transaction_id: transactionId },
+        { productId: id, productTransactionId: transactionId },
         consumedInfo => {
           resolve(JSON.parse(consumedInfo) as MiniAppResponseInfo);
         },

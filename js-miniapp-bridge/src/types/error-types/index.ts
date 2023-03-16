@@ -18,6 +18,14 @@ import {
   SecureStorageIOError,
   parseStorageError,
 } from './secure-storage-errors';
+import {
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
+  parseInAppPurchaseError,
+} from './in-app-purchase-errors';
 import { MiniAppError, MiniAppJson } from './mini-app-error';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
@@ -28,6 +36,7 @@ function parseMiniAppError(jsonString: string): MiniAppError {
       parseAuthError(json) ||
       parseDownloadError(json) ||
       parseStorageError(json) ||
+      parseInAppPurchaseError(json) ||
       new MiniAppError(json)
     );
   } catch (e) {
@@ -53,4 +62,9 @@ export {
   SecureStorageBusyError,
   SecureStorageUnavailableError,
   SecureStorageIOError,
+  PurchaseFailedError,
+  ConsumeFailedError,
+  ProductNotFoundError,
+  ProductPurchasedAlreadyError,
+  UserCancelledPurchaseError,
 };
