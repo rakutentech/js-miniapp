@@ -27,8 +27,11 @@ import { Purchases } from './modules/in-app-purchase';
  */
 interface MiniAppFeatures {
   /**
+   * @deprecated
+   * Use `getMessagingUniqueId` or `getMauid` instead
    * Request the mini app's unique id from the host app.
    * @returns The Promise of provided id of mini app from injected side.
+   * 
    */
   getUniqueId(): Promise<string>;
 
