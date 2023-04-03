@@ -395,7 +395,9 @@ function PurchaseProductComponent() {
                     <Typography>
                       {productInfo.description &&
                         productInfo.description !== '' && (
-                          <span>{'Description: ' + productInfo.description}</span>
+                          <span>
+                            {'Description: ' + productInfo.description}
+                          </span>
                         )}
                     </Typography>
                     <Typography>
@@ -453,9 +455,8 @@ function PurchaseProductComponent() {
                 </div>
               </div>
               {state.purchasedProductInfo &&
-                state.purchasedProductInfo.productInfo.id === productInfo.id && (
-                  <div>{TransactionDetails()}</div>
-                )}
+                state.purchasedProductInfo.productInfo.id ===
+                  productInfo.id && <div>{TransactionDetails()}</div>}
             </ListItem>
           ))}
       </React.Fragment>
