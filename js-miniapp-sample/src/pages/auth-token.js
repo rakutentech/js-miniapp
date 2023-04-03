@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '40px',
-    overflowY: 'scroll'
+    overflowY: 'scroll',
   },
   wrapper: {
     position: 'relative',
