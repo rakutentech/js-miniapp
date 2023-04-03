@@ -511,6 +511,5 @@ return (
     </GreyCard>
   </div>
 );
-}
 
 export { PurchaseProductComponent };
