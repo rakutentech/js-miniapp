@@ -299,8 +299,7 @@ function PurchaseProductComponent() {
       dispatch({
         type: 'CONSUME_PRODUCT_FAILURE',
       });
-    }
-    else {
+    } else {
       ConsumeProduct(
         e.currentTarget.value,
         getTransactionId(e.currentTarget.value)
@@ -397,9 +396,7 @@ function ShowProductDetails() {
                   <Typography>
                     {productInfo.description &&
                       productInfo.description !== '' && (
-                        <span>
-                          {'Description: ' + productInfo.description}
-                        </span>
+                        <span>{'Description: ' + productInfo.description}</span>
                       )}
                   </Typography>
                   <Typography>
@@ -457,8 +454,9 @@ function ShowProductDetails() {
               </div>
             </div>
             {state.purchasedProductInfo &&
-              state.purchasedProductInfo.productInfo.id ===
-              productInfo.id && <div>{TransactionDetails()}</div>}
+              state.purchasedProductInfo.productInfo.id === productInfo.id && (
+                <div>{TransactionDetails()}</div>
+              )}
           </ListItem>
         ))}
     </React.Fragment>
