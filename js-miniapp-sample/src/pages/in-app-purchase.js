@@ -295,12 +295,19 @@ function PurchaseProductComponent() {
   }
 
   function handleConsumeClick(e) {
-    if (!state.isLoading) {
-      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
+    if (transactionId !== null || transactionId !== undefined) {
+      dispatch({
+        type: 'CONSUME_PRODUCT_FAILURE',
+      });
+    }
+    else {
       ConsumeProduct(
         e.currentTarget.value,
         getTransactionId(e.currentTarget.value)
       );
+    }
+    if (!state.isLoading) {
+      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
     }
   }
 
@@ -311,204 +318,199 @@ function PurchaseProductComponent() {
   }
 
   function ConsumeProduct(productId: string, transactionId: string) {
-    if (transactionId !== null || transactionId !== undefined) {
-      MiniApp.purchaseService
-        .consumePurchaseWith(productId, transactionId)
-        .then((response) => {
-          console.log('SUCCESS - ConsumeProduct', response);
-          setSnackBarOpen(true);
-          dispatch({
-            type: 'CONSUME_PRODUCT_SUCCESS',
-            miniAppError: null,
-            consumeProductResponse: response,
-          });
-          cachePurchasedProduct(productId, '');
-        })
-        .catch((miniAppError) => {
-          console.log('Consume Product Error: ', miniAppError);
-          dispatch({
-            type: 'CONSUME_PRODUCT_FAILURE',
-            miniAppError,
-          });
+    MiniApp.purchaseService
+      .consumePurchaseWith(productId, transactionId)
+      .then((response) => {
+        console.log('SUCCESS - ConsumeProduct', response);
+        setSnackBarOpen(true);
+        dispatch({
+          type: 'CONSUME_PRODUCT_SUCCESS',
+          miniAppError: null,
+          consumeProductResponse: response,
         });
-    } else {
-      dispatch({
-        type: 'CONSUME_PRODUCT_FAILURE',
+        cachePurchasedProduct(productId, '');
+      })
+      .catch((miniAppError) => {
+        console.log('Consume Product Error: ', miniAppError);
+        dispatch({
+          type: 'CONSUME_PRODUCT_FAILURE',
+          miniAppError,
+        });
       });
-    }
   }
+}
 
-  function TransactionDetails() {
-    const dateInfo = new Date(state.purchasedProductInfo.transactionDate);
-    return (
-      <React.Fragment>
-        <Typography
-          variant="body1"
-          className={classes.success}
-          align="left"
-          style={{ overflowWrap: 'break-word' }}
-        >
-          Transaction ID: {state.purchasedProductInfo.transactionId}
-          <br />
-          Transaction Date: {dateInfo.toLocaleDateString()}
-          <br />
-          Transaction Time: {dateInfo.toLocaleTimeString()}
-          <br />
-        </Typography>
-      </React.Fragment>
-    );
-  }
+function TransactionDetails() {
+  const dateInfo = new Date(state.purchasedProductInfo.transactionDate);
+  return (
+    <React.Fragment>
+      <Typography
+        variant="body1"
+        className={classes.success}
+        align="left"
+        style={{ overflowWrap: 'break-word' }}
+      >
+        Transaction ID: {state.purchasedProductInfo.transactionId}
+        <br />
+        Transaction Date: {dateInfo.toLocaleDateString()}
+        <br />
+        Transaction Time: {dateInfo.toLocaleTimeString()}
+        <br />
+      </Typography>
+    </React.Fragment>
+  );
+}
 
-  function ShowConsumedAlert() {
-    return (
-      <React.Fragment>
-        <Snackbar
-          open={snackBarOpen}
-          autoHideDuration={2000}
-          onClose={handleSnackBarClose}
-        >
-          <Alert severity="success" onClose={handleSnackBarClose}>
-            <AlertTitle>{state.consumeProductResponse.title}</AlertTitle>
-            {state.consumeProductResponse.description}
-          </Alert>
-        </Snackbar>
-      </React.Fragment>
-    );
-  }
+function ShowConsumedAlert() {
+  return (
+    <React.Fragment>
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={2000}
+        onClose={handleSnackBarClose}
+      >
+        <Alert severity="success" onClose={handleSnackBarClose}>
+          <AlertTitle>{state.consumeProductResponse.title}</AlertTitle>
+          {state.consumeProductResponse.description}
+        </Alert>
+      </Snackbar>
+    </React.Fragment>
+  );
+}
 
-  function ShowProductDetails() {
-    console.log('ShowProductDetails: ', productFetchState);
-    return (
-      <React.Fragment>
-        {productFetchState.productInfo &&
-          productFetchState.productInfo.map((productInfo) => (
-            <ListItem
-              divider
-              className={classes.displayInlineBlock}
-              key={productInfo.id}
-            >
-              <ListItemText
-                className={classes.listItemStyle}
-                primary={'Title: ' + productInfo.title}
-                secondary={
-                  <React.Fragment>
-                    <Typography>
-                      {productInfo.description &&
-                        productInfo.description !== '' && (
-                          <span>
-                            {'Description: ' + productInfo.description}
-                          </span>
-                        )}
-                    </Typography>
-                    <Typography>
-                      {productInfo.id && productInfo.id !== '' && (
-                        <span>{'Product ID: ' + productInfo.id}</span>
-                      )}
-                    </Typography>
-                    <Typography>
-                      {productInfo.id && productInfo.id !== '' && (
+function ShowProductDetails() {
+  console.log('ShowProductDetails: ', productFetchState);
+  return (
+    <React.Fragment>
+      {productFetchState.productInfo &&
+        productFetchState.productInfo.map((productInfo) => (
+          <ListItem
+            divider
+            className={classes.displayInlineBlock}
+            key={productInfo.id}
+          >
+            <ListItemText
+              className={classes.listItemStyle}
+              primary={'Title: ' + productInfo.title}
+              secondary={
+                <React.Fragment>
+                  <Typography>
+                    {productInfo.description &&
+                      productInfo.description !== '' && (
                         <span>
-                          {'Price : ' +
-                            productInfo.productPriceInfo.price +
-                            ' ' +
-                            productInfo.productPriceInfo.currencyCode}
+                          {'Description: ' + productInfo.description}
                         </span>
                       )}
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-              <div className={classes.purchaseButtonContainer}>
-                <div>
-                  <Button
-                    onClick={handlePurchaseClick}
-                    variant="contained"
-                    color="primary"
-                    classes={{ root: classes.button }}
-                    className={buttonClassname}
-                    disabled={state.isLoading}
-                    data-testid="buyProduct"
-                    value={productInfo.id}
-                  >
-                    Buy
-                  </Button>
-                </div>
-                <div>
-                  <Button
-                    onClick={handleConsumeClick}
-                    variant="contained"
-                    color="primary"
-                    classes={{ root: classes.button }}
-                    className={buttonClassname}
-                    disabled={state.isLoading}
-                    data-testid="consumeProduct"
-                    value={productInfo.id}
-                  >
-                    Consume
-                  </Button>
-                  {state.isLoading && (
-                    <CircularProgress
-                      size={20}
-                      className={classes.buttonProgress}
-                    />
-                  )}
-                </div>
+                  </Typography>
+                  <Typography>
+                    {productInfo.id && productInfo.id !== '' && (
+                      <span>{'Product ID: ' + productInfo.id}</span>
+                    )}
+                  </Typography>
+                  <Typography>
+                    {productInfo.id && productInfo.id !== '' && (
+                      <span>
+                        {'Price : ' +
+                          productInfo.productPriceInfo.price +
+                          ' ' +
+                          productInfo.productPriceInfo.currencyCode}
+                      </span>
+                    )}
+                  </Typography>
+                </React.Fragment>
+              }
+            />
+            <div className={classes.purchaseButtonContainer}>
+              <div>
+                <Button
+                  onClick={handlePurchaseClick}
+                  variant="contained"
+                  color="primary"
+                  classes={{ root: classes.button }}
+                  className={buttonClassname}
+                  disabled={state.isLoading}
+                  data-testid="buyProduct"
+                  value={productInfo.id}
+                >
+                  Buy
+                </Button>
               </div>
-              {state.purchasedProductInfo &&
-                state.purchasedProductInfo.productInfo.id ===
-                  productInfo.id && <div>{TransactionDetails()}</div>}
-            </ListItem>
-          ))}
-      </React.Fragment>
-    );
-  }
-
-  function PurchaseProductCardActionsForm() {
-    return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
-        <div>
-          <div className={classes.wrapper}>
-            <Button
-              onClick={handleFetchClick}
-              variant="contained"
-              color="primary"
-              classes={{ root: classes.button }}
-              className={buttonClassname}
-              disabled={state.isLoading}
-              data-testid="buyProduct"
-            >
-              Fetch Products
-            </Button>
-
-            {state.isLoading && (
-              <CircularProgress size={20} className={classes.buttonProgress} />
-            )}
-          </div>
-        </div>
-        {!state.isLoading && state.isError && (
-          <Typography variant="body1" className={classes.red}>
-            {state.error}
-          </Typography>
-        )}
-        {!state.isLoading && state.consumeProductResponse && (
-          <div>{ShowConsumedAlert()}</div>
-        )}
-      </FormGroup>
-    );
-  }
-
-  return (
-    <div className={classes.scrollable}>
-      <CardActions classes={{ root: classes.rootCardActions }}>
-        {PurchaseProductCardActionsForm()}
-      </CardActions>
-      <GreyCard className={classes.card}>
-        {!productFetchState.isLoading && productFetchState.productInfo && (
-          <CardContent>{ShowProductDetails()}</CardContent>
-        )}
-      </GreyCard>
-    </div>
+              <div>
+                <Button
+                  onClick={handleConsumeClick}
+                  variant="contained"
+                  color="primary"
+                  classes={{ root: classes.button }}
+                  className={buttonClassname}
+                  disabled={state.isLoading}
+                  data-testid="consumeProduct"
+                  value={productInfo.id}
+                >
+                  Consume
+                </Button>
+                {state.isLoading && (
+                  <CircularProgress
+                    size={20}
+                    className={classes.buttonProgress}
+                  />
+                )}
+              </div>
+            </div>
+            {state.purchasedProductInfo &&
+              state.purchasedProductInfo.productInfo.id ===
+              productInfo.id && <div>{TransactionDetails()}</div>}
+          </ListItem>
+        ))}
+    </React.Fragment>
   );
+}
+
+function PurchaseProductCardActionsForm() {
+  return (
+    <FormGroup column="true" className={classes.rootUserGroup}>
+      <div>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handleFetchClick}
+            variant="contained"
+            color="primary"
+            classes={{ root: classes.button }}
+            className={buttonClassname}
+            disabled={state.isLoading}
+            data-testid="buyProduct"
+          >
+            Fetch Products
+          </Button>
+
+          {state.isLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
+          )}
+        </div>
+      </div>
+      {!state.isLoading && state.isError && (
+        <Typography variant="body1" className={classes.red}>
+          {state.error}
+        </Typography>
+      )}
+      {!state.isLoading && state.consumeProductResponse && (
+        <div>{ShowConsumedAlert()}</div>
+      )}
+    </FormGroup>
+  );
+}
+
+return (
+  <div className={classes.scrollable}>
+    <CardActions classes={{ root: classes.rootCardActions }}>
+      {PurchaseProductCardActionsForm()}
+    </CardActions>
+    <GreyCard className={classes.card}>
+      {!productFetchState.isLoading && productFetchState.productInfo && (
+        <CardContent>{ShowProductDetails()}</CardContent>
+      )}
+    </GreyCard>
+  </div>
+);
 }
 
 export { PurchaseProductComponent };
