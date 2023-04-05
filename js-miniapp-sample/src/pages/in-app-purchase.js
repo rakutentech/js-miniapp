@@ -295,12 +295,18 @@ function PurchaseProductComponent() {
   }
 
   function handleConsumeClick(e) {
-    if (!state.isLoading) {
-      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
+    if (e.currentTarget.value !== null || e.currentTarget.value !== undefined) {
+      dispatch({
+        type: 'CONSUME_PRODUCT_FAILURE',
+      });
+    } else {
       ConsumeProduct(
         e.currentTarget.value,
         getTransactionId(e.currentTarget.value)
       );
+    }
+    if (!state.isLoading) {
+      dispatch({ type: 'PURCHASE_PRODUCT_INIT', miniAppError: null });
     }
   }
 
@@ -311,31 +317,25 @@ function PurchaseProductComponent() {
   }
 
   function ConsumeProduct(productId: string, transactionId: string) {
-    if (transactionId !== null || transactionId !== undefined) {
-      MiniApp.purchaseService
-        .consumePurchaseWith(productId, transactionId)
-        .then((response) => {
-          console.log('SUCCESS - ConsumeProduct', response);
-          setSnackBarOpen(true);
-          dispatch({
-            type: 'CONSUME_PRODUCT_SUCCESS',
-            miniAppError: null,
-            consumeProductResponse: response,
-          });
-          cachePurchasedProduct(productId, '');
-        })
-        .catch((miniAppError) => {
-          console.log('Consume Product Error: ', miniAppError);
-          dispatch({
-            type: 'CONSUME_PRODUCT_FAILURE',
-            miniAppError,
-          });
+    MiniApp.purchaseService
+      .consumePurchaseWith(productId, transactionId)
+      .then((response) => {
+        console.log('SUCCESS - ConsumeProduct', response);
+        setSnackBarOpen(true);
+        dispatch({
+          type: 'CONSUME_PRODUCT_SUCCESS',
+          miniAppError: null,
+          consumeProductResponse: response,
         });
-    } else {
-      dispatch({
-        type: 'CONSUME_PRODUCT_FAILURE',
+        cachePurchasedProduct(productId, '');
+      })
+      .catch((miniAppError) => {
+        console.log('Consume Product Error: ', miniAppError);
+        dispatch({
+          type: 'CONSUME_PRODUCT_FAILURE',
+          miniAppError,
+        });
       });
-    }
   }
 
   function TransactionDetails() {
@@ -510,5 +510,4 @@ function PurchaseProductComponent() {
     </div>
   );
 }
-
 export { PurchaseProductComponent };

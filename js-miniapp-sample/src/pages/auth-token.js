@@ -29,10 +29,11 @@ import { requestAccessToken } from '../services/user/actions';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    display: 'flex',
+    display: 'inline-block',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '40px',
+    overflowY: 'scroll',
   },
   wrapper: {
     position: 'relative',
