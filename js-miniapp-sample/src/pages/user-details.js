@@ -356,6 +356,7 @@ function UserDetails(props: UserDetailsProps) {
           'We would like to display your Points on your profile page.',
       },
     ];
+    props.points = undefined;
 
     props
       .requestPermissions(permissionsList)
@@ -572,7 +573,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-standard"
-            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
+            error={
+              state.isPointsError ||
+              (state.hasRequestedPointPermissions && !hasPointsPermission)
+            }
             label={'Points (Standard)'}
             value={
               state.hasRequestedPointPermissions && !hasPointsPermission
@@ -588,7 +592,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-term"
-            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
+            error={
+              state.isPointsError ||
+              (state.hasRequestedPointPermissions && !hasPointsPermission)
+            }
             label={'Points (Time-Limited)'}
             value={
               state.hasRequestedPointPermissions && !hasPointsPermission
@@ -603,7 +610,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-cash"
-            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
+            error={
+              state.isPointsError ||
+              (state.hasRequestedPointPermissions && !hasPointsPermission)
+            }
             label={'Points (Rakuten Cash)'}
             value={
               state.hasRequestedPointPermissions && !hasPointsPermission
@@ -644,7 +654,7 @@ function UserDetails(props: UserDetailsProps) {
     permissionList = permissionList || props.permissions || [];
     if (permissionList.indexOf !== undefined) {
       return permissionList.indexOf(permission) > -1;
-    } else if(permissionList.permissions.indexOf !== undefined) {
+    } else if (permissionList.permissions.indexOf !== undefined) {
       return permissionList.permissions.indexOf(permission) > -1;
     }
     return false;
