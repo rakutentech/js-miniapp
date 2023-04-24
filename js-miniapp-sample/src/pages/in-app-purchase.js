@@ -134,9 +134,6 @@ type Action = {
 };
 
 export const dataFetchReducer = (state: State, action: Action) => {
-  console.log('dataFetchReducer: ', state);
-  console.log('dataFetchReducer ACTION: ', action);
-  console.log('dataFetchReducer Items: ', action.productInfo);
   switch (action.type) {
     case 'PURCHASE_FETCH_INIT':
       return {
@@ -244,6 +241,7 @@ function PurchaseProductComponent() {
     MiniApp.purchaseService
       .getAllProducts()
       .then((products) => {
+        console.log('getAllProducts SUCCESS: ', products);
         productFetchDispatch({
           type: 'PURCHASE_FETCH_SUCCESS',
           miniAppError: null,
@@ -267,10 +265,12 @@ function PurchaseProductComponent() {
   }
 
   function BuyProduct(productId: string) {
+    console.log('BuyProduct: ', productId);
+
     MiniApp.purchaseService
       .purchaseProductWith(productId)
       .then((purchasedProduct) => {
-        console.log('SUCCESS - BuyProduct', purchasedProduct);
+        console.log('BuyProduct - SUCCESS: ', purchasedProduct);
         dispatch({
           type: 'PURCHASE_PRODUCT_SUCCESS',
           miniAppError: null,
@@ -282,7 +282,7 @@ function PurchaseProductComponent() {
         );
       })
       .catch((miniAppError) => {
-        console.log('Buy Product Error: ', miniAppError);
+        console.log('Buy Product ERROR: ', miniAppError);
         dispatch({
           type: 'PURCHASE_PRODUCT_FAILURE',
           miniAppError,
@@ -295,10 +295,11 @@ function PurchaseProductComponent() {
   }
 
   function handleConsumeClick(e) {
-    if (e.currentTarget.value !== null || e.currentTarget.value !== undefined) {
+    if (e.currentTarget.value === null || e.currentTarget.value === undefined) {
       dispatch({
         type: 'CONSUME_PRODUCT_FAILURE',
       });
+      console.log('CONSUME_PRODUCT_FAILURE: ', e.currentTarget.value);
     } else {
       ConsumeProduct(
         e.currentTarget.value,
@@ -317,6 +318,9 @@ function PurchaseProductComponent() {
   }
 
   function ConsumeProduct(productId: string, transactionId: string) {
+    console.log('ConsumeProduct PRODUCT: ', productId);
+    console.log('ConsumeProduct TRANSACTION: ', transactionId);
+
     MiniApp.purchaseService
       .consumePurchaseWith(productId, transactionId)
       .then((response) => {

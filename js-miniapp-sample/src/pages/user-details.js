@@ -479,10 +479,9 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardContactsActionsForm() {
-    const hasDeniedPermision =
+    const hasContactsPermision =
       state.hasRequestedContactsPermissions &&
       hasPermission(CustomPermissionName.CONTACT_LIST);
-
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <div className={classes.wrapper}>
@@ -504,7 +503,7 @@ function UserDetails(props: UserDetailsProps) {
         <Paper className={classes.paper}>
           <CardHeader subheader="Contact List" />
           <List className={classes.contactsList}>
-            {hasDeniedPermision && (
+            {state.hasRequestedContactsPermissions && !hasContactsPermision && (
               <ListItem>
                 <ListItemText
                   primary='"Contacts" permission not granted.'
@@ -512,7 +511,7 @@ function UserDetails(props: UserDetailsProps) {
                 />
               </ListItem>
             )}
-            {!hasDeniedPermision &&
+            {hasContactsPermision &&
               props.contactList &&
               props.contactList.map((contact) => (
                 <ListItem divider>
@@ -560,7 +559,7 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardPointActionsForm() {
-    const hasDeniedPermission =
+    const hasPointsPermission =
       state.hasRequestedPointPermissions &&
       hasPermission(CustomPermissionName.POINTS);
 
@@ -573,10 +572,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-standard"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
             label={'Points (Standard)'}
             value={
-              hasDeniedPermission
+              state.hasRequestedPointPermissions && !hasPointsPermission
                 ? '"Points" permission not granted.'
                 : props.points !== undefined &&
                   props.points.standard !== undefined
@@ -589,10 +588,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-term"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
             label={'Points (Time-Limited)'}
             value={
-              hasDeniedPermission
+              state.hasRequestedPointPermissions && !hasPointsPermission
                 ? '"Points" permission not granted.'
                 : props.points !== undefined && props.points.term !== undefined
                 ? props.points.term.toString()
@@ -604,10 +603,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-cash"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || (state.hasRequestedPointPermissions && !hasPointsPermission)}
             label={'Points (Rakuten Cash)'}
             value={
-              hasDeniedPermission
+              state.hasRequestedPointPermissions && !hasPointsPermission
                 ? '"Points" permission not granted.'
                 : props.points !== undefined && props.points.cash !== undefined
                 ? props.points.cash.toString()
@@ -645,6 +644,8 @@ function UserDetails(props: UserDetailsProps) {
     permissionList = permissionList || props.permissions || [];
     if (permissionList.indexOf !== undefined) {
       return permissionList.indexOf(permission) > -1;
+    } else if(permissionList.permissions.indexOf !== undefined) {
+      return permissionList.permissions.indexOf(permission) > -1;
     }
     return false;
   }
