@@ -13,6 +13,7 @@ import AdsIcon from '@material-ui/icons/LocalPlay';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MediaIcon from '@material-ui/icons/MusicVideo';
 import NotificationImportantOutlinedIcon from '@material-ui/icons/NotificationImportantOutlined';
+import PaletteIcon from '@material-ui/icons/Palette';
 import PersonIcon from '@material-ui/icons/Person';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
@@ -26,6 +27,7 @@ import Ads from './pages/ads';
 import { CloseConfirmAlert } from './pages/app-close-alert';
 import AuthToken from './pages/auth-token';
 import Camera from './pages/camera';
+import ColorThemeComponent from './pages/color-theme';
 import EventListener from './pages/event-listener';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
@@ -105,6 +107,10 @@ const inAppPurchaseNavLink = {
   navLink: '/in-app-purchase',
   label: 'Purchase',
 };
+const colorThemeNavLink = {
+  navLink: '/color-theme',
+  label: 'Color Theme',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -131,6 +137,7 @@ const navLinks = [
   closeAlertNavLink,
   universalBridgeNavLink,
   inAppPurchaseNavLink,
+  colorThemeNavLink,
 ];
 
 const homeItem = [
@@ -262,6 +269,12 @@ const appItems = [
     label: inAppPurchaseNavLink.label,
     navLink: inAppPurchaseNavLink.navLink,
     element: <PurchaseProductComponent />,
+  },
+  {
+    icon: <PaletteIcon />,
+    label: colorThemeNavLink.label,
+    navLink: colorThemeNavLink.navLink,
+    element: <ColorThemeComponent />,
   },
 ];
 
