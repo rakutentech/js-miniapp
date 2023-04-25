@@ -16,7 +16,6 @@ import useGeoLocation from '../hooks/useGeoLocation';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '40px',

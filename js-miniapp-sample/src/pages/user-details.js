@@ -356,6 +356,7 @@ function UserDetails(props: UserDetailsProps) {
           'We would like to display your Points on your profile page.',
       },
     ];
+    props.points = undefined;
 
     props
       .requestPermissions(permissionsList)
@@ -479,10 +480,9 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardContactsActionsForm() {
-    const hasDeniedPermision =
+    const hasContactsPermision =
       state.hasRequestedContactsPermissions &&
       hasPermission(CustomPermissionName.CONTACT_LIST);
-
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <div className={classes.wrapper}>
@@ -504,7 +504,7 @@ function UserDetails(props: UserDetailsProps) {
         <Paper className={classes.paper}>
           <CardHeader subheader="Contact List" />
           <List className={classes.contactsList}>
-            {hasDeniedPermision && (
+            {state.hasRequestedContactsPermissions && !hasContactsPermision && (
               <ListItem>
                 <ListItemText
                   primary='"Contacts" permission not granted.'
@@ -512,7 +512,7 @@ function UserDetails(props: UserDetailsProps) {
                 />
               </ListItem>
             )}
-            {!hasDeniedPermision &&
+            {hasContactsPermision &&
               props.contactList &&
               props.contactList.map((contact) => (
                 <ListItem divider>
@@ -560,10 +560,6 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardPointActionsForm() {
-    const hasDeniedPermission =
-      state.hasRequestedPointPermissions &&
-      hasPermission(CustomPermissionName.POINTS);
-
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <Paper className={classes.paper}>
@@ -573,10 +569,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-standard"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || isPointsPermissionDenied()}
             label={'Points (Standard)'}
             value={
-              hasDeniedPermission
+              isPointsPermissionDenied()
                 ? '"Points" permission not granted.'
                 : props.points !== undefined &&
                   props.points.standard !== undefined
@@ -589,10 +585,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-term"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || isPointsPermissionDenied()}
             label={'Points (Time-Limited)'}
             value={
-              hasDeniedPermission
+              isPointsPermissionDenied()
                 ? '"Points" permission not granted.'
                 : props.points !== undefined && props.points.term !== undefined
                 ? props.points.term.toString()
@@ -604,10 +600,10 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-points-cash"
-            error={state.isPointsError || hasDeniedPermission}
+            error={state.isPointsError || isPointsPermissionDenied()}
             label={'Points (Rakuten Cash)'}
             value={
-              hasDeniedPermission
+              isPointsPermissionDenied()
                 ? '"Points" permission not granted.'
                 : props.points !== undefined && props.points.cash !== undefined
                 ? props.points.cash.toString()
@@ -641,10 +637,19 @@ function UserDetails(props: UserDetailsProps) {
     );
   }
 
+  function isPointsPermissionDenied() {
+    return (
+      state.hasRequestedPointPermissions &&
+      !hasPermission(CustomPermissionName.POINTS)
+    );
+  }
+
   function hasPermission(permission, permissionList: ?(string[])) {
     permissionList = permissionList || props.permissions || [];
     if (permissionList.indexOf !== undefined) {
       return permissionList.indexOf(permission) > -1;
+    } else if (permissionList.permissions.indexOf !== undefined) {
+      return permissionList.permissions.indexOf(permission) > -1;
     }
     return false;
   }
