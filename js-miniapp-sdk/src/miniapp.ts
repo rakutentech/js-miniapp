@@ -282,9 +282,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge().downloadFile(filename, url, headers);
   }
 
-  /**
-   * @deprecated Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
-   */
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
   }

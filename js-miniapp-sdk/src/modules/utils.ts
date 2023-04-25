@@ -36,7 +36,7 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().setCloseAlert(alertInfo);
   }
   getHostAppColorTheme(): Promise<HostColorScheme> {
-    console.log("SDK: getHostAppColorTheme");
+    console.log('SDK: getHostAppColorTheme');
     return getBridge().getHostAppColorTheme();
   }
 }

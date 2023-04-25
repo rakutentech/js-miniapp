@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-import {
-  makeStyles,
-  CardContent,
-  CardActions,
-} from '@material-ui/core';
-
-import GreyCard from '../components/GreyCard';
-import MiniApp, { HostColorScheme } from 'js-miniapp-sdk';
+import { makeStyles, Chip } from '@material-ui/core';
+import MiniApp from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -56,10 +50,13 @@ function ColorThemeComponent() {
   });
 
   function getColorTheme() {
-    console.log("getColorTheme");
     MiniApp.miniappUtils
       .getHostAppColorTheme()
       .then((response) => {
+        document.getElementById('primaryChip').style.backgroundColor =
+          response.primaryColor;
+        document.getElementById('secondaryChip').style.backgroundColor =
+          response.secondaryColor;
         console.log('getColorTheme SUCCESS: ', response);
       })
       .catch((error) => {
@@ -68,9 +65,12 @@ function ColorThemeComponent() {
   }
 
   return (
-    <GreyCard className={classes.card}>
-
-    </GreyCard>
+    <div className={classes.card}>
+      <Chip label="primary" id="primaryChip" />
+      <br />
+      <br />
+      <Chip label="secondary" id="secondaryChip" />
+    </div>
   );
 }
 
