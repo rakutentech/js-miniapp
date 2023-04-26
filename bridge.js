@@ -524,6 +524,14 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    MiniAppBridge.prototype.getHostAppThemeColors = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getHostAppThemeColors', null, function (response) {
+                resolve(JSON.parse(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
