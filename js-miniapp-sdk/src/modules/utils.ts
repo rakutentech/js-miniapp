@@ -1,8 +1,5 @@
 import { getBridge } from '../sdkbridge';
-import {
-  CloseAlertInfo,
-  HostThemeColor,
-} from '../../../js-miniapp-bridge/src';
+import { CloseAlertInfo, HostThemeColor } from '../../../js-miniapp-bridge/src';
 
 /**
  * Mini App Utility methods
