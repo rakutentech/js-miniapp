@@ -51,7 +51,7 @@ function ColorThemeComponent() {
 
   function getColorTheme() {
     MiniApp.miniappUtils
-      .getHostAppColorTheme()
+      .getHostAppThemeColors()
       .then((response) => {
         document.getElementById('primaryChip').style.backgroundColor =
           response.primaryColor;

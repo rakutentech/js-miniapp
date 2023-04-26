@@ -28,7 +28,7 @@ import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
 import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
-import { HostColorScheme } from './types/host-color-scheme';
+import { HostThemeColor } from './types/host-color-scheme';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -740,14 +740,13 @@ export class MiniAppBridge {
     });
   }
 
-  getHostAppColorTheme() {
-    return new Promise<HostColorScheme>((resolve, reject) => {
-      console.log("BRIDGE: getHostAppColorTheme")
+  getHostAppThemeColors() {
+    return new Promise<HostThemeColor>((resolve, reject) => {
       return this.executor.exec(
-        'getHostAppColorTheme',
+        'getHostAppThemeColors',
         null,
         response => {
-          resolve(JSON.parse(response) as HostColorScheme);
+          resolve(JSON.parse(response) as HostThemeColor);
         },
         error => reject(parseMiniAppError(error))
       );

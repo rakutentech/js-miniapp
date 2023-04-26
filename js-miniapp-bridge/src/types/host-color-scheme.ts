@@ -1,5 +1,5 @@
 /** Host Color Scheme type. */
-export interface HostColorScheme {
+export interface HostThemeColor {
   primaryColor?: string;
   secondaryColor?: string;
 }
