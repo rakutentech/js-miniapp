@@ -41,6 +41,7 @@ import {
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
+  HostThemeColor,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -86,6 +87,7 @@ export {
   SecureStorageIOError,
   MiniAppSecureStorageEvents,
   CloseAlertInfo,
+  HostThemeColor,
   ProductInfo,
   ProductPrice,
   PurchasedProductInfo,

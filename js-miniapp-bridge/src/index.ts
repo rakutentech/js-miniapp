@@ -25,6 +25,8 @@ import { DownloadFileHeaders } from './types/download-file-headers';
 import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import { CloseAlertInfo } from './types/close-alert';
+import { HostThemeColor } from './types/host-color-scheme';
+
 import {
   AuthorizationFailureError,
   AudienceNotSupportedError,
@@ -98,4 +100,5 @@ export {
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
+  HostThemeColor,
 };

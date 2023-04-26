@@ -1,5 +1,5 @@
 import { getBridge } from '../sdkbridge';
-import { CloseAlertInfo } from '../../../js-miniapp-bridge/src';
+import { CloseAlertInfo, HostThemeColor } from '../../../js-miniapp-bridge/src';
 
 /**
  * Mini App Utility methods
@@ -17,6 +17,11 @@ export interface MiniAppUtilsProvider {
    * which should be set using `setCloseAlert` method in prior before calling this interface
    */
   closeMiniApp(withConfirmation: boolean): Promise<string>;
+
+  /**
+   * Interface that is used to get the Color theme used in the Host application
+   */
+  getHostAppThemeColors(): Promise<HostThemeColor>;
 }
 
 /** @internal */
@@ -26,5 +31,8 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   }
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
+  }
+  getHostAppThemeColors(): Promise<HostThemeColor> {
+    return getBridge().getHostAppThemeColors();
   }
 }
