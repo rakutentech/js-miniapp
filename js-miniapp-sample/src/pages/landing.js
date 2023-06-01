@@ -23,8 +23,6 @@ import {
   onSecureStorageReady,
 } from '../services/landing/actions';
 
-
-
 type LandingProps = {
   platform: ?string,
   platformVersion: ?string,
@@ -57,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     '& p': {
       lineHeight: 1.5,
     },
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   info: {
     fontSize: 16,
@@ -100,85 +98,107 @@ const Landing = (props: LandingProps) => {
   }
 
   return (
-
-      <CardContent className={classes.content}>
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-        >
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <DevicesOtherIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Platform" secondary={props.platform ?? props.infoError ?? 'Unknown'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <SystemUpdateIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Platform Version" secondary={props.platformVersion ?? '-'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <AppSettingsAltRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Host Version" secondary={props.hostVersion ?? '-'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <SettingsApplicationsRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="SDK Version" secondary={props.sdkVersion ?? '-'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <LanguageRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Host Locale:" secondary={props.hostLocale ?? '-'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <HelpRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText style={{ wordBreak: 'break-word' }} primary="Query Parameters" secondary={window.location.search || 'None'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <HttpRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="URL Fragment" secondary={window.location.hash || 'None'} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <StorageRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Secure Storage Status" secondary={props.secureStorageStatus} />
-          </ListItem>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <DarkModeRoundedIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Dark mode" secondary={String(darkMode)} />
-          </ListItem>
-        </List>
-      </CardContent>
+    <CardContent className={classes.content}>
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <DevicesOtherIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Platform"
+            secondary={props.platform ?? props.infoError ?? 'Unknown'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <SystemUpdateIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Platform Version"
+            secondary={props.platformVersion ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <AppSettingsAltRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Host Version"
+            secondary={props.hostVersion ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <SettingsApplicationsRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="SDK Version"
+            secondary={props.sdkVersion ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <LanguageRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Host Locale:"
+            secondary={props.hostLocale ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <HelpRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            style={{ wordBreak: 'break-word' }}
+            primary="Query Parameters"
+            secondary={window.location.search || 'None'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <HttpRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="URL Fragment"
+            secondary={window.location.hash || 'None'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <StorageRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Secure Storage Status"
+            secondary={props.secureStorageStatus}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <DarkModeRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Dark mode" secondary={String(darkMode)} />
+        </ListItem>
+      </List>
+    </CardContent>
   );
 };
 
