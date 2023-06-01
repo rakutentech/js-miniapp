@@ -10,5 +10,8 @@
         "sample": "yarn workspace js-miniapp-sample",
         "bridge": "yarn workspace js-miniapp-bridge",
         "postinstall": "yarn sdk compile"
+    },
+    "dependencies": {
+        "@mui/icons-material": "^5.11.16"
     }
 }

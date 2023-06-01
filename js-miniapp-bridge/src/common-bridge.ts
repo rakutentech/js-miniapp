@@ -752,6 +752,19 @@ export class MiniAppBridge {
       );
     });
   }
+
+  isDarkMode() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isDarkMode',
+        null,
+        response => {
+          resolve(Boolean(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**

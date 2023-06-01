@@ -1,13 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { CardContent, makeStyles } from '@material-ui/core';
+import AppSettingsAltRoundedIcon from '@mui/icons-material/AppSettingsAltRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
+import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import HttpRoundedIcon from '@mui/icons-material/HttpRounded';
+import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
+import SettingsApplicationsRoundedIcon from '@mui/icons-material/SettingsApplicationsRounded';
+import StorageRoundedIcon from '@mui/icons-material/StorageRounded';
+import SystemUpdateIcon from '@mui/icons-material/SystemUpdate';
+import Avatar from '@mui/material/Avatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import ListItemText from '@mui/material/ListItemText';
+import MiniApp from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
-import GreyCard from '../components/GreyCard';
 import {
   setHostEnvironmentInfo,
   onSecureStorageReady,
 } from '../services/landing/actions';
+
+
 
 type LandingProps = {
   platform: ?string,
@@ -29,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '40px',
   },
   content: {
-    height: '25%',
+    height: '100%',
     width: '100%',
-    justifyContent: 'center',
+    justifyContent: 'left',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
@@ -41,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     '& p': {
       lineHeight: 1.5,
     },
+    overflowY: 'auto'
   },
   info: {
     fontSize: 16,
@@ -59,41 +76,109 @@ const useStyles = makeStyles((theme) => ({
 
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
+  const [darkMode, setDarkMode] = useState(false);
+
   useEffect(() => {
     try {
       props.getHostInfo();
       checkSecureStorageStorageReady(props);
+      getDarkMode();
     } catch (e) {
       console.log(e);
     }
   }, [props]);
 
+  function getDarkMode() {
+    MiniApp.miniappUtils
+      .isDarkMode()
+      .then((response) => {
+        setDarkMode(response);
+      })
+      .catch((miniAppError) => {
+        console.log('getDarkMode - Error: ', miniAppError);
+      });
+  }
+
   return (
-    <GreyCard className={classes.card}>
+
       <CardContent className={classes.content}>
-        <p>Demo Mini App JS SDK</p>
-        <p className={classes.info}>
-          Platform: {props.platform ?? props.infoError ?? 'Unknown'}
-          <br />
-          Platform Version: {props.platformVersion ?? '-'}
-          <br />
-          Host Version: {props.hostVersion ?? '-'}
-          <br />
-          SDK Version: {props.sdkVersion ?? '-'}
-          <br />
-          Host Locale: {props.hostLocale ?? '-'}
-        </p>
-        <p className={classes.info}>
-          Query Parameters: {window.location.search || 'None'}
-        </p>
-        <p className={classes.info}>
-          URL Fragment: {window.location.hash || 'None'}
-        </p>
-        <p className={classes.info}>
-          Secure Storage Status: {props.secureStorageStatus}
-        </p>
+        <List
+          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+        >
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <DevicesOtherIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Platform" secondary={props.platform ?? props.infoError ?? 'Unknown'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <SystemUpdateIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Platform Version" secondary={props.platformVersion ?? '-'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <AppSettingsAltRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Host Version" secondary={props.hostVersion ?? '-'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <SettingsApplicationsRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="SDK Version" secondary={props.sdkVersion ?? '-'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <LanguageRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Host Locale:" secondary={props.hostLocale ?? '-'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <HelpRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText style={{ wordBreak: 'break-word' }} primary="Query Parameters" secondary={window.location.search || 'None'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <HttpRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="URL Fragment" secondary={window.location.hash || 'None'} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <StorageRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Secure Storage Status" secondary={props.secureStorageStatus} />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>
+                <DarkModeRoundedIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Dark mode" secondary={String(darkMode)} />
+          </ListItem>
+        </List>
       </CardContent>
-    </GreyCard>
   );
 };
 
