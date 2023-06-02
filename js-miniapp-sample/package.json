@@ -48,7 +48,8 @@
     "flow-typed": "^3.7.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.1",
+    "@mui/icons-material": "^5.11.16"
   },
   "husky": {
     "hooks": {
