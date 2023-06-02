@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.18.0 (2023-XX-XX)
+- **Feature:** Added new interface `isDarkMode()`. Interface to know if the Hostapp/Device is set to use the Dark mode
+
 ### 1.17.0 (2023-03-30)
 - **Feature:** Added In-app purchases related interfaces. `getAllProducts()` , `purchaseProductWith(id: string)`, `consumePurchaseWith(id: string, transactionId: string)`. These interfaces can be used to prepare the list of products and make a in-app purchase with product id from associated with Mini App platform.
 
