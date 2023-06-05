@@ -22,6 +22,11 @@ export interface MiniAppUtilsProvider {
    * Interface that is used to get the Color theme used in the Host application
    */
   getHostAppThemeColors(): Promise<HostThemeColor>;
+
+  /**
+   * Interface to check if the Device/Application is using Dark mode
+   */
+  isDarkMode(): Promise<boolean>;
 }
 
 /** @internal */
@@ -34,5 +39,8 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   }
   getHostAppThemeColors(): Promise<HostThemeColor> {
     return getBridge().getHostAppThemeColors();
+  }
+  isDarkMode(): Promise<boolean> {
+    return getBridge().isDarkMode();
   }
 }
