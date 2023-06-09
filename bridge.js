@@ -508,7 +508,12 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('isDarkMode', null, function (response) {
-                resolve(Boolean(response));
+                if (response.toLowerCase() === 'true') {
+                    resolve(Boolean(true));
+                }
+                else {
+                    resolve(Boolean(false));
+                }
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
