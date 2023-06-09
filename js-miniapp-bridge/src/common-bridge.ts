@@ -759,7 +759,11 @@ export class MiniAppBridge {
         'isDarkMode',
         null,
         response => {
-          resolve(Boolean(response));
+          if (response.toLowerCase() === "true") {
+            resolve(Boolean(true));
+          } else {
+            resolve(Boolean(false));
+          }
         },
         error => reject(parseMiniAppError(error))
       );
