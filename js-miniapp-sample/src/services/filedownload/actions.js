@@ -31,10 +31,12 @@ const requestDownloadFile = (
         return Promise.resolve(name);
       })
       .catch((error) => {
+        console.log("requestDownloadFile: CATCH BLOCK: ", error)
         dispatch({
           type: FILE_DOWNLOAD_FAILURE,
-          error,
+          error: error,
         });
+        throw error;
       });
   };
 };

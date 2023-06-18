@@ -105,7 +105,7 @@ const FileDownload = (props: FileDownloadProps) => {
           )
           .map((permission) => permission.name)
       )
-      .then((permissions) =>
+      .then((permissions) => 
         hasPermission(CustomPermissionName.FILE_DOWNLOAD, permissions)
           ? startFileDownload(url, fileName)
           : setIsPermissionGranted(false)
@@ -127,7 +127,16 @@ const FileDownload = (props: FileDownloadProps) => {
 
   function startFileDownload(url, fileName) {
     setIsPermissionGranted(true);
-    return props.downloadFile(fileName, url, { token: 'test' });
+    return props.downloadFile(fileName, url, {token: 'test'})
+    .then((downloadedFile) => {
+      console.log("FileDownloadRsponse THEN:", downloadedFile);
+      props.downloadedFile = downloadedFile;
+    })
+    .catch((error) => {
+      console.log("FileDownloadErrors CATCH:", error);
+      props.error = error;
+      props.isLoading = false;
+    });
   }
 
   function handleDownloadClick(url, fileName) {
@@ -174,7 +183,8 @@ const FileDownload = (props: FileDownloadProps) => {
         <div className={classes.info}>
           <p>
             {!isPermissionGranted && '"FILE_DOWNLOAD" permission not granted.'}
-            {props.error && props.error.message}
+            {props.error && "Dowload failed: " + props.error.message}
+            {props.downloadedFile && "File Downloaded:" + props.downloadedFile}
           </p>
         </div>
 
