@@ -184,7 +184,7 @@ const FileDownload = (props: FileDownloadProps) => {
         <div className={classes.info}>
           <p>
             {!isPermissionGranted && '"FILE_DOWNLOAD" permission not granted.'}
-            {props.error && 'Dowload failed: ' + props.error.message}
+            {props.error && 'Download failed: ' + props.error.message}
             {props.downloadedFile && 'File Downloaded:' + props.downloadedFile}
           </p>
         </div>
