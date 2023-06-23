@@ -512,7 +512,7 @@ describe('shareInfo', () => {
 describe('getUserName', () => {
   it('will return the close status string response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    const response = 'leo';
+    const response = 'miniapp';
     mockExecutor.exec.callsArgWith(2, response);
 
     return expect(bridge.getUserName()).to.eventually.deep.equal(response);
