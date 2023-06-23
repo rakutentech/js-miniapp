@@ -29,6 +29,7 @@ import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
 import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 import { HostThemeColor } from './types/host-color-scheme';
+import { MAAnalytics } from './types/analytics/analytics';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -769,6 +770,24 @@ export class MiniAppBridge {
       );
     });
   }
+
+  sendAnalytics(analyticsInfo: MAAnalytics) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'sendAnalytics',
+        analyticsInfo,
+        response => {
+          if (response.toLowerCase() === 'true') {
+            resolve(Boolean(true));
+          } else {
+            resolve(Boolean(false));
+          }
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+  
 }
 
 /**

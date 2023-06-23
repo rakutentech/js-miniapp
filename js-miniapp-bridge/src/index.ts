@@ -26,6 +26,7 @@ import { Platform } from './types/platform';
 import { MessageToContact } from './types/message-to-contact';
 import { CloseAlertInfo } from './types/close-alert';
 import { HostThemeColor } from './types/host-color-scheme';
+import { MAAnalytics } from './types/analytics/analytics';
 
 import {
   AuthorizationFailureError,
@@ -101,4 +102,5 @@ export {
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
   HostThemeColor,
+  MAAnalytics,
 };
