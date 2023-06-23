@@ -1,5 +1,9 @@
 import { getBridge } from '../sdkbridge';
-import { CloseAlertInfo, HostThemeColor, MAAnalytics } from '../../../js-miniapp-bridge/src';
+import {
+  CloseAlertInfo,
+  HostThemeColor,
+  MAAnalytics,
+} from '../../../js-miniapp-bridge/src';
 
 /**
  * Mini App Utility methods
@@ -33,7 +37,6 @@ export interface MiniAppUtilsProvider {
    * @param analyticsInfo Analytics info
    */
   sendAnalytics(analyticsInfo: MAAnalytics): Promise<boolean>;
-
 }
 
 /** @internal */
