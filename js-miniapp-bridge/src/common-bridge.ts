@@ -760,7 +760,7 @@ export class MiniAppBridge {
         'isDarkMode',
         null,
         response => {
-          resolve(BooleanValue(response))
+          resolve(BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );
@@ -773,13 +773,12 @@ export class MiniAppBridge {
         'sendAnalytics',
         analyticsInfo,
         response => {
-          resolve(BooleanValue(response))
+          resolve(BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );
     });
   }
-  
 }
 
 /**
@@ -825,7 +824,7 @@ function trimBannerText(message: string = null, maxLength = 128) {
 
 function BooleanValue(value) {
   if (value.toLowerCase() === 'true') {
-    return true
+    return true;
   }
-  return false
+  return false;
 }
