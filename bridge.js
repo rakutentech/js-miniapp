@@ -508,12 +508,15 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('isDarkMode', null, function (response) {
-                if (response.toLowerCase() === 'true') {
-                    resolve(Boolean(true));
-                }
-                else {
-                    resolve(Boolean(false));
-                }
+                resolve(BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    MiniAppBridge.prototype.sendAnalytics = function (analyticsInfo) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('sendAnalytics', analyticsInfo, function (response) {
+                resolve(BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -550,6 +553,21 @@ function trimBannerText(message, maxLength) {
     return (message === null || message === void 0 ? void 0 : message.length) > maxLength
         ? (message === null || message === void 0 ? void 0 : message.substring(0, maxLength - 1)) + '…'
         : message;
+}
+function BooleanValue(value) {
+    if (typeof value === 'boolean') {
+        return value;
+    }
+    else if (typeof value === 'string') {
+        var lowerCaseValue = value.toLowerCase();
+        if (lowerCaseValue === 'true' || lowerCaseValue === '1') {
+            return true;
+        }
+        else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
+            return false;
+        }
+    }
+    return false;
 }
 
 },{"./types/error-types":6,"./types/secure-storage":10,"./types/token-data":11}],2:[function(require,module,exports){
