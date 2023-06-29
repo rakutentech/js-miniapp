@@ -823,8 +823,15 @@ function trimBannerText(message: string = null, maxLength = 128) {
 }
 
 function BooleanValue(value) {
-  if (value.toLowerCase() === 'true') {
-    return true;
+  if (typeof value === 'boolean') {
+    return value;
+  } else if (typeof value === 'string') {
+    const lowerCaseValue = value.toLowerCase();
+    if (lowerCaseValue === 'true' || lowerCaseValue === '1') {
+      return true;
+    } else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
+      return false;
+    }
+    return false;
   }
-  return false;
 }
