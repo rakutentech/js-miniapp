@@ -832,6 +832,6 @@ function BooleanValue(value) {
     } else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
       return false;
     }
-    return false;
   }
+  return false;
 }
