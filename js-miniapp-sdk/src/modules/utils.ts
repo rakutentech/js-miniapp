@@ -1,5 +1,9 @@
 import { getBridge } from '../sdkbridge';
-import { CloseAlertInfo, HostThemeColor } from '../../../js-miniapp-bridge/src';
+import {
+  CloseAlertInfo,
+  HostThemeColor,
+  MAAnalytics,
+} from '../../../js-miniapp-bridge/src';
 
 /**
  * Mini App Utility methods
@@ -27,6 +31,12 @@ export interface MiniAppUtilsProvider {
    * Interface to check if the Device/Application is using Dark mode
    */
   isDarkMode(): Promise<boolean>;
+
+  /**
+   * Interface to send analytics to Host app
+   * @param analyticsInfo Analytics info
+   */
+  sendAnalytics(analyticsInfo: MAAnalytics): Promise<boolean>;
 }
 
 /** @internal */
@@ -42,5 +52,8 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   }
   isDarkMode(): Promise<boolean> {
     return getBridge().isDarkMode();
+  }
+  sendAnalytics(analyticsInfo: MAAnalytics): Promise<boolean> {
+    return getBridge().sendAnalytics(analyticsInfo);
   }
 }

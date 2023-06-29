@@ -29,6 +29,7 @@ import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
 import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 import { HostThemeColor } from './types/host-color-scheme';
+import { MAAnalytics } from './types/analytics/analytics';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -759,11 +760,20 @@ export class MiniAppBridge {
         'isDarkMode',
         null,
         response => {
-          if (response.toLowerCase() === 'true') {
-            resolve(Boolean(true));
-          } else {
-            resolve(Boolean(false));
-          }
+          resolve(BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  sendAnalytics(analyticsInfo: MAAnalytics) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'sendAnalytics',
+        analyticsInfo,
+        response => {
+          resolve(BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );
@@ -810,4 +820,18 @@ function trimBannerText(message: string = null, maxLength = 128) {
   return message?.length > maxLength
     ? message?.substring(0, maxLength - 1) + '…'
     : message;
+}
+
+function BooleanValue(value) {
+  if (typeof value === 'boolean') {
+    return value;
+  } else if (typeof value === 'string') {
+    const lowerCaseValue = value.toLowerCase();
+    if (lowerCaseValue === 'true' || lowerCaseValue === '1') {
+      return true;
+    } else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
+      return false;
+    }
+  }
+  return false;
 }
