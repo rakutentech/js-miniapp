@@ -29,7 +29,7 @@ import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
 import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 import { HostThemeColor } from './types/host-color-scheme';
-import { MAAnalytics } from './types/analytics/analytics';
+import { MAAnalyticsInfo } from './types/analytics/analytics';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -767,11 +767,11 @@ export class MiniAppBridge {
     });
   }
 
-  sendAnalytics(analyticsInfo: MAAnalytics) {
+  sendAnalytics(analytics: MAAnalyticsInfo) {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'sendAnalytics',
-        analyticsInfo,
+        { analyticsInfo: analytics },
         response => {
           resolve(BooleanValue(response));
         },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Button,
@@ -7,8 +7,8 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import MiniApp from 'js-miniapp-sdk';
-
+import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +45,17 @@ function Share() {
   const defaultInputValue = 'This is JS-SDK-Sample.';
   let inputValue = defaultInputValue;
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Share',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
+  
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
     inputValue = e.currentTarget.value;

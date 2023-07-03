@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -7,8 +7,8 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import { MiniAppEvents, MiniAppKeyboardEvents } from 'js-miniapp-sdk';
-
+import { MiniAppEvents, MiniAppKeyboardEvents, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +51,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+useEffect(() => {
+  sendAnalytics(
+    MAAnalyticsEventType.appear,
+    MAAnalyticsActionType.open,
+    'Event Listener',
+    'Screen',
+    'Page',
+    ''
+  );
+});
 const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
 
 const NativeEvents = () => {

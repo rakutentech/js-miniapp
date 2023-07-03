@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 
 import {
   Button,
@@ -10,7 +10,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, {MAAnalyticsActionType, MAAnalyticsEventType} from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 
 import GreyCard from '../components/GreyCard';
 
@@ -92,6 +93,9 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 function Ads() {
+  useEffect(() => {
+    sendAnalytics(MAAnalyticsEventType.appear, MAAnalyticsActionType.open, 'Ads', 'Screen', 'Page','')
+  });
   const [interstitialState, interstitialDispatch] = useReducer(
     dataFetchReducer,
     initialState

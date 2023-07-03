@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -10,6 +10,8 @@ import {
 
 import GreyCard from '../components/GreyCard';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -56,6 +58,17 @@ function LocalStorage() {
     setInputValue(e.currentTarget.value);
   };
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Local Storage',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
+  
   const handleLoad = () => {
     setInputValue(storedValue);
   };

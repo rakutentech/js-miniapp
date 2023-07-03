@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import {
   Avatar,
@@ -39,6 +39,8 @@ import {
   requestUserName,
   requestPoints,
 } from '../services/user/actions';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -266,6 +268,16 @@ function UserDetails(props: UserDetailsProps) {
       [classes.buttonSuccess]: !isError,
     });
   }
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'User details',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
 
   function requestNamePhoto() {
     const permissionsList = [

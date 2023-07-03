@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Typography, CardContent, CardMedia, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function GIFComponent() {
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'App Close alert',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   const classes = useStyles();
   const images = [
     {

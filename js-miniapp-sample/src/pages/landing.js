@@ -15,8 +15,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
+import { sendAnalytics } from './helper';
 
 import {
   setHostEnvironmentInfo,
@@ -78,6 +79,7 @@ const Landing = (props: LandingProps) => {
 
   useEffect(() => {
     try {
+      sendAnalytics(MAAnalyticsEventType.appear, MAAnalyticsActionType.open, 'Home', 'Screen', 'Page','')
       props.getHostInfo();
       checkSecureStorageStorageReady(props);
       getDarkMode();

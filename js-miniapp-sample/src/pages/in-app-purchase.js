@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 
 import {
   Button,
@@ -15,8 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert, AlertTitle } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
-import MiniApp, { MiniAppError } from 'js-miniapp-sdk';
-
+import MiniApp, { MiniAppError, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -209,6 +209,18 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 function PurchaseProductComponent() {
+
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'In-App-Purchase',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
+
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const [productFetchState, productFetchDispatch] = useReducer(
     dataFetchReducer,

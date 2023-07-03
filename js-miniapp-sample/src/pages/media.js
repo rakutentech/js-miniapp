@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ReactPlayerLoader from '@brightcove/react-player-loader';
 import {
@@ -8,10 +8,11 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 import { ScreenOrientation } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
+import { sendAnalytics } from './helper';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -62,6 +63,17 @@ const Media = () => {
   const [showAutoplayVideo, setShowAutoplayVideo] = useState(false);
   const classes = useStyles();
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Media',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
+  
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>
