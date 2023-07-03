@@ -8,7 +8,10 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
@@ -80,7 +83,7 @@ const UniversalBridge = () => {
       ''
     );
   });
-  
+
   window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
     let message = e.detail.message;
     console.log(message);

@@ -7,7 +7,10 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
@@ -55,7 +58,7 @@ function Share() {
       ''
     );
   });
-  
+
   const handleInput = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.preventDefault();
     inputValue = e.currentTarget.value;

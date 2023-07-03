@@ -1,5 +1,5 @@
 // @flow
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { sendAnalytics } from './helper';
 
 import { Button, Card, CardContent, makeStyles } from '@material-ui/core';
@@ -42,7 +42,7 @@ const WindowActions = () => {
       'Page',
       ''
     );
-  });  
+  });
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>

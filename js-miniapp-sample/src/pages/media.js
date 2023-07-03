@@ -8,7 +8,10 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { ScreenOrientation } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
@@ -73,7 +76,7 @@ const Media = () => {
       ''
     );
   });
-  
+
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>

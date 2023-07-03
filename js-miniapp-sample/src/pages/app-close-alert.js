@@ -16,7 +16,11 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import MiniApp, { CloseAlertInfo, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  CloseAlertInfo,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 
 const useStyles = makeStyles((theme) => ({

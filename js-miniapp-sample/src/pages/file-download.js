@@ -100,7 +100,7 @@ const FileDownload = (props: FileDownloadProps) => {
       ''
     );
   });
-  
+
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [
       {

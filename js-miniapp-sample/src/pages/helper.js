@@ -13,12 +13,12 @@ export function sendAnalytics(
   data: string
 ) {
   const analyticsInfo: MAAnalyticsInfo = {
-      eventType: eventType,
-      actionType: actionType,
-      pageName: pageName,
-      componentName: componentName,
-      elementType: elementType,
-      data: data,
+    eventType: eventType,
+    actionType: actionType,
+    pageName: pageName,
+    componentName: componentName,
+    elementType: elementType,
+    data: data,
   };
   return MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
 }

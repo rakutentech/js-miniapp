@@ -7,7 +7,12 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import { MiniAppEvents, MiniAppKeyboardEvents, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import {
+  MiniAppEvents,
+  MiniAppKeyboardEvents,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 

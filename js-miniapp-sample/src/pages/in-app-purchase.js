@@ -15,7 +15,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Alert, AlertTitle } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
-import MiniApp, { MiniAppError, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  MiniAppError,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
@@ -209,7 +213,6 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 function PurchaseProductComponent() {
-
   useEffect(() => {
     sendAnalytics(
       MAAnalyticsEventType.appear,

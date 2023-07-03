@@ -15,7 +15,12 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
-import { MiniAppError, MiniAppSecureStorageSize, MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import {
+  MiniAppError,
+  MiniAppSecureStorageSize,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 import { sendAnalytics } from './helper';
 import {
@@ -652,7 +657,7 @@ function SecureStorageComponent(props: SecureStorageProps) {
       ''
     );
   });
-  
+
   return (
     <Container className={classes.wrapperContainer}>
       <TabContext value={value}>

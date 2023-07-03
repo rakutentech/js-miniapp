@@ -68,7 +68,7 @@ function LocalStorage() {
       ''
     );
   });
-  
+
   const handleLoad = () => {
     setInputValue(storedValue);
   };

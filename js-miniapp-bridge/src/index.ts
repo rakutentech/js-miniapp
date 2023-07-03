@@ -29,7 +29,7 @@ import { HostThemeColor } from './types/host-color-scheme';
 import {
   MAAnalyticsInfo,
   MAAnalyticsActionType,
-  MAAnalyticsEventType
+  MAAnalyticsEventType,
 } from './types/analytics/analytics';
 
 import {

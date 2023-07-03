@@ -90,7 +90,7 @@ const UriSchemes = () => {
       ''
     );
   });
-  
+
   function onOpenExternalWebview() {
     if (params && !validateParams(params)) {
       window.alert(

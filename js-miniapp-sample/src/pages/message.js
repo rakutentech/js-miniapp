@@ -142,7 +142,7 @@ const Message = (props: MessageTypeProps) => {
       'Page',
       ''
     );
-  });  
+  });
   const handleChange = (event) => {
     message.text = defaultTexts.get(event.target.value);
     message.action = defaultAction;
