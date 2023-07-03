@@ -56,16 +56,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-useEffect(() => {
-  sendAnalytics(
-    MAAnalyticsEventType.appear,
-    MAAnalyticsActionType.open,
-    'Event Listener',
-    'Screen',
-    'Page',
-    ''
-  );
-});
 const EXTERNAL_WEBVIEW_URL = 'https://www.google.com';
 
 const NativeEvents = () => {
@@ -77,6 +67,17 @@ const NativeEvents = () => {
   let [navigationBarHeight, setNavigationBarHeight] = useState(0);
   let [screenHeight, setScreenHeight] = useState(0);
   let [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Event Listener',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
 
   window.addEventListener(MiniAppEvents.EXTERNAL_WEBVIEW_CLOSE, function (e) {
     let message = e.detail.message;
