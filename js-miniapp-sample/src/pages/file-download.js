@@ -204,7 +204,7 @@ const FileDownload = (props: FileDownloadProps) => {
 
         {renderButton('Download ZIP', 'button-download-zip', () => {
           handleDownloadClick(
-            'https://file-examples.com/wp-content/uploads/2017/02/zip_2MB.zip',
+            'https://file-examples.com/wp-content/storage/2017/02/zip_2MB.zip',
             'sample.zip'
           );
         })}
