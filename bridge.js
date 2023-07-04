@@ -512,12 +512,10 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
-    MiniAppBridge.prototype.sendAnalytics = function (analyticsInfo) {
+    MiniAppBridge.prototype.sendAnalytics = function (analytics) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('sendAnalytics', analyticsInfo, function (response) {
-                resolve(BooleanValue(response));
-            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+            return _this.executor.exec('sendAnalytics', { analyticsInfo: analytics }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     return MiniAppBridge;
