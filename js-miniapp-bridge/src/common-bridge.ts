@@ -768,13 +768,11 @@ export class MiniAppBridge {
   }
 
   sendAnalytics(analytics: MAAnalyticsInfo) {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'sendAnalytics',
         { analyticsInfo: analytics },
-        response => {
-          resolve(BooleanValue(response));
-        },
+        success => resolve(success),
         error => reject(parseMiniAppError(error))
       );
     });

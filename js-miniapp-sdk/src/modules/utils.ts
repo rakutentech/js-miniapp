@@ -36,7 +36,7 @@ export interface MiniAppUtilsProvider {
    * Interface to send analytics to Host app
    * @param analyticsInfo Analytics info
    */
-  sendAnalytics(analytics: MAAnalyticsInfo): Promise<boolean>;
+  sendAnalytics(analytics: MAAnalyticsInfo): Promise<string>;
 }
 
 /** @internal */
@@ -53,7 +53,7 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   isDarkMode(): Promise<boolean> {
     return getBridge().isDarkMode();
   }
-  sendAnalytics(analytics: MAAnalyticsInfo): Promise<boolean> {
+  sendAnalytics(analytics: MAAnalyticsInfo): Promise<string> {
     return getBridge().sendAnalytics(analytics);
   }
 }
