@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +57,16 @@ const Camera = () => {
 
   const cameraRef = useRef(null);
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Camera',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   const setFiles = (e) => {
     const files = e.target.files;
     if (!files && files.length > 0) {

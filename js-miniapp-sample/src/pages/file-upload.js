@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Card,
@@ -14,6 +14,8 @@ import {
   TableContainer,
   Grid,
 } from '@material-ui/core';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,6 +55,16 @@ const FileUploader = () => {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'File Upload',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   const setFiles = (e) => {
     const files = e.target.files;
     if (!files) {

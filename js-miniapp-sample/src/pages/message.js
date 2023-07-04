@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 
 import {
   makeStyles,
@@ -16,6 +16,7 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { sendAnalytics } from './helper';
 
 import { pandaLogo } from '../assets/images/base64';
 import {
@@ -26,6 +27,7 @@ import {
 import { getMessageTypeList } from '../services/message/actions';
 import type { MessageType } from '../services/message/types';
 import { MessageTypeId } from '../services/message/types';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const defaultTexts = new Map();
 defaultTexts.set(MessageTypeId.SINGLE_CONTACT, 'Single contact');
@@ -131,6 +133,16 @@ const Message = (props: MessageTypeProps) => {
     }
     return true;
   };
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Message',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   const handleChange = (event) => {
     message.text = defaultTexts.get(event.target.value);
     message.action = defaultAction;

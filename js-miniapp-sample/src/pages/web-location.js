@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Button,
@@ -13,6 +13,8 @@ import clsx from 'clsx';
 
 import GreyCard from '../components/GreyCard';
 import useGeoLocation from '../hooks/useGeoLocation';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -66,7 +68,16 @@ const useStyles = makeStyles((theme) => ({
 const Location = (props: any) => {
   const classes = useStyles();
   const [state, watch, unwatch] = useGeoLocation();
-
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Location',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   return (
     <GreyCard className={classes.card}>
       <CardContent className={classes.content}>

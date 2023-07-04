@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -7,8 +7,13 @@ import {
   CardActions,
   makeStyles,
 } from '@material-ui/core';
-import { MiniAppEvents, MiniAppKeyboardEvents } from 'js-miniapp-sdk';
-
+import {
+  MiniAppEvents,
+  MiniAppKeyboardEvents,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +67,17 @@ const NativeEvents = () => {
   let [navigationBarHeight, setNavigationBarHeight] = useState(0);
   let [screenHeight, setScreenHeight] = useState(0);
   let [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Event Listener',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
 
   window.addEventListener(MiniAppEvents.EXTERNAL_WEBVIEW_CLOSE, function (e) {
     let message = e.detail.message;

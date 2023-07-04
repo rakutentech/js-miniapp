@@ -42,6 +42,9 @@ import {
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
   HostThemeColor,
+  MAAnalyticsInfo,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -96,4 +99,7 @@ export {
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
+  MAAnalyticsInfo,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
 };

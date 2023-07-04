@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 
 import {
   Button,
@@ -16,7 +16,12 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import MiniApp, { CloseAlertInfo } from 'js-miniapp-sdk';
+import MiniApp, {
+  CloseAlertInfo,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
+import { sendAnalytics } from './helper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +145,17 @@ export const dataFetchReducer = (state: State, action: Action) => {
 };
 
 function CloseConfirmAlert() {
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'App Close alert',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
+
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
 
   const classes = useStyles();

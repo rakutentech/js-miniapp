@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -22,6 +22,8 @@ import { pandaLogo } from '../assets/images/base64';
 import GreyCard from '../components/GreyCard';
 import { requestDownloadFile } from '../services/filedownload/actions';
 import { requestCustomPermissions } from '../services/permissions/actions';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -87,6 +89,17 @@ const FileDownload = (props: FileDownloadProps) => {
   const classes = useStyles();
   let [isPermissionGranted, setIsPermissionGranted] = useState(true);
   let [dataUri, setDataUri] = useState(pandaLogo);
+
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'File Download',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
 
   function requestDownloadAttachmentPermission(url, fileName) {
     const permissionsList = [

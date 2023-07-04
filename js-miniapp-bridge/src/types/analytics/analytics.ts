@@ -2,27 +2,27 @@
  * Analytics Event type
  */
 export enum MAAnalyticsEventType {
-  appear,
-  click,
-  error,
-  custom,
+  appear = 'appear',
+  click = 'click',
+  error = 'error',
+  custom = 'custom',
 }
 
 /**
  * Action Type
  */
 export enum MAAnalyticsActionType {
-  open,
-  close,
-  add,
-  delete,
-  change,
+  open = 'open',
+  close = 'close',
+  add = 'add',
+  delete = 'delete',
+  change = 'change',
 }
 
 /**
  * Mini App Analytics info type
  */
-export interface MAAnalytics {
+export interface MAAnalyticsInfo {
   eventType: MAAnalyticsEventType;
   actionType: MAAnalyticsActionType;
   pageName: string;

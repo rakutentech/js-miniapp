@@ -2,7 +2,7 @@ import { getBridge } from '../sdkbridge';
 import {
   CloseAlertInfo,
   HostThemeColor,
-  MAAnalytics,
+  MAAnalyticsInfo,
 } from '../../../js-miniapp-bridge/src';
 
 /**
@@ -36,7 +36,7 @@ export interface MiniAppUtilsProvider {
    * Interface to send analytics to Host app
    * @param analyticsInfo Analytics info
    */
-  sendAnalytics(analyticsInfo: MAAnalytics): Promise<boolean>;
+  sendAnalytics(analytics: MAAnalyticsInfo): Promise<string>;
 }
 
 /** @internal */
@@ -53,7 +53,7 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   isDarkMode(): Promise<boolean> {
     return getBridge().isDarkMode();
   }
-  sendAnalytics(analyticsInfo: MAAnalytics): Promise<boolean> {
-    return getBridge().sendAnalytics(analyticsInfo);
+  sendAnalytics(analytics: MAAnalyticsInfo): Promise<string> {
+    return getBridge().sendAnalytics(analytics);
   }
 }

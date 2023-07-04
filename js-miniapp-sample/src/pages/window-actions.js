@@ -1,7 +1,9 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
+import { sendAnalytics } from './helper';
 
 import { Button, Card, CardContent, makeStyles } from '@material-ui/core';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,16 @@ const WindowActions = () => {
   const onPrompt = () => {
     window.prompt('This is window prompt!', 'sure!');
   };
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Window actions',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   return (
     <Card className={classes.root}>
       <CardContent className={classes.content}>

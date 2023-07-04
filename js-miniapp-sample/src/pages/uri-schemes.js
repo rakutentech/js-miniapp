@@ -1,5 +1,5 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 
 import GreyCard from '../components/GreyCard';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -77,6 +79,17 @@ const UriSchemes = () => {
   function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
   }
+
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'URI Schemes',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
 
   function onOpenExternalWebview() {
     if (params && !validateParams(params)) {

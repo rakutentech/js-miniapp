@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useState } from 'react';
+import React, { Fragment, useReducer, useState, useEffect } from 'react';
 
 import {
   Button,
@@ -26,6 +26,8 @@ import GreyCard from '../components/GreyCard';
 import { displayDate } from '../js_sdk';
 import { requestCustomPermissions } from '../services/permissions/actions';
 import { requestAccessToken } from '../services/user/actions';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -155,6 +157,16 @@ function AuthToken(props: AuthTokenProps) {
     setScope({ ...scope, scopes: event.target.value.split(', ') });
   };
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Auth Token',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   function requestAccessTokenPermission() {
     const permissionsList = [
       {

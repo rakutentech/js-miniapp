@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { connect } from 'react-redux';
+import { sendAnalytics } from './helper';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 import GreyCard from '../components/GreyCard';
 import {
@@ -62,6 +64,16 @@ const UuidFetcher = (props: UUIDProps) => {
     error: false,
   });
 
+  useEffect(() => {
+    sendAnalytics(
+      MAAnalyticsEventType.appear,
+      MAAnalyticsActionType.open,
+      'Unique ID',
+      'Screen',
+      'Page',
+      ''
+    );
+  });
   function textCopied(text, result) {
     if (result) {
       setCopyStatus({ success: true, error: false });
