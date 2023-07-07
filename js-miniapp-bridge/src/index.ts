@@ -31,6 +31,7 @@ import {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from './types/analytics/analytics';
+import { UniversalBridgeToHostInfo } from './types/universal-bridge';
 
 import {
   AuthorizationFailureError,
@@ -109,4 +110,5 @@ export {
   MAAnalyticsInfo,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
+  UniversalBridgeToHostInfo,
 };

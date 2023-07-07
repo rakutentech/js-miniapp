@@ -675,6 +675,24 @@ miniApp.universalBridge
   });
 ```
 
+#### Send a UniversalBridgeToHostInfo from MiniApp to HostApp
+
+Please use the following example in the MiniApp:
+
+```javascript
+import miniApp from 'js-miniapp-sdk';
+const inputValue = '{"data":"This is a sample json information"}';
+const info = { content: inputValue };
+miniApp.universalBridge
+  .sendInfoToHostapp(info)
+  .then(success => {
+    console.log(success);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+```
+
 #### Receive a JSON/String from HostApp to MiniApp
 
 Please use the following example in the MiniApp:
