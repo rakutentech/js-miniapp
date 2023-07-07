@@ -11,7 +11,7 @@ import {
 import MiniApp, {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
-  UniversalBridgeToHostInfo,
+  UniversalBridgeInfo,
 } from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
@@ -131,7 +131,7 @@ const UniversalBridge = () => {
   };
 
   const sendInfo = () => {
-    const info: UniversalBridgeToHostInfo = {
+    const info: UniversalBridgeInfo = {
       key: infoInputKey,
       value: infoInputValue,
       description: infoInputDescription,

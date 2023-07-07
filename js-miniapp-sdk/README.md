@@ -675,7 +675,7 @@ miniApp.universalBridge
   });
 ```
 
-#### Send a UniversalBridgeToHostInfo from MiniApp to HostApp
+#### Send a UniversalBridgeInfo from MiniApp to HostApp
 
 Please use the following example in the MiniApp:
 

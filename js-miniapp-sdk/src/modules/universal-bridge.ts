@@ -1,4 +1,4 @@
-import { UniversalBridgeToHostInfo } from '../../../js-miniapp-bridge/src/types/universal-bridge';
+import { UniversalBridgeInfo } from '../../../js-miniapp-bridge/src/types/universal-bridge';
 import { getBridge } from '../sdkbridge';
 
 /**
@@ -11,9 +11,9 @@ export interface UniversalBridgeProvider {
   sendJsonToHostapp(info: string): Promise<string>;
 
   /**
-   * Send UniversalBridgeToHostInfo to HostApp.
+   * Send UniversalBridgeInfo to HostApp.
    */
-  sendInfoToHostapp(info: UniversalBridgeToHostInfo): Promise<string>;
+  sendInfoToHostapp(info: UniversalBridgeInfo): Promise<string>;
 }
 
 /** @internal */
@@ -22,7 +22,7 @@ export class UniversalBridge implements UniversalBridgeProvider {
     return getBridge().sendJsonToHostapp(info);
   }
 
-  sendInfoToHostapp(info: UniversalBridgeToHostInfo): Promise<string> {
+  sendInfoToHostapp(info: UniversalBridgeInfo): Promise<string> {
     return getBridge().sendInfoToHostapp(info);
   }
 }

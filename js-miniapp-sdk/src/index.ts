@@ -45,7 +45,7 @@ import {
   MAAnalyticsInfo,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
-  UniversalBridgeToHostInfo,
+  UniversalBridgeInfo,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -103,5 +103,5 @@ export {
   MAAnalyticsInfo,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
-  UniversalBridgeToHostInfo,
+  UniversalBridgeInfo,
 };
