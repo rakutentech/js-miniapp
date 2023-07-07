@@ -681,7 +681,11 @@ Please use the following example in the MiniApp:
 
 ```javascript
 import miniApp from 'js-miniapp-sdk';
-const inputValue = '{"data":"This is a sample json information"}';
+const info: UniversalBridgeInfo = {
+  key: "launch",
+  value: "deeplinkurl",
+  description: "Description of the info that is passed",
+};
 const info = { content: inputValue };
 miniApp.universalBridge
   .sendInfoToHostapp(info)
