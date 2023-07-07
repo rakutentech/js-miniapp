@@ -11,14 +11,13 @@ import {
 import MiniApp, {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
+  UniversalBridgeToHostInfo,
 } from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
 
 import { red, green } from '@material-ui/core/colors';
-
-import MiniApp, { UniversalBridgeToHostInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
