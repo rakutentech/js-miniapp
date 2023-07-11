@@ -54,6 +54,9 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().isDarkMode();
   }
   sendAnalytics(analytics: MAAnalyticsInfo): Promise<string> {
-    return getBridge().sendAnalytics(analytics);
+    if (typeof getBridge().sendAnalytics === 'function') {
+      return getBridge().sendAnalytics(analytics);
+    }
+    return Promise.reject('sendAnalytics Error');
   }
 }
