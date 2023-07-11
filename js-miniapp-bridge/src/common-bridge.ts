@@ -30,6 +30,7 @@ import { MiniAppResponseInfo } from './types/response-types/miniapp';
 import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
+import { UniversalBridgeInfo } from './types/universal-bridge';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -664,6 +665,22 @@ export class MiniAppBridge {
       return this.executor.exec(
         'sendJsonToHostapp',
         { jsonInfo: info },
+        success => resolve(success),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Associating sendInfoToHostapp function to MiniAppBridge object.
+   * @param {info} UniversalBridgeInfo information that you would like to send to HostApp.
+   * @see {sendInfoToHostapp}
+   */
+  sendInfoToHostapp(info: UniversalBridgeInfo) {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'sendInfoToHostapp',
+        { universalBridgeInfo: info },
         success => resolve(success),
         error => reject(parseMiniAppError(error))
       );

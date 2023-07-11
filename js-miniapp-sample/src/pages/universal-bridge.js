@@ -11,6 +11,7 @@ import {
 import MiniApp, {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
+  UniversalBridgeInfo,
 } from 'js-miniapp-sdk';
 import { HostAppEvents } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
@@ -55,6 +56,12 @@ const useStyles = makeStyles((theme) => ({
     disabled: 'disabled',
     caretColor: 'transparent',
   },
+  formInput: {
+    marginTop: 10,
+    marginBottom: 10,
+    background: 'white',
+    width: '90%',
+  },
   success: {
     color: green[500],
     marginTop: 20,
@@ -70,6 +77,9 @@ const UniversalBridge = () => {
   const classes = useStyles();
   const defaultJsonValue = '{"data":"This is a sample json information"}';
   let [inputValue, setInputValue] = useState(defaultJsonValue);
+  let [infoInputKey, setInfoInputKey] = useState();
+  let [infoInputValue, setInfoInputValue] = useState();
+  let [infoInputDescription, setInfoInputDescription] = useState();
   let [receiveJsonInfo, setReceiveJsonInfo] = useState('');
   let [sendJsonStatus, setSendJsonStatus] = useState('');
 
@@ -100,10 +110,34 @@ const UniversalBridge = () => {
     setInputValue('');
   };
 
+  const clearInfoSendInput = () => {
+    setInfoInputKey('');
+    setInfoInputValue('');
+    setInfoInputDescription('');
+  };
+
   const sendJson = () => {
     const info = { content: inputValue };
     MiniApp.universalBridge
       .sendJsonToHostapp(info)
+      .then((success) => {
+        console.log(success);
+        setSendJsonStatus('SUCCESS');
+      })
+      .catch((miniAppError) => {
+        console.error(miniAppError);
+        setSendJsonStatus(miniAppError.message);
+      });
+  };
+
+  const sendInfo = () => {
+    const info: UniversalBridgeInfo = {
+      key: infoInputKey,
+      value: infoInputValue,
+      description: infoInputDescription,
+    };
+    MiniApp.universalBridge
+      .sendInfoToHostapp(info)
       .then((success) => {
         console.log(success);
         setSendJsonStatus('SUCCESS');
@@ -167,6 +201,54 @@ const UniversalBridge = () => {
           <Button
             className={classes.button}
             onClick={clearSendInput}
+            variant="contained"
+          >
+            Clear
+          </Button>
+        </CardActions>
+        <hr
+          style={{
+            borderColor: 'primary',
+          }}
+        />
+        <div>
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-name"
+            label={'Key'}
+            value={infoInputKey}
+            onChange={(e) => setInfoInputKey(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-name"
+            label={'Value'}
+            value={infoInputValue}
+            onChange={(e) => setInfoInputValue(e.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-name"
+            label={'Description'}
+            value={infoInputDescription}
+            onChange={(e) => setInfoInputDescription(e.target.value)}
+          />
+        </div>
+        <CardActions className={classes.actions}>
+          <Button
+            color="primary"
+            className={classes.button}
+            onClick={sendInfo}
+            variant="contained"
+          >
+            Send Info
+          </Button>
+          <Button
+            className={classes.button}
+            onClick={clearInfoSendInput}
             variant="contained"
           >
             Clear
