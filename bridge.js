@@ -474,6 +474,17 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Associating sendInfoToHostapp function to MiniAppBridge object.
+     * @param {info} UniversalBridgeInfo information that you would like to send to HostApp.
+     * @see {sendInfoToHostapp}
+     */
+    MiniAppBridge.prototype.sendInfoToHostapp = function (info) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('sendInfoToHostapp', { universalBridgeInfo: info }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
      * Associating closeMiniApp function to MiniAppBridge object.
      * @param {withConfirmation} boolean value which will be used by the host app to show/hide close confirmation alert
      * which should be set using `setCloseAlert` method in prior before calling this interface
