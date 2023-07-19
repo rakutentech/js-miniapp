@@ -2,7 +2,7 @@
 
 The Mini App SDK for JavaScript can be used to access Android/iOS device and App specific features from a Mini App. It is intended to be used in conjunction with the [Android Mini App SDK](https://github.com/rakutentech/android-miniapp) and [iOS Mini App SDK](https://github.com/rakutentech/ios-miniapp).
 
-[JS SDK Developer documentation](https://rakutentech.github.io/js-miniapp/docs/v1.15/)
+[JS SDK Developer documentation](https://rakutentech.github.io/js-miniapp/docs/1.17/)
 
 ## Table of Contents
 {:.no_toc}
@@ -341,7 +341,7 @@ Mini app can listen to the following events that will be sent/triggered by the H
 <dl>
 <dd>
 
-### <b><u>Mini App Events</u></b>
+### Mini App Events
 
 **API:** [MiniAppEvents](api/enums/MiniAppEvents.md)
 
@@ -362,7 +362,7 @@ These `MiniAppEvents` events are more live Mini app life cycle events that will 
 
   </details>
 
-### <b><u>Keyboard events</u></b>
+### Keyboard events
 **API:** [MiniAppKeyboardEvents](api/enums/MiniAppKeyboardEvents.md)
 
 These `MiniAppKeyboardEvents` events will be triggered when a keyboard is shown or dismissed
@@ -381,7 +381,7 @@ These `MiniAppKeyboardEvents` events will be triggered when a keyboard is shown 
 
   </details>
 
-### <b><u>Host app events</u></b> <small style="color:green;font-size: 12px">Available from v1.16.0</small>
+### Host app events <small style="color:green;font-size: 12px">Available from v1.16.0</small>
 **API:** [HostAppEvents](api/enums/HostAppEvents.md)
 
 These `HostAppEvents` will be triggered when the host app wants to notify something to the Mini app
@@ -657,7 +657,7 @@ When a Mini app is closed, you can set the close confirmation popup which the ho
 
 MiniApp users can send any JSON/String from MiniApp to HostApp as well as receive any JSON/String from HostApp to MiniApp.
 
-#### Send a JSON/String from MiniApp to HostApp
+### Send a JSON/String from MiniApp to HostApp <small style="color:green;font-size: 12px">Available from v1.18.0</small>
 
 Please use the following example in the MiniApp:
 
@@ -675,7 +675,7 @@ miniApp.universalBridge
   });
 ```
 
-#### Send a UniversalBridgeInfo from MiniApp to HostApp
+### Send a UniversalBridgeInfo from MiniApp to HostApp <small style="color:green;font-size: 12px">Available from v1.18.0</small>
 
 Please use the following example in the MiniApp:
 
@@ -855,6 +855,27 @@ function getId() {
 
 </dl>
 </dd>
+
+
+### Send Analytics to Host app <small style="color:green;font-size: 12px">Available from v1.18.0</small>
+
+You can use the following interface to send analytics to Host app. Host app can use this data to record them to any server.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+  const analyticsInfo: MAAnalyticsInfo = {
+    eventType: MAAnalyticsEventType.appear,
+    actionType: MAAnalyticsActionType.open,
+    pageName: "Home",
+    componentName: "Page",
+    elementType: "Tab",
+    data: "AnyData",
+  };
+  
+  MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
+```
+
 
 ## Troubleshooting & FAQs
 
