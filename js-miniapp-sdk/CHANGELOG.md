@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 1.18.0 (2023-XX-XX)
+- **Feature:** Added new interface `isDarkMode()`. Interface to know if the Hostapp/Device is set to use the Dark 
+- **Feature:** Added new interface `sendAnalytics(analyticsInfo: MAAnalyticsInfo)`. This interface will be used to send analytics to host app.
+- **Feature:** Added new interface in Universal Bridge i.e `sendInfoToHostapp` which helps the Miniapp to send `UniversalBridgeInfo` to the HostApp. 
+
+
 ### 1.18.0-alpha (2023-07-12)
 
 :warning: This version is an internal release. It is not fully tested and can produce unexpected behaviors. Due to potential changes, the full change log will be provided with the final version and its usage is discouraged.
