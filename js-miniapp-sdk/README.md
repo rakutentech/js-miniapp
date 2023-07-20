@@ -143,6 +143,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Secure storage](#secure-storage)
 - [Host app theme colors](#host-theme-colors)
 - [isDarkMode](#dark-mode)
+- [Send Analytics](#send-analytics)
 
 
 ### Retrieve a unique ID
@@ -1166,6 +1167,8 @@ MiniApp
 
 </dl>
 </dd>
+
+<div id='send-analytics'/>
 
 ## Send Analytics to Host app <small style="color:green;font-size: 12px">Available from v1.18.0</small>
 
