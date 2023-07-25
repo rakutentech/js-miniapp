@@ -1,6 +1,7 @@
 ## CHANGELOG
 
-### 1.18.0 (2023-XX-XX)
+### 1.18.0 (2023-07-25)
+- **Feature:** Added new interface `getHostAppThemeColors()` to get `HostThemeColor` which contains primary & secondary color set by the Host app
 - **Feature:** Added new interface `isDarkMode()`. Interface to know if the Hostapp/Device is set to use the Dark 
 - **Feature:** Added new interface `sendAnalytics(analyticsInfo: MAAnalyticsInfo)`. This interface will be used to send analytics to host app.
 - **Feature:** Added new interface in Universal Bridge i.e `sendInfoToHostapp` which helps the Miniapp to send `UniversalBridgeInfo` to the HostApp. 
