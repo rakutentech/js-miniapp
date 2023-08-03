@@ -420,11 +420,11 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardNamePhotoActionsForm() {
-    const hasPhotoDeniedPermission =
+    const hasPhotoPermission =
       state.hasRequestedNamePhotoPermissions &&
       hasPermission(CustomPermissionName.PROFILE_PHOTO);
 
-    const hasNameDeniedPermission =
+    const hasNamePermission =
       state.hasRequestedNamePhotoPermissions &&
       hasPermission(CustomPermissionName.USER_NAME);
 
@@ -432,7 +432,7 @@ function UserDetails(props: UserDetailsProps) {
       <FormGroup column="true" className={classes.rootUserGroup}>
         <Paper className={classes.paper}>
           <List className={classes.userProfile}>
-            {hasPhotoDeniedPermission && (
+            {state.hasRequestedNamePhotoPermissions && !hasPhotoPermission && (
               <ListItem>
                 <ListItemText
                   primary='"Profile Photo" permission not granted.'
@@ -441,7 +441,7 @@ function UserDetails(props: UserDetailsProps) {
                 />
               </ListItem>
             )}
-            {!hasPhotoDeniedPermission && (
+            {hasPhotoPermission && (
               <div className={classes.profilePhotoOuter}>
                 <Avatar
                   src={props.profilePhoto}
@@ -457,10 +457,12 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-name"
-            error={state.isNamePhotoError || hasNameDeniedPermission}
+            error={
+              state.isNamePhotoError && state.hasRequestedNamePhotoPermissions
+            }
             label={'User Name'}
             value={
-              hasNameDeniedPermission
+              !hasNamePermission && state.hasRequestedNamePhotoPermissions
                 ? '"User Name" permission not granted.'
                 : props.userName || ' '
             }
