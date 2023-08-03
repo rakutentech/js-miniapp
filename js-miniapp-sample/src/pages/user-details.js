@@ -457,7 +457,9 @@ function UserDetails(props: UserDetailsProps) {
             disabled={true}
             className={classes.formInput}
             id="input-name"
-            error={state.isNamePhotoError && state.hasRequestedNamePhotoPermissions}
+            error={
+              state.isNamePhotoError && state.hasRequestedNamePhotoPermissions
+            }
             label={'User Name'}
             value={
               !hasNamePermission && state.hasRequestedNamePhotoPermissions
