@@ -31,8 +31,5 @@ body,
 }
 
 .MuiTabPanel-root {
-  padding: 0%;
-}
-.MuiTabPanel-root {
   padding: 3% !important;
 }
