@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 
 import {
   Avatar,
@@ -14,6 +14,7 @@ import {
   ListItemText,
   TextField,
   Paper,
+  InputAdornment,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +22,8 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
+import SearchIcon from '@material-ui/icons/Search';
+import ClearIcon from '@material-ui/icons/Clear';
 import clsx from 'clsx';
 import {
   CustomPermission,
@@ -262,6 +265,37 @@ function UserDetails(props: UserDetailsProps) {
   const contactsButtonClassname = getButtonState(state.isContactsError);
   const pointsButtonClassname = getButtonState(state.isPointsError);
 
+  const [showClearIcon, setShowClearIcon] = useState('none');
+  const [searchText, setSearchText] = useState('');
+  const dataFiltered = filterSearchData(searchText, props.contactList);
+
+  const handleSearchTextChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setShowClearIcon(event.target.value === '' ? 'none' : 'flex');
+    setSearchText(event.target.value);
+  };
+
+  const handleSearchReset = (): void => {
+    setSearchText('');
+    setShowClearIcon('none');
+  };
+
+  function filterSearchData(query: string, contactList: Contact[]) {
+    if (!query) {
+      return contactList;
+    } else {
+      let filteredContacts = contactList
+        .filter(function (contact) {
+          return contact.name.toLocaleLowerCase().includes(query.toLowerCase());
+        })
+        .map(function (contact) {
+          return contact;
+        });
+      return filteredContacts;
+    }
+  }
+
   function getButtonState(isError: boolean) {
     return clsx({
       [classes.buttonFailure]: isError,
@@ -429,7 +463,7 @@ function UserDetails(props: UserDetailsProps) {
       hasPermission(CustomPermissionName.USER_NAME);
 
     return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
+      <FormGroup column="true">
         <Paper className={classes.paper}>
           <List className={classes.userProfile}>
             {state.hasRequestedNamePhotoPermissions && !hasPhotoPermission && (
@@ -494,11 +528,9 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardContactsActionsForm() {
-    const hasContactsPermision =
-      state.hasRequestedContactsPermissions &&
-      hasPermission(CustomPermissionName.CONTACT_LIST);
+    const hasContactsPermision = true;
     return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
+      <FormGroup column="true">
         <div className={classes.wrapper}>
           <Button
             onClick={handleContactsClick}
@@ -515,8 +547,34 @@ function UserDetails(props: UserDetailsProps) {
             <CircularProgress size={20} className={classes.buttonProgress} />
           )}
         </div>
+        <TextField
+          size="small"
+          variant="outlined"
+          onChange={handleSearchTextChange}
+          value={searchText}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment
+                position="end"
+                style={{ display: showClearIcon }}
+                onClick={handleSearchReset}
+              >
+                <ClearIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
         <Paper className={classes.paper}>
-          <CardHeader subheader="Contact List" />
+          {hasContactsPermision && props.contactList && (
+            <CardHeader
+              subheader={'Contact List: ' + props.contactList.length}
+            />
+          )}
           <List className={classes.contactsList}>
             {state.hasRequestedContactsPermissions && !hasContactsPermision && (
               <ListItem>
@@ -528,7 +586,7 @@ function UserDetails(props: UserDetailsProps) {
             )}
             {hasContactsPermision &&
               props.contactList &&
-              props.contactList.map((contact) => (
+              dataFiltered.map((contact) => (
                 <ListItem divider>
                   <ListItemAvatar>
                     <Avatar className={classes.contactIcon} />
@@ -575,7 +633,7 @@ function UserDetails(props: UserDetailsProps) {
 
   function CardPointActionsForm() {
     return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
+      <FormGroup column="true">
         <Paper className={classes.paper}>
           <CardHeader subheader="Points" />
           <TextField

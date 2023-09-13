@@ -29,3 +29,7 @@ body,
   font-size: 18px;
   font-weight: bold;
 }
+
+.MuiTabPanel-root {
+  padding: 3% !important;
+}
