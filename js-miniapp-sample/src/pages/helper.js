@@ -20,5 +20,7 @@ export function sendAnalytics(
     elementType: elementType,
     data: data,
   };
-  return MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
+  if (MiniApp.miniappUtils) {
+    MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
+  }
 }
