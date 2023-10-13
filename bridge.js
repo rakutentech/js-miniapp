@@ -529,6 +529,22 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('sendAnalytics', { analyticsInfo: analytics }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    MiniAppBridge.prototype.getAllCookies = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getAllCookies', null, function (response) {
+                resolve(JSON.parse(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    MiniAppBridge.prototype.getCookies = function (cookieNameList) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getCookies', { cookieList: cookieNameList }, function (response) {
+                resolve(JSON.parse(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
