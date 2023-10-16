@@ -866,6 +866,11 @@ function BooleanValue(value) {
   return false;
 }
 
-const decodeOctalEscape = (input) => input.replace(/\\(\d{3})/g, (match, octalCode) =>
-  String.fromCharCode(parseInt(octalCode, 8))
-);
+const parseIntOctal = (octalCode) => {
+  return Number.parseInt(octalCode, 8);
+};
+
+const decodeOctalEscape = (input) =>
+input.replace(/\\(\d{3})/g, (match, octalCode) => {
+  return String.fromCharCode(parseIntOctal(octalCode));
+});
