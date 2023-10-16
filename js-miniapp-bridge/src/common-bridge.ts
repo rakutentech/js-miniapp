@@ -143,8 +143,16 @@ export class MiniAppBridge {
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
    */
   execCustomEventsCallback(eventType: string, value: string) {
+
+    // This fix is added to decode the string from the host app.
+    // Reason: Some characters are not escaped properly, so the data is encoded in the native application
+    // and decoded here.
+    let decoded = ''
+    if (eventType === "miniappreceivejsoninfo") {
+      decoded = atob(value)
+    }
     const event = new CustomEvent(eventType, {
-      detail: { message: value },
+      detail: { message: decoded },
     });
     let queueObj = mabCustomEventQueue.filter(
       customEvent => customEvent === event
