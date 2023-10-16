@@ -79,8 +79,22 @@ var MiniAppBridge = /** @class */ (function () {
      * @param  {[String]} value Additional message sent from the native on invoking for the eventType
      */
     MiniAppBridge.prototype.execCustomEventsCallback = function (eventType, value) {
+        // This fix is added to decode the string from the host app.
+        // Reason: Some characters are not escaped properly, so the data is encoded in the native application
+        // and decoded here.
+        var result;
+        if (eventType === 'miniappreceivejsoninfo') {
+            //This will decode the message string that is sent from Native
+            var decoded = atob(value);
+            //Few characters like currency, etc., is not decoded properly,
+            // We use folllowing method to decoded it.
+            var octalString = decodeOctalEscape(decoded);
+            var stringifyMessage = JSON.stringify(octalString);
+            var replaced = stringifyMessage.replace(/\\\\/g, '\\');
+            result = JSON.parse(replaced);
+        }
         var event = new CustomEvent(eventType, {
-            detail: { message: value },
+            detail: { message: result },
         });
         var queueObj = mabCustomEventQueue.filter(function (customEvent) { return customEvent === event; })[0];
         if (!queueObj) {
@@ -578,6 +592,14 @@ function BooleanValue(value) {
     }
     return false;
 }
+var parseIntOctal = function (octalCode) {
+    return Number.parseInt(octalCode, 8);
+};
+var decodeOctalEscape = function (input) {
+    return input.replace(/\\(\d{3})/g, function (match, octalCode) {
+        return String.fromCharCode(parseIntOctal(octalCode));
+    });
+};
 
 },{"./types/error-types":6,"./types/secure-storage":10,"./types/token-data":11}],2:[function(require,module,exports){
 "use strict";
