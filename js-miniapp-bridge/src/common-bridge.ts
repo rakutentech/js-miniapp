@@ -31,7 +31,6 @@ import { ProductInfo, PurchasedProductInfo } from './types/in-app-purchase';
 import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
 import { UniversalBridgeInfo } from './types/universal-bridge';
-import { CookieInfo } from './types/cookie-info';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -806,32 +805,6 @@ export class MiniAppBridge {
         'sendAnalytics',
         { analyticsInfo: analytics },
         success => resolve(success),
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  getAllCookies() {
-    return new Promise<[CookieInfo]>((resolve, reject) => {
-      return this.executor.exec(
-        'getAllCookies',
-        null,
-        response => {
-          resolve(JSON.parse(response) as [CookieInfo]);
-        },
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  getCookies(cookieNameList: string[]) {
-    return new Promise<[CookieInfo]>((resolve, reject) => {
-      return this.executor.exec(
-        'getCookies',
-        { cookieList: cookieNameList },
-        response => {
-          resolve(JSON.parse(response) as [CookieInfo]);
-        },
         error => reject(parseMiniAppError(error))
       );
     });

@@ -144,7 +144,6 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Host app theme colors](#host-theme-colors)
 - [isDarkMode](#dark-mode)
 - [Send Analytics](#send-analytics)
-- [Get Cookies](#get-cookies)
 
 
 ### Retrieve a unique ID
@@ -1190,43 +1189,6 @@ import MiniApp from 'js-miniapp-sdk';
   MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
 ```
 
-<div id='get-cookies'/>
-
-## Get Cookies from host application <small style="color:green;font-size: 12px">Available from v1.19.0</small>
-
-You can use the following interface to get all Cookies from Host app using the following interface
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-  MiniApp.cookieManager
-    .getAllCookies()
-    .then((response) => {
-      // Response will be [CookieInfo]
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-```
-
-You can also request the host app to provide specific cookies by sharing the list of keys as `string[]`
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-  MiniApp.cookieManager
-    .getCookies(['user-token', `user-last-session`])
-    .then((response) => {
-      // Response will be [CookieInfo]
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-```
 
 ## Advanced Usage
 
