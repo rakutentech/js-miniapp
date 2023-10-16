@@ -148,14 +148,14 @@ export class MiniAppBridge {
     // Reason: Some characters are not escaped properly, so the data is encoded in the native application
     // and decoded here.
     let result;
-    if (eventType === "miniappreceivejsoninfo") {
+    if (eventType === 'miniappreceivejsoninfo') {
       //This will decode the message string that is sent from Native
       const decoded = atob(value);
       //Few characters like currency, etc., is not decoded properly,
       // We use folllowing method to decoded it.
-      const octalString = decodeOctalEscape(decoded)
-      const stringifyMessage = JSON.stringify(octalString)
-      const replaced = stringifyMessage.replace(/\\\\/g, '\\')
+      const octalString = decodeOctalEscape(decoded);
+      const stringifyMessage = JSON.stringify(octalString);
+      const replaced = stringifyMessage.replace(/\\\\/g, '\\');
       result = JSON.parse(replaced);
     }
     const event = new CustomEvent(eventType, {
@@ -894,7 +894,7 @@ function BooleanValue(value) {
 }
 
 function decodeOctalEscape(input) {
-  return input.replace(/\\(\d{3})/g, function (match, octalCode) {
+  return input.replace(/\\(\d{3})/g, function(match, octalCode) {
     return String.fromCharCode(parseInt(octalCode, 8));
   });
 }
