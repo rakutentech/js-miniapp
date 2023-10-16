@@ -142,8 +142,23 @@ export class MiniAppBridge {
    * @param  {[String]} value Additional message sent from the native on invoking for the eventType
    */
   execCustomEventsCallback(eventType: string, value: string) {
+
+    // This fix is added to decode the string from the host app.
+    // Reason: Some characters are not escaped properly, so the data is encoded in the native application
+    // and decoded here.
+    let result;
+    if (eventType === 'miniappreceivejsoninfo') {
+      //This will decode the message string that is sent from Native
+      const decoded = atob(value);
+      //Few characters like currency, etc., is not decoded properly,
+      // We use folllowing method to decoded it.
+      const octalString = decodeOctalEscape(decoded);
+      const stringifyMessage = JSON.stringify(octalString);
+      const replaced = stringifyMessage.replace(/\\\\/g, '\\');
+      result = JSON.parse(replaced);
+    }
     const event = new CustomEvent(eventType, {
-      detail: { message: value },
+      detail: { message: result },
     });
     let queueObj = mabCustomEventQueue.filter(
       customEvent => customEvent === event
@@ -850,3 +865,7 @@ function BooleanValue(value) {
   }
   return false;
 }
+
+const decodeOctalEscape = (input) => input.replace(/\\(\d{3})/g, (match, octalCode) =>
+  String.fromCharCode(parseInt(octalCode, 8))
+);
