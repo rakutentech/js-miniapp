@@ -110,7 +110,7 @@ var MiniAppBridge = /** @class */ (function () {
         // This fix is added to decode the string from the host app.
         // Reason: Some characters are not escaped properly, so the data is encoded in the native application
         // and decoded here.
-        var result;
+        var result = value;
         if (eventType === 'miniappreceivejsoninfo') {
             //This will decode the message string that is sent from Native
             var decoded = atob(value);
