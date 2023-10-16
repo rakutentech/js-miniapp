@@ -21,7 +21,6 @@ import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
 import { Purchases } from './modules/in-app-purchase';
-import { CookieManager } from './modules/cookie-manager';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -171,7 +170,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   universalBridge = new UniversalBridge();
   miniappUtils = new MiniAppUtils();
   purchaseService = new Purchases();
-  cookieManager = new CookieManager();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
