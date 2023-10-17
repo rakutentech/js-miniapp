@@ -875,5 +875,18 @@ function convertUnicodeCharacters(value) {
   const octalString = decodeOctalEscape(decoded);
   const stringifyMessage = JSON.stringify(octalString);
   const replaced = stringifyMessage.replace(/\\\\/g, '\\');
-  return JSON.parse(replaced);
+  if (isValidJson(replaced) === true) {
+    return JSON.parse(replaced);
+  } else {
+    return JSON.parse(stringifyMessage);
+  }
+}
+
+function isValidJson(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
 }
