@@ -630,7 +630,21 @@ function convertUnicodeCharacters(value) {
     var octalString = decodeOctalEscape(decoded);
     var stringifyMessage = JSON.stringify(octalString);
     var replaced = stringifyMessage.replace(/\\\\/g, '\\');
-    return JSON.parse(replaced);
+    if (isValidJson(replaced) === true) {
+        return JSON.parse(replaced);
+    }
+    else {
+        return JSON.parse(stringifyMessage);
+    }
+}
+function isValidJson(str) {
+    try {
+        JSON.parse(str);
+    }
+    catch (e) {
+        return false;
+    }
+    return true;
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
