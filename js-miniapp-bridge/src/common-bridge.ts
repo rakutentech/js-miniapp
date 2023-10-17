@@ -147,14 +147,7 @@ export class MiniAppBridge {
     // and decoded here.
     let result = value;
     if (eventType === 'miniappreceivejsoninfo') {
-      //This will decode the message string that is sent from Native
-      const decoded = atob(value);
-      //Few characters like currency, etc., is not decoded properly,
-      // We use folllowing method to decoded it.
-      const octalString = decodeOctalEscape(decoded);
-      const stringifyMessage = JSON.stringify(octalString);
-      const replaced = stringifyMessage.replace(/\\\\/g, '\\');
-      result = JSON.parse(replaced);
+      result = convertUnicodeCharacters(value);
     }
     const event = new CustomEvent(eventType, {
       detail: { message: result },
@@ -382,7 +375,7 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUserName',
         null,
-        userName => resolve(userName),
+        userName => resolve(convertUnicodeCharacters(userName)),
         error => reject(error)
       );
     });
@@ -873,3 +866,14 @@ const decodeOctalEscape = input =>
   input.replace(/\\(\d{3})/g, (match, octalCode) => {
     return String.fromCharCode(parseIntOctal(octalCode));
   });
+
+function convertUnicodeCharacters(value) {
+  //This will decode the message string that is sent from Native
+  const decoded = Buffer.from(value, 'base64').toString('utf8');
+  //Few characters like currency, etc., is not decoded properly,
+  // We use folllowing method to decoded it.
+  const octalString = decodeOctalEscape(decoded);
+  const stringifyMessage = JSON.stringify(octalString);
+  const replaced = stringifyMessage.replace(/\\\\/g, '\\');
+  return JSON.parse(replaced);
+}
