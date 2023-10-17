@@ -147,7 +147,7 @@ export class MiniAppBridge {
     // and decoded here.
     let result = value;
     if (eventType === 'miniappreceivejsoninfo') {
-      result = convertUnicodeCharacters(value)
+      result = convertUnicodeCharacters(value);
     }
     const event = new CustomEvent(eventType, {
       detail: { message: result },
