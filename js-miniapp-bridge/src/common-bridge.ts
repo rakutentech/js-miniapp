@@ -869,7 +869,7 @@ const decodeOctalEscape = input =>
 
 function convertUnicodeCharacters(value) {
   //This will decode the message string that is sent from Native
-  const decoded = atob(value);
+  const decoded = Buffer.from(value, 'base64').toString('utf8');
   //Few characters like currency, etc., is not decoded properly,
   // We use folllowing method to decoded it.
   const octalString = decodeOctalEscape(decoded);
