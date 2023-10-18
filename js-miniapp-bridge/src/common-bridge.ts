@@ -379,7 +379,15 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUserName',
         null,
-        userName => resolve(convertUnicodeCharacters(userName)),
+        userName => {
+          let value;
+          if (this.platform === 'iOS') {
+            value = convertUnicodeCharacters(userName);
+          } else {
+            value = convertUnicodeCharactersForAndroid(userName);
+          }
+          resolve(value)
+        },
         error => reject(error)
       );
     });
@@ -889,10 +897,7 @@ function convertUnicodeCharacters(value) {
 function convertUnicodeCharactersForAndroid(value) {
   //This will decode the message string that is sent from Native
   const decoded = Buffer.from(value, 'base64').toString('utf8');
-  //Few characters like currency, etc., is not decoded properly,
-  // We use following method to decoded it.
-  const octalString = decodeOctalEscape(decoded);
-  const stringifyMessage = JSON.stringify(octalString);
+  const stringifyMessage = JSON.stringify(decoded);
   const replaced = stringifyMessage.replace(/\\\\/g, '\\');
   if (isValidJson(stringifyMessage) === true) {
     return JSON.parse(stringifyMessage);
