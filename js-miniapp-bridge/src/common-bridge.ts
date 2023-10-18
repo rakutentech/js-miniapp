@@ -386,7 +386,7 @@ export class MiniAppBridge {
           } else {
             value = convertUnicodeCharactersForAndroid(userName);
           }
-          resolve(value)
+          resolve(value);
         },
         error => reject(error)
       );
