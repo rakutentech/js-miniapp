@@ -4,12 +4,12 @@ import { grey } from '@material-ui/core/colors';
 export default createTheme({
   palette: {
     primary: {
-      main: '#bf0000',
+      main: '#000000',
     },
     secondary: grey,
   },
   color: {
-    primary: '#bf0000',
+    primary: '#000000',
     secondary: 'lightgrey',
   },
 });
