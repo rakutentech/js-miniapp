@@ -113,7 +113,12 @@ var MiniAppBridge = /** @class */ (function () {
         // and decoded here.
         var result = value;
         if (eventType === 'miniappreceivejsoninfo') {
-            result = convertUnicodeCharacters(value);
+            if (this.platform === 'iOS') {
+                result = convertUnicodeCharacters(value);
+            }
+            else {
+                result = convertUnicodeCharactersForAndroid(value);
+            }
         }
         var event = new CustomEvent(eventType, {
             detail: { message: result },
@@ -626,7 +631,7 @@ function convertUnicodeCharacters(value) {
     //This will decode the message string that is sent from Native
     var decoded = Buffer.from(value, 'base64').toString('utf8');
     //Few characters like currency, etc., is not decoded properly,
-    // We use folllowing method to decoded it.
+    // We use following method to decoded it.
     var octalString = decodeOctalEscape(decoded);
     var stringifyMessage = JSON.stringify(octalString);
     var replaced = stringifyMessage.replace(/\\\\/g, '\\');
@@ -635,6 +640,21 @@ function convertUnicodeCharacters(value) {
     }
     else {
         return JSON.parse(stringifyMessage);
+    }
+}
+function convertUnicodeCharactersForAndroid(value) {
+    //This will decode the message string that is sent from Native
+    var decoded = Buffer.from(value, 'base64').toString('utf8');
+    //Few characters like currency, etc., is not decoded properly,
+    // We use following method to decoded it.
+    var octalString = decodeOctalEscape(decoded);
+    var stringifyMessage = JSON.stringify(octalString);
+    var replaced = stringifyMessage.replace(/\\\\/g, '\\');
+    if (isValidJson(stringifyMessage) === true) {
+        return JSON.parse(stringifyMessage);
+    }
+    else {
+        return JSON.parse(replaced);
     }
 }
 function isValidJson(str) {
