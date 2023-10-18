@@ -254,7 +254,16 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.getUserName = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getUserName', null, function (userName) { return resolve(convertUnicodeCharacters(userName)); }, function (error) { return reject(error); });
+            return _this.executor.exec('getUserName', null, function (userName) {
+                var value;
+                if (_this.platform === 'iOS') {
+                    value = convertUnicodeCharacters(userName);
+                }
+                else {
+                    value = convertUnicodeCharactersForAndroid(userName);
+                }
+                resolve(value);
+            }, function (error) { return reject(error); });
         });
     };
     /**
@@ -617,10 +626,7 @@ function convertUnicodeCharacters(value) {
 function convertUnicodeCharactersForAndroid(value) {
     //This will decode the message string that is sent from Native
     var decoded = Buffer.from(value, 'base64').toString('utf8');
-    //Few characters like currency, etc., is not decoded properly,
-    // We use following method to decoded it.
-    var octalString = decodeOctalEscape(decoded);
-    var stringifyMessage = JSON.stringify(octalString);
+    var stringifyMessage = JSON.stringify(decoded);
     var replaced = stringifyMessage.replace(/\\\\/g, '\\');
     if (isValidJson(stringifyMessage) === true) {
         return JSON.parse(stringifyMessage);
