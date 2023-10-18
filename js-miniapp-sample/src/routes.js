@@ -19,9 +19,9 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 
 import Ads from './pages/ads';
 import { CloseConfirmAlert } from './pages/app-close-alert';
@@ -32,6 +32,7 @@ import EventListener from './pages/event-listener';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
 import GifPage from './pages/gifs';
+import { PurchaseProductComponent } from './pages/in-app-purchase';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import Media from './pages/media';
@@ -44,7 +45,6 @@ import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
-import CookieManagerComponent from './pages/cookie-manager';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -103,13 +103,13 @@ const universalBridgeNavLink = {
   navLink: '/universal-bridge',
   label: 'Universal Bridge',
 };
+const inAppPurchaseNavLink = {
+  navLink: '/in-app-purchase',
+  label: 'Purchase',
+};
 const colorThemeNavLink = {
   navLink: '/color-theme',
   label: 'Color Theme',
-};
-const cookieManagerNavLink = {
-  navLink: '/cookies',
-  label: 'Cookie Manager',
 };
 
 const navLinks = [
@@ -136,8 +136,8 @@ const navLinks = [
   secureStorageNavLink,
   closeAlertNavLink,
   universalBridgeNavLink,
+  inAppPurchaseNavLink,
   colorThemeNavLink,
-  cookieManagerNavLink,
 ];
 
 const homeItem = [
@@ -265,16 +265,16 @@ const appItems = [
     element: <UniversalBridge />,
   },
   {
+    icon: <ShoppingCartIcon />,
+    label: inAppPurchaseNavLink.label,
+    navLink: inAppPurchaseNavLink.navLink,
+    element: <PurchaseProductComponent />,
+  },
+  {
     icon: <PaletteIcon />,
     label: colorThemeNavLink.label,
     navLink: colorThemeNavLink.navLink,
     element: <ColorThemeComponent />,
-  },
-  {
-    icon: <ArtTrackIcon />,
-    label: cookieManagerNavLink.label,
-    navLink: cookieManagerNavLink.navLink,
-    element: <CookieManagerComponent />,
   },
 ];
 

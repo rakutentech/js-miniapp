@@ -1,9 +1,5 @@
 ## CHANGELOG
 
-### 1.18.0 (2023-10-13)
-- **Feature:** Added new interface `getAllCookies()` to get `CookieInfo` which contains `name` and `value` of the cookie
-- **Feature:** Added new interface `getCookies(cookieNameList:)` that requests for certain cookies to host application that will get `CookieInfo` which contains `name` and `value` of the cookie
-
 ### 1.18.0 (2023-07-25)
 - **Feature:** Added new interface `getHostAppThemeColors()` to get `HostThemeColor` which contains primary & secondary color set by the Host app
 - **Feature:** Added new interface `isDarkMode()`. Interface to know if the Hostapp/Device is set to use the Dark 
