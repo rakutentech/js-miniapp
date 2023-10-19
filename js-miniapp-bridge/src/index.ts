@@ -62,6 +62,7 @@ import {
   PurchasedProductInfo,
   ProductPrice,
 } from './types/in-app-purchase';
+import { CookieInfo } from './types/cookie-info';
 
 export {
   MiniAppBridge,
@@ -111,4 +112,5 @@ export {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   UniversalBridgeInfo,
+  CookieInfo,
 };
