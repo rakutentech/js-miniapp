@@ -148,7 +148,11 @@ export class MiniAppBridge {
     // and decoded here.
     let result = value;
     if (eventType === 'miniappreceivejsoninfo') {
-      result = convertUnicodeCharacters(value);
+      if (this.platform === 'iOS') {
+        result = convertUnicodeCharacters(value);
+      } else {
+        result = convertUnicodeCharactersForAndroid(value);
+      }
     }
     const event = new CustomEvent(eventType, {
       detail: { message: result },
@@ -376,7 +380,15 @@ export class MiniAppBridge {
       return this.executor.exec(
         'getUserName',
         null,
-        userName => resolve(convertUnicodeCharacters(userName)),
+        userName => {
+          let value;
+          if (this.platform === 'iOS') {
+            value = convertUnicodeCharacters(userName);
+          } else {
+            value = convertUnicodeCharactersForAndroid(userName);
+          }
+          resolve(value);
+        },
         error => reject(error)
       );
     });
@@ -898,7 +910,7 @@ function convertUnicodeCharacters(value) {
   //This will decode the message string that is sent from Native
   const decoded = Buffer.from(value, 'base64').toString('utf8');
   //Few characters like currency, etc., is not decoded properly,
-  // We use folllowing method to decoded it.
+  // We use following method to decoded it.
   const octalString = decodeOctalEscape(decoded);
   const stringifyMessage = JSON.stringify(octalString);
   const replaced = stringifyMessage.replace(/\\\\/g, '\\');
@@ -906,6 +918,18 @@ function convertUnicodeCharacters(value) {
     return JSON.parse(replaced);
   } else {
     return JSON.parse(stringifyMessage);
+  }
+}
+
+function convertUnicodeCharactersForAndroid(value) {
+  //This will decode the message string that is sent from Native
+  const decoded = Buffer.from(value, 'base64').toString('utf8');
+  const stringifyMessage = JSON.stringify(decoded);
+  const replaced = stringifyMessage.replace(/\\\\/g, '\\');
+  if (isValidJson(stringifyMessage) === true) {
+    return JSON.parse(stringifyMessage);
+  } else {
+    return JSON.parse(replaced);
   }
 }
 
