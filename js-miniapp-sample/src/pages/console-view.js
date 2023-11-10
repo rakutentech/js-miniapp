@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { capturedLogs } from './log-capture';
 
 const ConsoleView = () => {
   const [isExpanded, setExpanded] = useState(false);
-  const [logs, setLogs] = useState([]);
+  const [mount, setMount] = useState(false);
 
   const toggleView = () => {
     setExpanded(!isExpanded);
@@ -15,9 +14,23 @@ const ConsoleView = () => {
     return isExpanded ? '200px' : '10px'; // Adjust the heights as needed
   };
 
-  useEffect(() => {
-    setLogs(capturedLogs);
-  }, [capturedLogs]);
+  if (window.console !== undefined) {
+    if (mount === false) {
+      setMount(true);
+      window.console = {
+        log: function (str) {
+          var test = document.createElement('div');
+          test.appendChild(document.createTextNode(str));
+          document.getElementById('myLog').appendChild(test);
+        },
+        error: function (str) {
+          var test = document.createElement('div');
+          test.appendChild(document.createTextNode(str));
+          document.getElementById('myLog').appendChild(test);
+        },
+      };
+    }
+  }
 
   return (
     <div
@@ -26,20 +39,14 @@ const ConsoleView = () => {
     >
       <div className="toggle-button" onClick={toggleView}>
         {isExpanded ? (
-          <ExpandLessIcon fontSize="inherit" />
-        ) : (
           <ExpandMoreIcon fontSize="inherit" />
+        ) : (
+          <ExpandLessIcon fontSize="inherit" />
         )}
       </div>
       <div className="content-container">
         <div className="content"></div>
-        <div className="log-container">
-          {logs.map((log, index) => (
-            <div key={index} className={`log-item ${log.type}`}>
-              {log.message}
-            </div>
-          ))}
-        </div>
+        <div className="log-container" id="myLog"></div>
       </div>
     </div>
   );
