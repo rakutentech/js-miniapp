@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.18.0 (2023-10-13)
+### 1.19.0 (2023-11-02)
 - **Feature:** Added new interface `getAllCookies()` to get `CookieInfo` which contains `name` and `value` of the cookie
 - **Feature:** Added new interface `getCookies(cookieNameList:)` that requests for certain cookies to host application that will get `CookieInfo` which contains `name` and `value` of the cookie
 
