@@ -3,11 +3,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const ConsoleView = () => {
-  const [isExpanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [mount, setMount] = useState(false);
 
   const toggleView = () => {
-    setExpanded(!isExpanded);
+    setIsExpanded(!isExpanded);
   };
 
   const getViewHeight = () => {
@@ -19,12 +19,12 @@ const ConsoleView = () => {
       setMount(true);
       window.console = {
         log: function (str) {
-          var test = document.createElement('div');
+          let test = document.createElement('div');
           test.appendChild(document.createTextNode(str));
           document.getElementById('myLog').appendChild(test);
         },
         error: function (str) {
-          var test = document.createElement('div');
+          let test = document.createElement('div');
           test.appendChild(document.createTextNode(str));
           document.getElementById('myLog').appendChild(test);
         },
