@@ -20,7 +20,9 @@ export function sendAnalytics(
     elementType: elementType,
     data: data,
   };
-  if (MiniApp.miniappUtils) {
+  try {
     MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
+  } catch (error) {
+    console.error('An error occurred while sending analytics:', error);
   }
 }
