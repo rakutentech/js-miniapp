@@ -1,4 +1,5 @@
 import React from 'react';
+import ConsoleView from './pages/console-view';
 
 import { makeStyles, ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
@@ -21,6 +22,7 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div className={classes.App}>
           <Home />
+          <ConsoleView />
         </div>
       </ThemeProvider>
     </Provider>

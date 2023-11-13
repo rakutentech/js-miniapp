@@ -33,3 +33,41 @@ body,
 .MuiTabPanel-root {
   padding: 3% !important;
 }
+
+.bottom-view {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  transition: height 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-view.expanded {
+  height: 200px;
+}
+
+.toggle-button {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.content-container {
+  text-align: left;
+}
+
+.content {
+  display: block;
+  transition: opacity 0.3s;
+  opacity: 1;
+}
+
+.log-container {
+  height: 160px; /* Set a fixed height, adjust as needed */
+  overflow-y: scroll; /* Enable scrolling when content exceeds the height */
+  padding: 10px; /* Add padding for better readability */
+}
