@@ -5,6 +5,7 @@ import {
   Points,
 } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../sdkbridge';
+import { DecodeManager } from './decoder';
 
 /**
  * Interfaces to retrieve User profile related information.
@@ -60,7 +61,22 @@ export class UserInfo implements UserInfoProvider {
   }
 
   getContacts(): Promise<Contact[]> {
-    return getBridge().getContacts();
+    if (getBridge().getContacts.length > 0) {
+      console.log('Fetch Encoded Contacts');
+      return getBridge()
+        .getContacts(true)
+        .then(contactList => {
+          console.log('Fetched Contacts: ', contactList);
+          const decoder = new DecodeManager();
+          return decoder.decodeContacts(contactList);
+        })
+        .catch(error => {
+          console.error(`Error retrieving contacts: ${error.message}`);
+          return [];
+        });
+    } else {
+      return getBridge().getContacts();
+    }
   }
 
   getAccessToken(audience: string, scopes: string[]): Promise<AccessTokenData> {

@@ -417,11 +417,11 @@ export class MiniAppBridge {
    * (provided the rakuten.miniapp.user.CONTACT_LIST is allowed by the user)
    * It returns error info if user had denied the custom permission
    */
-  getContacts() {
+  getContacts(isEncoded?) {
     return new Promise<Contact[]>((resolve, reject) => {
       return this.executor.exec(
         'getContacts',
-        null,
+        { isContactsEncodingRequired: isEncoded },
         contacts => resolve(JSON.parse(contacts) as Contact[]),
         error => reject(error)
       );
