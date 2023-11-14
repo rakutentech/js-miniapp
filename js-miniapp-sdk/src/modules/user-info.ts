@@ -62,11 +62,9 @@ export class UserInfo implements UserInfoProvider {
 
   getContacts(): Promise<Contact[]> {
     if (getBridge().getContacts.length > 0) {
-      console.log('Fetch Encoded Contacts');
       return getBridge()
         .getContacts(true)
         .then(contactList => {
-          console.log('Fetched Contacts: ', contactList);
           const decoder = new DecodeManager();
           return decoder.decodeContacts(contactList);
         })
