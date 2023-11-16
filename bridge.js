@@ -284,10 +284,10 @@ var MiniAppBridge = /** @class */ (function () {
      * (provided the rakuten.miniapp.user.CONTACT_LIST is allowed by the user)
      * It returns error info if user had denied the custom permission
      */
-    MiniAppBridge.prototype.getContacts = function () {
+    MiniAppBridge.prototype.getContacts = function (isEncoded) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getContacts', null, function (contacts) { return resolve(JSON.parse(contacts)); }, function (error) { return reject(error); });
+            return _this.executor.exec('getContacts', { isContactsEncodingRequired: isEncoded }, function (contacts) { return resolve(JSON.parse(contacts)); }, function (error) { return reject(error); });
         });
     };
     /**
