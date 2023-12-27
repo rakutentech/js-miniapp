@@ -22,7 +22,7 @@ import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
 import { Purchases } from './modules/in-app-purchase';
 import { CookieManager } from './modules/cookie-manager';
-
+import { BridgeInfoConverter } from './modules/bridge-info-converter';
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -272,7 +272,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       .getHostEnvironmentInfo()
       .then(info => {
         info.platform = getBridge().platform as HostPlatform;
-        return info;
+        return BridgeInfoConverter.convertJsonToPlatformInfo(info);
       });
   }
 
