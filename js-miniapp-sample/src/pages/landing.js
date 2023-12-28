@@ -220,7 +220,7 @@ const Landing = (props: LandingProps) => {
           </ListItemAvatar>
           <ListItemText
             primary="Build Type:"
-            secondary={String(props.hostBuildType) ?? '-'}
+            secondary={String(props.hostBuildType) || '-'}
           />
         </ListItem>
         <ListItem>
