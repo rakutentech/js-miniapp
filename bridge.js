@@ -1180,13 +1180,23 @@ exports.parseStorageError = parseStorageError;
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Platform = void 0;
+exports.HostBuildType = exports.Platform = void 0;
 /** Device platform. */
 var Platform;
 (function (Platform) {
     Platform["ANDROID"] = "Android";
     Platform["IOS"] = "iOS";
 })(Platform = exports.Platform || (exports.Platform = {}));
+/** Device Build Types. */
+var HostBuildType;
+(function (HostBuildType) {
+    HostBuildType["DEBUG"] = "DEBUG";
+    HostBuildType["STAGING"] = "STAGING";
+    HostBuildType["QA"] = "QA";
+    HostBuildType["CUSTOM"] = "CUSTOM";
+    HostBuildType["PREPRODUCTION"] = "PRE-PRODUCTION";
+    HostBuildType["PRODUCTION"] = "PRODUCTION";
+})(HostBuildType = exports.HostBuildType || (exports.HostBuildType = {}));
 
 },{}],10:[function(require,module,exports){
 "use strict";
