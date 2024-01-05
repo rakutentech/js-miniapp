@@ -1,4 +1,4 @@
-import { Platform } from './platform';
+import { Platform, HostBuildType } from './platform';
 
 /** HostEnvironmentInfo type. */
 export interface HostEnvironmentInfo {
@@ -7,4 +7,7 @@ export interface HostEnvironmentInfo {
   hostVersion?: string;
   sdkVersion?: string;
   hostLocale?: string;
+  hostBuildType?: HostBuildType;
+  deviceToken?: string;
+  pushToken?: string;
 }

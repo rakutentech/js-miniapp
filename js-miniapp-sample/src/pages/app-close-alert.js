@@ -9,7 +9,7 @@ import {
   Typography,
   FormGroup,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { red, green } from '@material-ui/core/colors';
 import Checkbox from '@mui/material/Checkbox';
 import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
@@ -78,6 +78,9 @@ const useStyles = makeStyles((theme) => ({
   },
   red: {
     color: red[500],
+  },
+  green: {
+    color: green[500],
   },
 }));
 
@@ -329,7 +332,7 @@ function CloseConfirmAlert() {
             </Typography>
           )}
           {!state.isLoading && state.isSuccess && (
-            <Typography variant="body1" className={classes.red}>
+            <Typography variant="body1" className={classes.green}>
               Alert information stored Successfully
             </Typography>
           )}
