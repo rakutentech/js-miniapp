@@ -857,8 +857,12 @@ export class MiniAppBridge {
     this.notificationBridge.shouldUpdateBadgeNumber(notificationInfo);
   }
 
-  shouldUpdateNotificationInfo(notificationDetailedInfo: NotificationDetailedInfo) {
-    this.notificationBridge.shouldUpdateNotificationInfo(notificationDetailedInfo);
+  shouldUpdateNotificationInfo(
+    notificationDetailedInfo: NotificationDetailedInfo
+  ) {
+    this.notificationBridge.shouldUpdateNotificationInfo(
+      notificationDetailedInfo
+    );
   }
 }
 
