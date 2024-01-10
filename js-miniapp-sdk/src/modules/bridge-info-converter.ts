@@ -49,13 +49,16 @@ export class BridgeInfoConverter {
   ): HostEnvironmentInfo {
     console.log('convertJsonToPlatformInfo: ', json);
     if (json && json !== undefined) {
-      const convertedValue = BridgeInfoConverter.mapStringToHostBuildType(
-        json.hostBuildType.toUpperCase()
-      );
-      console.log('convertJsonToPlatformInfo convertedValue: ', convertedValue);
-      if (convertedValue !== undefined) {
-        json.hostBuildType = convertedValue;
-        return json;
+      if (json.hostBuildType && json.hostBuildType !== undefined) {
+        const convertedValue = BridgeInfoConverter.mapStringToHostBuildType(
+          json.hostBuildType.toUpperCase()
+        );
+        if (convertedValue !== undefined) {
+          json.hostBuildType = convertedValue;
+          return json;
+        } else {
+          return json;
+        }
       } else {
         return json;
       }
