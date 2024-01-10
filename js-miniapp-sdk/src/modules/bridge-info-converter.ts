@@ -5,11 +5,11 @@ export class BridgeInfoConverter {
   private static buildTypeMapping: Record<string, HostBuildType>;
 
   private static initialize() {
-    const prodKeyList = ['PRD', 'PROD', 'PRODUCTION'];
-    const preprodKeyList = ['PRE-PROD', 'PRE-PRODUCTION'];
+    const prodKeyList = ['PRD', 'PROD', 'PRODUCTION', 'RELEASE'];
+    const preprodKeyList = ['PRE-PROD', 'PRE-PRODUCTION', 'PREPROD'];
     const stagingKeyList = ['STG', 'STAGING'];
-    const qaKeyList = ['QA'];
-    const debugKeyList = ['DEBUG'];
+    const qaKeyList = ['QA', 'TESTING'];
+    const debugKeyList = ['DEBUG', 'DEV', 'DEVELOPMENT'];
     const customKeyList = ['CUSTOM'];
     BridgeInfoConverter.buildTypeMapping = {
       ...prodKeyList.reduce((acc, key) => {
@@ -50,7 +50,7 @@ export class BridgeInfoConverter {
     console.log('convertJsonToPlatformInfo: ', json);
     if (json && json !== undefined) {
       const convertedValue = BridgeInfoConverter.mapStringToHostBuildType(
-        json.hostBuildType
+        json.hostBuildType.toUpperCase()
       );
       console.log('convertJsonToPlatformInfo convertedValue: ', convertedValue);
       if (convertedValue !== undefined) {
