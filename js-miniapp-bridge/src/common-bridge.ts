@@ -32,7 +32,7 @@ import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
 import { UniversalBridgeInfo } from './types/universal-bridge';
 import { CookieInfo } from './types/cookie-info';
-import { MiniAppPreferences } from './modules/miniapp-preferences'
+import { MiniAppPreferences } from './modules/miniapp-preferences';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -87,7 +87,7 @@ export class MiniAppBridge {
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
-    this.preferences = new MiniAppPreferences(executor)
+    this.preferences = new MiniAppPreferences(executor);
 
     if (window) {
       window.addEventListener(
@@ -845,19 +845,19 @@ export class MiniAppBridge {
   }
 
   set(key: string, value: string) {
-    return this.preferences.set(key, value)
+    return this.preferences.set(key, value);
   }
 
   get(key: string) {
-    return this.preferences.get(key)
+    return this.preferences.get(key);
   }
 
   remove(key: string) {
-    return this.preferences.remove(key)
+    return this.preferences.remove(key);
   }
 
   clearMiniAppPreferences() {
-    return this.preferences.clearMiniAppPreferences()
+    return this.preferences.clearMiniAppPreferences();
   }
 }
 

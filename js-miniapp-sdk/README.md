@@ -1245,15 +1245,15 @@ Android uses Shared Preferences and iOS uses UserDefaults for the interfaces bel
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
-  MiniApp.preferences
-    .set(key, value)
-    .then((response) => {
-      // Boolean response whether the value set is successfull
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+MiniApp.preferences
+  .set(key, value)
+  .then((response) => {
+    // Boolean response whether the value set is successfull
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 ```
 
@@ -1262,15 +1262,15 @@ import MiniApp from 'js-miniapp-sdk';
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
-  MiniApp.preferences
-    .get(key)
-    .then((response) => {
-      // Value that is stored for a given key
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+MiniApp.preferences
+  .get(key)
+  .then((response) => {
+    // Value that is stored for a given key
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 ```
 
@@ -1279,15 +1279,15 @@ import MiniApp from 'js-miniapp-sdk';
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
-  MiniApp.preferences
-    .remove(key)
-    .then((response) => {
-      // Boolean response whether the remove is successfull
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+MiniApp.preferences
+  .remove(key)
+  .then((response) => {
+    // Boolean response whether the remove is successfull
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 ```
 
@@ -1296,15 +1296,15 @@ import MiniApp from 'js-miniapp-sdk';
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
-  MiniApp.preferences
-    .clearMiniAppPreferences(key)
-    .then((response) => {
-      // Boolean response whether the clearing storage is successfull
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+MiniApp.preferences
+  .clearMiniAppPreferences(key)
+  .then((response) => {
+    // Boolean response whether the clearing storage is successfull
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 ```
 
