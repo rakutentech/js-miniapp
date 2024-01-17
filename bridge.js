@@ -26,7 +26,7 @@ var AndroidExecutor = /** @class */ (function () {
 }());
 window.MiniAppBridge = new common_bridge_1.MiniAppBridge(new AndroidExecutor());
 
-},{"../common-bridge":2,"../types/platform":9}],2:[function(require,module,exports){
+},{"../common-bridge":2,"../types/platform":10}],2:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 /** @internal */
@@ -46,6 +46,7 @@ exports.MiniAppBridge = exports.mabKeyboardEventQueue = exports.mabCustomEventQu
 var secure_storage_1 = require("./types/secure-storage");
 var token_data_1 = require("./types/token-data");
 var error_types_1 = require("./types/error-types");
+var notification_bridge_1 = require("./notification-bridge");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
@@ -61,6 +62,7 @@ var MiniAppBridge = /** @class */ (function () {
         this.secureStorageLoadError = null;
         this.executor = executor;
         this.platform = executor.getPlatform();
+        this.notificationBridge = new notification_bridge_1.NotificationBridge(executor);
         if (window) {
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
@@ -595,6 +597,15 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    MiniAppBridge.prototype.shouldClearNotifications = function (notificationType) {
+        this.notificationBridge.shouldClearNotifications(notificationType);
+    };
+    MiniAppBridge.prototype.shouldUpdateBadgeNumber = function (notificationInfo) {
+        this.notificationBridge.shouldUpdateBadgeNumber(notificationInfo);
+    };
+    MiniAppBridge.prototype.shouldUpdateNotificationInfo = function (notificationDetailedInfo) {
+        this.notificationBridge.shouldUpdateNotificationInfo(notificationDetailedInfo);
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
@@ -690,7 +701,53 @@ function isValidJson(str) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./types/error-types":6,"./types/secure-storage":10,"./types/token-data":11,"buffer":13}],3:[function(require,module,exports){
+},{"./notification-bridge":3,"./types/error-types":7,"./types/secure-storage":11,"./types/token-data":12,"buffer":14}],3:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotificationBridge = void 0;
+var NotificationBridge = /** @class */ (function () {
+    function NotificationBridge(executor) {
+        this.executor = executor;
+        this.platform = executor.getPlatform();
+    }
+    /**
+     * This method is used to clear any notifications in the Host application
+     * @param {notificationType} NotificationInfoType
+     * @see {shouldClearNotifications}
+     */
+    NotificationBridge.prototype.shouldClearNotifications = function (notificationType) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('shouldClearNotifications', { notificationType: notificationType }, function (result) { return resolve(result); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * This method is used to to update badge number for a specific notification info
+     * @param {notificationInfo} NotificationInfo
+     * @see {shouldUpdateBadgeNumber}
+     */
+    NotificationBridge.prototype.shouldUpdateBadgeNumber = function (notificationInfo) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('shouldUpdateBadgeNumber', { notificationInfo: notificationInfo }, function (result) { return resolve(result); }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * This method is used to share the notification detailed information to Host app
+     * @param {notificationDetailedInfo} NotificationDetailedInfo
+     * @see {shouldUpdateNotificationInfo}
+     */
+    NotificationBridge.prototype.shouldUpdateNotificationInfo = function (notificationDetailedInfo) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('shouldUpdateNotificationInfo', { notificationDetailedInfo: notificationDetailedInfo }, function (result) { return resolve(result); }, function (error) { return reject(error); });
+        });
+    };
+    return NotificationBridge;
+}());
+exports.NotificationBridge = NotificationBridge;
+
+},{}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -766,7 +823,7 @@ function parseAuthError(json) {
 }
 exports.parseAuthError = parseAuthError;
 
-},{"./mini-app-error":7}],4:[function(require,module,exports){
+},{"./mini-app-error":8}],5:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -873,7 +930,7 @@ function parseDownloadError(json) {
 }
 exports.parseDownloadError = parseDownloadError;
 
-},{"./mini-app-error":7}],5:[function(require,module,exports){
+},{"./mini-app-error":8}],6:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -982,7 +1039,7 @@ function parseInAppPurchaseError(json) {
 }
 exports.parseInAppPurchaseError = parseInAppPurchaseError;
 
-},{"./mini-app-error":7}],6:[function(require,module,exports){
+},{"./mini-app-error":8}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
@@ -1027,7 +1084,7 @@ function parseMiniAppError(jsonString) {
 }
 exports.parseMiniAppError = parseMiniAppError;
 
-},{"./auth-errors":3,"./download-file-errors":4,"./in-app-purchase-errors":5,"./mini-app-error":7,"./secure-storage-errors":8}],7:[function(require,module,exports){
+},{"./auth-errors":4,"./download-file-errors":5,"./in-app-purchase-errors":6,"./mini-app-error":8,"./secure-storage-errors":9}],8:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1063,7 +1120,7 @@ var MiniAppError = /** @class */ (function (_super) {
 }(Error));
 exports.MiniAppError = MiniAppError;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1155,7 +1212,7 @@ function parseStorageError(json) {
 }
 exports.parseStorageError = parseStorageError;
 
-},{"./mini-app-error":7}],9:[function(require,module,exports){
+},{"./mini-app-error":8}],10:[function(require,module,exports){
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1177,7 +1234,7 @@ var HostBuildType;
     HostBuildType["PRODUCTION"] = "PRODUCTION";
 })(HostBuildType = exports.HostBuildType || (exports.HostBuildType = {}));
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiniAppSecureStorageEvents = void 0;
@@ -1187,7 +1244,7 @@ var MiniAppSecureStorageEvents;
     MiniAppSecureStorageEvents["onLoadError"] = "miniappsecurestorageloaderror";
 })(MiniAppSecureStorageEvents = exports.MiniAppSecureStorageEvents || (exports.MiniAppSecureStorageEvents = {}));
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessTokenScopes = exports.AccessTokenData = void 0;
@@ -1211,7 +1268,7 @@ var AccessTokenScopes = /** @class */ (function () {
 }());
 exports.AccessTokenScopes = AccessTokenScopes;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -1365,7 +1422,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -3146,7 +3203,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":12,"buffer":13,"ieee754":14}],14:[function(require,module,exports){
+},{"base64-js":13,"buffer":14,"ieee754":15}],15:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
