@@ -32,6 +32,12 @@ import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
 import { UniversalBridgeInfo } from './types/universal-bridge';
 import { CookieInfo } from './types/cookie-info';
+import { NotificationBridge } from './notification-bridge';
+import {
+  NotificationDetailedInfo,
+  NotificationInfo,
+  NotificationInfoType,
+} from './types/notification/notification-info';
 import { MiniAppPreferences } from './modules/miniapp-preferences';
 
 /** @internal */
@@ -82,11 +88,13 @@ export class MiniAppBridge {
   platform: string;
   isSecureStorageReady = false;
   secureStorageLoadError: MiniAppError | null = null;
+  private notificationBridge: NotificationBridge;
   preferences: MiniAppPreferences;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
+    this.notificationBridge = new NotificationBridge(executor);
     this.preferences = new MiniAppPreferences(executor);
 
     if (window) {
@@ -842,6 +850,22 @@ export class MiniAppBridge {
         error => reject(parseMiniAppError(error))
       );
     });
+  }
+
+  shouldClearNotifications(notificationType: NotificationInfoType) {
+    this.notificationBridge.shouldClearNotifications(notificationType);
+  }
+
+  shouldUpdateBadgeNumber(notificationInfo: NotificationInfo) {
+    this.notificationBridge.shouldUpdateBadgeNumber(notificationInfo);
+  }
+
+  shouldUpdateNotificationInfo(
+    notificationDetailedInfo: NotificationDetailedInfo
+  ) {
+    this.notificationBridge.shouldUpdateNotificationInfo(
+      notificationDetailedInfo
+    );
   }
 
   set(key: string, value: string) {
