@@ -32,6 +32,13 @@ import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
 import { UniversalBridgeInfo } from './types/universal-bridge';
 import { CookieInfo } from './types/cookie-info';
+import { NotificationBridge } from './notification-bridge';
+import {
+  NotificationDetailedInfo,
+  NotificationInfo,
+  NotificationInfoType,
+} from './types/notification/notification-info';
+import { MiniAppPreferences } from './modules/miniapp-preferences';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -81,10 +88,14 @@ export class MiniAppBridge {
   platform: string;
   isSecureStorageReady = false;
   secureStorageLoadError: MiniAppError | null = null;
+  private notificationBridge: NotificationBridge;
+  preferences: MiniAppPreferences;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
+    this.notificationBridge = new NotificationBridge(executor);
+    this.preferences = new MiniAppPreferences(executor);
 
     if (window) {
       window.addEventListener(
@@ -797,7 +808,7 @@ export class MiniAppBridge {
         'isDarkMode',
         null,
         response => {
-          resolve(BooleanValue(response));
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );
@@ -840,6 +851,38 @@ export class MiniAppBridge {
       );
     });
   }
+
+  shouldClearNotifications(notificationType: NotificationInfoType) {
+    this.notificationBridge.shouldClearNotifications(notificationType);
+  }
+
+  shouldUpdateBadgeNumber(notificationInfo: NotificationInfo) {
+    this.notificationBridge.shouldUpdateBadgeNumber(notificationInfo);
+  }
+
+  shouldUpdateNotificationInfo(
+    notificationDetailedInfo: NotificationDetailedInfo
+  ) {
+    this.notificationBridge.shouldUpdateNotificationInfo(
+      notificationDetailedInfo
+    );
+  }
+
+  set(key: string, value: string) {
+    return this.preferences.set(key, value);
+  }
+
+  get(key: string) {
+    return this.preferences.get(key);
+  }
+
+  remove(key: string) {
+    return this.preferences.remove(key);
+  }
+
+  clearMiniAppPreferences() {
+    return this.preferences.clearMiniAppPreferences();
+  }
 }
 
 /**
@@ -881,20 +924,6 @@ function trimBannerText(message: string = null, maxLength = 128) {
   return message?.length > maxLength
     ? message?.substring(0, maxLength - 1) + '…'
     : message;
-}
-
-function BooleanValue(value) {
-  if (typeof value === 'boolean') {
-    return value;
-  } else if (typeof value === 'string') {
-    const lowerCaseValue = value.toLowerCase();
-    if (lowerCaseValue === 'true' || lowerCaseValue === '1') {
-      return true;
-    } else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
-      return false;
-    }
-  }
-  return false;
 }
 
 const parseIntOctal = octalCode => {
@@ -940,4 +969,20 @@ function isValidJson(str) {
     return false;
   }
   return true;
+}
+
+export class MiniAppBridgeUtils {
+  static BooleanValue(value) {
+    if (typeof value === 'boolean') {
+      return value;
+    } else if (typeof value === 'string') {
+      const lowerCaseValue = value.toLowerCase();
+      if (lowerCaseValue === 'true' || lowerCaseValue === '1') {
+        return true;
+      } else if (lowerCaseValue === 'false' || lowerCaseValue === '0') {
+        return false;
+      }
+    }
+    return false;
+  }
 }
