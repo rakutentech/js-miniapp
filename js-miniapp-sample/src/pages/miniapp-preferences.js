@@ -1,5 +1,4 @@
 import React, { useReducer, useState, Fragment, useEffect } from 'react';
-import MiniApp from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -17,6 +16,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import {
+  MiniApp,
   MiniAppError,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
@@ -344,12 +344,7 @@ function MiniAppPreferenceComponent() {
   }
 
   function isValidKeyValue(key, val) {
-    if (isEmpty(key) && !isEmpty(val)) {
-      return false;
-    } else if (!isEmpty(key) && isEmpty(val)) {
-      return false;
-    }
-    return true;
+    return !(isEmpty(key) && !isEmpty(val)) && !(isEmpty(val) && !isEmpty(key));
   }
 
   function SetPreferenceCardActionsForm() {
