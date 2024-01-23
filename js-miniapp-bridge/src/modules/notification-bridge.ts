@@ -1,9 +1,9 @@
-import { PlatformExecutor } from './common-bridge';
+import { PlatformExecutor } from '../common-bridge';
 import {
   NotificationDetailedInfo,
   NotificationInfo,
   NotificationInfoType,
-} from './types/notification/notification-info';
+} from '../types/notification/notification-info';
 
 export class NotificationBridge {
   executor: PlatformExecutor;

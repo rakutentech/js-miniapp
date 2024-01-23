@@ -32,7 +32,7 @@ import { HostThemeColor } from './types/host-color-scheme';
 import { MAAnalyticsInfo } from './types/analytics/analytics';
 import { UniversalBridgeInfo } from './types/universal-bridge';
 import { CookieInfo } from './types/cookie-info';
-import { NotificationBridge } from './notification-bridge';
+import { NotificationBridge } from './modules/notification-bridge';
 import {
   NotificationDetailedInfo,
   NotificationInfo,
