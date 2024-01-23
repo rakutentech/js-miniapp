@@ -203,16 +203,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
   }
 };
 
-type MiniAppPreferenceProps = {
-  getItem: string,
-  requestSetItem: (key: string, value: string) => Promise<Boolean>,
-  requestGetItem: (key: string) => Promise<string>,
-  requestRemoveItem: (key: string) => Promise<Boolean>,
-  requestClear: () => Promise<Boolean>,
-  storageError: MiniAppError,
-};
-
-function MiniAppPreferenceComponent(props: MiniAppPreferenceProps) {
+function MiniAppPreferenceComponent() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const [storeKey, setStoreKey] = useState('');
@@ -450,11 +441,6 @@ function MiniAppPreferenceComponent(props: MiniAppPreferenceProps) {
         {!state.isLoading && state.isError && (
           <Typography variant="body1" className={classes.red}>
             {state.error}
-          </Typography>
-        )}
-        {!state.isLoading && !state.isError && (
-          <Typography variant="body1" className={classes.red}>
-            {props.getItems}
           </Typography>
         )}
       </FormGroup>
