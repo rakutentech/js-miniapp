@@ -17,6 +17,7 @@ import PaletteIcon from '@material-ui/icons/Palette';
 import PersonIcon from '@material-ui/icons/Person';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
+import DatasetIcon from '@mui/icons-material/Dataset';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
@@ -45,6 +46,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import CookieManagerComponent from './pages/cookie-manager';
+import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -111,6 +113,10 @@ const cookieManagerNavLink = {
   navLink: '/cookies',
   label: 'Cookie Manager',
 };
+const miniAppPreferenceNavLink = {
+  navLink: '/miniapp-preference',
+  label: 'MiniApp Preference',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -134,6 +140,7 @@ const navLinks = [
   fileUploadNavLink,
   gifsNavLink,
   secureStorageNavLink,
+  miniAppPreferenceNavLink,
   closeAlertNavLink,
   universalBridgeNavLink,
   colorThemeNavLink,
@@ -251,6 +258,12 @@ const appItems = [
     label: secureStorageNavLink.label,
     navLink: secureStorageNavLink.navLink,
     element: <SecureStorageComponent />,
+  },
+  {
+    icon: <DatasetIcon />,
+    label: miniAppPreferenceNavLink.label,
+    navLink: miniAppPreferenceNavLink.navLink,
+    element: <MiniAppPreferenceComponent />,
   },
   {
     icon: <NotificationImportantOutlinedIcon />,
