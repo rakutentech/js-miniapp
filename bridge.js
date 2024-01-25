@@ -18,7 +18,7 @@ exports.MiniAppBridgeUtils = exports.MiniAppBridge = exports.mabKeyboardEventQue
 var secure_storage_1 = require("./types/secure-storage");
 var token_data_1 = require("./types/token-data");
 var error_types_1 = require("./types/error-types");
-var notification_bridge_1 = require("./notification-bridge");
+var notification_bridge_1 = require("./modules/notification-bridge");
 var miniapp_preferences_1 = require("./modules/miniapp-preferences");
 /** @internal */
 var mabMessageQueue = [];
@@ -693,7 +693,7 @@ var MiniAppBridgeUtils = /** @class */ (function () {
 exports.MiniAppBridgeUtils = MiniAppBridgeUtils;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./modules/miniapp-preferences":3,"./notification-bridge":4,"./types/error-types":8,"./types/secure-storage":12,"./types/token-data":13,"buffer":15}],2:[function(require,module,exports){
+},{"./modules/miniapp-preferences":3,"./modules/notification-bridge":4,"./types/error-types":8,"./types/secure-storage":12,"./types/token-data":13,"buffer":15}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
