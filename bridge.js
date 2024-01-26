@@ -741,7 +741,7 @@ var MiniAppPreferences = /** @class */ (function () {
     MiniAppPreferences.prototype.set = function (key, value) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('setPreference', { preferenceKey: key, preferenceValue: value }, function (response) {
+            return _this.executor.exec('setMiniAppPreference', { preferenceKey: key, preferenceValue: value }, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
@@ -754,7 +754,7 @@ var MiniAppPreferences = /** @class */ (function () {
     MiniAppPreferences.prototype.get = function (key) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getPreference', { preferenceKey: key }, function (response) {
+            return _this.executor.exec('getMiniAppPreference', { preferenceKey: key }, function (response) {
                 resolve(response);
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
@@ -767,7 +767,7 @@ var MiniAppPreferences = /** @class */ (function () {
     MiniAppPreferences.prototype.remove = function (key) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getPreference', { preferenceKey: key }, function (response) {
+            return _this.executor.exec('removeMiniAppPreference', { preferenceKey: key }, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
