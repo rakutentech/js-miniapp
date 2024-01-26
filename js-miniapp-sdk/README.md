@@ -1228,7 +1228,7 @@ import MiniApp from 'js-miniapp-sdk';
 
 ## MiniApp storage using Key/Value <small style="color:green;font-size: 12px">Available from v1.20.0</small>
 
-[Secure storage](#secure-storage) uses database for storing any data from MiniApp. It is recommended for MiniApps that wants to store huge data.
+We already have a [Secure storage](#secure-storage) that uses database for storing any data from MiniApp. It is recommended for MiniApps that wants to store huge data.
 
 If MiniApp wants to use any storage that is lightweight, then they can use the following interfaces.
 Android uses Shared Preferences and iOS uses UserDefaults for the interfaces below,

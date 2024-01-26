@@ -19,7 +19,7 @@ export class MiniAppPreferences {
   set(key: string, value: string) {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
-        'setPreference',
+        'setMiniAppPreference',
         { preferenceKey: key, preferenceValue: value },
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
@@ -37,7 +37,7 @@ export class MiniAppPreferences {
   get(key: string) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
-        'getPreference',
+        'getMiniAppPreference',
         { preferenceKey: key },
         response => {
           resolve(response);
@@ -55,7 +55,7 @@ export class MiniAppPreferences {
   remove(key: string) {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
-        'getPreference',
+        'removeMiniAppPreference',
         { preferenceKey: key },
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
