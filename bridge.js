@@ -725,7 +725,6 @@ exports.MiniAppBridgeUtils = MiniAppBridgeUtils;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiniAppPreferences = void 0;
-var common_bridge_1 = require("../common-bridge");
 var error_types_1 = require("../types/error-types");
 var MiniAppPreferences = /** @class */ (function () {
     function MiniAppPreferences(executor) {
@@ -742,7 +741,7 @@ var MiniAppPreferences = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('setMiniAppPreference', { preferenceKey: key, preferenceValue: value }, function (response) {
-                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+                resolve(response);
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -768,7 +767,7 @@ var MiniAppPreferences = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('removeMiniAppPreference', { preferenceKey: key }, function (response) {
-                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+                resolve(response);
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -781,7 +780,7 @@ var MiniAppPreferences = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('clearMiniAppPreferences', null, function (response) {
-                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+                resolve(response);
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -789,7 +788,7 @@ var MiniAppPreferences = /** @class */ (function () {
 }());
 exports.MiniAppPreferences = MiniAppPreferences;
 
-},{"../common-bridge":2,"../types/error-types":8}],4:[function(require,module,exports){
+},{"../types/error-types":8}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationBridge = void 0;
