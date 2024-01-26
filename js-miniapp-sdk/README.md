@@ -1248,7 +1248,7 @@ import MiniApp from 'js-miniapp-sdk';
 MiniApp.preferences
   .set(key, value)
   .then((response) => {
-    // Boolean response whether the value set is successfull
+    // String response sent from Host app when the value set is successfull
     console.log(response);
   })
   .catch((error) => {
@@ -1282,7 +1282,7 @@ import MiniApp from 'js-miniapp-sdk';
 MiniApp.preferences
   .remove(key)
   .then((response) => {
-    // Boolean response whether the remove is successfull
+    // String response sent from Host app when the remove is successfull
     console.log(response);
   })
   .catch((error) => {
@@ -1299,7 +1299,7 @@ import MiniApp from 'js-miniapp-sdk';
 MiniApp.preferences
   .clearMiniAppPreferences(key)
   .then((response) => {
-    // Boolean response whether the clearing storage is successfull
+    // String response sent from Host app when the clearing preferences is successfull
     console.log(response);
   })
   .catch((error) => {

@@ -17,12 +17,12 @@ export class MiniAppPreferences {
    * @see {set}
    */
   set(key: string, value: string) {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'setMiniAppPreference',
         { preferenceKey: key, preferenceValue: value },
         response => {
-          resolve(MiniAppBridgeUtils.BooleanValue(response));
+          resolve(response);
         },
         error => reject(parseMiniAppError(error))
       );
@@ -53,12 +53,12 @@ export class MiniAppPreferences {
    * @see {remove}
    */
   remove(key: string) {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'removeMiniAppPreference',
         { preferenceKey: key },
         response => {
-          resolve(MiniAppBridgeUtils.BooleanValue(response));
+          resolve(response);
         },
         error => reject(parseMiniAppError(error))
       );
@@ -71,12 +71,12 @@ export class MiniAppPreferences {
    * @see {clearMiniAppPreferences}
    */
   clearMiniAppPreferences() {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'clearMiniAppPreferences',
         null,
         response => {
-          resolve(MiniAppBridgeUtils.BooleanValue(response));
+          resolve(response);
         },
         error => reject(parseMiniAppError(error))
       );
