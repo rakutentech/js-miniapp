@@ -323,7 +323,7 @@ function MiniAppPreferenceComponent() {
     if (!state.isLoading) {
       dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       MiniApp.preferences
-        .clear()
+        .clearMiniAppPreferences()
         .then((response) => {
           console.log('Page - Clear Preference - Success', response);
           dispatch({
