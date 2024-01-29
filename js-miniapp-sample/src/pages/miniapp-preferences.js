@@ -16,12 +16,12 @@ import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
 import clsx from 'clsx';
 import {
-  MiniApp,
   MiniAppError,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
+import MiniApp from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -107,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
   },
   red: {
     color: red[500],
+  },
+  green: {
+    color: green[500],
   },
   padding10: {
     padding: 10,
@@ -209,6 +212,7 @@ function MiniAppPreferenceComponent() {
   const [storeKey, setStoreKey] = useState('');
   const [storeKeyValue, setStoreKeyValue] = useState('');
   const [getItemUsingKey, setGetItemUsingKey] = useState('');
+  const [retrievedValue, setRetrievedValue] = useState('');
   const [removeItemUsingKey, setRemoveItemUsingKey] = useState('');
 
   const buttonClassname = clsx({
@@ -269,14 +273,13 @@ function MiniAppPreferenceComponent() {
   }
 
   function getItemButtonClick(e) {
-    console.log('getItemButtonClick: ', getItemUsingKey);
-
     if (!isEmpty(getItemUsingKey)) {
       if (!state.isLoading) {
         dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
         MiniApp.preferences
           .get(getItemUsingKey)
           .then((response) => {
+            setRetrievedValue(response)
             console.log('Page - GetItems - Success', response);
             dispatch({
               type: 'FETCH_SUCCESS',
@@ -299,7 +302,6 @@ function MiniAppPreferenceComponent() {
   }
 
   function removeItemButtonClick(e) {
-    console.log('removeItemButtonClick: ', removeItemUsingKey);
     if (!state.isLoading) {
       dispatch({ type: 'FETCH_INIT', miniAppError: null, inputError: null });
       MiniApp.preferences
@@ -394,8 +396,8 @@ function MiniAppPreferenceComponent() {
           </Typography>
         )}
         {!state.isLoading && state.isSuccess && (
-          <Typography variant="body1" className={classes.red}>
-            Items stored Successfully
+          <Typography variant="body1" className={classes.green}>
+            Item stored Successfully
           </Typography>
         )}
       </FormGroup>
@@ -436,6 +438,11 @@ function MiniAppPreferenceComponent() {
         {!state.isLoading && state.isError && (
           <Typography variant="body1" className={classes.red}>
             {state.error}
+          </Typography>
+        )}
+        {!state.isLoading && state.isSuccess && (
+          <Typography variant="body1" className={classes.green}>
+            {retrievedValue}
           </Typography>
         )}
       </FormGroup>
@@ -479,8 +486,8 @@ function MiniAppPreferenceComponent() {
           </Typography>
         )}
         {!state.isLoading && state.isSuccess && (
-          <Typography variant="body1" className={classes.red}>
-            Items removed Successfully
+          <Typography variant="body1" className={classes.green}>
+            Item removed Successfully
           </Typography>
         )}
       </FormGroup>
@@ -516,8 +523,8 @@ function MiniAppPreferenceComponent() {
           </Typography>
         )}
         {!state.isLoading && !state.isError && state.isStorageCleaned && (
-          <Typography variant="body1" className={classes.red}>
-            Storage Cleared Successfully
+          <Typography variant="body1" className={classes.green}>
+            MiniApp preferences Cleared Successfully
           </Typography>
         )}
       </FormGroup>
