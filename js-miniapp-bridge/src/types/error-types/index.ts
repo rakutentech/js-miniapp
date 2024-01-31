@@ -41,7 +41,7 @@ function parseMiniAppError(jsonString: string): MiniAppError {
     );
   } catch (e) {
     console.error(e);
-    if (jsonString !== "" || jsonString !== undefined) {
+    if (jsonString !== '' || jsonString !== undefined) {
       return new MiniAppError({
         type: 'MiniAppError',
         message: jsonString,

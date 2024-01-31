@@ -279,7 +279,7 @@ function MiniAppPreferenceComponent() {
         MiniApp.preferences
           .get(getItemUsingKey)
           .then((response) => {
-            setRetrievedValue(response)
+            setRetrievedValue(response);
             console.log('Page - GetItems - Success', response);
             dispatch({
               type: 'FETCH_SUCCESS',
