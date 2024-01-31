@@ -1184,9 +1184,15 @@ function parseMiniAppError(jsonString) {
     }
     catch (e) {
         console.error(e);
+        if (jsonString !== '' || jsonString !== undefined) {
+            return new mini_app_error_1.MiniAppError({
+                type: 'MiniAppError',
+                message: jsonString,
+            });
+        }
         return new mini_app_error_1.MiniAppError({
             type: 'MiniAppError',
-            message: 'Failed to parse the error: ' + jsonString,
+            message: 'Failed to parse the error',
         });
     }
 }
