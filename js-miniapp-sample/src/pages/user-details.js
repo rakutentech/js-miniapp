@@ -528,7 +528,9 @@ function UserDetails(props: UserDetailsProps) {
   }
 
   function CardContactsActionsForm() {
-    const hasContactsPermision = state.hasRequestedContactsPermissions && hasPermission(CustomPermissionName.CONTACT_LIST);;
+    const hasContactsPermision =
+      state.hasRequestedContactsPermissions &&
+      hasPermission(CustomPermissionName.CONTACT_LIST);
     return (
       <FormGroup column="true">
         <div className={classes.wrapper}>
