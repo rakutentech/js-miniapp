@@ -377,7 +377,7 @@ function UserDetails(props: UserDetailsProps) {
         description: 'We would like to send messages to your contacts.',
       },
     ];
-    props.contactList = undefined
+    props.contactList = undefined;
     props
       .requestPermissions(permissionsList)
       .then((permissions) => filterAllowedPermissions(permissions))
@@ -406,7 +406,6 @@ function UserDetails(props: UserDetailsProps) {
     if (props !== undefined) {
       props.points = undefined;
     }
-    
 
     props
       .requestPermissions(permissionsList)
@@ -574,11 +573,13 @@ function UserDetails(props: UserDetailsProps) {
           }}
         />
         <Paper className={classes.paper}>
-          {hasContactsPermision && !state.isContactsError && props.contactList && (
-            <CardHeader
-              subheader={'Contact List: ' + props.contactList.length}
-            />
-          )}
+          {hasContactsPermision &&
+            !state.isContactsError &&
+            props.contactList && (
+              <CardHeader
+                subheader={'Contact List: ' + props.contactList.length}
+              />
+            )}
           <List className={classes.contactsList}>
             {state.hasRequestedContactsPermissions && !hasContactsPermision && (
               <ListItem>
