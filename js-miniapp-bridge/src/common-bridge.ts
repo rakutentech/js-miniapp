@@ -736,6 +736,22 @@ export class MiniAppBridge {
   }
 
   /**
+   * Associating miniAppFinishedLoading function to MiniAppBridge object.
+   * @returns Promise resolve with string
+   * Host app can implement an iterface miniAppFinishedLoading to perform any operations after the miniapp is loaded.
+   */
+  miniAppFinishedLoading() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'miniAppFinishedLoading',
+        {},
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
    * This will retrieve the list of products details available for In-App Purchases associated with Mini App in the Platform.
    * @returns List of In-app purchase products
    * @see {getAllProducts}

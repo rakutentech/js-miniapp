@@ -10,6 +10,7 @@ import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
 import SettingsApplicationsRoundedIcon from '@mui/icons-material/SettingsApplicationsRounded';
 import StorageRoundedIcon from '@mui/icons-material/StorageRounded';
 import SystemUpdateIcon from '@mui/icons-material/SystemUpdate';
+import MobileHostAppIcon from '@mui/icons-material/SendToMobile';
 import Avatar from '@mui/material/Avatar';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -82,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
   const [darkMode, setDarkMode] = useState(false);
+  const [hostNotified, setHostNotified] = useState(false);
 
   useEffect(() => {
     try {
@@ -101,14 +103,36 @@ const Landing = (props: LandingProps) => {
     }
   }, [props]);
 
+  useEffect(() => {
+    try {
+      if (document.readyState === 'complete') {
+        miniAppDidFinishLoad();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   function getDarkMode() {
     MiniApp.miniappUtils
-      .isDarkMode()
+      .isDarkModes()
       .then((response) => {
         setDarkMode(response);
       })
       .catch((miniAppError) => {
         console.log('getDarkMode - Error: ', miniAppError);
+      });
+  }
+
+  function miniAppDidFinishLoad() {
+    MiniApp.miniappUtils
+      .miniAppFinishedLoading()
+      .then((response) => {
+        console.log(response);
+        setHostNotified(true);
+      })
+      .catch((miniAppError) => {
+        console.log('miniAppFinishedLoading - Error: ', miniAppError);
       });
   }
 
@@ -221,6 +245,17 @@ const Landing = (props: LandingProps) => {
           <ListItemText
             primary="Build Type:"
             secondary={String(props.hostBuildType) || '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <MobileHostAppIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="HostApp Notified For Missing Assets:"
+            secondary={String(hostNotified)}
           />
         </ListItem>
         <ListItem>
