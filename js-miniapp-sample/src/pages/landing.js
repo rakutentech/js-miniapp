@@ -128,7 +128,6 @@ const Landing = (props: LandingProps) => {
     MiniApp.miniappUtils
       .miniAppFinishedLoading()
       .then((response) => {
-        console.log(response);
         setHostNotified(true);
       })
       .catch((miniAppError) => {

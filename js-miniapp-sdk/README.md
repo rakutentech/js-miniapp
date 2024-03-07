@@ -1186,6 +1186,32 @@ import MiniApp from 'js-miniapp-sdk';
   MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
 ```
 
+<div id='miniapp-finished-loading'/>
+
+## MiniApp Finished Loading <small style="color:green;font-size: 12px">Available from v1.20.0</small>
+
+<dl>
+<dd>
+
+**API:** [Platform.isDarkMode](api/interfaces/miniapputilsprovider.html#miniAppFinishedLoading)
+
+Using the following interface the Miniapp can notify the host app that it has finished loading.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .miniAppFinishedLoading()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log('miniAppFinishedLoading - Error: ', miniAppError);
+  });
+```
+
+</dd>
+
 <div id='get-cookies'/>
 
 ## Get Cookies from host application <small style="color:green;font-size: 12px">Available from v1.19.0</small>
