@@ -115,7 +115,7 @@ const Landing = (props: LandingProps) => {
 
   function getDarkMode() {
     MiniApp.miniappUtils
-      .isDarkModes()
+      .isDarkMode()
       .then((response) => {
         setDarkMode(response);
       })
@@ -254,7 +254,7 @@ const Landing = (props: LandingProps) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText
-            primary="HostApp Notified For Missing Assets:"
+            primary="HostApp Notified:"
             secondary={String(hostNotified)}
           />
         </ListItem>
