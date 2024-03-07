@@ -744,7 +744,7 @@ export class MiniAppBridge {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'miniAppFinishedLoading',
-        {},
+        null,
         success => resolve(success),
         error => reject(error)
       );
