@@ -23,6 +23,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 
 import Ads from './pages/ads';
 import { CloseConfirmAlert } from './pages/app-close-alert';
@@ -47,6 +48,7 @@ import WebLocation from './pages/web-location';
 import WindowActions from './pages/window-actions';
 import CookieManagerComponent from './pages/cookie-manager';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
+import FeatureListComponent from './pages/feature-list';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -117,6 +119,10 @@ const miniAppPreferenceNavLink = {
   navLink: '/miniapp-preference',
   label: 'MiniApp Preference',
 };
+const miniFeatureListNavLink = {
+  navLink: '/miniapp-feature-list',
+  label: 'Feature List',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -145,6 +151,7 @@ const navLinks = [
   universalBridgeNavLink,
   colorThemeNavLink,
   cookieManagerNavLink,
+  miniFeatureListNavLink,
 ];
 
 const homeItem = [
@@ -288,6 +295,12 @@ const appItems = [
     label: cookieManagerNavLink.label,
     navLink: cookieManagerNavLink.navLink,
     element: <CookieManagerComponent />,
+  },
+  {
+    icon: <FormatListNumberedIcon />,
+    label: miniFeatureListNavLink.label,
+    navLink: miniFeatureListNavLink.navLink,
+    element: <FeatureListComponent />,
   },
 ];
 
