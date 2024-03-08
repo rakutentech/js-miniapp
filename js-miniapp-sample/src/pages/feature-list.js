@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
       background: 'white',
     },
   },
+  scrollable: {
+    overflowY: 'auto',
+    width: '100%',
+    paddingBottom: 20,
+  },
 }));
 
 function FeatureListComponent() {
@@ -55,11 +60,10 @@ function FeatureListComponent() {
   });
 
   function getFeatureList() {
-    console.log('getFeatureList')
     MiniApp.miniappUtils
       .getFeatureList()
       .then((response) => {
-        setFeatureList(test);
+        setFeatureList(response);
         console.log('getFeatureList SUCCESS: ', response);
       })
       .catch((error) => {
@@ -68,7 +72,7 @@ function FeatureListComponent() {
   }
 
   return (
-    <div className={classes.card}>
+    <div className={classes.scrollable}>
       {featureList &&
         featureList.map((item) => (
           <ListItem disablePadding>
