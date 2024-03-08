@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ConsoleView from './pages/console-view';
 
 import { makeStyles, ThemeProvider } from '@material-ui/core';
 import { Provider } from 'react-redux';
-import { useEffect, useState } from 'react';
 
 import Home from './pages/home';
 import store from './services/store';
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const [isToastVisible, setToastVisible] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
 
   useEffect(() => {
     try {
@@ -64,7 +63,7 @@ function App() {
         <div className={classes.App}>
           <Home />
           <ConsoleView />
-          {isToastVisible && (
+          {toastVisible && (
             <div className={classes.toastStyle}>
               HostApp was notified successfully.
             </div>
