@@ -738,7 +738,7 @@ export class MiniAppBridge {
   /**
    * Associating miniAppFinishedLoading function to MiniAppBridge object.
    * @returns Promise resolve with string
-   * Host app can implement an iterface miniAppFinishedLoading to perform any operations after the miniapp is loaded.
+   * Host app can implement an interface miniAppFinishedLoading to perform any operations after the miniapp is loaded.
    */
   miniAppFinishedLoading() {
     return new Promise<string>((resolve, reject) => {

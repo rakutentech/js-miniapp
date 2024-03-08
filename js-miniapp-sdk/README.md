@@ -144,6 +144,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Send Analytics](#send-analytics)
 - [Get Cookies](#get-cookies)
 - [MiniApp Storage][#miniapp-storage]
+- [MiniApp Finished Loading](#miniapp-finished-loading)
 
 
 ### Retrieve a unique ID
@@ -1193,7 +1194,7 @@ import MiniApp from 'js-miniapp-sdk';
 <dl>
 <dd>
 
-**API:** [Platform.isDarkMode](api/interfaces/miniapputilsprovider.html#miniAppFinishedLoading)
+**API:** [Platform.miniAppFinishedLoading](api/interfaces/miniapputilsprovider.html#miniAppFinishedLoading)
 
 Using the following interface the Miniapp can notify the host app that it has finished loading.
 
