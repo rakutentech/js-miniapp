@@ -82,7 +82,6 @@ const useStyles = makeStyles((theme) => ({
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
   const [darkMode, setDarkMode] = useState(false);
-  const [hostNotified, setHostNotified] = useState(false);
 
   useEffect(() => {
     try {

@@ -25,20 +25,19 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     borderRadius: '5px',
     zIndex: '9999',
-    textAlign: 'center'
+    textAlign: 'center',
   },
 }));
-
 
 function App() {
   const classes = useStyles();
   const [isToastVisible, setToastVisible] = useState(false);
-  
+
   useEffect(() => {
     try {
       if (document.readyState === 'complete') {
         miniAppDidFinishLoad();
-        console.log("Called Miniapp FinishedLoad()")
+        console.log('Called Miniapp FinishedLoad()');
       }
     } catch (e) {
       console.log(e);
@@ -49,7 +48,7 @@ function App() {
     MiniApp.miniappUtils
       .miniAppFinishedLoading()
       .then((response) => {
-        console.log(response);
+        console.log('miniAppFinishedLoading(): ', response);
         setToastVisible(true);
         const timer = setTimeout(() => setToastVisible(false), 5000);
         return () => clearTimeout(timer);
@@ -66,7 +65,9 @@ function App() {
           <Home />
           <ConsoleView />
           {isToastVisible && (
-            <div className={classes.toastStyle}>HostApp was notified successfully.</div>
+            <div className={classes.toastStyle}>
+              HostApp was notified successfully.
+            </div>
           )}
         </div>
       </ThemeProvider>
