@@ -75,7 +75,7 @@ function FeatureListComponent() {
     <div className={classes.scrollable}>
       {featureList &&
         featureList.map((item) => (
-          <ListItem disablePadding>
+          <ListItem key={item} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <Brightness1Icon />
