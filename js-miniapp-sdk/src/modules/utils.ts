@@ -37,6 +37,11 @@ export interface MiniAppUtilsProvider {
    * @param analyticsInfo Analytics info
    */
   sendAnalytics(analytics: MAAnalyticsInfo): Promise<string>;
+
+  /**
+   * Interface to get list of features supported by the SDK and Host
+   */
+  getFeatureList(): Promise<string[]>;
 }
 
 /** @internal */
@@ -58,5 +63,8 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
       return getBridge().sendAnalytics(analytics);
     }
     return Promise.reject('sendAnalytics Error');
+  }
+  getFeatureList(): Promise<string[]> {
+    return getBridge().getFeatureList();
   }
 }

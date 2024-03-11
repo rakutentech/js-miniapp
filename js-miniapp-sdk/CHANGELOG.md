@@ -4,6 +4,7 @@
 - **Feature:** Added new interfaces `set(key: string, value: string)`, `get(key: string)`, `remove(key: string)`, `clearMiniAppPreferences()` which uses the native storage features like Shared Preferences/User defaults to store anything from MiniApp.
 - **Feature:** Updated HostEnvironmentInfo to have `hostBuildType`, `deviceToken` and `pushToken`
 - **Fix:** Few Contacts with special characters is failed to retrieve, its fixed now
+- **Feature:** Added new interface `getFeatureList()` that will return the list if features supported by the Host and MiniApp SDK.
 
 ### 1.19.0 (2023-11-02)
 - **Feature:** Added new interface `getAllCookies()` to get `CookieInfo` which contains `name` and `value` of the cookie
