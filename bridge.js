@@ -620,6 +620,18 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.clearMiniAppPreferences = function () {
         return this.preferences.clearMiniAppPreferences();
     };
+    /**
+     * This interface will get you the list of all features that is supported by the SDK and Host application
+     * @returns List of features for eg., ["GET_UNIQUE_ID", "GET_USERNAME", "GET_PROFILE_PHOTO", "IS_DARK_MODE"]
+     */
+    MiniAppBridge.prototype.getFeatureList = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getFeatureList', null, function (response) {
+                resolve(JSON.parse(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
