@@ -899,6 +899,23 @@ export class MiniAppBridge {
   clearMiniAppPreferences() {
     return this.preferences.clearMiniAppPreferences();
   }
+
+  /**
+   * This interface will get you the list of all features that is supported by the SDK and Host application
+   * @returns List of features for eg., ["GET_UNIQUE_ID", "GET_USERNAME", "GET_PROFILE_PHOTO", "IS_DARK_MODE"]
+   */
+  getFeatureList() {
+    return new Promise<string[]>((resolve, reject) => {
+      return this.executor.exec(
+        'getFeatureList',
+        null,
+        response => {
+          resolve(JSON.parse(response) as string[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**
