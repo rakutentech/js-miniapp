@@ -144,6 +144,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Send Analytics](#send-analytics)
 - [Get Cookies](#get-cookies)
 - [MiniApp Storage][#miniapp-storage]
+- [MiniApp Finished Loading](#miniapp-finished-loading)
 - [Get Feature list][#get-feature-list]
 
 
@@ -1186,6 +1187,32 @@ import MiniApp from 'js-miniapp-sdk';
   
   MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
 ```
+
+<div id='miniapp-finished-loading'/>
+
+## MiniApp Finished Loading <small style="color:green;font-size: 12px">Available from v1.20.0</small>
+
+<dl>
+<dd>
+
+**API:** [Platform.miniAppFinishedLoading](api/interfaces/miniapputilsprovider.html#miniAppFinishedLoading)
+
+Using the following interface the Miniapp can notify the host app that it has finished loading.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .miniAppFinishedLoading()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log('miniAppFinishedLoading - Error: ', miniAppError);
+  });
+```
+
+</dd>
 
 <div id='get-cookies'/>
 

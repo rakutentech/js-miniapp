@@ -23,6 +23,12 @@ export interface MiniAppUtilsProvider {
   closeMiniApp(withConfirmation: boolean): Promise<string>;
 
   /**
+   * Miniapp can notify the host app that it has finished loading using this call.
+   * Host app can implement this interface to perform any other actions after the miniapp has loaded.
+   */
+  miniAppFinishedLoading(): Promise<string>;
+
+  /**
    * Interface that is used to get the Color theme used in the Host application
    */
   getHostAppThemeColors(): Promise<HostThemeColor>;
@@ -48,6 +54,9 @@ export interface MiniAppUtilsProvider {
 export class MiniAppUtils implements MiniAppUtilsProvider {
   closeMiniApp(withConfirmation: boolean): Promise<string> {
     return getBridge().closeMiniApp(withConfirmation);
+  }
+  miniAppFinishedLoading(): Promise<string> {
+    return getBridge().miniAppFinishedLoading();
   }
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);

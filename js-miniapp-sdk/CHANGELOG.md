@@ -3,6 +3,7 @@
 ### 1.20.0 (2024-xx-xx)
 - **Feature:** Added new interfaces `set(key: string, value: string)`, `get(key: string)`, `remove(key: string)`, `clearMiniAppPreferences()` which uses the native storage features like Shared Preferences/User defaults to store anything from MiniApp.
 - **Feature:** Updated HostEnvironmentInfo to have `hostBuildType`, `deviceToken` and `pushToken`
+- **Feature:** Added new interface `miniAppFinishedLoading()` which can be used by miniapp to notify the host app that it has finished loading.
 - **Fix:** Few Contacts with special characters is failed to retrieve, its fixed now
 - **Feature:** Added new interface `getFeatureList()` that will return the list if features supported by the Host and MiniApp SDK.
 
