@@ -495,6 +495,17 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Associating miniAppFinishedLoading function to MiniAppBridge object.
+     * @returns Promise resolve with string
+     * Host app can implement an interface miniAppFinishedLoading to perform any operations after the miniapp is loaded.
+     */
+    MiniAppBridge.prototype.miniAppFinishedLoading = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('miniAppFinishedLoading', null, function (success) { return resolve(success); }, function (error) { return reject(error); });
+        });
+    };
+    /**
      * This will retrieve the list of products details available for In-App Purchases associated with Mini App in the Platform.
      * @returns List of In-app purchase products
      * @see {getAllProducts}
