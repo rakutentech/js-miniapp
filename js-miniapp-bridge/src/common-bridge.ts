@@ -736,6 +736,22 @@ export class MiniAppBridge {
   }
 
   /**
+   * Associating miniAppFinishedLoading function to MiniAppBridge object.
+   * @returns Promise resolve with string
+   * Host app can implement an interface miniAppFinishedLoading to perform any operations after the miniapp is loaded.
+   */
+  miniAppFinishedLoading() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'miniAppFinishedLoading',
+        null,
+        success => resolve(success),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
    * This will retrieve the list of products details available for In-App Purchases associated with Mini App in the Platform.
    * @returns List of In-app purchase products
    * @see {getAllProducts}
@@ -882,6 +898,23 @@ export class MiniAppBridge {
 
   clearMiniAppPreferences() {
     return this.preferences.clearMiniAppPreferences();
+  }
+
+  /**
+   * This interface will get you the list of all features that is supported by the SDK and Host application
+   * @returns List of features for eg., ["GET_UNIQUE_ID", "GET_USERNAME", "GET_PROFILE_PHOTO", "IS_DARK_MODE"]
+   */
+  getFeatureList() {
+    return new Promise<string[]>((resolve, reject) => {
+      return this.executor.exec(
+        'getFeatureList',
+        null,
+        response => {
+          resolve(JSON.parse(response) as string[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
   }
 }
 
