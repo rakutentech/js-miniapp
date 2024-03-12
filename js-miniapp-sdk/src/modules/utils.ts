@@ -23,6 +23,12 @@ export interface MiniAppUtilsProvider {
   closeMiniApp(withConfirmation: boolean): Promise<string>;
 
   /**
+   * Miniapp can notify the host app that it has finished loading using this call.
+   * Host app can implement this interface to perform any other actions after the miniapp has loaded.
+   */
+  miniAppFinishedLoading(): Promise<string>;
+
+  /**
    * Interface that is used to get the Color theme used in the Host application
    */
   getHostAppThemeColors(): Promise<HostThemeColor>;
@@ -37,12 +43,20 @@ export interface MiniAppUtilsProvider {
    * @param analyticsInfo Analytics info
    */
   sendAnalytics(analytics: MAAnalyticsInfo): Promise<string>;
+
+  /**
+   * Interface to get list of features supported by the SDK and Host
+   */
+  getFeatureList(): Promise<string[]>;
 }
 
 /** @internal */
 export class MiniAppUtils implements MiniAppUtilsProvider {
   closeMiniApp(withConfirmation: boolean): Promise<string> {
     return getBridge().closeMiniApp(withConfirmation);
+  }
+  miniAppFinishedLoading(): Promise<string> {
+    return getBridge().miniAppFinishedLoading();
   }
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
@@ -58,5 +72,8 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
       return getBridge().sendAnalytics(analytics);
     }
     return Promise.reject('sendAnalytics Error');
+  }
+  getFeatureList(): Promise<string[]> {
+    return getBridge().getFeatureList();
   }
 }

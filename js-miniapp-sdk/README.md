@@ -144,6 +144,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Send Analytics](#send-analytics)
 - [Get Cookies](#get-cookies)
 - [MiniApp Storage][#miniapp-storage]
+- [MiniApp Finished Loading](#miniapp-finished-loading)
+- [Get Feature list][#get-feature-list]
 
 
 ### Retrieve a unique ID
@@ -1186,6 +1188,32 @@ import MiniApp from 'js-miniapp-sdk';
   MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
 ```
 
+<div id='miniapp-finished-loading'/>
+
+## MiniApp Finished Loading <small style="color:green;font-size: 12px">Available from v1.20.0</small>
+
+<dl>
+<dd>
+
+**API:** [Platform.miniAppFinishedLoading](api/interfaces/miniapputilsprovider.html#miniAppFinishedLoading)
+
+Using the following interface the Miniapp can notify the host app that it has finished loading.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .miniAppFinishedLoading()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log('miniAppFinishedLoading - Error: ', miniAppError);
+  });
+```
+
+</dd>
+
 <div id='get-cookies'/>
 
 ## Get Cookies from host application <small style="color:green;font-size: 12px">Available from v1.19.0</small>
@@ -1300,6 +1328,29 @@ MiniApp.preferences
   .clearMiniAppPreferences(key)
   .then((response) => {
     // String response sent from Host app when the clearing preferences is successfull
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+```
+
+
+<div id='get-feature-list'/>
+
+## Get feature list <small style="color:green;font-size: 12px">Available from v1.20.0</small>
+
+This interface will help the MiniApps to get the list of features that is supported by the MiniApp native SDK also with the list of other features that is supported by the Host app
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.miniappUtils
+  .getFeatureList()
+  .then((response) => {
+    // Array of strings/features that is supported
+    // For eg., ["GET_USERNAME", "IS_DARK_MODE", "GET_ALL_COOKIES"]
     console.log(response);
   })
   .catch((error) => {
