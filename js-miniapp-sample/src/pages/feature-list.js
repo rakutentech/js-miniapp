@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import MiniApp from 'js-miniapp-sdk';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Brightness1Icon from '@mui/icons-material/Brightness1';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -42,9 +44,30 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   scrollable: {
-    overflowY: 'auto',
+    overflowY: 'scroll',
     width: '100%',
-    paddingBottom: 20,
+    paddingTop: '20px',
+    paddingBottom: '50px',
+  },
+}));
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
   },
 }));
 
@@ -73,17 +96,20 @@ function FeatureListComponent() {
 
   return (
     <div className={classes.scrollable}>
-      {featureList &&
-        featureList.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Brightness1Icon />
-              </ListItemIcon>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+      <TableContainer component={Paper}>
+        <Table aria-label="Feature lists">
+          <TableBody>
+            {featureList &&
+              featureList.map((row) => (
+                <StyledTableRow key={row}>
+                  <StyledTableCell component="th" scope="row">
+                    {row}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
