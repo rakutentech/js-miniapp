@@ -80,7 +80,7 @@ function FeatureListComponent() {
     } catch (e) {
       console.log(e);
     }
-  });
+  }, []);
 
   function getFeatureList() {
     MiniApp.miniappUtils
