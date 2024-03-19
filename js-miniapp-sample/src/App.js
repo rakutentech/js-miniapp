@@ -34,14 +34,24 @@ function App() {
 
   useEffect(() => {
     try {
-      if (document.readyState === 'complete') {
-        miniAppDidFinishLoad();
-        console.log('Called Miniapp FinishedLoad()');
+      const platform = MiniApp.getPlatform();
+      if (platform === 'iOS') {
+        updateLoadingStatus();
+      } else {
+        document.onreadystatechange = function () {
+          updateLoadingStatus();
+        };
       }
     } catch (e) {
       console.log(e);
     }
   }, []);
+
+  function updateLoadingStatus() {
+    if (document.readyState === 'complete') {
+      miniAppDidFinishLoad();
+    }
+  }
 
   function miniAppDidFinishLoad() {
     MiniApp.miniappUtils
