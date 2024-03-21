@@ -32,21 +32,21 @@ function App() {
   const classes = useStyles();
   const [toastVisible, setToastVisible] = useState(false);
 
-  function updateLoadingStatus() {
+  const updateLoadingStatus = () => {
     if (document.readyState === 'complete') {
       miniAppDidFinishLoad();
     }
-  }
+  };
 
   useEffect(() => {
     try {
       const platform = MiniApp.getPlatform();
       if (platform === 'iOS') {
-        if (typeof functionName === 'function') {
+        if (typeof updateLoadingStatus === 'function') {
           updateLoadingStatus();
         }
       } else {
-        if (typeof functionName === 'function') {
+        if (typeof updateLoadingStatus === 'function') {
           document.onreadystatechange = function () {
             updateLoadingStatus();
           };
