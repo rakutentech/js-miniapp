@@ -32,25 +32,20 @@ function App() {
   const classes = useStyles();
   const [toastVisible, setToastVisible] = useState(false);
 
-  const updateLoadingStatus = () => {
-    if (document.readyState === 'complete') {
-      miniAppDidFinishLoad();
-    }
-  };
-
   useEffect(() => {
     try {
       const platform = MiniApp.getPlatform();
+      function updateLoadingStatus() {
+        if (document.readyState === 'complete') {
+          miniAppDidFinishLoad();
+        }
+      }
       if (platform === 'iOS') {
-        if (typeof updateLoadingStatus === 'function') {
-          updateLoadingStatus();
-        }
+        updateLoadingStatus();
       } else {
-        if (typeof updateLoadingStatus === 'function') {
-          document.onreadystatechange = function () {
-            updateLoadingStatus();
-          };
-        }
+        document.onreadystatechange = function () {
+          updateLoadingStatus();
+        };
       }
     } catch (e) {
       console.log(e);
@@ -58,17 +53,21 @@ function App() {
   }, []);
 
   function miniAppDidFinishLoad() {
-    MiniApp.miniappUtils
-      .miniAppFinishedLoading()
-      .then((response) => {
-        console.log('miniAppFinishedLoading(): ', response);
-        setToastVisible(true);
-        const timer = setTimeout(() => setToastVisible(false), 5000);
-        return () => clearTimeout(timer);
-      })
-      .catch((miniAppError) => {
-        console.log('miniAppFinishedLoading - Error: ', miniAppError);
-      });
+    try {
+      MiniApp.miniappUtils
+        .miniAppFinishedLoading()
+        .then((response) => {
+          console.log('miniAppFinishedLoading(): ', response);
+          setToastVisible(true);
+          const timer = setTimeout(() => setToastVisible(false), 5000);
+          return () => clearTimeout(timer);
+        })
+        .catch((miniAppError) => {
+          console.log('miniAppFinishedLoading - Error: ', miniAppError);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
