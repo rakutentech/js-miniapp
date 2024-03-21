@@ -32,26 +32,30 @@ function App() {
   const classes = useStyles();
   const [toastVisible, setToastVisible] = useState(false);
 
-  useEffect(() => {
-    try {
-      const platform = MiniApp.getPlatform();
-      if (platform === 'iOS') {
-        updateLoadingStatus();
-      } else {
-        document.onreadystatechange = function () {
-          updateLoadingStatus();
-        };
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
   function updateLoadingStatus() {
     if (document.readyState === 'complete') {
       miniAppDidFinishLoad();
     }
   }
+
+  useEffect(() => {
+    try {
+      const platform = MiniApp.getPlatform();
+      if (platform === 'iOS') {
+        if (typeof functionName === 'function') {
+          updateLoadingStatus();
+        }
+      } else {
+        if (typeof functionName === 'function') {
+          document.onreadystatechange = function () {
+            updateLoadingStatus();
+          };
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
 
   function miniAppDidFinishLoad() {
     MiniApp.miniappUtils
