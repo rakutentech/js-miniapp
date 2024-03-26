@@ -6,9 +6,6 @@
   "browser": "build/miniapp.bundle.js",
   "module": "build/js-miniapp-sdk/src/index.js",
   "types": "build/js-miniapp-sdk/src/index.d.ts",
-  "dependencies": {
-    "libbase64": "1.2.1"
-  },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.2.11",

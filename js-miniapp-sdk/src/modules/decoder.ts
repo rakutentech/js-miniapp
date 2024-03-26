@@ -1,5 +1,5 @@
 import { Contact } from '../../../js-miniapp-bridge/src';
-import libbase64 from 'libbase64';
+import { Buffer } from 'buffer';
 
 /**
  * Interfaces to Decode any input
@@ -31,11 +31,22 @@ export class DecodeManager implements Decoder {
 
   private async decodeBase64(input: string): Promise<string> {
     try {
-      const decoded = await libbase64.decode(input);
+      const decoded = await this.decode(input);
       return decoded.toString();
     } catch (error) {
       console.error(`Error decoding input: ${error.message}`);
       return '';
     }
+  }
+
+  /**
+   * Decodes a base64 encoded string to a Buffer object
+   *
+   * @param {String} str base64 encoded string
+   * @returns {Buffer} Decoded value
+   */
+  decode(str) {
+    str = str || '';
+    return Buffer.from(str, 'base64');
   }
 }
