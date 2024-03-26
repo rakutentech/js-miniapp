@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.20.1 (2024-03-26)
+- **Fix:** Updated dependency for `libbase64` to use static `1.2.1` version
+
 ### 1.20.0 (2024-03-21)
 - **Feature:** Added new interfaces `set(key: string, value: string)`, `get(key: string)`, `remove(key: string)`, `clearMiniAppPreferences()` which uses the native storage features like Shared Preferences/User defaults to store anything from MiniApp.
 - **Feature:** Updated HostEnvironmentInfo to have `hostBuildType`, `deviceToken` and `pushToken`
