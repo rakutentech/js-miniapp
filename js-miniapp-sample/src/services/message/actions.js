@@ -27,13 +27,6 @@ const getMessageTypeList = (): SetMessageTypeAction => {
   };
 };
 
-const permissionsList = [
-  {
-    name: CustomPermissionName.SEND_MESSAGE,
-    description: 'We would like to send message from this mini app.',
-  },
-];
-
 const sendMessageToContact = (
   image: String,
   text: String,
@@ -61,6 +54,12 @@ const sendMessageToContactId = (
   action: String
 ): Function => {
   return async (dispatch) => {
+    const permissionsList = [
+      {
+        name: CustomPermissionName.SEND_MESSAGE,
+        description: 'We would like to send message from this mini app.',
+      },
+    ];
     const promise = MiniApp.requestCustomPermissions(permissionsList).then(
       (permissions) => {
         return permissions[0].status === CustomPermissionStatus.ALLOWED;

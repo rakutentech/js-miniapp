@@ -7,7 +7,7 @@
   "module": "build/js-miniapp-sdk/src/index.js",
   "types": "build/js-miniapp-sdk/src/index.d.ts",
   "dependencies": {
-    "libbase64": "^1.2.1"
+    "libbase64": "1.2.1"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
