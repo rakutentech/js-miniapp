@@ -21,7 +21,7 @@ Analytics Event type
 
 •  **appear**:  = "appear"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L5)*
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 •  **click**:  = "click"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L6)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 •  **custom**:  = "custom"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L8)*
 
 ___
 
@@ -45,4 +45,4 @@ ___
 
 •  **error**:  = "error"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:7](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L7)*

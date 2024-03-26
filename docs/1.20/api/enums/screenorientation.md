@@ -20,7 +20,7 @@ Screen orientation with lock action type.
 
 •  **LOCK\_LANDSCAPE**:  = "rakuten.miniapp.screen.LOCK\_LANDSCAPE"
 
-*Defined in [js-miniapp-bridge/src/types/screen.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/screen.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/screen.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/screen.ts#L8)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 •  **LOCK\_PORTRAIT**:  = "rakuten.miniapp.screen.LOCK\_PORTRAIT"
 
-*Defined in [js-miniapp-bridge/src/types/screen.ts:7](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/screen.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/screen.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/screen.ts#L7)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 •  **LOCK\_RELEASE**:  = "rakuten.miniapp.screen.LOCK\_RELEASE"
 
-*Defined in [js-miniapp-bridge/src/types/screen.ts:9](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/screen.ts#L9)*
+*Defined in [js-miniapp-bridge/src/types/screen.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/screen.ts#L9)*

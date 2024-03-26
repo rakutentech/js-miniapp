@@ -22,7 +22,7 @@ Interfaces to Decode any input
 
 ▸ **decodeContacts**(`contactList`: [Contact](contact.md)[]): Promise\<[Contact](contact.md)[]>
 
-*Defined in [js-miniapp-sdk/src/modules/decoder.ts:12](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/decoder.ts#L12)*
+*Defined in [js-miniapp-sdk/src/modules/decoder.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/decoder.ts#L12)*
 
 Decode the contacts name
 

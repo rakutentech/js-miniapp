@@ -23,7 +23,7 @@
 
 •  **description**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L3)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 •  **id**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L4)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 •  **productPriceInfo**: [ProductPrice](productprice.md)
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L5)*
 
 ___
 
@@ -47,4 +47,4 @@ ___
 
 •  **title**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:2](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L2)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:2](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L2)*

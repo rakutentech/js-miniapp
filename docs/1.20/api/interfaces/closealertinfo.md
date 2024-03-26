@@ -24,7 +24,7 @@ Mini App Close confirmation alert info
 
 •  **description**: string
 
-*Defined in [js-miniapp-bridge/src/types/close-alert.ts:10](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/close-alert.ts#L10)*
+*Defined in [js-miniapp-bridge/src/types/close-alert.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/close-alert.ts#L10)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 •  **shouldDisplay**: boolean
 
-*Defined in [js-miniapp-bridge/src/types/close-alert.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/close-alert.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/close-alert.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/close-alert.ts#L6)*
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 •  **title**: string
 
-*Defined in [js-miniapp-bridge/src/types/close-alert.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/close-alert.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/close-alert.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/close-alert.ts#L8)*

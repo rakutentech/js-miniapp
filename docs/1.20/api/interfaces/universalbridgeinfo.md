@@ -24,7 +24,7 @@ Model that will be sent to Host app through Universal bridge
 
 • `Optional` **description**: string
 
-*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:7](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/universal-bridge.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/universal-bridge.ts#L7)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • `Optional` **key**: string
 
-*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/universal-bridge.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/universal-bridge.ts#L5)*
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 • `Optional` **value**: string
 
-*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/universal-bridge.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/universal-bridge.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/universal-bridge.ts#L6)*

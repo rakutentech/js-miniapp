@@ -23,7 +23,7 @@ Generic Mini app Response object
 
 • `Optional` **description**: string
 
-*Defined in [js-miniapp-bridge/src/types/response-types/miniapp/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/response-types/miniapp/index.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/response-types/miniapp/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/response-types/miniapp/index.ts#L6)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • `Optional` **title**: string
 
-*Defined in [js-miniapp-bridge/src/types/response-types/miniapp/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/response-types/miniapp/index.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/response-types/miniapp/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/response-types/miniapp/index.ts#L5)*

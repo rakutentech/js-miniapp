@@ -36,7 +36,7 @@ A module layer for webapps and mobile native interaction.
 
 ▸ **downloadFile**(`filename`: string, `url`: string, `headers?`: [DownloadFileHeaders](downloadfileheaders.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:108](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L108)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:108](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L108)*
 
 Request to download a file and save to the user's device.
 
@@ -59,7 +59,7 @@ ___
 
 ▸ **getHostEnvironmentInfo**(): Promise\<[HostEnvironmentInfo](hostenvironmentinfo.md)>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:101](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L101)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:101](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L101)*
 
 Request the host environment information.
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **getMauid**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:50](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L50)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:50](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L50)*
 
 Request the mini app's mauid from the host app.
 
@@ -87,7 +87,7 @@ ___
 
 ▸ **getMessagingUniqueId**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:44](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L44)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:44](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L44)*
 
 Request the mini app's messaging unique id from the host app.
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **getPoints**(): Promise\<[Points](points.md)>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:95](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L95)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:95](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L95)*
 
 Request the point balance from the host app.
 
@@ -115,7 +115,7 @@ ___
 
 ▸ **getUniqueId**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:38](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L38)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:38](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L38)*
 
 **`deprecated`** 
 Use `getMessagingUniqueId` or `getMauid` instead
@@ -131,7 +131,7 @@ ___
 
 ▸ **requestCustomPermissions**(`permissions`: [CustomPermission](custompermission.md)[]): Promise\<[CustomPermissionResult](custompermissionresult.md)[]>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:72](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L72)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:72](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L72)*
 
 Request that the user grant custom permissions related to accessing user data.
 Typically, this will show a dialog in the Host App asking the user grant access to your Mini App.
@@ -153,7 +153,7 @@ ___
 
 ▸ **requestLocationPermission**(`permissionDescription?`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:61](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L61)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:61](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L61)*
 
 Request the location permission from the host app.
 You must call this before using `navigator.geolocation`.
@@ -177,7 +177,7 @@ ___
 
 ▸ **setCloseAlert**(`alertInfo`: [CloseAlertInfo](closealertinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:117](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L117)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:117](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L117)*
 
 Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
 
@@ -195,7 +195,7 @@ ___
 
 ▸ **setScreenOrientation**(`screenOrientation`: [ScreenOrientation](../enums/screenorientation.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:89](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L89)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:89](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L89)*
 
 Swap and lock the screen orientation.
 There is no guarantee that all hostapps and devices allow the force screen change so MiniApp should not rely on this.
@@ -216,7 +216,7 @@ ___
 
 ▸ **shareInfo**(`info`: [ShareInfoType](shareinfotype.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:81](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L81)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:81](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L81)*
 
 Share text data with another App or with the host app.
 

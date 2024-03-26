@@ -22,7 +22,7 @@
 
 •  **productInfo**: [ProductInfo](productinfo.md)
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:12](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L12)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L12)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 •  **transactionDate**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:14](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L14)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:14](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L14)*
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 •  **transactionId**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:13](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L13)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:13](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L13)*

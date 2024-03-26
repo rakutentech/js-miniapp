@@ -22,7 +22,7 @@
 
 •  **CALLS**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:2](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L2)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:2](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L2)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 •  **CUSTOM**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L8)*
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 •  **HOME**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L4)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 •  **MAIL**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L5)*
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 •  **MESSAGES**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L3)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 •  **PROFILE**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L6)*
 
 ___
 
@@ -70,4 +70,4 @@ ___
 
 •  **SUPPORT**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:7](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L7)*

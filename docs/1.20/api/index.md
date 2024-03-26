@@ -131,7 +131,7 @@
 
 Ƭ  **MiniAppSecureStorageKeyValues**: { [key:string]: string;  }
 
-*Defined in [js-miniapp-bridge/src/types/secure-storage.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/secure-storage.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/secure-storage.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/secure-storage.ts#L5)*
 
 Type used when requesting to set/get multiple key/value pairs using MiniApp.setItems
 
@@ -141,7 +141,7 @@ ___
 
 Ƭ  **MiniAppSecureStorageSize**: { max: number ; used: number  }
 
-*Defined in [js-miniapp-bridge/src/types/secure-storage.ts:10](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/secure-storage.ts#L10)*
+*Defined in [js-miniapp-bridge/src/types/secure-storage.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/secure-storage.ts#L10)*
 
 #### Type declaration:
 
@@ -156,7 +156,7 @@ Name | Type |
 
 • `Const` **mabCustomEventQueue**: CustomEvent[] = []
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:45](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L45)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:45](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L45)*
 
 ___
 
@@ -164,7 +164,7 @@ ___
 
 • `Const` **mabKeyboardEventQueue**: CustomEvent[] = []
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:46](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L46)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:46](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L46)*
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 • `Const` **originalDebug**: debug = console.debug
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:65](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L65)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:65](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L65)*
 
 ___
 
@@ -180,7 +180,7 @@ ___
 
 • `Const` **originalError**: error = console.error
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:64](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L64)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:64](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L64)*
 
 ___
 
@@ -188,7 +188,7 @@ ___
 
 • `Const` **originalLog**: log = console.log
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:62](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L62)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:62](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L62)*
 
 ___
 
@@ -196,7 +196,7 @@ ___
 
 • `Const` **originalWarn**: warn = console.warn
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:63](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L63)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:63](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L63)*
 
 ## Functions
 
@@ -204,7 +204,7 @@ ___
 
 ▸ **convertUnicodeCharacters**(`value`: any): any
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:971](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L971)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:971](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L971)*
 
 #### Parameters:
 
@@ -220,7 +220,7 @@ ___
 
 ▸ **convertUnicodeCharactersForAndroid**(`value`: any): any
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:986](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L986)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:986](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L986)*
 
 #### Parameters:
 
@@ -236,7 +236,7 @@ ___
 
 ▸ `Const`**decodeOctalEscape**(`input`: any): any
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:966](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L966)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:966](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L966)*
 
 #### Parameters:
 
@@ -252,7 +252,7 @@ ___
 
 ▸ **getConsoleForLogType**(`type`: [LogType](classes/logtype.md)): error
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:49](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L49)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:49](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L49)*
 
 #### Parameters:
 
@@ -268,7 +268,7 @@ ___
 
 ▸ **isValidJson**(`str`: any): boolean
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:998](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L998)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:998](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L998)*
 
 #### Parameters:
 
@@ -284,7 +284,7 @@ ___
 
 ▸ **logMessage**(`type`: [LogType](classes/logtype.md), `argumentsList`: any[]): void
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:67](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L67)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:67](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L67)*
 
 #### Parameters:
 
@@ -301,7 +301,7 @@ ___
 
 ▸ **parseAuthError**(`json`: [MiniAppJson](interfaces/miniappjson.md)): [AudienceNotSupportedError](classes/audiencenotsupportederror.md) \| [ScopesNotSupportedError](classes/scopesnotsupportederror.md) \| [AuthorizationFailureError](classes/authorizationfailureerror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:32](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L32)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:32](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L32)*
 
 #### Parameters:
 
@@ -317,7 +317,7 @@ ___
 
 ▸ **parseDownloadError**(`json`: [MiniAppDownloadError](interfaces/miniappdownloaderror.md)): [DownloadFailedError](classes/downloadfailederror.md) \| [InvalidUrlError](classes/invalidurlerror.md) \| [SaveFailureError](classes/savefailureerror.md) \| [DownloadHttpError](classes/downloadhttperror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:63](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L63)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:63](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L63)*
 
 #### Parameters:
 
@@ -333,7 +333,7 @@ ___
 
 ▸ **parseInAppPurchaseError**(`json`: [MiniAppJson](interfaces/miniappjson.md)): [PurchaseFailedError](classes/purchasefailederror.md) \| [ConsumeFailedError](classes/consumefailederror.md) \| [ProductNotFoundError](classes/productnotfounderror.md) \| [ProductPurchasedAlreadyError](classes/productpurchasedalreadyerror.md) \| [UserCancelledPurchaseError](classes/usercancelledpurchaseerror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L53)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L53)*
 
 #### Parameters:
 
@@ -349,7 +349,7 @@ ___
 
 ▸ `Const`**parseIntOctal**(`octalCode`: any): number
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:962](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L962)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:962](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L962)*
 
 #### Parameters:
 
@@ -365,7 +365,7 @@ ___
 
 ▸ **parseMiniAppError**(`jsonString`: string): [MiniAppError](classes/miniapperror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/index.ts:31](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/index.ts#L31)*
+*Defined in [js-miniapp-bridge/src/types/error-types/index.ts:31](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/index.ts#L31)*
 
 #### Parameters:
 
@@ -381,7 +381,7 @@ ___
 
 ▸ **parseStorageError**(`json`: [MiniAppJson](interfaces/miniappjson.md)): [SecureStorageFullError](classes/securestoragefullerror.md) \| [SecureStorageBusyError](classes/securestoragebusyerror.md) \| [SecureStorageUnavailableError](classes/securestorageunavailableerror.md) \| [SecureStorageIOError](classes/securestorageioerror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/secure-storage-errors.ts:42](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/secure-storage-errors.ts#L42)*
+*Defined in [js-miniapp-bridge/src/types/error-types/secure-storage-errors.ts:42](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/secure-storage-errors.ts#L42)*
 
 #### Parameters:
 
@@ -397,7 +397,7 @@ ___
 
 ▸ **removeFromEventQueue**(`queueObj`: any): void
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:934](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L934)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:934](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L934)*
 
 #### Parameters:
 
@@ -413,7 +413,7 @@ ___
 
 ▸ **removeFromKeyboardEventQueue**(`queueObj`: any): void
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:945](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L945)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:945](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L945)*
 
 #### Parameters:
 
@@ -429,7 +429,7 @@ ___
 
 ▸ **trimBannerText**(`message?`: string, `maxLength?`: number): string
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:956](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-bridge.ts#L956)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:956](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L956)*
 
 #### Parameters:
 

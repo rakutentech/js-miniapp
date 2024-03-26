@@ -25,7 +25,7 @@ Notification Info
 
 • `Optional` **badgeNumber**: number
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:24](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L24)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:24](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L24)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • `Optional` **clearAfterRead**: boolean
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:27](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L27)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:27](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L27)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 • `Optional` **notificationInfoPriority**: [NotificationInfoPriority](../enums/notificationinfopriority.md)
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:26](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L26)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:26](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L26)*
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 • `Optional` **notificationInfoType**: [NotificationInfoType](../enums/notificationinfotype.md)
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:25](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L25)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:25](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L25)*

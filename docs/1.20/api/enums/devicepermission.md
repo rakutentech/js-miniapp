@@ -18,4 +18,4 @@ Permission type resource.
 
 •  **LOCATION**:  = "location"
 
-*Defined in [js-miniapp-bridge/src/types/device-permission.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/device-permission.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/device-permission.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/device-permission.ts#L8)*

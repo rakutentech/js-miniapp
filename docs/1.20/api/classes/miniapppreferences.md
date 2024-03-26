@@ -32,7 +32,7 @@
 
 \+ **new MiniAppPreferences**(`executor`: PlatformExecutor): [MiniAppPreferences](miniapppreferences.md)
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L6)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L6)*
 
 #### Parameters:
 
@@ -48,7 +48,7 @@ Name | Type |
 
 •  **executor**: PlatformExecutor
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L5)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L5)*
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 •  **platform**: string
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L6)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L6)*
 
 ## Methods
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **clearMiniAppPreferences**(): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:73](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L73)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:73](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L73)*
 
 Removes all keys that is stored
 
@@ -78,7 +78,7 @@ ___
 
 ▸ **get**(`key`: string): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:37](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L37)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:37](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L37)*
 
 Returns the object associated with the specified key.
 
@@ -98,7 +98,7 @@ ___
 
 ▸ **remove**(`key`: string): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:55](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L55)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:55](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L55)*
 
 Removes the value of the specified default key.
 
@@ -118,7 +118,7 @@ ___
 
 ▸ **set**(`key`: string, `value`: string): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:19](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L19)*
+*Defined in [js-miniapp-bridge/src/modules/miniapp-preferences.ts:19](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/miniapp-preferences.ts#L19)*
 
 Sets the value of the specified default key.
 

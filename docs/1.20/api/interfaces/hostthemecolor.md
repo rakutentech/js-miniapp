@@ -23,7 +23,7 @@ Host Color Scheme type.
 
 • `Optional` **primaryColor**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-color-scheme.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/host-color-scheme.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/host-color-scheme.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-color-scheme.ts#L3)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • `Optional` **secondaryColor**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-color-scheme.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/host-color-scheme.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/host-color-scheme.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-color-scheme.ts#L4)*

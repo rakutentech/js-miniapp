@@ -21,7 +21,7 @@
 
 •  **name**: [CustomPermissionName](../enums/custompermissionname.md)
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:24](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L24)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:24](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L24)*
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 •  **status**: [CustomPermissionStatus](../enums/custompermissionstatus.md)
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:25](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L25)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:25](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L25)*

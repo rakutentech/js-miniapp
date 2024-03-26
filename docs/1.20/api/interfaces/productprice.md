@@ -21,7 +21,7 @@
 
 •  **currencyCode**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L8)*
 
 ___
 
@@ -29,4 +29,4 @@ ___
 
 •  **price**: string
 
-*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:9](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/in-app-purchase.ts#L9)*
+*Defined in [js-miniapp-bridge/src/types/in-app-purchase.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/in-app-purchase.ts#L9)*

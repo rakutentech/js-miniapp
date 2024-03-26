@@ -27,7 +27,7 @@ Token permission type.
 
 \+ **new AccessTokenScopes**(`basePermission`: NativeTokenScopes): [AccessTokenScopes](accesstokenscopes.md)
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:30](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/token-data.ts#L30)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:30](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L30)*
 
 #### Parameters:
 
@@ -43,7 +43,7 @@ Name | Type |
 
 • `Readonly` **audience**: string
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:29](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/token-data.ts#L29)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:29](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L29)*
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 • `Readonly` **scopes**: string[]
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:30](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/token-data.ts#L30)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:30](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L30)*

@@ -23,7 +23,7 @@
 
 • `Optional` **message**: string
 
-*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:2](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L2)*
+*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:2](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L2)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • `Optional` **type**: string
 
-*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L3)*

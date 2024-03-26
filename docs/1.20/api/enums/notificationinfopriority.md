@@ -21,7 +21,7 @@
 
 •  **CRITICAL**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:12](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L12)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L12)*
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 •  **MAINTENANCE**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:17](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L17)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:17](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L17)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 •  **MAJOR**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:13](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L13)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:13](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L13)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 •  **MINOR**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:14](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L14)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:14](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L14)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 •  **NORMAL**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:15](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L15)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:15](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L15)*
 
 ___
 
@@ -61,4 +61,4 @@ ___
 
 •  **OFFERS**: 
 
-*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:16](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/notification/notification-info.ts#L16)*
+*Defined in [js-miniapp-bridge/src/types/notification/notification-info.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/notification/notification-info.ts#L16)*

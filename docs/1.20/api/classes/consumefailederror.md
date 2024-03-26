@@ -31,7 +31,7 @@
 
 *Overrides [MiniAppError](miniapperror.md).[constructor](miniapperror.md#constructor)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:19](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L19)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:19](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L19)*
 
 #### Parameters:
 
@@ -49,7 +49,7 @@ Name | Type |
 
 *Overrides [MiniAppError](miniapperror.md).[errorInput](miniapperror.md#errorinput)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:20](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L20)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:20](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L20)*
 
 ___
 

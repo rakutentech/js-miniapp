@@ -25,7 +25,7 @@
 
 • `Readonly` **icon**: string
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:46](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L46)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:46](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L46)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • `Readonly` **type**: string
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:46](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L46)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:46](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L46)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 ▪ `Static` `Readonly` **debug**: [LogType](logtype.md) = new LogType('debug', '📘')
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:41](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L41)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:41](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L41)*
 
 ___
 
@@ -49,7 +49,7 @@ ___
 
 ▪ `Static` `Readonly` **error**: [LogType](logtype.md) = new LogType('error', '📕')
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:44](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L44)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:44](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L44)*
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 ▪ `Static` `Readonly` **log**: [LogType](logtype.md) = new LogType('log', '📗')
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:42](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L42)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:42](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L42)*
 
 ___
 
@@ -65,4 +65,4 @@ ___
 
 ▪ `Static` `Readonly` **warn**: [LogType](logtype.md) = new LogType('warning', '📙')
 
-*Defined in [js-miniapp-bridge/src/common-log.ts:43](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/common-log.ts#L43)*
+*Defined in [js-miniapp-bridge/src/common-log.ts:43](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-log.ts#L43)*

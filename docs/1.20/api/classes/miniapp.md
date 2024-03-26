@@ -52,7 +52,7 @@
 
 •  **chatService**: ChatService = new ChatService()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:170](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L170)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:170](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L170)*
 
 ___
 
@@ -60,7 +60,7 @@ ___
 
 •  **cookieManager**: CookieManager = new CookieManager()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:175](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L175)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:175](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L175)*
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 •  **miniappUtils**: MiniAppUtils = new MiniAppUtils()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:173](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L173)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:173](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L173)*
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 •  **preferences**: MiniAppPreference = new MiniAppPreference()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:176](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L176)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:176](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L176)*
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 •  **purchaseService**: Purchases = new Purchases()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:174](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L174)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:174](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L174)*
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 •  **secureStorageService**: SecureStorageService = new SecureStorageService()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:171](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L171)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:171](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L171)*
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 •  **universalBridge**: UniversalBridge = new UniversalBridge()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:172](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L172)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:172](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L172)*
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 •  **user**: [UserInfoProvider](../interfaces/userinfoprovider.md) = new UserInfo()
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:169](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L169)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:169](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L169)*
 
 ## Methods
 
@@ -118,7 +118,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:281](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L281)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:281](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L281)*
 
 #### Parameters:
 
@@ -138,7 +138,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:272](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L272)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:272](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L272)*
 
 **Returns:** Promise\<[HostEnvironmentInfo](../interfaces/hostenvironmentinfo.md)>
 
@@ -150,7 +150,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:193](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L193)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:193](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L193)*
 
 **Returns:** Promise\<string>
 
@@ -162,7 +162,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:189](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L189)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:189](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L189)*
 
 **Returns:** Promise\<string>
 
@@ -172,7 +172,7 @@ ___
 
 ▸ **getPlatform**(): string
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:256](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L256)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:256](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L256)*
 
 **Returns:** string
 
@@ -184,7 +184,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:268](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L268)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:268](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L268)*
 
 **Returns:** Promise\<[Points](../interfaces/points.md)>
 
@@ -196,7 +196,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:185](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L185)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:185](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L185)*
 
 **`deprecated`** Deprecated method for getting the uniqueId use `getMessagingUniqueId` or `getMauid` instead
 
@@ -210,7 +210,7 @@ ___
 
 *Implementation of [Ad](../interfaces/ad.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:236](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L236)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:236](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L236)*
 
 #### Parameters:
 
@@ -228,7 +228,7 @@ ___
 
 *Implementation of [Ad](../interfaces/ad.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:240](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L240)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:240](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L240)*
 
 #### Parameters:
 
@@ -246,7 +246,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:228](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L228)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:228](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L228)*
 
 #### Parameters:
 
@@ -264,7 +264,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:197](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L197)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:197](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L197)*
 
 #### Parameters:
 
@@ -282,7 +282,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:289](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L289)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:289](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L289)*
 
 #### Parameters:
 
@@ -300,7 +300,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:264](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L264)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:264](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L264)*
 
 #### Parameters:
 
@@ -318,7 +318,7 @@ ___
 
 *Implementation of [MiniAppFeatures](../interfaces/miniappfeatures.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:252](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L252)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:252](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L252)*
 
 #### Parameters:
 
@@ -336,7 +336,7 @@ ___
 
 *Implementation of [Ad](../interfaces/ad.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:244](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L244)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:244](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L244)*
 
 #### Parameters:
 
@@ -354,7 +354,7 @@ ___
 
 *Implementation of [Ad](../interfaces/ad.md)*
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:248](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/miniapp.ts#L248)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:248](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L248)*
 
 #### Parameters:
 

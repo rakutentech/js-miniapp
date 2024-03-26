@@ -25,7 +25,7 @@ Interfaces used to store, get and clear miniapp preferences
 
 ▸ **clearMiniAppPreferences**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:25](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L25)*
+*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:25](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L25)*
 
 Clear all key/values that is stored for the MiniApp
 
@@ -37,7 +37,7 @@ ___
 
 ▸ **get**(`key`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:15](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L15)*
+*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:15](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L15)*
 
 Get the value for a given key
 
@@ -55,7 +55,7 @@ ___
 
 ▸ **remove**(`key`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:20](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L20)*
+*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:20](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L20)*
 
 Remove value for a given key
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **set**(`key`: string, `value`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:10](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L10)*
+*Defined in [js-miniapp-sdk/src/modules/miniapp-preferences.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/miniapp-preferences.ts#L10)*
 
 Store any value for a given key
 

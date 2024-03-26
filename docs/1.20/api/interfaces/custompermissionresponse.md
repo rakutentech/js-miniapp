@@ -20,4 +20,4 @@
 
 •  **permissions**: [CustomPermissionResult](custompermissionresult.md)[]
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:29](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L29)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:29](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L29)*

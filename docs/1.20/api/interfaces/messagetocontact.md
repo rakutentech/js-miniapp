@@ -26,7 +26,7 @@ Message type sent to Contact.
 
 •  **action**: string
 
-*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:10](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/message-to-contact.ts#L10)*
+*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/message-to-contact.ts#L10)*
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • `Optional` **bannerMessage**: string
 
-*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:12](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/message-to-contact.ts#L12)*
+*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/message-to-contact.ts#L12)*
 
 ___
 
@@ -42,7 +42,7 @@ ___
 
 •  **caption**: string
 
-*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/message-to-contact.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/message-to-contact.ts#L8)*
 
 ___
 
@@ -50,7 +50,7 @@ ___
 
 •  **image**: string
 
-*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/message-to-contact.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/message-to-contact.ts#L4)*
 
 ___
 
@@ -58,4 +58,4 @@ ___
 
 •  **text**: string
 
-*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/message-to-contact.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/message-to-contact.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/message-to-contact.ts#L6)*

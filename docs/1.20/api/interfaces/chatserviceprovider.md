@@ -22,7 +22,7 @@
 
 ▸ **sendMessageToContact**(`message`: [MessageToContact](messagetocontact.md)): Promise\<string \| null>
 
-*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:13](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/chat-service.ts#L13)*
+*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:13](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/chat-service.ts#L13)*
 
 Opens a contact chooser which allows the user to choose a single contact,
 and then sends the message to the chosen contact.
@@ -45,7 +45,7 @@ ___
 
 ▸ **sendMessageToContactId**(`id`: string, `message`: [MessageToContact](messagetocontact.md)): Promise\<string \| null>
 
-*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:22](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/chat-service.ts#L22)*
+*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:22](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/chat-service.ts#L22)*
 
 Send a message to the specific contact.
 
@@ -68,7 +68,7 @@ ___
 
 ▸ **sendMessageToMultipleContacts**(`message`: [MessageToContact](messagetocontact.md)): Promise\<string[] \| null>
 
-*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:35](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-sdk/src/modules/chat-service.ts#L35)*
+*Defined in [js-miniapp-sdk/src/modules/chat-service.ts:35](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/chat-service.ts#L35)*
 
 Opens a contact chooser which allows the user to choose a multiple contacts
 and then sends the message to the all chosen contacts.

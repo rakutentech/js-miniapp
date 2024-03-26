@@ -25,7 +25,7 @@ Contact type.
 
 • `Optional` **allEmailList**: string[]
 
-*Defined in [js-miniapp-bridge/src/types/contact.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/contact.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/contact.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/contact.ts#L6)*
 
 ___
 
@@ -33,7 +33,7 @@ ___
 
 • `Optional` **email**: string
 
-*Defined in [js-miniapp-bridge/src/types/contact.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/contact.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/contact.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/contact.ts#L5)*
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 •  **id**: string
 
-*Defined in [js-miniapp-bridge/src/types/contact.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/contact.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/contact.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/contact.ts#L3)*
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 • `Optional` **name**: string
 
-*Defined in [js-miniapp-bridge/src/types/contact.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/contact.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/contact.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/contact.ts#L4)*

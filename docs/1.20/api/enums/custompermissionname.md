@@ -23,7 +23,7 @@
 
 •  **ACCESS\_TOKEN**:  = "rakuten.miniapp.user.ACCESS\_TOKEN"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:5](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L5)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 •  **CONTACT\_LIST**:  = "rakuten.miniapp.user.CONTACT\_LIST"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:4](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L4)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 •  **FILE\_DOWNLOAD**:  = "rakuten.miniapp.device.FILE\_DOWNLOAD"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:9](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L9)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L9)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 •  **LOCATION**:  = "rakuten.miniapp.device.LOCATION"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:6](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L6)*
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 •  **POINTS**:  = "rakuten.miniapp.user.POINTS"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:8](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L8)*
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 •  **PROFILE\_PHOTO**:  = "rakuten.miniapp.user.PROFILE\_PHOTO"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:3](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L3)*
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 •  **SEND\_MESSAGE**:  = "rakuten.miniapp.user.action.SEND\_MESSAGE"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:7](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L7)*
 
 ___
 
@@ -79,4 +79,4 @@ ___
 
 •  **USER\_NAME**:  = "rakuten.miniapp.user.USER\_NAME"
 
-*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:2](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/custom-permissions.ts#L2)*
+*Defined in [js-miniapp-bridge/src/types/custom-permissions.ts:2](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/custom-permissions.ts#L2)*

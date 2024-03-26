@@ -22,7 +22,7 @@ Action Type
 
 •  **add**:  = "add"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:17](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L17)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:17](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L17)*
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 •  **change**:  = "change"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:19](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L19)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:19](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L19)*
 
 ___
 
@@ -38,7 +38,7 @@ ___
 
 •  **close**:  = "close"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:16](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L16)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L16)*
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 •  **delete**:  = "delete"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:18](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L18)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L18)*
 
 ___
 
@@ -54,4 +54,4 @@ ___
 
 •  **open**:  = "open"
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:15](https://github.com/rakutentech/js-miniapp/blob/4741025/js-miniapp-bridge/src/types/analytics/analytics.ts#L15)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:15](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L15)*
