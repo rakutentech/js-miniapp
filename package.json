@@ -10,5 +10,6 @@
         "sample": "yarn workspace js-miniapp-sample",
         "bridge": "yarn workspace js-miniapp-bridge",
         "postinstall": "yarn sdk compile"
-    }
+    },
+    "version": "0.0.0"
 }
