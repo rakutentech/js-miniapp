@@ -20,7 +20,7 @@ Enum for supported SDK event types
 
 •  **EXTERNAL\_WEBVIEW\_CLOSE**:  = "miniappwebviewclosed"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L5)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L5)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 •  **PAUSE**:  = "miniapppause"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L6)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L6)*
 
 ___
 
@@ -36,4 +36,4 @@ ___
 
 •  **RESUME**:  = "miniappresume"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L7)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:7](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L7)*

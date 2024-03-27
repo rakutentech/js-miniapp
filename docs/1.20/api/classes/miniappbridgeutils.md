@@ -20,7 +20,7 @@
 
 ▸ `Static`**BooleanValue**(`value`: any): boolean
 
-*Defined in [js-miniapp-bridge/src/common-bridge.ts:1008](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/common-bridge.ts#L1008)*
+*Defined in [js-miniapp-bridge/src/common-bridge.ts:1008](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/common-bridge.ts#L1008)*
 
 #### Parameters:
 

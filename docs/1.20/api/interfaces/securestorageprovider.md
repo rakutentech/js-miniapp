@@ -26,7 +26,7 @@
 
 ▸ **clear**(): Promise\<undefined>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L18)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:18](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L18)*
 
 **Returns:** Promise\<undefined>
 
@@ -36,7 +36,7 @@ ___
 
 ▸ **getItem**(`key`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:14](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L14)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:14](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L14)*
 
 #### Parameters:
 
@@ -52,7 +52,7 @@ ___
 
 ▸ **onLoadError**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:24](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L24)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:24](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L24)*
 
 **Returns:** Promise\<string>
 
@@ -62,7 +62,7 @@ ___
 
 ▸ **onReady**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:22](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L22)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:22](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L22)*
 
 **Returns:** Promise\<string>
 
@@ -72,7 +72,7 @@ ___
 
 ▸ **removeItems**(`key`: [string]): Promise\<undefined>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L16)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:16](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L16)*
 
 #### Parameters:
 
@@ -88,7 +88,7 @@ ___
 
 ▸ **setItems**(`items`: [MiniAppSecureStorageKeyValues](../README.md#miniappsecurestoragekeyvalues)): Promise\<undefined>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L12)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:12](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L12)*
 
 #### Parameters:
 
@@ -104,6 +104,6 @@ ___
 
 ▸ **size**(): Promise\<[MiniAppSecureStorageSize](../README.md#miniappsecurestoragesize)>
 
-*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:20](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/secure-storage.ts#L20)*
+*Defined in [js-miniapp-sdk/src/modules/secure-storage.ts:20](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/secure-storage.ts#L20)*
 
 **Returns:** Promise\<[MiniAppSecureStorageSize](../README.md#miniappsecurestoragesize)>

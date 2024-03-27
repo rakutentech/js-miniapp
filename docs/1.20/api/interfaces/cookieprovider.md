@@ -23,7 +23,7 @@ Interfaces to retrieve Cookies from Host app
 
 ▸ **getAllCookies**(): Promise\<[[CookieInfo](cookieinfo.md)]>
 
-*Defined in [js-miniapp-sdk/src/modules/cookie-manager.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/cookie-manager.ts#L12)*
+*Defined in [js-miniapp-sdk/src/modules/cookie-manager.ts:12](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/cookie-manager.ts#L12)*
 
 Fetches all cookies from host app.
 
@@ -37,7 +37,7 @@ ___
 
 ▸ **getCookies**(`cookieNameList`: string[]): Promise\<[[CookieInfo](cookieinfo.md)]>
 
-*Defined in [js-miniapp-sdk/src/modules/cookie-manager.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/cookie-manager.ts#L18)*
+*Defined in [js-miniapp-sdk/src/modules/cookie-manager.ts:18](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/cookie-manager.ts#L18)*
 
 Fetches the cookies for the provided name list
 

@@ -24,7 +24,7 @@ Points type.
 
 • `Optional` **cash**: number
 
-*Defined in [js-miniapp-bridge/src/types/points.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/points.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/points.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/points.ts#L5)*
 
 ___
 
@@ -32,7 +32,7 @@ ___
 
 • `Optional` **standard**: number
 
-*Defined in [js-miniapp-bridge/src/types/points.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/points.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/points.ts:3](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/points.ts#L3)*
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 • `Optional` **term**: number
 
-*Defined in [js-miniapp-bridge/src/types/points.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/points.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/points.ts:4](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/points.ts#L4)*

@@ -20,7 +20,7 @@
 
 •  **ConsumeFailedError**:  = "ConsumeFailedError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L5)*
 
 ___
 
@@ -28,7 +28,7 @@ ___
 
 •  **ProductNotFoundError**:  = "ProductNotFoundError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L6)*
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 •  **ProductPurchasedAlreadyError**:  = "ProductPurchasedAlreadyError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:7](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L7)*
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 •  **PurchaseFailedError**:  = "PurchaseFailedError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L4)*
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 •  **UserCancelledPurchaseError**:  = "UserCancelledPurchaseError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts:8](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/in-app-purchase-errors.ts#L8)*

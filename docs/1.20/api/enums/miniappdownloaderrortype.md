@@ -19,7 +19,7 @@
 
 •  **DownloadFailedError**:  = "DownloadFailedError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L4)*
 
 ___
 
@@ -27,7 +27,7 @@ ___
 
 •  **DownloadHttpError**:  = "DownloadHttpError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:7](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L7)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **InvalidUrlError**:  = "InvalidUrlError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L5)*
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 •  **SaveFailureError**:  = "SaveFailureError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L6)*

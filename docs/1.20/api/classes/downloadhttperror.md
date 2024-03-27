@@ -36,7 +36,7 @@ Error returned by `MiniApp.downloadFile` when failed to download the file due to
 
 *Overrides [MiniAppError](miniapperror.md).[constructor](miniapperror.md#constructor)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L53)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L53)*
 
 #### Parameters:
 
@@ -52,7 +52,7 @@ Name | Type |
 
 •  **code**: number
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L53)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:53](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L53)*
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 *Overrides [MiniAppError](miniapperror.md).[errorInput](miniapperror.md#errorinput)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:55](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L55)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:55](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L55)*
 
 ___
 

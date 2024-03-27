@@ -18,7 +18,7 @@
 
 •  **AudienceNotSupportedError**:  = "AudienceNotSupportedError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L4)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:4](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L4)*
 
 ___
 
@@ -26,7 +26,7 @@ ___
 
 •  **AuthorizationFailureError**:  = "AuthorizationFailureError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L6)*
 
 ___
 
@@ -34,4 +34,4 @@ ___
 
 •  **ScopesNotSupportedError**:  = "ScopesNotSupportedError"
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L5)*

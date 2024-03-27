@@ -21,7 +21,7 @@
 
 ▸ `Static`**convertJsonToPlatformInfo**(`json`: [HostEnvironmentInfo](../interfaces/hostenvironmentinfo.md)): [HostEnvironmentInfo](../interfaces/hostenvironmentinfo.md)
 
-*Defined in [js-miniapp-sdk/src/modules/bridge-info-converter.ts:47](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/bridge-info-converter.ts#L47)*
+*Defined in [js-miniapp-sdk/src/modules/bridge-info-converter.ts:47](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/bridge-info-converter.ts#L47)*
 
 #### Parameters:
 
@@ -37,7 +37,7 @@ ___
 
 ▸ `Static`**mapStringToHostBuildType**(`value`: string): [HostBuildType](../enums/hostbuildtype.md) \| undefined
 
-*Defined in [js-miniapp-sdk/src/modules/bridge-info-converter.ts:41](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/bridge-info-converter.ts#L41)*
+*Defined in [js-miniapp-sdk/src/modules/bridge-info-converter.ts:41](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/bridge-info-converter.ts#L41)*
 
 #### Parameters:
 

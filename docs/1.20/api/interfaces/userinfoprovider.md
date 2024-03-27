@@ -26,7 +26,7 @@ Interfaces to retrieve User profile related information.
 
 ▸ **getAccessToken**(`audience`: string, `scopes`: string[]): Promise\<[AccessTokenData](../classes/accesstokendata.md) \| [MiniAppError](../classes/miniapperror.md)>
 
-*Defined in [js-miniapp-sdk/src/modules/user-info.ts:41](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/user-info.ts#L41)*
+*Defined in [js-miniapp-sdk/src/modules/user-info.ts:41](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/user-info.ts#L41)*
 
 Fetches the access token from host app.
 
@@ -47,7 +47,7 @@ ___
 
 ▸ **getContacts**(): Promise\<[Contact](contact.md)[]>
 
-*Defined in [js-miniapp-sdk/src/modules/user-info.ts:33](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/user-info.ts#L33)*
+*Defined in [js-miniapp-sdk/src/modules/user-info.ts:33](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/user-info.ts#L33)*
 
 Fetches the contact list from host app.
 You should request the [CustomPermissionName.CONTACT_LIST](../enums/custompermissionname.md#contact_list) permission before using this method.
@@ -62,7 +62,7 @@ ___
 
 ▸ **getPoints**(): Promise\<[Points](points.md)>
 
-*Defined in [js-miniapp-sdk/src/modules/user-info.ts:50](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/user-info.ts#L50)*
+*Defined in [js-miniapp-sdk/src/modules/user-info.ts:50](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/user-info.ts#L50)*
 
 Fetches the points from host app.
 
@@ -76,7 +76,7 @@ ___
 
 ▸ **getProfilePhoto**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/user-info.ts:26](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/user-info.ts#L26)*
+*Defined in [js-miniapp-sdk/src/modules/user-info.ts:26](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/user-info.ts#L26)*
 
 Fetches the profile photo URI from host app.
 You should request the [CustomPermissionName.PROFILE_PHOTO](../enums/custompermissionname.md#profile_photo) permission before using this method.
@@ -91,7 +91,7 @@ ___
 
 ▸ **getUserName**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/user-info.ts:19](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/user-info.ts#L19)*
+*Defined in [js-miniapp-sdk/src/modules/user-info.ts:19](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/user-info.ts#L19)*
 
 Fetches the username from host app.
 You should request the [CustomPermissionName.USER_NAME](../enums/custompermissionname.md#user_name) permission before using this method.

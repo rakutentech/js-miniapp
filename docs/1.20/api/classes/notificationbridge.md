@@ -31,7 +31,7 @@
 
 \+ **new NotificationBridge**(`executor`: PlatformExecutor): [NotificationBridge](notificationbridge.md)
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L10)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:10](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L10)*
 
 #### Parameters:
 
@@ -47,7 +47,7 @@ Name | Type |
 
 •  **executor**: PlatformExecutor
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L9)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:9](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L9)*
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 •  **platform**: string
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L10)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:10](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L10)*
 
 ## Methods
 
@@ -63,7 +63,7 @@ ___
 
 ▸ **shouldClearNotifications**(`notificationType`: [NotificationInfoType](../enums/notificationinfotype.md)): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:22](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L22)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:22](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L22)*
 
 This method is used to clear any notifications in the Host application
 
@@ -83,7 +83,7 @@ ___
 
 ▸ **shouldUpdateBadgeNumber**(`notificationInfo`: [NotificationInfo](../interfaces/notificationinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:38](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L38)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:38](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L38)*
 
 This method is used to to update badge number for a specific notification info
 
@@ -103,7 +103,7 @@ ___
 
 ▸ **shouldUpdateNotificationInfo**(`notificationDetailedInfo`: [NotificationDetailedInfo](../interfaces/notificationdetailedinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:54](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/modules/notification-bridge.ts#L54)*
+*Defined in [js-miniapp-bridge/src/modules/notification-bridge.ts:54](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/modules/notification-bridge.ts#L54)*
 
 This method is used to share the notification detailed information to Host app
 

@@ -31,7 +31,7 @@
 
 *Overrides [MiniAppError](miniapperror.md).[constructor](miniapperror.md#constructor)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:17](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L17)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:17](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L17)*
 
 #### Parameters:
 
@@ -49,7 +49,7 @@ Name | Type |
 
 *Overrides [MiniAppError](miniapperror.md).[errorInput](miniapperror.md#errorinput)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L18)*
+*Defined in [js-miniapp-bridge/src/types/error-types/auth-errors.ts:18](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/auth-errors.ts#L18)*
 
 ___
 

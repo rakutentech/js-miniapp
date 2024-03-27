@@ -28,7 +28,7 @@ Mini App Utility methods
 
 ▸ **closeMiniApp**(`withConfirmation`: boolean): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:23](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L23)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:23](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L23)*
 
 Mini App can be closed using this method, provided Host app is supporting this interface to close the miniapp.
 
@@ -46,7 +46,7 @@ ___
 
 ▸ **getFeatureList**(): Promise\<string[]>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:50](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L50)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:50](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L50)*
 
 Interface to get list of features supported by the SDK and Host
 
@@ -58,7 +58,7 @@ ___
 
 ▸ **getHostAppThemeColors**(): Promise\<[HostThemeColor](hostthemecolor.md)>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:34](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L34)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:34](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L34)*
 
 Interface that is used to get the Color theme used in the Host application
 
@@ -70,7 +70,7 @@ ___
 
 ▸ **isDarkMode**(): Promise\<boolean>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:39](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L39)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:39](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L39)*
 
 Interface to check if the Device/Application is using Dark mode
 
@@ -82,7 +82,7 @@ ___
 
 ▸ **miniAppFinishedLoading**(): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:29](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L29)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:29](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L29)*
 
 Miniapp can notify the host app that it has finished loading using this call.
 Host app can implement this interface to perform any other actions after the miniapp has loaded.
@@ -95,7 +95,7 @@ ___
 
 ▸ **sendAnalytics**(`analytics`: [MAAnalyticsInfo](maanalyticsinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:45](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L45)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:45](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L45)*
 
 Interface to send analytics to Host app
 
@@ -113,7 +113,7 @@ ___
 
 ▸ **setCloseAlert**(`alertInfo`: [CloseAlertInfo](closealertinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/utils.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/utils.ts#L16)*
+*Defined in [js-miniapp-sdk/src/modules/utils.ts:16](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/utils.ts#L16)*
 
 Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
 

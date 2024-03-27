@@ -18,4 +18,4 @@ Enum for supported HostApp event types
 
 •  **RECEIVE\_JSON\_INFO**:  = "miniappreceivejsoninfo"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:22](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L22)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:22](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L22)*

@@ -22,4 +22,4 @@ Shared info type.
 
 •  **content**: string
 
-*Defined in [js-miniapp-bridge/src/types/share-info.ts:3](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/share-info.ts#L3)*
+*Defined in [js-miniapp-bridge/src/types/share-info.ts:3](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/share-info.ts#L3)*

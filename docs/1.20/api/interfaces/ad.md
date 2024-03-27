@@ -29,7 +29,7 @@ A contract declaring the interaction mechanism between mini-apps and native host
 
 ▸ **loadInterstitialAd**(`id`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:131](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L131)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:131](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/miniapp.ts#L131)*
 
 Loads the specified Interstittial Ad Unit ID.
 Can be called multiple times to pre-load multiple ads.
@@ -52,7 +52,7 @@ ___
 
 ▸ **loadRewardedAd**(`id`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:140](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L140)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:140](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/miniapp.ts#L140)*
 
 Loads the specified Rewarded Ad Unit ID.
 Can be called multiple times to pre-load multiple ads.
@@ -75,7 +75,7 @@ ___
 
 ▸ **showInterstitialAd**(`id`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:148](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L148)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:148](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/miniapp.ts#L148)*
 
 Shows the Interstitial Ad for the specified ID.
 Promise is resolved after the user closes the Ad.
@@ -97,7 +97,7 @@ ___
 
 ▸ **showRewardedAd**(`id`: string): Promise\<[Reward](reward.md)>
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:157](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L157)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:157](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/miniapp.ts#L157)*
 
 Shows the Rewarded Ad for the specified ID.
 Promise is resolved with an object after the user closes the Ad. The object contains the reward earned by the user.

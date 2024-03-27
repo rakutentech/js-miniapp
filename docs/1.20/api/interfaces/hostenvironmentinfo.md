@@ -29,7 +29,7 @@ HostEnvironmentInfo type.
 
 • `Optional` **deviceToken**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:11](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L11)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:11](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L11)*
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 • `Optional` **hostBuildType**: [HostBuildType](../enums/hostbuildtype.md)
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L10)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:10](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L10)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 • `Optional` **hostLocale**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L9)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:9](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L9)*
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 • `Optional` **hostVersion**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:7](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L7)*
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • `Optional` **platform**: [Platform](../enums/platform.md)
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L5)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 • `Optional` **platformVersion**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L6)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • `Optional` **pushToken**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L12)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:12](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L12)*
 
 ___
 
@@ -85,4 +85,4 @@ ___
 
 • `Optional` **sdkVersion**: string
 
-*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:8](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/host-environment-info.ts#L8)*
+*Defined in [js-miniapp-bridge/src/types/host-environment-info.ts:8](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/host-environment-info.ts#L8)*

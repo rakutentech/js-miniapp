@@ -27,7 +27,7 @@ Mini App Analytics info type
 
 •  **actionType**: [MAAnalyticsActionType](../enums/maanalyticsactiontype.md)
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:27](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L27)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:27](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L27)*
 
 ___
 
@@ -35,7 +35,7 @@ ___
 
 •  **componentName**: string
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:29](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L29)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:29](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L29)*
 
 ___
 
@@ -43,7 +43,7 @@ ___
 
 •  **data**: string
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:31](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L31)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:31](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L31)*
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 •  **elementType**: string
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:30](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L30)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:30](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L30)*
 
 ___
 
@@ -59,7 +59,7 @@ ___
 
 •  **eventType**: [MAAnalyticsEventType](../enums/maanalyticseventtype.md)
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:26](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L26)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:26](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L26)*
 
 ___
 
@@ -67,4 +67,4 @@ ___
 
 •  **pageName**: string
 
-*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:28](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/analytics/analytics.ts#L28)*
+*Defined in [js-miniapp-bridge/src/types/analytics/analytics.ts:28](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/analytics/analytics.ts#L28)*

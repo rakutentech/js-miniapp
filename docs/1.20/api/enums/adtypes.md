@@ -20,7 +20,7 @@ These ad formats replicate formats supported by Google
 
 •  **INTERSTITIAL**: 
 
-*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/ad-types/index.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/ad-types/index.ts#L6)*
 
 ___
 
@@ -28,4 +28,4 @@ ___
 
 •  **REWARDED**: 
 
-*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:7](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/ad-types/index.ts#L7)*
+*Defined in [js-miniapp-bridge/src/types/ad-types/index.ts:7](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/ad-types/index.ts#L7)*

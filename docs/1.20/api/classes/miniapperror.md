@@ -64,7 +64,7 @@ This class is a representation of an error sent from MiniApp mobile SDK
 
 \+ **new MiniAppError**(`errorInput`: [MiniAppJson](../interfaces/miniappjson.md)): [MiniAppError](miniapperror.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:9](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L9)*
+*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:9](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L9)*
 
 #### Parameters:
 
@@ -80,7 +80,7 @@ Name | Type |
 
 •  **errorInput**: [MiniAppJson](../interfaces/miniappjson.md)
 
-*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:10](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L10)*
+*Defined in [js-miniapp-bridge/src/types/error-types/mini-app-error.ts:10](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/mini-app-error.ts#L10)*
 
 ___
 

@@ -23,7 +23,7 @@ Device Build Types.
 
 •  **CUSTOM**:  = "CUSTOM"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:14](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L14)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:14](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L14)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 •  **DEBUG**:  = "DEBUG"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:11](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L11)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:11](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L11)*
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 •  **PREPRODUCTION**:  = "PRE-PRODUCTION"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:15](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L15)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:15](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L15)*
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 •  **PRODUCTION**:  = "PRODUCTION"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L16)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:16](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L16)*
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 •  **QA**:  = "QA"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:13](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L13)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:13](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L13)*
 
 ___
 
@@ -63,4 +63,4 @@ ___
 
 •  **STAGING**:  = "STAGING"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L12)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:12](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L12)*

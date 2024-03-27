@@ -23,7 +23,7 @@ A contract declaring the reward response, consists of amount and type of the rew
 
 • `Optional` **amount**: number
 
-*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L5)*
 
 ___
 
@@ -31,4 +31,4 @@ ___
 
 • `Optional` **type**: string
 
-*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/response-types/rewarded/index.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/response-types/rewarded/index.ts#L6)*

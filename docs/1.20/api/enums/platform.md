@@ -23,7 +23,7 @@ Device platform.
 
 •  **ANDROID**:  = "Android"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:5](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L5)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:5](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L5)*
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 •  **IOS**:  = "iOS"
 
-*Defined in [js-miniapp-bridge/src/types/platform.ts:6](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/platform.ts#L6)*
+*Defined in [js-miniapp-bridge/src/types/platform.ts:6](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/platform.ts#L6)*
 
 ## Functions
 
@@ -39,7 +39,7 @@ ___
 
 ▸ **getPlatform**(): string
 
-*Defined in [js-miniapp-sdk/src/miniapp.ts:165](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/miniapp.ts#L165)*
+*Defined in [js-miniapp-sdk/src/miniapp.ts:165](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/miniapp.ts#L165)*
 
 Detect which platform your mini app is running on.
 

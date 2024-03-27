@@ -22,7 +22,7 @@
 
 ▸ **consumePurchaseWith**(`id`: string, `transactionId`: string): Promise\<[PurchasedProductInfo](purchasedproductinfo.md)>
 
-*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:26](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/in-app-purchase.ts#L26)*
+*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:26](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/in-app-purchase.ts#L26)*
 
 Triggers the request to host app to Purchase a product using the Product ID.
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **getAllProducts**(): Promise\<[ProductInfo](productinfo.md)[]>
 
-*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:12](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/in-app-purchase.ts#L12)*
+*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:12](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/in-app-purchase.ts#L12)*
 
 Retrieves and lists all the products from the play/app store which are available for inapp-purchases.
 
@@ -53,7 +53,7 @@ ___
 
 ▸ **purchaseProductWith**(`id`: string): Promise\<[PurchasedProductInfo](purchasedproductinfo.md)>
 
-*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:19](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/in-app-purchase.ts#L19)*
+*Defined in [js-miniapp-sdk/src/modules/in-app-purchase.ts:19](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/in-app-purchase.ts#L19)*
 
 Triggers the request to host app to Purchase a product using the Product ID.
 

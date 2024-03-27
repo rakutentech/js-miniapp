@@ -33,7 +33,7 @@ Error returned by `MiniApp.downloadFile` when failed to save file to device.
 
 *Overrides [MiniAppError](miniapperror.md).[constructor](miniapperror.md#constructor)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:40](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L40)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:40](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L40)*
 
 #### Parameters:
 
@@ -51,7 +51,7 @@ Name | Type |
 
 *Overrides [MiniAppError](miniapperror.md).[errorInput](miniapperror.md#errorinput)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:41](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L41)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:41](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L41)*
 
 ___
 

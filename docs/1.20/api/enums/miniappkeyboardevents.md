@@ -19,7 +19,7 @@ Enum for supported keyboard event types
 
 •  **KEYBOARDHIDDEN**:  = "miniappkeyboardhidden"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:15](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L15)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:15](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L15)*
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 •  **KEYBOARDSHOWN**:  = "miniappkeyboardshown"
 
-*Defined in [js-miniapp-sdk/src/event-types/index.ts:14](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/event-types/index.ts#L14)*
+*Defined in [js-miniapp-sdk/src/event-types/index.ts:14](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/event-types/index.ts#L14)*

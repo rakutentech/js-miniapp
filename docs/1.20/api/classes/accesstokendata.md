@@ -28,7 +28,7 @@ Token data type.
 
 \+ **new AccessTokenData**(`baseToken`: NativeTokenData): [AccessTokenData](accesstokendata.md)
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L18)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:18](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/token-data.ts#L18)*
 
 #### Parameters:
 
@@ -44,7 +44,7 @@ Name | Type |
 
 • `Readonly` **scopes**: [AccessTokenScopes](accesstokenscopes.md)
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:18](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L18)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:18](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/token-data.ts#L18)*
 
 ___
 
@@ -52,7 +52,7 @@ ___
 
 • `Readonly` **token**: string
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L16)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:16](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/token-data.ts#L16)*
 
 ___
 
@@ -60,4 +60,4 @@ ___
 
 • `Readonly` **validUntil**: Date
 
-*Defined in [js-miniapp-bridge/src/types/token-data.ts:17](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/token-data.ts#L17)*
+*Defined in [js-miniapp-bridge/src/types/token-data.ts:17](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/token-data.ts#L17)*

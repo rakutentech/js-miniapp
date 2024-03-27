@@ -34,7 +34,7 @@ Only `http:`, `https:` and `data:` URLs are supported.
 
 *Overrides [MiniAppError](miniapperror.md).[constructor](miniapperror.md#constructor)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:29](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L29)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:29](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L29)*
 
 #### Parameters:
 
@@ -52,7 +52,7 @@ Name | Type |
 
 *Overrides [MiniAppError](miniapperror.md).[errorInput](miniapperror.md#errorinput)*
 
-*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:30](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L30)*
+*Defined in [js-miniapp-bridge/src/types/error-types/download-file-errors.ts:30](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-bridge/src/types/error-types/download-file-errors.ts#L30)*
 
 ___
 

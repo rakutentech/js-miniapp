@@ -23,7 +23,7 @@ Interfaces to communicate with Host application
 
 ▸ **sendInfoToHostapp**(`info`: [UniversalBridgeInfo](universalbridgeinfo.md)): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/universal-bridge.ts:16](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/universal-bridge.ts#L16)*
+*Defined in [js-miniapp-sdk/src/modules/universal-bridge.ts:16](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/universal-bridge.ts#L16)*
 
 Send UniversalBridgeInfo to HostApp.
 
@@ -41,7 +41,7 @@ ___
 
 ▸ **sendJsonToHostapp**(`info`: string): Promise\<string>
 
-*Defined in [js-miniapp-sdk/src/modules/universal-bridge.ts:11](https://github.com/rakutentech/js-miniapp/blob/00ebd5b/js-miniapp-sdk/src/modules/universal-bridge.ts#L11)*
+*Defined in [js-miniapp-sdk/src/modules/universal-bridge.ts:11](https://github.com/rakutentech/js-miniapp/blob/df2c090/js-miniapp-sdk/src/modules/universal-bridge.ts#L11)*
 
 Send JSON/String information to HostApp.
 
