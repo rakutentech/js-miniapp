@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp-sample",
-  "version": "1.20.1",
+  "version": "1.20.2",
   "description": "Mini App Sample for JavaScript SDK",
   "dependencies": {
     "@brightcove/react-player-loader": "^1.4.2",

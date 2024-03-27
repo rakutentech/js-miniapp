@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.20.2 (2024-03-27)
+- **Fix:** Remove dependecy of `libbase64` and we moved the encode/decode internally in SDK
+
 ### 1.20.1 (2024-03-26)
 - **Fix:** Updated dependency for `libbase64` to use static `1.2.1` version
 
