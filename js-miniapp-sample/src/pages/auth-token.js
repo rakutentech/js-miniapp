@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     color: green[500],
     marginTop: 20,
     textAlign: 'center',
-    wordBreak: 'break-all',
+    wordWrap: 'anywhere',
   },
   rootFormGroup: {
     alignItems: 'center',

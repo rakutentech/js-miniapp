@@ -75,7 +75,7 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div className={classes.App}>
           <Home />
-          <ConsoleView />
+          {/* <ConsoleView /> */}
           {toastVisible && (
             <div className={classes.toastStyle}>
               HostApp was notified successfully.

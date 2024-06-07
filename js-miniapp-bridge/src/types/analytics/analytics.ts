@@ -6,6 +6,7 @@ export enum MAAnalyticsEventType {
   click = 'click',
   error = 'error',
   custom = 'custom',
+  pageView = "pv",
 }
 
 /**
@@ -29,4 +30,9 @@ export interface MAAnalyticsInfo {
   componentName: string;
   elementType: string;
   data: string;
+  ssc?: string;
+  genre?: string;
+  customerId?: string;
+  accountId?: string;
+  applicationId?: string;
 }
