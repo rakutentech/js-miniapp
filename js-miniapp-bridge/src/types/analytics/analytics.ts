@@ -6,7 +6,7 @@ export enum MAAnalyticsEventType {
   click = 'click',
   error = 'error',
   custom = 'custom',
-  pageView = "pv",
+  pageView = 'pv',
 }
 
 /**

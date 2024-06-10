@@ -159,12 +159,10 @@ function Analytics() {
   const [etype, setEtype] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [elementType, setElementType] = useState('');
-  const [actionType, setActionType] = useState('');
   const defaultJsonString = '{"contracted_plan": "Test"}';
 
   // Initialize the state with the default JSON string and its parsed object
   const [jsonString, setJsonString] = useState(defaultJsonString);
-  const [jsonObject, setJsonObject] = useState(JSON.parse(defaultJsonString));
 
   function SaveAnalyticsInfo() {
     if (!isTextFieldValuesValid(accountId)) {
@@ -193,13 +191,6 @@ function Analytics() {
   const handleCustomDataChange = (e) => {
     const newJsonString = e.target.value;
     setJsonString(newJsonString);
-
-    try {
-      const parsedJson = JSON.parse(newJsonString);
-      setJsonObject(parsedJson);
-    } catch (error) {
-      setJsonObject({});
-    }
   };
 
   function isEmpty(str) {
@@ -240,7 +231,7 @@ function Analytics() {
     }
     sendAnalytics(
       etype,
-      actionType,
+      '',
       pgn,
       '',
       elementType,
@@ -319,15 +310,6 @@ function Analytics() {
           label={'etype - appear/click/error/custom/pv'}
           value={etype}
           onChange={(e) => setEtype(e.target.value)}
-        />
-        <br />
-        <TextField
-          variant="outlined"
-          className={classes.formInput}
-          id="input-name"
-          label={'Action - open/close/add/delete/change'}
-          value={actionType}
-          onChange={(e) => setActionType(e.target.value)}
         />
         <br />
         <TextField
