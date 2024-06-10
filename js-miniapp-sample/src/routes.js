@@ -24,6 +24,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 import Ads from './pages/ads';
 import { CloseConfirmAlert } from './pages/app-close-alert';
@@ -49,6 +50,7 @@ import WindowActions from './pages/window-actions';
 import CookieManagerComponent from './pages/cookie-manager';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import FeatureListComponent from './pages/feature-list';
+import Analytics from './pages/analytics';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -123,6 +125,10 @@ const miniFeatureListNavLink = {
   navLink: '/miniapp-feature-list',
   label: 'Feature List',
 };
+const analyticsNavLink = {
+  navLink: '/analytics',
+  label: 'Analytics',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -152,6 +158,7 @@ const navLinks = [
   colorThemeNavLink,
   cookieManagerNavLink,
   miniFeatureListNavLink,
+  analyticsNavLink,
 ];
 
 const homeItem = [
@@ -301,6 +308,12 @@ const appItems = [
     label: miniFeatureListNavLink.label,
     navLink: miniFeatureListNavLink.navLink,
     element: <FeatureListComponent />,
+  },
+  {
+    icon: <AnalyticsIcon />,
+    label: analyticsNavLink.label,
+    navLink: analyticsNavLink.navLink,
+    element: <Analytics />,
   },
 ];
 
