@@ -98,6 +98,7 @@ const Landing = (props: LandingProps) => {
       props.getHostInfo();
       checkSecureStorageStorageReady(props);
       getDarkMode();
+      getPhoneNumber();
     } catch (e) {
       console.log(e);
     }
