@@ -48,6 +48,12 @@ export interface UserInfoProvider {
    * @returns Points from native host app.
    */
   getPoints(): Promise<Points>;
+
+  /**
+   * Fetches the Phone number of the user.
+   * @returns Phone number saved in the host app user profile.
+   */
+  getPhoneNumber(): Promise<string>;
 }
 
 /** @internal */
@@ -83,5 +89,9 @@ export class UserInfo implements UserInfoProvider {
 
   getPoints() {
     return getBridge().getPoints();
+  }
+
+  getPhoneNumber(): Promise<string> {
+    return getBridge().getPhoneNumber();
   }
 }

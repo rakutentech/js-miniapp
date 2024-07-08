@@ -2,7 +2,7 @@
 
 The Mini App SDK for JavaScript can be used to access Android/iOS device and App specific features from a Mini App. It is intended to be used in conjunction with the [Android Mini App SDK](https://github.com/rakutentech/android-miniapp) and [iOS Mini App SDK](https://github.com/rakutentech/ios-miniapp).
 
-[JS SDK Developer documentation](https://rakutentech.github.io/js-miniapp/docs/1.17/)
+[JS SDK Developer documentation](https://rakutentech.github.io/js-miniapp/docs/1.20/)
 
 ## Table of Contents
 {:.no_toc}
@@ -123,6 +123,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 ## Mini App Features
 
 - [Retrieve a unique ID](#retrieve-a-unique-id)
+- [Get Phone Number](#get-phone-number)
 - [Request Permissions](#request-permissions)
 - [Show Ads](#show-ads)
 - [Share info](#share-info)
@@ -143,10 +144,12 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [isDarkMode](#dark-mode)
 - [Send Analytics](#send-analytics)
 - [Get Cookies](#get-cookies)
-- [MiniApp Storage][#miniapp-storage]
+- [MiniApp Storage](#miniapp-storage)
 - [MiniApp Finished Loading](#miniapp-finished-loading)
-- [Get Feature list][#get-feature-list]
+- [Get Feature list](#get-feature-list)
 
+
+## User details
 
 ### Retrieve a unique ID
 
@@ -209,9 +212,27 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
       });
     ```
 
+<div id='get-phone-number'/>
+3. getPhoneNumber() - This method is used to retrieve phone number of the user. 
+
+    **API:** [MiniAppFeatures.getphonenumber](api/interfaces/miniappfeatures.md#getphonenumber)
+
+    ```javascript
+    import MiniApp from 'js-miniapp-sdk';
+
+    MiniApp.user
+      .getPhoneNumber()
+      .then(number => {
+        console.log(number);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    ```
+
 </dd>
 
-### Request Permissions
+## Request Permissions
 
 <dl>
 <dl>
@@ -336,7 +357,7 @@ MiniApp
 
 </dd>
 
-### Show Ads
+## Show Ads
 
 <dl>
 <dd>
@@ -623,7 +644,7 @@ MiniApp
 </dd>
 
 
-### Send message
+## Send message
 
 <dl>
 <dd>

@@ -65,6 +65,7 @@ window.MiniAppBridge = {
   closeMiniApp: sandbox.stub(),
   getAllProducts: sandbox.stub(),
   purchaseProductWith: sandbox.stub(),
+  getPhoneNumber: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -411,6 +412,17 @@ describe('getAccessToken', () => {
 
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.getPoints()).to.eventually.equal(response);
+    });
+  });
+
+  describe('getPhoneNumber', () => {
+    it('should retrieve phone number from the MiniAppBridge if getPhoneNumber is called', () => {
+      const response = '+810000000000';
+
+      window.MiniAppBridge.getPhoneNumber.resolves(response);
+      return expect(miniApp.user.getPhoneNumber()).to.eventually.equal(
+        response
+      );
     });
   });
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { CardContent, makeStyles } from '@material-ui/core';
 import AppSettingsAltRoundedIcon from '@mui/icons-material/AppSettingsAltRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import PhoneIcon from '@mui/icons-material/Phone';
 import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import HttpRoundedIcon from '@mui/icons-material/HttpRounded';
@@ -82,6 +83,7 @@ const useStyles = makeStyles((theme) => ({
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
   const [darkMode, setDarkMode] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('UNKNOWN');
 
   useEffect(() => {
     try {
@@ -109,6 +111,17 @@ const Landing = (props: LandingProps) => {
       })
       .catch((miniAppError) => {
         console.log('getDarkMode - Error: ', miniAppError);
+      });
+  }
+
+  function getPhoneNumber() {
+    MiniApp.user
+      .getPhoneNumber()
+      .then((response) => {
+        setPhoneNumber(response);
+      })
+      .catch((miniAppError) => {
+        console.log('getPhoneNumber - Error: ', miniAppError);
       });
   }
 
@@ -211,6 +224,14 @@ const Landing = (props: LandingProps) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary="Dark mode" secondary={String(darkMode)} />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <PhoneIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Phone #" secondary={String(phoneNumber)} />
         </ListItem>
         <ListItem>
           <ListItemAvatar>

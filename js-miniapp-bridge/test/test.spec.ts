@@ -1067,6 +1067,30 @@ describe('purchaseProductWith', () => {
   });
 });
 
+describe('getPhoneNumber', () => {
+  it('will return the string response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = '+810000000000';
+    mockExecutor.exec.callsArgWith(2, 'bWluaWFwcB==');
+
+    return expect(bridge.getPhoneNumber()).to.eventually.deep.equal(response);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'Couldnt find the phone number'
+    );
+
+    return expect(
+      bridge.getPhoneNumber()
+    ).to.eventually.be.rejected.and.deep.equal(
+      'Couldnt find the phone number'
+    );
+  });
+});
+
 interface CreateCallbackParams {
   onSuccess?: (success: any) => any;
   onError?: (error: string) => any;
