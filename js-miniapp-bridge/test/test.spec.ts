@@ -1072,21 +1072,18 @@ describe('getPhoneNumber', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, '+810000000000');
 
-    return expect(bridge.getPhoneNumber()).to.eventually.deep.equal("+810000000000");
+    return expect(bridge.getPhoneNumber()).to.eventually.deep.equal(
+      '+810000000000'
+    );
   });
 
   it('will parse the Error response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      3,
-      'Couldnt find the phone number'
-    );
+    mockExecutor.exec.callsArgWith(3, 'Couldnt find the phone number');
 
     return expect(
       bridge.getPhoneNumber()
-    ).to.eventually.be.rejected.and.deep.equal(
-      'Couldnt find the phone number'
-    );
+    ).to.eventually.be.rejected.and.deep.equal('Couldnt find the phone number');
   });
 });
 
