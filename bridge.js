@@ -643,6 +643,16 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    /**
+     * Associating getPhoneNumber function to MiniAppBridge object.
+     * This function returns phone number of the User
+     */
+    MiniAppBridge.prototype.getPhoneNumber = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getPhoneNumber', null, function (phoneNumber) { return resolve(phoneNumber); }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
