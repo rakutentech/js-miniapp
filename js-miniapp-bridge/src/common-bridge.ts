@@ -916,6 +916,20 @@ export class MiniAppBridge {
       );
     });
   }
+  /**
+   * Associating getPhoneNumber function to MiniAppBridge object.
+   * This function returns phone number of the User
+   */
+  getPhoneNumber() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getPhoneNumber',
+        null,
+        phoneNumber => resolve(phoneNumber),
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
