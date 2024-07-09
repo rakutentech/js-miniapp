@@ -1070,10 +1070,9 @@ describe('purchaseProductWith', () => {
 describe('getPhoneNumber', () => {
   it('will return the string response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    const response = '+810000000000';
-    mockExecutor.exec.callsArgWith(2, 'bWluaWFwcB==');
+    mockExecutor.exec.callsArgWith(2, '+810000000000');
 
-    return expect(bridge.getPhoneNumber()).to.eventually.deep.equal(response);
+    return expect(bridge.getPhoneNumber()).to.eventually.deep.equal("+810000000000");
   });
 
   it('will parse the Error response', () => {
