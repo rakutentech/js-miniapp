@@ -51,6 +51,7 @@ import CookieManagerComponent from './pages/cookie-manager';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import FeatureListComponent from './pages/feature-list';
 import Analytics from './pages/analytics';
+import DeeplinkSupport from './pages/deeplink-support';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -129,6 +130,10 @@ const analyticsNavLink = {
   navLink: '/analytics',
   label: 'Analytics',
 };
+const deeplinkSupportNavLink = {
+  navLink: '/deeplink-support',
+  label: 'Deeplink Checker',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -159,6 +164,7 @@ const navLinks = [
   cookieManagerNavLink,
   miniFeatureListNavLink,
   analyticsNavLink,
+  deeplinkSupportNavLink,
 ];
 
 const homeItem = [
@@ -314,6 +320,12 @@ const appItems = [
     label: analyticsNavLink.label,
     navLink: analyticsNavLink.navLink,
     element: <Analytics />,
+  },
+  {
+    icon: <AnalyticsIcon />,
+    label: deeplinkSupportNavLink.label,
+    navLink: deeplinkSupportNavLink.navLink,
+    element: <DeeplinkSupport />,
   },
 ];
 

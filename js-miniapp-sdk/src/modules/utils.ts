@@ -48,6 +48,16 @@ export interface MiniAppUtilsProvider {
    * Interface to get list of features supported by the SDK and Host
    */
   getFeatureList(): Promise<string[]>;
+
+  /**
+   * Interface to check if the device has the deeplink available.
+   */
+  canOpenAppDeeplink(deeplinkURL: string): Promise<boolean>;
+
+  /**
+   * Interface to check if the application has whitelisted the deeplink
+   */
+  isAppDeeplinkSupported(deeplinkURL: string): Promise<boolean>;
 }
 
 /** @internal */
@@ -75,5 +85,13 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   }
   getFeatureList(): Promise<string[]> {
     return getBridge().getFeatureList();
+  }
+
+  canOpenAppDeeplink(deeplinkURL: string): Promise<boolean> {
+    return getBridge().canOpenAppDeeplink(deeplinkURL);
+  }
+
+  isAppDeeplinkSupported(deeplinkURL: string): Promise<boolean> {
+    return getBridge().isAppDeeplinkSupported(deeplinkURL);
   }
 }

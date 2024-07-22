@@ -147,6 +147,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [MiniApp Storage](#miniapp-storage)
 - [MiniApp Finished Loading](#miniapp-finished-loading)
 - [Get Feature list](#get-feature-list)
+- [Can open App Deeplink](#can-open-app-deeplink)
+- [App supports deeplink](#is-app-deeplink-supported)
 
 
 ## User details
@@ -1372,6 +1374,48 @@ MiniApp.miniappUtils
   .then((response) => {
     // Array of strings/features that is supported
     // For eg., ["GET_USERNAME", "IS_DARK_MODE", "GET_ALL_COOKIES"]
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+```
+
+<div id='can-open-app-deeplink'/>
+
+## Can open App Deeplink <small style="color:green;font-size: 12px">Available from v1.20.3</small>
+
+This interface will help the MiniApps to check if the URL scheme that they want to open is available in the device
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.miniappUtils
+  .canOpenAppDeeplink(url)
+  .then((response) => {
+    // True if the device contains/supports the scheme
+    console.log(response);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
+```
+
+<div id='is-app-deeplink-supported'/>
+
+## App supports deeplink <small style="color:green;font-size: 12px">Available from v1.20.3</small>
+
+This interface will help the MiniApps to check if the application allows/whitelisted the URL that MiniApp wants to launch
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.miniappUtils
+  .isAppDeeplinkSupported(url)
+  .then((response) => {
+    // True if the application allows to launch the deeplink
     console.log(response);
   })
   .catch((error) => {
