@@ -625,6 +625,33 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('getPhoneNumber', null, function (phoneNumber) { return resolve(phoneNumber); }, function (error) { return reject(error); });
         });
     };
+    /**
+     * This interface checks if the device contains/has the deeplink to launch
+     * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+     * @returns true if device can find the deeplink available to launch
+     */
+    MiniAppBridge.prototype.canOpenAppDeeplink = function (url) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('canOpenAppDeeplink', { deeplinkURL: url }, function (response) {
+                resolve(MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject(error); });
+        });
+    };
+    /**
+     * This interface checks if the application supports launching the Deeplink URL,
+     * sometimes application has whitelist URL, so this interface helps to check it.
+     * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+     * @returns true if device can find the deeplink available to launch
+     */
+    MiniAppBridge.prototype.isAppDeeplinkSupported = function (url) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('isAppDeeplinkSupported', { deeplinkURL: url }, function (response) {
+                resolve(MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject(error); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
