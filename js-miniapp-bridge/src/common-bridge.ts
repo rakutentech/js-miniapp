@@ -930,6 +930,43 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * This interface checks if the device contains/has the deeplink to launch
+   * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+   * @returns true if device can find the deeplink available to launch
+   */
+  canOpenAppDeeplink(url: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'canOpenAppDeeplink',
+        { deeplinkURL: url },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * This interface checks if the application supports launching the Deeplink URL,
+   * sometimes application has whitelist URL, so this interface helps to check it.
+   * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+   * @returns true if device can find the deeplink available to launch
+   */
+  isAppDeeplinkSupported(url: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isAppDeeplinkSupported',
+        { deeplinkURL: url },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(error)
+      );
+    });
+  }
 }
 
 /**
