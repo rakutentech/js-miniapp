@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.20.3 (2024-XX-XX)
+### 1.21.0 (2024-07-30)
 - **Feature:** Added new interface `isAppDeeplinkSupported` which helps to check if the application have whitelisted/allows the deeplink to open
 - **Feature:** Added new interface `canOpenAppDeeplink` which helps to check if the device can open the deeplink scheme
 - **Feature:** Added new interface `getPhoneNumber` to get the phone number from the native application
