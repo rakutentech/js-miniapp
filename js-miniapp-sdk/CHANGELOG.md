@@ -6,6 +6,8 @@
 - **Feature:** Added new interface `getPhoneNumber` to get the phone number from the native application
 - **Fix:** Updated `MAAnalyticsInfo` in SDK to have more parameters
 
+---
+
 ### 1.20.2 (2024-03-27)
 - **Fix:** Remove dependecy of `libbase64` and we moved the encode/decode internally in SDK
 
