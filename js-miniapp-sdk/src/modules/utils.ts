@@ -4,7 +4,6 @@ import {
   HostThemeColor,
   MAAnalyticsInfo,
 } from '../../../js-miniapp-bridge/src';
-import { get } from 'http';
 
 /**
  * Mini App Utility methods

@@ -1,4 +1,4 @@
-import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
+import { PlatformExecutor } from '../common-bridge';
 import { parseMiniAppError } from '../types/error-types';
 
 export class GalleryManager {
