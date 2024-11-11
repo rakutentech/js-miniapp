@@ -201,7 +201,7 @@ const Landing = (props: LandingProps) => {
             primary="Login Status"
             secondary={String(loggedIn)}
           />
-        </ListItem>        
+        </ListItem>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -231,7 +231,7 @@ const Landing = (props: LandingProps) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary="Phone #" secondary={String(phoneNumber)} />
-        </ListItem>        
+        </ListItem>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -273,7 +273,6 @@ const Landing = (props: LandingProps) => {
           </ListItemAvatar>
           <ListItemText primary="Dark mode" secondary={String(darkMode)} />
         </ListItem>
-
 
         <ListItem>
           <ListItemAvatar>
