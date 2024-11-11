@@ -74,7 +74,7 @@ interface MiniAppFeatures {
   ): Promise<CustomPermissionResult[]>;
 
   /**
-   * Share text data with another App or with the host app.
+   * Share text and image with another App or with the host app.
    * @param info The shared data must match the property in [ShareInfoType].
    * @returns The Promise of share info action state from injected side.
    */

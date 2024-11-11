@@ -54,6 +54,11 @@ export interface UserInfoProvider {
    * @returns Phone number saved in the host app user profile.
    */
   getPhoneNumber(): Promise<string>;
+
+  /**
+   * Fetches the current login status of the user
+   */
+  isLoggedIn(): Promise<boolean>;
 }
 
 /** @internal */
@@ -93,5 +98,9 @@ export class UserInfo implements UserInfoProvider {
 
   getPhoneNumber(): Promise<string> {
     return getBridge().getPhoneNumber();
+  }
+
+  isLoggedIn(): Promise<boolean> {
+    return getBridge().userProfileManager.isLoggedIn();
   }
 }

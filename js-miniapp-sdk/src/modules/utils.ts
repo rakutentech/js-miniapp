@@ -58,6 +58,18 @@ export interface MiniAppUtilsProvider {
    * Interface to check if the application has whitelisted the deeplink
    */
   isAppDeeplinkSupported(deeplinkURL: string): Promise<boolean>;
+
+  /**
+   * This interface will be used to launch the URL in external browser
+   * @param url Remote URL
+   */
+  launchExternalBrowser(url: string): Promise<string>;
+
+  /**
+   * This interface will be used to launch the URL in Internal browser
+   * @param url Remote URL
+   */
+  launchInternalBrowser(url: string): Promise<string>;
 }
 
 /** @internal */
@@ -93,5 +105,13 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
 
   isAppDeeplinkSupported(deeplinkURL: string): Promise<boolean> {
     return getBridge().isAppDeeplinkSupported(deeplinkURL);
+  }
+
+  launchExternalBrowser(url: string): Promise<string> {
+    return getBridge().browserManager.launchExternalBrowser(url);
+  }
+
+  launchInternalBrowser(url: string): Promise<string> {
+    return getBridge().browserManager.launchInternalBrowser(url);
   }
 }
