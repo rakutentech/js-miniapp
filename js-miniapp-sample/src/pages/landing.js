@@ -138,7 +138,7 @@ const Landing = (props: LandingProps) => {
         setLoggedIn(response);
       })
       .catch((miniAppError) => {
-        console.log('getDarkMode - Error: ', miniAppError);
+        console.log('isLoggedIn - Error: ', miniAppError);
       });
   }
 
