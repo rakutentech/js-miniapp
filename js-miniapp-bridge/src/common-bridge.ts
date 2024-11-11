@@ -39,6 +39,9 @@ import {
   NotificationInfoType,
 } from './types/notification/notification-info';
 import { MiniAppPreferences } from './modules/miniapp-preferences';
+import { BrowserManager } from './modules/browser-manager';
+import { GalleryManager } from './modules/gallery-manager';
+import { UserProfileManager } from './modules/userprofile-manager';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -90,12 +93,18 @@ export class MiniAppBridge {
   secureStorageLoadError: MiniAppError | null = null;
   private notificationBridge: NotificationBridge;
   preferences: MiniAppPreferences;
+  browserManager: BrowserManager;
+  galleryManager: GalleryManager;
+  userProfileManager: UserProfileManager;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
     this.notificationBridge = new NotificationBridge(executor);
     this.preferences = new MiniAppPreferences(executor);
+    this.browserManager = new BrowserManager(executor);
+    this.galleryManager = new GalleryManager(executor);
+    this.userProfileManager = new UserProfileManager(executor);
 
     if (window) {
       window.addEventListener(
@@ -966,6 +975,39 @@ export class MiniAppBridge {
         error => reject(error)
       );
     });
+  }
+
+  /**
+   * This interface helps you to launch URL in External browser
+   * @returns true if browser is launched
+   */
+  launchExternalBrowser(url: string) {
+    return this.browserManager.launchExternalBrowser(url);
+  }
+
+  /**
+   * This interface helps you to launch URL in Internal browser
+   * @returns true if browser is launched
+   */
+  launchInternalBrowser(url: string) {
+    return this.browserManager.launchInternalBrowser(url);
+  }
+
+  /**
+   * This interface helps you to launch Gallery and user can pick a photo
+   * from the library and same will be returned to MiniApp
+   * @returns Base64 string of the image which is selected by user
+   */
+  launchGallery() {
+    return this.galleryManager.launchGallery();
+  }
+
+  /**
+   * This interface is used to know if the user login status
+   * @returns true/false based on the user profile status
+   */
+  isLoggedIn() {
+    return this.userProfileManager.isLoggedIn();
   }
 }
 
