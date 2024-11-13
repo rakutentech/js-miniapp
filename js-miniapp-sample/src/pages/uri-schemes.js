@@ -11,7 +11,10 @@ import {
 
 import GreyCard from '../components/GreyCard';
 import { sendAnalytics } from './helper';
-import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp, {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+} from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -75,6 +78,8 @@ const UriSchemes = () => {
     `${window.location.protocol}//${window.location.host}/index.html`
   );
   const [externalUrl, setExternalUrl] = useState('');
+  const [externalBrowserUrl, setExternalBrowserUrl] = useState('');
+  const [internalBrowserUrl, setInternalBrowserUrl] = useState('');
 
   function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
@@ -112,8 +117,112 @@ const UriSchemes = () => {
     window.location.href = url;
   }
 
+  function openExternalBrowser(url: URL) {
+    MiniApp.miniappUtils
+    .launchExternalBrowser(url)
+    .then((response) => {
+      console.log('openExternalBrowser - SUCCESS: ', response);
+    })
+    .catch((miniAppError) => {
+      console.log('openExternalBrowser - Error: ', miniAppError);
+    });
+  }
+
+  function openInternalBrowser(url: URL) {
+    MiniApp.miniappUtils
+    .launchInternalBrowser(url)
+    .then((response) => {
+      console.log('openInternalBrowser - SUCCESS: ', response);
+    })
+    .catch((miniAppError) => {
+      console.log('openInternalBrowser - Error: ', miniAppError);
+    });
+  }
+
   return (
     <div className={classes.scrollable}>
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in External Browser
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setExternalBrowserUrl(e.currentTarget.value)}
+            value={externalBrowserUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'external-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => externalBrowserUrl && openExternalBrowser(externalBrowserUrl)}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in Internal Browser
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInternalBrowserUrl(e.currentTarget.value)}
+            value={internalBrowserUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => internalBrowserUrl && openInternalBrowser(internalBrowserUrl)}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>URL or Deep Link</CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setExternalUrl(e.currentTarget.value)}
+            value={externalUrl}
+            label="Deep Link URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'deeplink-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => externalUrl && onOpenUrl(externalUrl)}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
       <GreyCard className={classes.card}>
         <CardContent className={classes.content}>tel: scheme</CardContent>
         <CardActions className={classes.actions}>
@@ -188,31 +297,6 @@ const UriSchemes = () => {
         </CardActions>
       </GreyCard>
       <br />
-      <GreyCard className={classes.card}>
-        <CardContent className={classes.content}>URL or Deep Link</CardContent>
-        <CardContent className={deeplinkClass.content}>
-          <TextField
-            className={classes.textfield}
-            onChange={(e) => setExternalUrl(e.currentTarget.value)}
-            value={externalUrl}
-            label="Deep Link URL"
-            variant="outlined"
-            color="primary"
-            inputProps={{
-              'data-testid': 'deeplink-input-field',
-            }}
-          />
-        </CardContent>
-        <CardActions className={deeplinkClass.actions}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => externalUrl && onOpenUrl(externalUrl)}
-          >
-            Open
-          </Button>
-        </CardActions>
-      </GreyCard>
     </div>
   );
 };

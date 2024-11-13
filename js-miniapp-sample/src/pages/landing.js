@@ -132,7 +132,7 @@ const Landing = (props: LandingProps) => {
   }
 
   function isLoggedIn() {
-    MiniApp.miniappUtils
+    MiniApp.user
       .isLoggedIn()
       .then((response) => {
         setLoggedIn(response);

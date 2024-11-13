@@ -1,4 +1,4 @@
-import { PlatformExecutor } from '../common-bridge';
+import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
 import { parseMiniAppError } from '../types/error-types';
 
 export class BrowserManager {
@@ -16,12 +16,12 @@ export class BrowserManager {
    * @see {launchExternalBrowser}
    */
   launchExternalBrowser(url: string) {
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'launchExternalBrowser',
         { url },
         response => {
-          resolve(response);
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );
@@ -34,12 +34,12 @@ export class BrowserManager {
    * @see {launchInternalBrowser}
    */
   launchInternalBrowser(url: string) {
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'launchInternalBrowser',
         { url },
         response => {
-          resolve(response);
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );

@@ -63,13 +63,13 @@ export interface MiniAppUtilsProvider {
    * This interface will be used to launch the URL in external browser
    * @param url Remote URL
    */
-  launchExternalBrowser(url: string): Promise<string>;
+  launchExternalBrowser(url: string): Promise<boolean>;
 
   /**
    * This interface will be used to launch the URL in Internal browser
    * @param url Remote URL
    */
-  launchInternalBrowser(url: string): Promise<string>;
+  launchInternalBrowser(url: string): Promise<boolean>;
 }
 
 /** @internal */
@@ -107,11 +107,11 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().isAppDeeplinkSupported(deeplinkURL);
   }
 
-  launchExternalBrowser(url: string): Promise<string> {
+  launchExternalBrowser(url: string): Promise<boolean> {
     return getBridge().browserManager.launchExternalBrowser(url);
   }
 
-  launchInternalBrowser(url: string): Promise<string> {
+  launchInternalBrowser(url: string): Promise<boolean> {
     return getBridge().browserManager.launchInternalBrowser(url);
   }
 }
