@@ -52,7 +52,7 @@ import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import FeatureListComponent from './pages/feature-list';
 import Analytics from './pages/analytics';
 import DeeplinkSupport from './pages/deeplink-support';
-import ImageUpload from './pages/image-upload'; // Import the new ImageUpload component
+import ImageUpload from './pages/image-upload';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
