@@ -78,8 +78,12 @@ const UriSchemes = () => {
     `${window.location.protocol}//${window.location.host}/index.html`
   );
   const [externalUrl, setExternalUrl] = useState('');
-  const [externalBrowserUrl, setExternalBrowserUrl] = useState('');
-  const [internalBrowserUrl, setInternalBrowserUrl] = useState('');
+  const [externalBrowserUrl, setExternalBrowserUrl] = useState(
+    'https://www.google.com'
+  );
+  const [internalBrowserUrl, setInternalBrowserUrl] = useState(
+    'https://www.google.com'
+  );
 
   function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
@@ -119,24 +123,24 @@ const UriSchemes = () => {
 
   function openExternalBrowser(url: URL) {
     MiniApp.miniappUtils
-    .launchExternalBrowser(url)
-    .then((response) => {
-      console.log('openExternalBrowser - SUCCESS: ', response);
-    })
-    .catch((miniAppError) => {
-      console.log('openExternalBrowser - Error: ', miniAppError);
-    });
+      .launchExternalBrowser(url)
+      .then((response) => {
+        console.log('openExternalBrowser - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        console.log('openExternalBrowser - Error: ', miniAppError);
+      });
   }
 
   function openInternalBrowser(url: URL) {
     MiniApp.miniappUtils
-    .launchInternalBrowser(url)
-    .then((response) => {
-      console.log('openInternalBrowser - SUCCESS: ', response);
-    })
-    .catch((miniAppError) => {
-      console.log('openInternalBrowser - Error: ', miniAppError);
-    });
+      .launchInternalBrowser(url)
+      .then((response) => {
+        console.log('openInternalBrowser - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        console.log('openInternalBrowser - Error: ', miniAppError);
+      });
   }
 
   return (
@@ -162,7 +166,9 @@ const UriSchemes = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => externalBrowserUrl && openExternalBrowser(externalBrowserUrl)}
+            onClick={() =>
+              externalBrowserUrl && openExternalBrowser(externalBrowserUrl)
+            }
           >
             Open
           </Button>
@@ -190,7 +196,9 @@ const UriSchemes = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => internalBrowserUrl && openInternalBrowser(internalBrowserUrl)}
+            onClick={() =>
+              internalBrowserUrl && openInternalBrowser(internalBrowserUrl)
+            }
           >
             Open
           </Button>

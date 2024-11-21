@@ -66,7 +66,8 @@ const useStyles = makeStyles((theme) => ({
 function Share() {
   const classes = useStyles();
   const defaultInputValue = 'This is Sample text to share';
-  const defaultImageUrl = 'https://github.com/test-images/png/blob/main/202105/cs-black-000.png';
+  const defaultImageUrl =
+    'https://github.com/test-images/png/blob/main/202105/cs-black-000.png';
   const defaultBase64Image = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgAB/ax5LkAAAAAASUVORK5CYII=`;
   const [inputValue, setInputValue] = useState(defaultInputValue);
   const [imageOption, setImageOption] = useState('none');
@@ -157,7 +158,11 @@ function Share() {
             type="text"
             className={classes.textfield}
             onChange={handleImageInput}
-            placeholder={imageOption === 'url' ? "Enter image URL" : "Enter base64 image string"}
+            placeholder={
+              imageOption === 'url'
+                ? 'Enter image URL'
+                : 'Enter base64 image string'
+            }
             value={imageUrl}
             variant="outlined"
             color="primary"

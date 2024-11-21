@@ -24,6 +24,7 @@ import { Purchases } from './modules/in-app-purchase';
 import { CookieManager } from './modules/cookie-manager';
 import { BridgeInfoConverter } from './modules/bridge-info-converter';
 import { MiniAppPreference } from './modules/miniapp-preferences';
+import { GalleryBridge } from './modules/gallery-manager';
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -174,6 +175,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   purchaseService = new Purchases();
   cookieManager = new CookieManager();
   preferences = new MiniAppPreference();
+  galleryManager = new GalleryBridge();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

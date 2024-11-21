@@ -998,8 +998,8 @@ export class MiniAppBridge {
    * from the library and same will be returned to MiniApp
    * @returns Base64 string of the image which is selected by user
    */
-  launchGallery() {
-    return this.galleryManager.launchGallery();
+  getImageFromGallery() {
+    return this.galleryManager.getImageFromGallery();
   }
 
   /**
