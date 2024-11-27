@@ -23,7 +23,7 @@ import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
-import { ShareInfoType } from './types/share-info';
+import { GalleryFileInfo, ShareInfo } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
@@ -378,7 +378,7 @@ export class MiniAppBridge {
    * This function returns the shared info action state.
    * @param {info} The shared info object.
    */
-  shareInfo(info: ShareInfoType) {
+  shareInfo(info: ShareInfo) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'shareInfo',
@@ -996,10 +996,12 @@ export class MiniAppBridge {
   /**
    * This interface helps you to launch Gallery and user can pick a photo
    * from the library and same will be returned to MiniApp
-   * @returns Base64 string of the image which is selected by user
+   * @returns GalleryFileInfo of the image which is selected by user
    */
   getImageFromGallery() {
-    return this.galleryManager.getImageFromGallery();
+    return new Promise<GalleryFileInfo>((resolve, reject) => {
+      return this.galleryManager.getImageFromGallery();
+    });
   }
 
   /**

@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
 import {
   Button,
   TextField,
   CardContent,
   CardActions,
   makeStyles,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
 } from '@material-ui/core';
 import MiniApp, {
   MAAnalyticsActionType,
@@ -17,6 +12,7 @@ import MiniApp, {
 } from 'js-miniapp-sdk';
 import { sendAnalytics } from './helper';
 import GreyCard from '../components/GreyCard';
+import roadGif from '../assets/images/gif/road.gif';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -56,22 +52,14 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px 0',
     fontSize: '1em',
   },
-  formControl: {
-    width: '100%',
-    maxWidth: 400,
-    marginBottom: '20px',
-  },
 }));
 
 function Share() {
   const classes = useStyles();
   const defaultInputValue = 'This is Sample text to share';
-  const defaultImageUrl =
-    'https://github.com/test-images/png/blob/main/202105/cs-black-000.png';
-  const defaultBase64Image = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgAB/ax5LkAAAAAASUVORK5CYII=`;
+  const defaultUrl = 'https://www.rakuten.com/';
   const [inputValue, setInputValue] = useState(defaultInputValue);
-  const [imageOption, setImageOption] = useState('none');
-  const [imageUrl, setImageUrl] = useState('');
+  const [url, setUrl] = useState(defaultUrl);
 
   useEffect(() => {
     sendAnalytics(
@@ -84,44 +72,73 @@ function Share() {
     );
   }, []);
 
-  useEffect(() => {
-    if (imageOption === 'url') {
-      setImageUrl(defaultImageUrl);
-    } else if (imageOption === 'base64') {
-      setImageUrl(defaultBase64Image);
-    }
-  }, [imageOption, defaultBase64Image]);
-
   const handleInput = (e) => {
     e.preventDefault();
     setInputValue(e.currentTarget.value);
   };
 
-  const handleImageInput = (e) => {
+  const handleUrlInput = (e) => {
     e.preventDefault();
-    setImageUrl(e.currentTarget.value);
+    setUrl(e.currentTarget.value);
   };
 
-  const handleImageOptionChange = (e) => {
-    setImageOption(e.target.value);
-    setImageUrl(''); // Reset image URL when option changes
-  };
-
-  const shareContent = () => {
-    let info = { content: inputValue };
-    if (imageOption === 'url') {
-      info.imageUrl = imageUrl || defaultImageUrl;
-    } else if (imageOption === 'base64') {
-      info.imageUrl = imageUrl || defaultBase64Image; // Assuming the base64 string is directly used
+  const shareContent = async () => {
+    const response = await fetch(roadGif);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
     }
+    const blob = await response.blob();
+    const arrayBuffer = await blob.arrayBuffer();
+    const imageData = new Uint8Array(arrayBuffer);
+
+    const info = {
+      content: inputValue,
+      url: url,
+      fileBlobList: [imageData],
+    };
+    console.log('Info: ', info);
     MiniApp.shareInfo(info)
       .then((success) => {
-        console.log(success);
+        console.log('Sharing Success');
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Error sharing content: ', error);
       });
   };
+
+  const downloadAndShareImageBlob = async () => {
+    shareImageWithNativeApp('https://picsum.photos/200');
+  };
+
+  async function fetchImageAsArrayBuffer(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image: ${response.statusText}`);
+    }
+    const blob = await response.blob();
+    const arrayBuffer = await blob.arrayBuffer();
+    return new Uint8Array(arrayBuffer);
+  }
+
+  async function shareImageWithNativeApp(url) {
+    const imageData = await fetchImageAsArrayBuffer(url);
+    const info = {
+      content: 'Check out this image!',
+      url: 'https://www.rakuten.co.jp/',
+      fileBlobList: [imageData],
+    };
+    if (url) {
+      info.url = url;
+    }
+    console.log('Info: ', info);
+    MiniApp.shareInfo(info)
+      .then((success) => {
+        console.log('Sharing Success');
+      })
+      .catch((error) => {
+        console.error('Error sharing downloaded image: ', error);
+      });
+  }
 
   return (
     <GreyCard className={classes.card}>
@@ -140,37 +157,18 @@ function Share() {
             'data-testid': 'input-field',
           }}
         />
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel id="image-option-label">Image Option</InputLabel>
-          <Select
-            labelId="image-option-label"
-            value={imageOption}
-            onChange={handleImageOptionChange}
-            label="Image Option"
-          >
-            <MenuItem value="none">No image</MenuItem>
-            <MenuItem value="url">Share image URL</MenuItem>
-            <MenuItem value="base64">Convert base64 string to URL</MenuItem>
-          </Select>
-        </FormControl>
-        {imageOption !== 'none' && (
-          <TextField
-            type="text"
-            className={classes.textfield}
-            onChange={handleImageInput}
-            placeholder={
-              imageOption === 'url'
-                ? 'Enter image URL'
-                : 'Enter base64 image string'
-            }
-            value={imageUrl}
-            variant="outlined"
-            color="primary"
-            inputProps={{
-              'data-testid': 'image-input-field',
-            }}
-          />
-        )}
+        <TextField
+          type="text"
+          className={classes.textfield}
+          onChange={handleUrlInput}
+          placeholder="Enter URL here"
+          value={url}
+          variant="outlined"
+          color="primary"
+          inputProps={{
+            'data-testid': 'url-input',
+          }}
+        />
       </CardContent>
       <CardActions className={classes.actions}>
         <Button
@@ -180,6 +178,14 @@ function Share() {
           variant="contained"
         >
           Share
+        </Button>
+        <Button
+          color="secondary"
+          className={classes.button}
+          onClick={downloadAndShareImageBlob}
+          variant="contained"
+        >
+          Download and Share
         </Button>
       </CardActions>
     </GreyCard>

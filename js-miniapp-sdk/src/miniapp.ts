@@ -5,7 +5,7 @@ import {
   CustomPermissionName,
   CustomPermissionResult,
   CustomPermissionStatus,
-  ShareInfoType,
+  ShareInfo,
   ScreenOrientation,
   Points,
   DownloadFileHeaders,
@@ -25,6 +25,8 @@ import { CookieManager } from './modules/cookie-manager';
 import { BridgeInfoConverter } from './modules/bridge-info-converter';
 import { MiniAppPreference } from './modules/miniapp-preferences';
 import { GalleryBridge } from './modules/gallery-manager';
+import { ShareInfoType } from './types/share-info';
+
 /**
  * A module layer for webapps and mobile native interaction.
  */
@@ -252,7 +254,16 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    return getBridge().shareInfo(info);
+    const shareInfo: ShareInfo = {
+      content: info.content,
+      url: info.url,
+      fileList: info.fileBlobList
+        ? ((MiniAppUtils.convertBlobListToNumberArray(
+            info.fileBlobList
+          ) as unknown) as number[][])
+        : undefined,
+    };
+    return getBridge().shareInfo(shareInfo);
   }
 
   getPlatform(): string {

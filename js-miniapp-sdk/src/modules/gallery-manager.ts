@@ -1,3 +1,4 @@
+import { GalleryFileInfo } from '../../../js-miniapp-bridge/src/types/share-info';
 import { getBridge } from '../sdkbridge';
 
 /**
@@ -6,9 +7,9 @@ import { getBridge } from '../sdkbridge';
 export interface GalleryBridgeProvider {
   /**
    * Requests an image from the host application's gallery.
-   * @returns A promise that resolves to a Blob representing the image data.
+   * @returns A promise that resolves to a FileType object representing the image data.
    */
-  getImage(): Promise<Blob>;
+  getImage(): Promise<GalleryFileInfo>;
 }
 
 /** @internal */
@@ -18,17 +19,10 @@ export interface GalleryBridgeProvider {
 export class GalleryBridge implements GalleryBridgeProvider {
   /**
    * Requests an image from the host application's gallery.
-   * @returns A promise that resolves to a Blob representing the image data.
+   * @returns A promise that resolves to a FileType object representing the image data.
    */
-  async getImage(): Promise<Blob> {
-    const base64String = await getBridge().getImageFromGallery();
-    const [mimeType, base64Data] = base64String.split(';base64,');
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    return new Blob([byteArray], { type: mimeType });
+  async getImage(): Promise<GalleryFileInfo> {
+    const fileTypeObject = await getBridge().getImageFromGallery();
+    return fileTypeObject;
   }
 }

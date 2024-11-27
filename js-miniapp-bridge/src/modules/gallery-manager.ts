@@ -1,5 +1,6 @@
 import { PlatformExecutor } from '../common-bridge';
 import { parseMiniAppError } from '../types/error-types';
+import { GalleryFileInfo } from '../types/share-info';
 
 export class GalleryManager {
   executor: PlatformExecutor;
@@ -16,12 +17,12 @@ export class GalleryManager {
    * @see {getImageFromGallery}
    */
   getImageFromGallery() {
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<GalleryFileInfo>((resolve, reject) => {
       return this.executor.exec(
         'getImageFromGallery',
         null,
         response => {
-          resolve(response);
+          resolve(JSON.parse(response) as GalleryFileInfo);
         },
         error => reject(parseMiniAppError(error))
       );
