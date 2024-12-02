@@ -7,8 +7,9 @@ const ImageUpload = () => {
   const handleSelectFromGallery = () => {
     MiniApp.galleryManager
       .getImageFromGallery()
-      .then((blob) => {
-        setSelectedImage(blob);
+      .then((response) => {
+        const imageUrl = URL.createObjectURL(response.data);
+        setSelectedImage(imageUrl);
       })
       .catch((error) => {
         console.error('Error selecting image from gallery:', error);
@@ -22,11 +23,7 @@ const ImageUpload = () => {
       {selectedImage && (
         <div>
           <h3>Image Preview:</h3>
-          <img
-            src={URL.createObjectURL(selectedImage)}
-            alt="Selected"
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
+          <img src={selectedImage} alt="Selected" style={{ maxWidth: '100%', height: 'auto' }} />
         </div>
       )}
     </div>

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: '40px',
     padding: '20px',
+    height: 'auto',
     borderRadius: '10px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     justifyContent: 'center',
     marginTop: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   textfield: {
     width: '100%',
@@ -51,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 200,
     padding: '10px 0',
     fontSize: '1em',
+    marginBottom: '10px', // Add margin to separate the buttons
   },
 }));
 
@@ -83,54 +88,49 @@ function Share() {
   };
 
   const shareContent = async () => {
-    const response = await fetch(roadGif);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image: ${response.statusText}`);
-    }
-    const blob = await response.blob();
-    const arrayBuffer = await blob.arrayBuffer();
-    const imageData = new Uint8Array(arrayBuffer);
-
-    const info = {
-      content: inputValue,
-      url: url,
-      fileBlobList: [imageData],
-    };
-    console.log('Info: ', info);
-    MiniApp.shareInfo(info)
-      .then((success) => {
-        console.log('Sharing Success');
+    fetch(roadGif)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const info = {
+          content: inputValue,
+          url: url,
+          imageBlob: blob,
+        };
+        //console.log('Info: ', info);
+        MiniApp.shareInfo(info)
+          .then((success) => {
+            console.time('Sharing Success');
+          })
+          .catch((error) => {
+            console.error('Error sharing content: ', error);
+          });
       })
-      .catch((error) => {
-        console.error('Error sharing content: ', error);
-      });
+      .catch((error) => console.error('Error loading image:', error));
   };
 
   const downloadAndShareImageBlob = async () => {
     shareImageWithNativeApp('https://picsum.photos/200');
   };
 
-  async function fetchImageAsArrayBuffer(url) {
+  async function fetchImageAsBlob(url) {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
     }
-    const blob = await response.blob();
-    const arrayBuffer = await blob.arrayBuffer();
-    return new Uint8Array(arrayBuffer);
+    return await response.blob();
   }
 
   async function shareImageWithNativeApp(url) {
-    const imageData = await fetchImageAsArrayBuffer(url);
+    const blob = await fetchImageAsBlob(url);
     const info = {
       content: 'Check out this image!',
-      url: 'https://www.rakuten.co.jp/',
-      fileBlobList: [imageData],
+      url: '',
+      imageBlob: blob,
     };
     if (url) {
       info.url = url;
     }
-    console.log('Info: ', info);
+    //console.log('Info: ', info);
     MiniApp.shareInfo(info)
       .then((success) => {
         console.log('Sharing Success');
@@ -179,13 +179,15 @@ function Share() {
         >
           Share
         </Button>
+      </CardActions>
+      <CardActions className={classes.actions}>
         <Button
-          color="secondary"
+          color="primary"
           className={classes.button}
           onClick={downloadAndShareImageBlob}
           variant="contained"
         >
-          Download and Share
+          Download & Share
         </Button>
       </CardActions>
     </GreyCard>

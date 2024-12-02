@@ -2,5 +2,5 @@
 export interface ShareInfoType {
   content: string;
   url?: string;
-  fileBlobList?: Blob[];
+  imageBlob?: Blob;
 }

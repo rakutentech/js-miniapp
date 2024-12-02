@@ -23,7 +23,7 @@ import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
-import { GalleryFileInfo, ShareInfo } from './types/share-info';
+import { ShareInfo } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
@@ -996,12 +996,10 @@ export class MiniAppBridge {
   /**
    * This interface helps you to launch Gallery and user can pick a photo
    * from the library and same will be returned to MiniApp
-   * @returns GalleryFileInfo of the image which is selected by user
+   * @returns path of the image which is selected by user
    */
   getImageFromGallery() {
-    return new Promise<GalleryFileInfo>((resolve, reject) => {
       return this.galleryManager.getImageFromGallery();
-    });
   }
 
   /**

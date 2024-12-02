@@ -7,9 +7,9 @@ import { getBridge } from '../sdkbridge';
 export interface GalleryBridgeProvider {
   /**
    * Requests an image from the host application's gallery.
-   * @returns A promise that resolves to a FileType object representing the image data.
+   * @returns A promise that resolves to a GalleryFileInfo object representing the image data.
    */
-  getImage(): Promise<GalleryFileInfo>;
+  getImageFromGallery(): Promise<GalleryFileResponse>;
 }
 
 /** @internal */
@@ -17,12 +17,24 @@ export interface GalleryBridgeProvider {
  * Implementation of the GalleryBridgeProvider interface to interact with the host application.
  */
 export class GalleryBridge implements GalleryBridgeProvider {
-  /**
-   * Requests an image from the host application's gallery.
-   * @returns A promise that resolves to a FileType object representing the image data.
-   */
-  async getImage(): Promise<GalleryFileInfo> {
-    const fileTypeObject = await getBridge().getImageFromGallery();
-    return fileTypeObject;
+  async getImageFromGallery(): Promise<GalleryFileResponse> {
+    const fileInfo = await getBridge().getImageFromGallery();
+    const blob = new Blob([new Uint8Array(fileInfo.data)], {
+      type: fileInfo.mimeType,
+    });
+    return {
+      filename: fileInfo.filename,
+      data: blob,
+    };
   }
+}
+
+/**
+ * Represents a file in the gallery.
+ */
+export interface GalleryFileResponse {
+  /** The name of the file (optional). */
+  filename?: string;
+  /** The binary data of the file. */
+  data: Blob;
 }

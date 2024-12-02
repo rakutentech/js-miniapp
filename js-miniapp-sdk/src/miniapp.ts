@@ -16,7 +16,6 @@ import {
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
 import { getBridge } from './sdkbridge';
-import { deprecate } from 'util';
 import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
@@ -170,14 +169,14 @@ interface Platform {
 
 export class MiniApp implements MiniAppFeatures, Ad, Platform {
   user: UserInfoProvider = new UserInfo();
-  chatService = new ChatService();
-  secureStorageService = new SecureStorageService();
-  universalBridge = new UniversalBridge();
-  miniappUtils = new MiniAppUtils();
-  purchaseService = new Purchases();
-  cookieManager = new CookieManager();
-  preferences = new MiniAppPreference();
-  galleryManager = new GalleryBridge();
+  chatService: ChatService = new ChatService();
+  secureStorageService: SecureStorageService = new SecureStorageService();
+  universalBridge: UniversalBridge = new UniversalBridge();
+  miniappUtils: MiniAppUtils = new MiniAppUtils();
+  purchaseService: Purchases = new Purchases();
+  cookieManager: CookieManager = new CookieManager();
+  preferences: MiniAppPreference = new MiniAppPreference();
+  galleryManager: GalleryBridge = new GalleryBridge();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
@@ -254,16 +253,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   }
 
   shareInfo(info: ShareInfoType): Promise<string> {
-    const shareInfo: ShareInfo = {
-      content: info.content,
-      url: info.url,
-      fileList: info.fileBlobList
-        ? ((MiniAppUtils.convertBlobListToNumberArray(
-            info.fileBlobList
-          ) as unknown) as number[][])
-        : undefined,
-    };
-    return getBridge().shareInfo(shareInfo);
+    return MiniAppUtils.convertBlobToNumberArray(info.imageBlob).then(blob => {
+      const shareInfo: ShareInfo = {
+        content: info.content,
+        url: info.url,
+        imageData: blob.length ? blob : undefined,
+      };
+      return getBridge().shareInfo(shareInfo);
+    });
   }
 
   getPlatform(): string {

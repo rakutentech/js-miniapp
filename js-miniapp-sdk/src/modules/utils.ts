@@ -120,24 +120,15 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
    * Each Blob is converted to an ArrayBuffer, which is then converted to a Uint8Array.
    * The Uint8Array is converted to a regular array of numbers.
    *
-   * @param fileBlobList - An optional array of Blob objects to be converted.
+   * @param imageBlob - An optional of Blob object to be converted.
    * @returns A promise that resolves to an array of number arrays.
    */
-  static async convertBlobListToNumberArray(
-    fileBlobList?: Blob[]
-  ): Promise<number[][]> {
-    if (!fileBlobList) {
+  static async convertBlobToNumberArray(imageBlob?: Blob): Promise<number[]> {
+    if (!imageBlob) {
       return [];
     }
-
-    const numberArrayList: number[][] = [];
-
-    for (const blob of fileBlobList) {
-      const arrayBuffer = await blob.arrayBuffer();
-      const data = new Uint8Array(arrayBuffer);
-      numberArrayList.push(Array.from(data));
-    }
-
-    return numberArrayList;
+    const arrayBuffer = await imageBlob.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    return Array.from(uint8Array);
   }
 }
