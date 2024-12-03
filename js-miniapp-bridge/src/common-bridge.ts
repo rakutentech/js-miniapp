@@ -999,7 +999,7 @@ export class MiniAppBridge {
    * @returns path of the image which is selected by user
    */
   getImageFromGallery() {
-      return this.galleryManager.getImageFromGallery();
+    return this.galleryManager.getImageFromGallery();
   }
 
   /**

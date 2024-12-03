@@ -121,7 +121,7 @@ const UriSchemes = () => {
     window.location.href = url;
   }
 
-  function openExternalBrowser(url: URL) {
+  function openExternalBrowser(url: string) {
     MiniApp.miniappUtils
       .launchExternalBrowser(url)
       .then((response) => {
@@ -132,7 +132,7 @@ const UriSchemes = () => {
       });
   }
 
-  function openInternalBrowser(url: URL) {
+  function openInternalBrowser(url: string) {
     MiniApp.miniappUtils
       .launchInternalBrowser(url)
       .then((response) => {
