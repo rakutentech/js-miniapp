@@ -675,10 +675,10 @@ var MiniAppBridge = /** @class */ (function () {
     /**
      * This interface helps you to launch Gallery and user can pick a photo
      * from the library and same will be returned to MiniApp
-     * @returns Base64 string of the image which is selected by user
+     * @returns path of the image which is selected by user
      */
-    MiniAppBridge.prototype.launchGallery = function () {
-        return this.galleryManager.launchGallery();
+    MiniAppBridge.prototype.getImageFromGallery = function () {
+        return this.galleryManager.getImageFromGallery();
     };
     /**
      * This interface is used to know if the user login status
@@ -841,35 +841,41 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrowserManager = void 0;
+var common_bridge_1 = require("../common-bridge");
 var error_types_1 = require("../types/error-types");
+/**
+ * Manages browser-related functionalities for the MiniApp.
+ */
 var BrowserManager = /** @class */ (function () {
     function BrowserManager(executor) {
         this.executor = executor;
         this.platform = executor.getPlatform();
     }
     /**
-     * Launches the URL in External browser.
-     * @param {url} string
+     * Launches the specified URL in an external browser.
+     * @param {string} url - The URL to be opened in the external browser.
+     * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
      * @see {launchExternalBrowser}
      */
     BrowserManager.prototype.launchExternalBrowser = function (url) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('launchExternalBrowser', { url: url }, function (response) {
-                resolve(response);
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     /**
-     * Launches the URL in Internal browser.
-     * @param {url} string
+     * Launches the specified URL in an internal browser.
+     * @param {string} url - The URL to be opened in the internal browser.
+     * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
      * @see {launchInternalBrowser}
      */
     BrowserManager.prototype.launchInternalBrowser = function (url) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('launchInternalBrowser', { url: url }, function (response) {
-                resolve(response);
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -877,7 +883,7 @@ var BrowserManager = /** @class */ (function () {
 }());
 exports.BrowserManager = BrowserManager;
 
-},{"../types/error-types":11}],4:[function(require,module,exports){
+},{"../common-bridge":1,"../types/error-types":11}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GalleryManager = void 0;
@@ -890,13 +896,13 @@ var GalleryManager = /** @class */ (function () {
     /**
      * This interface will launch the device gallery that helps the
      * user to choose a photo and the same will be returned back to the MiniApp
-     * @see {launchGallery}
+     * @see {getImageFromGallery}
      */
-    GalleryManager.prototype.launchGallery = function () {
+    GalleryManager.prototype.getImageFromGallery = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('launchGallery', null, function (response) {
-                resolve(response);
+            return _this.executor.exec('getImageFromGallery', null, function (response) {
+                resolve(JSON.parse(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -1023,13 +1029,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserProfileManager = void 0;
 var common_bridge_1 = require("../common-bridge");
 var error_types_1 = require("../types/error-types");
+/**
+ * Manages user profile related operations.
+ */
 var UserProfileManager = /** @class */ (function () {
+    /**
+     * Creates an instance of UserProfileManager.
+     * @param {PlatformExecutor} executor - The executor to run platform-specific code.
+     */
     function UserProfileManager(executor) {
         this.executor = executor;
         this.platform = executor.getPlatform();
     }
     /**
-     * This interface will be used to know the login status of the User
+     * Checks if the user is logged in.
+     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the login status.
      * @see {isLoggedIn}
      */
     UserProfileManager.prototype.isLoggedIn = function () {
