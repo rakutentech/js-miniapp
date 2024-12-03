@@ -25,6 +25,7 @@ import { BridgeInfoConverter } from './modules/bridge-info-converter';
 import { MiniAppPreference } from './modules/miniapp-preferences';
 import { GalleryBridge } from './modules/gallery-manager';
 import { ShareInfoType } from './types/share-info';
+import { WebviewManager } from './modules/webview-config-provider';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -177,6 +178,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   cookieManager: CookieManager = new CookieManager();
   preferences: MiniAppPreference = new MiniAppPreference();
   galleryManager: GalleryBridge = new GalleryBridge();
+  webviewManager: WebviewManager = new WebviewManager();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
