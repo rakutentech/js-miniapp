@@ -15,7 +15,7 @@ import {
   CustomPermissionStatus,
   CustomPermissionResult,
 } from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
+import { ShareInfo } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
@@ -80,7 +80,7 @@ export {
   CustomPermissionName,
   CustomPermissionStatus,
   CustomPermissionResult,
-  ShareInfoType,
+  ShareInfo,
   ScreenOrientation,
   AccessTokenData,
   Contact,

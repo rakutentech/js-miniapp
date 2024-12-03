@@ -52,6 +52,7 @@ import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import FeatureListComponent from './pages/feature-list';
 import Analytics from './pages/analytics';
 import DeeplinkSupport from './pages/deeplink-support';
+import ImageUpload from './pages/image-upload';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -134,6 +135,7 @@ const deeplinkSupportNavLink = {
   navLink: '/deeplink-support',
   label: 'Deeplink Checker',
 };
+const imageUploadNavLink = { navLink: '/image_upload', label: 'Image Upload' };
 
 const navLinks = [
   iosHomeNavLink,
@@ -165,6 +167,7 @@ const navLinks = [
   miniFeatureListNavLink,
   analyticsNavLink,
   deeplinkSupportNavLink,
+  imageUploadNavLink,
 ];
 
 const homeItem = [
@@ -326,6 +329,12 @@ const appItems = [
     label: deeplinkSupportNavLink.label,
     navLink: deeplinkSupportNavLink.navLink,
     element: <DeeplinkSupport />,
+  },
+  {
+    icon: <PhotoCamera />,
+    label: imageUploadNavLink.label,
+    navLink: imageUploadNavLink.navLink,
+    element: <ImageUpload />,
   },
 ];
 

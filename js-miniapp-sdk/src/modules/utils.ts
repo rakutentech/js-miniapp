@@ -63,13 +63,13 @@ export interface MiniAppUtilsProvider {
    * This interface will be used to launch the URL in external browser
    * @param url Remote URL
    */
-  launchExternalBrowser(url: string): Promise<string>;
+  launchExternalBrowser(url: string): Promise<boolean>;
 
   /**
    * This interface will be used to launch the URL in Internal browser
    * @param url Remote URL
    */
-  launchInternalBrowser(url: string): Promise<string>;
+  launchInternalBrowser(url: string): Promise<boolean>;
 }
 
 /** @internal */
@@ -107,11 +107,28 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().isAppDeeplinkSupported(deeplinkURL);
   }
 
-  launchExternalBrowser(url: string): Promise<string> {
+  launchExternalBrowser(url: string): Promise<boolean> {
     return getBridge().browserManager.launchExternalBrowser(url);
   }
 
-  launchInternalBrowser(url: string): Promise<string> {
+  launchInternalBrowser(url: string): Promise<boolean> {
     return getBridge().browserManager.launchInternalBrowser(url);
+  }
+
+  /**
+   * Converts a list of Blob objects to a list of number arrays.
+   * Each Blob is converted to an ArrayBuffer, which is then converted to a Uint8Array.
+   * The Uint8Array is converted to a regular array of numbers.
+   *
+   * @param imageBlob - An optional of Blob object to be converted.
+   * @returns A promise that resolves to an array of number arrays.
+   */
+  static async convertBlobToNumberArray(imageBlob?: Blob): Promise<number[]> {
+    if (!imageBlob) {
+      return [];
+    }
+    const arrayBuffer = await imageBlob.arrayBuffer();
+    const uint8Array = new Uint8Array(arrayBuffer);
+    return Array.from(uint8Array);
   }
 }

@@ -1,5 +1,6 @@
 import { PlatformExecutor } from '../common-bridge';
 import { parseMiniAppError } from '../types/error-types';
+import { GalleryFileInfo } from '../types/share-info';
 
 export class GalleryManager {
   executor: PlatformExecutor;
@@ -13,15 +14,15 @@ export class GalleryManager {
   /**
    * This interface will launch the device gallery that helps the
    * user to choose a photo and the same will be returned back to the MiniApp
-   * @see {launchGallery}
+   * @see {getImageFromGallery}
    */
-  launchGallery() {
-    return new Promise<string>((resolve, reject) => {
+  getImageFromGallery() {
+    return new Promise<GalleryFileInfo>((resolve, reject) => {
       return this.executor.exec(
-        'launchGallery',
+        'getImageFromGallery',
         null,
         response => {
-          resolve(response);
+          resolve(JSON.parse(response) as GalleryFileInfo);
         },
         error => reject(parseMiniAppError(error))
       );
