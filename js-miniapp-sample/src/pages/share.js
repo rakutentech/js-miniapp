@@ -96,7 +96,6 @@ function Share() {
           url: url,
           imageBlob: blob,
         };
-        //console.log('Info: ', info);
         MiniApp.shareInfo(info)
           .then((success) => {
             console.time('Sharing Success');
@@ -130,7 +129,6 @@ function Share() {
     if (url) {
       info.url = url;
     }
-    //console.log('Info: ', info);
     MiniApp.shareInfo(info)
       .then((success) => {
         console.log('Sharing Success');

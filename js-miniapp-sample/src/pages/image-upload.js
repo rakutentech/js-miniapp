@@ -23,7 +23,11 @@ const ImageUpload = () => {
       {selectedImage && (
         <div>
           <h3>Image Preview:</h3>
-          <img src={selectedImage} alt="Selected" style={{ maxWidth: '100%', height: 'auto' }} />
+          <img
+            src={selectedImage}
+            alt="Selected"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
         </div>
       )}
     </div>
