@@ -42,6 +42,7 @@ import { MiniAppPreferences } from './modules/miniapp-preferences';
 import { BrowserManager } from './modules/browser-manager';
 import { GalleryManager } from './modules/gallery-manager';
 import { UserProfileManager } from './modules/userprofile-manager';
+import { WebViewConfigManager } from './modules/webview-config-manager';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -96,6 +97,7 @@ export class MiniAppBridge {
   browserManager: BrowserManager;
   galleryManager: GalleryManager;
   userProfileManager: UserProfileManager;
+  webviewConfigManager: WebViewConfigManager;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
@@ -105,6 +107,7 @@ export class MiniAppBridge {
     this.browserManager = new BrowserManager(executor);
     this.galleryManager = new GalleryManager(executor);
     this.userProfileManager = new UserProfileManager(executor);
+    this.webviewConfigManager = new WebViewConfigManager(executor);
 
     if (window) {
       window.addEventListener(
@@ -1008,6 +1011,12 @@ export class MiniAppBridge {
    */
   isLoggedIn() {
     return this.userProfileManager.isLoggedIn();
+  }
+
+  allowBackForwardNavigationGestures(shouldAllow: boolean) {
+    return this.webviewConfigManager.allowBackForwardNavigationGestures(
+      shouldAllow
+    );
   }
 }
 

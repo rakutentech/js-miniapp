@@ -25,6 +25,7 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
+import WebIcon from '@material-ui/icons/Web';
 
 import Ads from './pages/ads';
 import { CloseConfirmAlert } from './pages/app-close-alert';
@@ -53,6 +54,7 @@ import FeatureListComponent from './pages/feature-list';
 import Analytics from './pages/analytics';
 import DeeplinkSupport from './pages/deeplink-support';
 import ImageUpload from './pages/image-upload';
+import WebViewConfig from './pages/web-view-config';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -136,6 +138,10 @@ const deeplinkSupportNavLink = {
   label: 'Deeplink Checker',
 };
 const imageUploadNavLink = { navLink: '/image_upload', label: 'Image Upload' };
+const webViewConfigNavLink = {
+  navLink: '/web-view-config',
+  label: 'Web View Config',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -168,6 +174,7 @@ const navLinks = [
   analyticsNavLink,
   deeplinkSupportNavLink,
   imageUploadNavLink,
+  webViewConfigNavLink,
 ];
 
 const homeItem = [
@@ -335,6 +342,12 @@ const appItems = [
     label: imageUploadNavLink.label,
     navLink: imageUploadNavLink.navLink,
     element: <ImageUpload />,
+  },
+  {
+    icon: <WebIcon />,
+    label: webViewConfigNavLink.label,
+    navLink: webViewConfigNavLink.navLink,
+    element: <WebViewConfig />,
   },
 ];
 
