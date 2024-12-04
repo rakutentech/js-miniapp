@@ -23,6 +23,7 @@ var miniapp_preferences_1 = require("./modules/miniapp-preferences");
 var browser_manager_1 = require("./modules/browser-manager");
 var gallery_manager_1 = require("./modules/gallery-manager");
 var userprofile_manager_1 = require("./modules/userprofile-manager");
+var webview_config_manager_1 = require("./modules/webview-config-manager");
 /** @internal */
 var mabMessageQueue = [];
 exports.mabMessageQueue = mabMessageQueue;
@@ -43,6 +44,7 @@ var MiniAppBridge = /** @class */ (function () {
         this.browserManager = new browser_manager_1.BrowserManager(executor);
         this.galleryManager = new gallery_manager_1.GalleryManager(executor);
         this.userProfileManager = new userprofile_manager_1.UserProfileManager(executor);
+        this.webviewConfigManager = new webview_config_manager_1.WebViewConfigManager(executor);
         if (window) {
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
@@ -687,6 +689,9 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.isLoggedIn = function () {
         return this.userProfileManager.isLoggedIn();
     };
+    MiniAppBridge.prototype.allowBackForwardNavigationGestures = function (shouldAllow) {
+        return this.webviewConfigManager.allowBackForwardNavigationGestures(shouldAllow);
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
@@ -788,7 +793,7 @@ var MiniAppBridgeUtils = /** @class */ (function () {
 exports.MiniAppBridgeUtils = MiniAppBridgeUtils;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./modules/browser-manager":3,"./modules/gallery-manager":4,"./modules/miniapp-preferences":5,"./modules/notification-bridge":6,"./modules/userprofile-manager":7,"./types/error-types":11,"./types/secure-storage":15,"./types/token-data":16,"buffer":18}],2:[function(require,module,exports){
+},{"./modules/browser-manager":3,"./modules/gallery-manager":4,"./modules/miniapp-preferences":5,"./modules/notification-bridge":6,"./modules/userprofile-manager":7,"./modules/webview-config-manager":8,"./types/error-types":12,"./types/secure-storage":16,"./types/token-data":17,"buffer":19}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var common_bridge_1 = require("../common-bridge");
@@ -837,7 +842,7 @@ navigator.geolocation.getCurrentPosition = function (success, error, options) {
     }, function (error) { return console.error(error); });
 };
 
-},{"../common-bridge":1,"../types/platform":14}],3:[function(require,module,exports){
+},{"../common-bridge":1,"../types/platform":15}],3:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrowserManager = void 0;
@@ -883,7 +888,7 @@ var BrowserManager = /** @class */ (function () {
 }());
 exports.BrowserManager = BrowserManager;
 
-},{"../common-bridge":1,"../types/error-types":11}],4:[function(require,module,exports){
+},{"../common-bridge":1,"../types/error-types":12}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GalleryManager = void 0;
@@ -910,7 +915,7 @@ var GalleryManager = /** @class */ (function () {
 }());
 exports.GalleryManager = GalleryManager;
 
-},{"../types/error-types":11}],5:[function(require,module,exports){
+},{"../types/error-types":12}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiniAppPreferences = void 0;
@@ -977,7 +982,7 @@ var MiniAppPreferences = /** @class */ (function () {
 }());
 exports.MiniAppPreferences = MiniAppPreferences;
 
-},{"../types/error-types":11}],6:[function(require,module,exports){
+},{"../types/error-types":12}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationBridge = void 0;
@@ -1058,7 +1063,42 @@ var UserProfileManager = /** @class */ (function () {
 }());
 exports.UserProfileManager = UserProfileManager;
 
-},{"../common-bridge":1,"../types/error-types":11}],8:[function(require,module,exports){
+},{"../common-bridge":1,"../types/error-types":12}],8:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WebViewConfigManager = void 0;
+var common_bridge_1 = require("../common-bridge");
+var error_types_1 = require("../types/error-types");
+/**
+ * Manages the configuration of the WebView.
+ */
+var WebViewConfigManager = /** @class */ (function () {
+    /**
+     * Creates an instance of WebViewConfigManager.
+     * @param executor - The platform executor.
+     */
+    function WebViewConfigManager(executor) {
+        this.executor = executor;
+        this.platform = executor.getPlatform();
+    }
+    /**
+     * Allows or disallows back and forward navigation gestures.
+     * @param shouldAllow - A boolean indicating whether to allow the gestures.
+     * @returns A promise that resolves to a boolean indicating the success of the operation.
+     */
+    WebViewConfigManager.prototype.allowBackForwardNavigationGestures = function (shouldAllow) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('allowBackForwardNavigationGestures', { shouldAllowNavigationGestures: shouldAllow }, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    return WebViewConfigManager;
+}());
+exports.WebViewConfigManager = WebViewConfigManager;
+
+},{"../common-bridge":1,"../types/error-types":12}],9:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1134,7 +1174,7 @@ function parseAuthError(json) {
 }
 exports.parseAuthError = parseAuthError;
 
-},{"./mini-app-error":12}],9:[function(require,module,exports){
+},{"./mini-app-error":13}],10:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1241,7 +1281,7 @@ function parseDownloadError(json) {
 }
 exports.parseDownloadError = parseDownloadError;
 
-},{"./mini-app-error":12}],10:[function(require,module,exports){
+},{"./mini-app-error":13}],11:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1350,7 +1390,7 @@ function parseInAppPurchaseError(json) {
 }
 exports.parseInAppPurchaseError = parseInAppPurchaseError;
 
-},{"./mini-app-error":12}],11:[function(require,module,exports){
+},{"./mini-app-error":13}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
@@ -1401,7 +1441,7 @@ function parseMiniAppError(jsonString) {
 }
 exports.parseMiniAppError = parseMiniAppError;
 
-},{"./auth-errors":8,"./download-file-errors":9,"./in-app-purchase-errors":10,"./mini-app-error":12,"./secure-storage-errors":13}],12:[function(require,module,exports){
+},{"./auth-errors":9,"./download-file-errors":10,"./in-app-purchase-errors":11,"./mini-app-error":13,"./secure-storage-errors":14}],13:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1437,7 +1477,7 @@ var MiniAppError = /** @class */ (function (_super) {
 }(Error));
 exports.MiniAppError = MiniAppError;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -1529,7 +1569,7 @@ function parseStorageError(json) {
 }
 exports.parseStorageError = parseStorageError;
 
-},{"./mini-app-error":12}],14:[function(require,module,exports){
+},{"./mini-app-error":13}],15:[function(require,module,exports){
 "use strict";
 /** @internal */
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1551,7 +1591,7 @@ var HostBuildType;
     HostBuildType["PRODUCTION"] = "PRODUCTION";
 })(HostBuildType = exports.HostBuildType || (exports.HostBuildType = {}));
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MiniAppSecureStorageEvents = void 0;
@@ -1561,7 +1601,7 @@ var MiniAppSecureStorageEvents;
     MiniAppSecureStorageEvents["onLoadError"] = "miniappsecurestorageloaderror";
 })(MiniAppSecureStorageEvents = exports.MiniAppSecureStorageEvents || (exports.MiniAppSecureStorageEvents = {}));
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AccessTokenScopes = exports.AccessTokenData = void 0;
@@ -1585,7 +1625,7 @@ var AccessTokenScopes = /** @class */ (function () {
 }());
 exports.AccessTokenScopes = AccessTokenScopes;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -1739,7 +1779,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -3520,7 +3560,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":17,"buffer":18,"ieee754":19}],19:[function(require,module,exports){
+},{"base64-js":18,"buffer":19,"ieee754":20}],20:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
