@@ -96,6 +96,7 @@ function Share() {
           url: url,
           imageBlob: blob,
         };
+        console.log('Share:', info);
         MiniApp.shareInfo(info)
           .then((success) => {
             console.time('Sharing Success');
@@ -112,6 +113,7 @@ function Share() {
   };
 
   async function fetchImageAsBlob(url) {
+    console.log('fetchImageAsBlob:', url);
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Failed to fetch image: ${response.statusText}`);
@@ -119,23 +121,19 @@ function Share() {
     return await response.blob();
   }
 
-  async function shareImageWithNativeApp(url) {
-    const blob = await fetchImageAsBlob(url);
-    const info = {
-      content: 'Check out this image!',
-      url: '',
-      imageBlob: blob,
-    };
-    if (url) {
-      info.url = url;
+  async function shareImageWithNativeApp(imageUrl) {
+    try {
+      const blob = await fetchImageAsBlob(imageUrl);
+      const info = {
+        content: inputValue,
+        imageBlob: blob,
+      };
+      console.log('Download & Share:', info);
+      await MiniApp.shareInfo(info);
+      console.log('Sharing Success');
+    } catch (error) {
+      console.error('Error sharing downloaded image:', error);
     }
-    MiniApp.shareInfo(info)
-      .then((success) => {
-        console.log('Sharing Success');
-      })
-      .catch((error) => {
-        console.error('Error sharing downloaded image: ', error);
-      });
   }
 
   return (
