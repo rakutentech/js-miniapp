@@ -149,7 +149,11 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Get Feature list](#get-feature-list)
 - [Can open App Deeplink](#can-open-app-deeplink)
 - [App supports deeplink](#is-app-deeplink-supported)
-
+- [Launch Internal browser](#launch-internal-browser)
+- [Launch External browser](#launch-external-browser)
+- [Get Image from Gallery](#get-image-from-gallery)
+- [Enable/Disable Navigation Gestures](#enable-disable-navigation-gestures)
+- [Get User Login status](#is-loggedIn)
 
 ## User details
 
@@ -498,10 +502,16 @@ It is possible for the mini app user to share data with another App by showing t
 
 The data format must match the [ShareInfoType](api/interfaces/shareinfotype.md).
 
+NOTE: URL & Image support is added from v1.22.0
+
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
 
-const info = { content: inputValue };
+const info = {
+  content: inputValue,
+  url: url,
+  imageBlob: blob,
+};
 
 MiniApp
   .shareInfo(info)
@@ -1423,6 +1433,124 @@ MiniApp.miniappUtils
   });
 
 ```
+
+<div id='launch-internal-browser'/>
+
+## Launch Internal browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to launch URL in internal browser
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.miniappUtils
+  .launchInternalBrowser(url)
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+
+```
+
+<div id='launch-external-browser'/>
+
+## Launch External browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to launch URL in External browser
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.miniappUtils
+  .launchExternalBrowser("https:///www.rakuten.co.jp")
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+
+```
+
+<div id='get-image-from-gallery'/>
+
+## Get Image from Gallery <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help you to launch the gallery directly and user can select the image and the same image will be returned.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.galleryManager
+  .getImageFromGallery()
+  .then((response) => {
+    console.error('Success');
+  })
+  .catch((error) => {
+    console.error('Error selecting image from gallery:', error);
+  });
+
+```
+
+Please note that the response will be of GalleryFileResponse
+
+```javascript
+/**
+ * Represents a file in the gallery.
+ */
+export interface GalleryFileResponse {
+  /** The name of the file (optional). */
+  filename?: string;
+  /** The binary data of the file. */
+  data: Blob;
+}
+
+```
+
+<div id='is-loggedIn'/>
+
+## Get User Login status <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to know if the User is logged in.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.user
+  .isLoggedIn()
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+
+```
+
+
+<div id='enable-disable-navigation-gestures'/>
+
+## Enable/Disable Navigation Gestures <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to enable/disable the forward/back navigation gestures in iOS
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.webviewManager
+  .allowBackForwardNavigationGestures(false)
+  .then((response) => {
+    console.log('Updated');
+  })
+  .catch((error) => {
+    console.log('Error: ', error);
+  });
+
+```
+
+
 
 ## Advanced Usage
 
