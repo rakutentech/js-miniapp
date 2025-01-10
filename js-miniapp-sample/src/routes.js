@@ -55,6 +55,11 @@ import Analytics from './pages/analytics';
 import DeeplinkSupport from './pages/deeplink-support';
 import ImageUpload from './pages/image-upload';
 import WebViewConfig from './pages/web-view-config';
+import TriggerLoginUIPage from './pages/trigger-login-ui';
+import LogEventPage from './pages/log-event';
+import GetExchangeTokenPage from './pages/get-exchange-token';
+import LoginIcon from '@mui/icons-material/Login';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -78,7 +83,7 @@ const deviceLocationNavLink = {
 };
 const authTokenNavLink = {
   navLink: '/auth_token',
-  label: 'Auth token',
+  label: 'Access token',
 };
 const userDetailNavLink = { navLink: '/user_detail', label: 'User Details' };
 const messageNavLink = { navLink: '/chatbot', label: 'Message' };
@@ -143,6 +148,21 @@ const webViewConfigNavLink = {
   label: 'Web View Config',
 };
 
+const logEventNavLink = {
+  navLink: '/log-event',
+  label: 'Log Event',
+};
+
+const triggerLoginNavLink = {
+  navLink: '/trigger-login',
+  label: 'Trigger Login UI',
+};
+
+const exchangeTokenNavLink = {
+  navLink: '/exchange-token',
+  label: 'Exchange Token',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -175,6 +195,9 @@ const navLinks = [
   deeplinkSupportNavLink,
   imageUploadNavLink,
   webViewConfigNavLink,
+  logEventNavLink,
+  exchangeTokenNavLink,
+  triggerLoginNavLink,
 ];
 
 const homeItem = [
@@ -348,6 +371,24 @@ const appItems = [
     label: webViewConfigNavLink.label,
     navLink: webViewConfigNavLink.navLink,
     element: <WebViewConfig />,
+  },
+  {
+    icon: <Inventory2Icon />,
+    label: logEventNavLink.label,
+    navLink: logEventNavLink.navLink,
+    element: <LogEventPage />,
+  },
+  {
+    icon: <LoginIcon />,
+    label: triggerLoginNavLink.label,
+    navLink: triggerLoginNavLink.navLink,
+    element: <TriggerLoginUIPage />,
+  },
+  {
+    icon: <VpnKeyIcon />,
+    label: exchangeTokenNavLink.label,
+    navLink: exchangeTokenNavLink.navLink,
+    element: <GetExchangeTokenPage />,
   },
 ];
 

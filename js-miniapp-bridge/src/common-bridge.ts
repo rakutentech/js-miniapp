@@ -43,6 +43,8 @@ import { BrowserManager } from './modules/browser-manager';
 import { GalleryManager } from './modules/gallery-manager';
 import { UserProfileManager } from './modules/userprofile-manager';
 import { WebViewConfigManager } from './modules/webview-config-manager';
+import { UtitlityManager } from './modules/utility-manager';
+import { LogType } from './types/log-type';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -98,6 +100,7 @@ export class MiniAppBridge {
   galleryManager: GalleryManager;
   userProfileManager: UserProfileManager;
   webviewConfigManager: WebViewConfigManager;
+  utilityManager: UtitlityManager;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
@@ -108,6 +111,7 @@ export class MiniAppBridge {
     this.galleryManager = new GalleryManager(executor);
     this.userProfileManager = new UserProfileManager(executor);
     this.webviewConfigManager = new WebViewConfigManager(executor);
+    this.utilityManager = new UtitlityManager(executor);
 
     if (window) {
       window.addEventListener(
@@ -463,6 +467,27 @@ export class MiniAppBridge {
     return new Promise<AccessTokenData>((resolve, reject) => {
       return this.executor.exec(
         'getAccessToken',
+        { audience, scopes },
+        tokenData => {
+          const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
+          resolve(new AccessTokenData(nativeTokenData));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Associating getExchangeToken function to MiniAppBridge object.
+   * This function returns exchange token details from the host app.
+   * It returns error info if user had denied the custom permission
+   * @param {string} audience the audience the MiniApp requests for the token
+   * @param {string[]} scopes the associated scopes with the requested audience
+   */
+  getExchangeToken(audience: string, scopes: string[]) {
+    return new Promise<AccessTokenData>((resolve, reject) => {
+      return this.executor.exec(
+        'getExchangeToken',
         { audience, scopes },
         tokenData => {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
@@ -1017,6 +1042,24 @@ export class MiniAppBridge {
     return this.webviewConfigManager.allowBackForwardNavigationGestures(
       shouldAllow
     );
+  }
+
+  /**
+   * Triggers the login UI for the user.
+   * @returns - A promise that resolves when the login UI is triggered.
+   */
+  triggerLoginUI() {
+    return this.userProfileManager.triggerLoginUI();
+  }
+
+  /**
+   * Logs an event with the specified message and log level.
+   * @param {string} logMessage - The log message to be sent.
+   * @param {LogType} logLevel - The log level (debug, info, error).
+   * @returns {Promise<boolean>} - A promise that resolves to true if the log was successfully sent, otherwise rejects with an error.
+   */
+  logEvent(logMessage: string, logLevel: LogType) {
+    return this.utilityManager.logEvent(logMessage, logLevel);
   }
 }
 

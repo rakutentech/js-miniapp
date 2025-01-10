@@ -62,9 +62,7 @@ const useStyles = makeStyles((theme) => ({
 function Share() {
   const classes = useStyles();
   const defaultInputValue = 'This is Sample text to share';
-  const defaultUrl = 'https://www.rakuten.com/';
   const [inputValue, setInputValue] = useState(defaultInputValue);
-  const [url, setUrl] = useState(defaultUrl);
 
   useEffect(() => {
     sendAnalytics(
@@ -82,18 +80,12 @@ function Share() {
     setInputValue(e.currentTarget.value);
   };
 
-  const handleUrlInput = (e) => {
-    e.preventDefault();
-    setUrl(e.currentTarget.value);
-  };
-
   const shareContent = async () => {
     fetch(roadGif)
       .then((response) => response.blob())
       .then((blob) => {
         const info = {
           content: inputValue,
-          url: url,
           imageBlob: blob,
         };
         console.log('Share:', info);
@@ -151,18 +143,6 @@ function Share() {
           rowsMax="5"
           inputProps={{
             'data-testid': 'input-field',
-          }}
-        />
-        <TextField
-          type="text"
-          className={classes.textfield}
-          onChange={handleUrlInput}
-          placeholder="Enter URL here"
-          value={url}
-          variant="outlined"
-          color="primary"
-          inputProps={{
-            'data-testid': 'url-input',
           }}
         />
       </CardContent>

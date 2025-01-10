@@ -34,4 +34,22 @@ export class UserProfileManager {
       );
     });
   }
+
+  /**
+   * Triggers the login UI for the user.
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the login UI was successfully triggered.
+   * @see {triggerLoginUI}
+   */
+  triggerLoginUI() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'triggerLoginUI',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

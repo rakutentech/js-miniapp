@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.23.0 (2025-01-15)
+- **Feature:** Added new interface `triggerLoginUI` to trigger the login UI for the user.
+- **Feature:** Added new interface `getExchangeToken` to get the exchange token from the Host app.
+- **Feature:** Added new interface `logEvent` to log an event with the specified message and log level.
+
 ### 1.22.0 (2024-12-05)
 - **Feature:** Added new interface `launchExternalBrowser` which helps the MiniApps to launch a URL in external browser
 - **Feature:** Added new interface `launchInternalBrowser` which helps the MiniApps to launch a URL in internal browser
