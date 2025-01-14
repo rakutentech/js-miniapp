@@ -7,7 +7,7 @@ class GetExchangeTokenPage extends React.Component {
     audience: '',
     scopes: '',
     statusMessage: '',
-    isError: false
+    isError: false,
   };
 
   handleInputChange = (event) => {
@@ -17,12 +17,18 @@ class GetExchangeTokenPage extends React.Component {
 
   handleGetExchangeToken = async () => {
     const { audience, scopes } = this.state;
-    const scopesArray = scopes.split(',').map(scope => scope.trim());
+    const scopesArray = scopes.split(',').map((scope) => scope.trim());
     try {
       const token = await MiniApp.user.getExchangeToken(audience, scopesArray);
-      this.setState({ statusMessage: `Exchange token: ${token}`, isError: false });
+      this.setState({
+        statusMessage: `Exchange token: ${token}`,
+        isError: false,
+      });
     } catch (error) {
-      this.setState({ statusMessage: `Get exchange token failed: ${error.message}`, isError: true });
+      this.setState({
+        statusMessage: `Get exchange token failed: ${error.message}`,
+        isError: true,
+      });
     }
   };
 
@@ -57,7 +63,7 @@ class GetExchangeTokenPage extends React.Component {
         {this.state.statusMessage && (
           <Typography
             variant="body1"
-            color={this.state.isError ? "error" : "textSecondary"}
+            color={this.state.isError ? 'error' : 'textSecondary'}
             style={{ marginTop: '20px', wordBreak: 'break-all' }}
           >
             {this.state.statusMessage}

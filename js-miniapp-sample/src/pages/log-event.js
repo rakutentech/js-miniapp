@@ -5,12 +5,15 @@ import { Button, TextField, Grid } from '@material-ui/core';
 class LogEventPage extends React.Component {
   state = {
     logMessage: '',
-    statusMessage: ''
+    statusMessage: '',
   };
 
   handleLogEvent = async () => {
     try {
-      const result = await MiniApp.miniappUtils.logEvent(this.state.logMessage, LogType.INFO);
+      const result = await MiniApp.miniappUtils.logEvent(
+        this.state.logMessage,
+        LogType.INFO
+      );
       console.log('Event logged:', result);
       this.setState({ statusMessage: 'Event logged successfully' });
     } catch (error) {
@@ -38,12 +41,19 @@ class LogEventPage extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          <Button variant="contained" color="primary" onClick={this.handleLogEvent} fullWidth>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleLogEvent}
+            fullWidth
+          >
             Log Event
           </Button>
         </Grid>
         <Grid item xs={12}>
-          <p style={{ color: isError ? 'red' : 'black' }}>{this.state.statusMessage}</p>
+          <p style={{ color: isError ? 'red' : 'black' }}>
+            {this.state.statusMessage}
+          </p>
         </Grid>
       </Grid>
     );

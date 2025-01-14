@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MiniApp from 'js-miniapp-sdk';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -21,8 +21,8 @@ class TriggerLoginUIPage extends React.Component {
   render() {
     return (
       <div>
-        <br/>
-        <br/>
+        <br />
+        <br />
         <Button variant="contained" color="primary" onClick={this.handleLogin}>
           Trigger Login
         </Button>
