@@ -152,8 +152,10 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 - [Launch Internal browser](#launch-internal-browser)
 - [Launch External browser](#launch-external-browser)
 - [Get Image from Gallery](#get-image-from-gallery)
-- [Enable/Disable Navigation Gestures](#enable-disable-navigation-gestures)
 - [Get User Login status](#is-loggedIn)
+- [Trigger Login UI](#trigger-login-ui)
+- [Log Event](#log-event)
+- [Enable/Disable Navigation Gestures](#enable-disable-navigation-gestures)
 
 ## User details
 
@@ -614,6 +616,39 @@ import MiniApp from 'js-miniapp-sdk';
 
 MiniApp.user
   .getAccessToken('TOKEN_AUDIENCE', ['TOKEN_SCOPE1', 'TOKEN_SCOPE2'])
+  .then(data => {
+    const isValid = data.validUntil.getTime() >= Date.now();
+    if (isValid) {
+      const token = data.token;
+      // Use token
+    }
+  })
+  .catch(error => console.error(error));
+```
+
+#### Exchange Token
+
+**API:** [UserInfoProvider.getExchangeToken](api/interfaces/userinfoprovider.md#getexchangetoken),
+[AccessTokenData](api/classes/accesstokendata.md),
+[AccessTokenScopes](api/classes/accesstokenscopes.md),
+[CustomPermissionName.ACCESS_TOKEN](api/enums/custompermissionname.html#access_token)
+
+You can get an exchange token provided by the Host App.
+
+There are 2 reasons your exchange token request can be rejected:
+
+- The Host App will be able to deny your request if your mini app ID is not approved to access the token.
+- Your request will also be denied by the MiniApp SDK if your audience and scopes do not match the ones defined in the [Mini App Manifest](#mini-app-manifest)
+
+Returns the [AccessTokenData](api/interfaces/accesstokendata.md) list from the Host app.
+
+**AccessTokenData** contains `token`,`validUntil` and `scopes` details.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.user
+  .getExchangeToken('TOKEN_AUDIENCE', ['TOKEN_SCOPE1', 'TOKEN_SCOPE2'])
   .then(data => {
     const isValid = data.validUntil.getTime() >= Date.now();
     if (isValid) {
@@ -1529,6 +1564,57 @@ MiniApp.user
 
 ```
 
+<div id='trigger-login-ui'/>
+
+## Trigger Login UI
+
+<dl>
+<dd>
+
+**API:** [UserProfileManager.triggerLoginUI](api/interfaces/userprofilemanager.md#triggerloginui)
+
+This interface triggers the login UI for the user.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.userProfileManager
+  .triggerLoginUI()
+  .then(() => {
+    console.log('Login UI triggered');
+  })
+  .catch(error => {
+    console.error('Error triggering login UI:', error);
+  });
+```
+
+</dd>
+
+<div id='log-event'/>
+
+## Log Event
+
+<dl>
+<dd>
+
+**API:** [UtilityManager.logEvent](api/interfaces/utilitymanager.md#logevent)
+
+This interface logs an event with the specified message and log level.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.utilityManager
+  .logEvent('Sample log message', 'info')
+  .then(success => {
+    console.log('Log event successful:', success);
+  })
+  .catch(error => {
+    console.error('Error logging event:', error);
+  });
+```
+
+</dd>
 
 <div id='enable-disable-navigation-gestures'/>
 

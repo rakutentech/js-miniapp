@@ -4,6 +4,7 @@ import {
   HostThemeColor,
   MAAnalyticsInfo,
 } from '../../../js-miniapp-bridge/src';
+import { LogType } from '../../../js-miniapp-bridge/src/types/log-type';
 
 /**
  * Mini App Utility methods
@@ -70,6 +71,13 @@ export interface MiniAppUtilsProvider {
    * @param url Remote URL
    */
   launchInternalBrowser(url: string): Promise<boolean>;
+
+  /**
+   * Interface to log events with a message and log type.
+   * @param message - The log message.
+   * @param type - The log type.
+   */
+  logEvent(message: string, type: LogType): Promise<boolean>;
 }
 
 /** @internal */
@@ -113,6 +121,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
 
   launchInternalBrowser(url: string): Promise<boolean> {
     return getBridge().browserManager.launchInternalBrowser(url);
+  }
+
+  logEvent(message: string, type: LogType = LogType.DEBUG): Promise<boolean> {
+    return getBridge().utilityManager.logEvent(message, type);
   }
 
   /**

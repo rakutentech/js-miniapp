@@ -70,6 +70,8 @@ import {
   NotificationInfoPriority,
 } from './types/notification/notification-info';
 
+import { LogType } from './types/log-type';
+
 export {
   MiniAppBridge,
   MiniAppSDKLogger,
@@ -123,4 +125,5 @@ export {
   NotificationDetailedInfo,
   NotificationInfoType,
   NotificationInfoPriority,
+  LogType,
 };
