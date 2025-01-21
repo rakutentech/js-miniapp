@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 1.23.0 (2025-01-15)
+### 1.23.0 (2025-01-21)
 - **Feature:** Added new interface `triggerLoginUI` to trigger the login UI for the user.
 - **Feature:** Added new interface `getExchangeToken` to get the exchange token from the Host app.
 - **Feature:** Added new interface `logEvent` to log an event with the specified message and log level.

@@ -626,7 +626,7 @@ MiniApp.user
   .catch(error => console.error(error));
 ```
 
-#### Exchange Token
+#### Exchange Token <small style="color:green;font-size: 12px">Available from v1.23.0</small>
 
 **API:** [UserInfoProvider.getExchangeToken](api/interfaces/userinfoprovider.md#getexchangetoken),
 [AccessTokenData](api/classes/accesstokendata.md),
@@ -1566,7 +1566,7 @@ MiniApp.user
 
 <div id='trigger-login-ui'/>
 
-## Trigger Login UI
+## Trigger Login UI <small style="color:green;font-size: 12px">Available from v1.23.0</small>
 
 <dl>
 <dd>
@@ -1592,7 +1592,7 @@ MiniApp.userProfileManager
 
 <div id='log-event'/>
 
-## Log Event
+## Log Event <small style="color:green;font-size: 12px">Available from v1.23.0</small>
 
 <dl>
 <dd>
