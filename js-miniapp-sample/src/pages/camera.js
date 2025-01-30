@@ -3,11 +3,13 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 import { sendAnalytics } from './helper';
 import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import MiniApp from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '90%',
+    height: 'auto',
     width: '100%',
+    overflowY: 'auto', // Add this line to make the page scrollable
   },
   grid: {
     display: 'flex',
@@ -49,11 +51,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const recognition = new (window.SpeechRecognition ||
+  window.webkitSpeechRecognition)();
+recognition.lang = 'en-US';
+recognition.interimResults = false;
+
+recognition.onresult = (event) => {
+  document.getElementById('output').innerText = event.results[0][0].transcript;
+};
+
 const Camera = () => {
   const classes = useStyles();
 
   const [image, setImage] = useState(null);
   const [backCamera] = useState(undefined);
+  const [cameraPermission, setCameraPermission] = useState('');
+  const [microphonePermission, setMicrophonePermission] = useState('');
 
   const cameraRef = useRef(null);
 
@@ -79,6 +92,46 @@ const Camera = () => {
     setImage(null);
     if (cameraRef.current !== null) {
       cameraRef.current.value = '';
+    }
+  }
+
+  function checkCameraPermission() {
+    console.log('Checking Camera permission');
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          console.log('Camera permission granted.');
+          setCameraPermission('Camera permission granted.');
+          stream.getTracks().forEach((track) => track.stop()); // Stop the stream after checking
+        })
+        .catch(function (error) {
+          console.log('Camera permission denied: ', error);
+          setCameraPermission('Camera permission denied.');
+        });
+    } else {
+      console.log('Camera permission not supported in this browser.');
+      setCameraPermission('Camera permission not supported in this browser.');
+    }
+  }
+
+  function checkMicrophonePermission() {
+    console.log('Checking Microphone permission...');
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then(function (stream) {
+          console.log('Microphone permission granted.');
+          setMicrophonePermission('Microphone permission granted.');
+          stream.getTracks().forEach((track) => track.stop()); // Stop the stream after checking
+        })
+        .catch(function (error) {
+          console.log('Microphone permission denied: ', error);
+          setMicrophonePermission('Microphone permission denied.');
+        });
+    } else {
+      console.log('Microphone permission not supported in this browser.');
+      setMicrophonePermission('Microphone permission not supported in this browser.');
     }
   }
 
@@ -110,6 +163,50 @@ const Camera = () => {
           <Button variant="contained" color="primary" onClick={() => clear()}>
             Clear
           </Button>
+        </div>
+        <br />
+        <div className={classes.contentSection}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => checkCameraPermission()}
+          >
+            Check Camera Permissions
+          </Button>
+          <label className={classes.label}>{cameraPermission}</label>
+        </div>
+        <div className={classes.contentSection}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => checkMicrophonePermission()}
+          >
+            Check Microphone Permissions
+          </Button>
+          <label className={classes.label}>{microphonePermission}</label>
+        </div>
+        <div className={classes.contentSection}>
+          <Button
+            id="start"
+            variant="contained"
+            color="primary"
+            onClick={() => recognition.start()}
+          >
+            Start Speech Recognition
+          </Button>
+        </div>
+        <div className={classes.contentSection}>
+          <Button
+            id="stop"
+            variant="contained"
+            color="primary"
+            onClick={() => recognition.stop()}
+          >
+            Stop Speech Recognition
+          </Button>
+        </div>
+        <div className={classes.contentSection}>
+          <label id="output" className={classes.label}></label>
         </div>
       </Grid>
     </Card>

@@ -8,6 +8,7 @@ export interface MiniAppJson {
  */
 export class MiniAppError extends Error {
   constructor(public errorInput: MiniAppJson) {
+    console.log('MiniAppError: errorInput', errorInput);
     super();
     Object.setPrototypeOf(this, MiniAppError.prototype);
     this.name = errorInput.type;

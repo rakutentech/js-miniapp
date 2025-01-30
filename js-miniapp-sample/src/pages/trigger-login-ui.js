@@ -14,6 +14,9 @@ class TriggerLoginUIPage extends React.Component {
       const result = await MiniApp.user.triggerLoginUI();
       this.setState({ message: 'Login successful: ' + result, error: false });
     } catch (error) {
+      console.log(error);
+      console.log("Error Type:", error.name)
+      console.log("Error Message:", error.message)
       this.setState({ message: 'Login failed: ' + error, error: true });
     }
   };
