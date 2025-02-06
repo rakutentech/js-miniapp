@@ -3,7 +3,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 import { sendAnalytics } from './helper';
 import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
-import MiniApp from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,9 +63,9 @@ const Camera = () => {
   const classes = useStyles();
 
   const [image, setImage] = useState(null);
-  const [backCamera] = useState(undefined);
-  const [cameraPermission, setCameraPermission] = useState('');
-  const [microphonePermission, setMicrophonePermission] = useState('');
+  const [cameraPermission, setCameraPermission] = useState('Checking...');
+  const [microphonePermission, setMicrophonePermission] =
+    useState('Checking...');
 
   const cameraRef = useRef(null);
 
@@ -95,45 +94,33 @@ const Camera = () => {
     }
   }
 
-  function checkCameraPermission() {
-    console.log('Checking Camera permission');
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then(function (stream) {
-          console.log('Camera permission granted.');
-          setCameraPermission('Camera permission granted.');
-          stream.getTracks().forEach((track) => track.stop()); // Stop the stream after checking
-        })
-        .catch(function (error) {
-          console.log('Camera permission denied: ', error);
-          setCameraPermission('Camera permission denied.');
-        });
-    } else {
-      console.log('Camera permission not supported in this browser.');
-      setCameraPermission('Camera permission not supported in this browser.');
+  function updateStatus(type, status) {
+    if (type === 'microphone') setMicrophonePermission(status);
+    if (type === 'camera') setCameraPermission(status);
+  }
+
+  async function requestPermission(type) {
+    try {
+      console.log('[Leo]: requestPermission');
+      const constraints =
+        type === 'microphone' ? { audio: true } : { video: true };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      console.log(`[Leo]: ${type} permission granted.`);
+      updateStatus(type, 'granted');
+      stream.getTracks().forEach((track) => track.stop()); // Stop stream after requesting
+    } catch (error) {
+      console.error(`[Leo]: ${type} permission denied:`, error);
+      updateStatus(type, 'denied');
     }
   }
 
-  function checkMicrophonePermission() {
-    console.log('Checking Microphone permission...');
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then(function (stream) {
-          console.log('Microphone permission granted.');
-          setMicrophonePermission('Microphone permission granted.');
-          stream.getTracks().forEach((track) => track.stop()); // Stop the stream after checking
-        })
-        .catch(function (error) {
-          console.log('Microphone permission denied: ', error);
-          setMicrophonePermission('Microphone permission denied.');
-        });
-    } else {
-      console.log('Microphone permission not supported in this browser.');
-      setMicrophonePermission('Microphone permission not supported in this browser.');
+  const handleFileInputClick = async () => {
+    if (cameraPermission === 'denied') {
+      alert('Please go to settings and enable camera permission.');
+      return;
     }
-  }
+    cameraRef.current.click();
+  };
 
   return (
     <Card className={classes.root}>
@@ -155,9 +142,12 @@ const Camera = () => {
             onChange={setFiles}
             data-testid="file-input-image-back"
             capture="environment"
-            value={backCamera}
             ref={cameraRef}
+            style={{ display: 'none' }} // Hide the input element
           />
+          <Button variant="contained" color="primary" onClick={handleFileInputClick}>
+            Open Camera
+          </Button>
         </div>
         <div className={classes.contentSection}>
           <Button variant="contained" color="primary" onClick={() => clear()}>
@@ -169,9 +159,9 @@ const Camera = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => checkCameraPermission()}
+            onClick={() => requestPermission('camera')}
           >
-            Check Camera Permissions
+            Request Camera Permission
           </Button>
           <label className={classes.label}>{cameraPermission}</label>
         </div>
@@ -179,9 +169,9 @@ const Camera = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => checkMicrophonePermission()}
+            onClick={() => requestPermission('microphone')}
           >
-            Check Microphone Permissions
+            Request Microphone Permission
           </Button>
           <label className={classes.label}>{microphonePermission}</label>
         </div>
