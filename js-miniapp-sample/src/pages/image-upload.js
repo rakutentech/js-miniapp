@@ -15,7 +15,9 @@ const ImageUpload = () => {
       })
       .catch((error) => {
         console.error('Error selecting image from gallery:', error);
-        setMessage(`Error selecting image from gallery: ${error.name} - ${error.message}`); // Set error message
+        setMessage(
+          `Error selecting image from gallery: ${error.name} - ${error.message}`
+        ); // Set error message
       });
   };
 

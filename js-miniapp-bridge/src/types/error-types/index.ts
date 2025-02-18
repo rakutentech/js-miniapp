@@ -30,7 +30,6 @@ import { MiniAppError, MiniAppJson } from './mini-app-error';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
   try {
-    console.log('parseMiniAppError: jsonString: ', jsonString);
     const json = JSON.parse(jsonString) as MiniAppJson;
 
     return (
@@ -41,7 +40,6 @@ function parseMiniAppError(jsonString: string): MiniAppError {
       new MiniAppError(json)
     );
   } catch (e) {
-    console.log('parseMiniAppError: ERROR: ', e);
     console.error(e);
     if (jsonString !== '' || jsonString !== undefined) {
       return new MiniAppError({

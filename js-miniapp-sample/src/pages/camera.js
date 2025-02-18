@@ -145,7 +145,11 @@ const Camera = () => {
             ref={cameraRef}
             style={{ display: 'none' }} // Hide the input element
           />
-          <Button variant="contained" color="primary" onClick={handleFileInputClick}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleFileInputClick}
+          >
             Open Camera
           </Button>
         </div>
