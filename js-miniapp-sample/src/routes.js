@@ -22,6 +22,7 @@ import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import SimCardIcon from '@material-ui/icons/SimCard'
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
@@ -60,6 +61,7 @@ import LogEventPage from './pages/log-event';
 import GetExchangeTokenPage from './pages/get-exchange-token';
 import LoginIcon from '@mui/icons-material/Login';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
+import ESimPage from './pages/e-sim';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -163,6 +165,11 @@ const exchangeTokenNavLink = {
   label: 'Exchange Token',
 };
 
+const eSimNavLink = {
+  navLink: '/e-sim',
+  label: 'E Sim'
+}
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -198,6 +205,7 @@ const navLinks = [
   logEventNavLink,
   exchangeTokenNavLink,
   triggerLoginNavLink,
+  eSimNavLink,
 ];
 
 const homeItem = [
@@ -390,6 +398,12 @@ const appItems = [
     navLink: exchangeTokenNavLink.navLink,
     element: <GetExchangeTokenPage />,
   },
+  {
+    icon: <SimCardIcon />,
+    label: eSimNavLink.label,
+    navLink: eSimNavLink.navLink,
+    element: <ESimPage />
+  }
 ];
 
 const navItems: Object[] = homeItem.concat(

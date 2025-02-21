@@ -48,6 +48,7 @@ import {
   UniversalBridgeInfo,
   CookieInfo,
   LogType,
+  EsimConfig,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -108,4 +109,5 @@ export {
   UniversalBridgeInfo,
   CookieInfo,
   LogType,
+  EsimConfig,
 };

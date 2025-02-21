@@ -72,6 +72,8 @@ import {
 
 import { LogType } from './types/log-type';
 
+import { EsimConfig } from './types/e-sim';
+
 export {
   MiniAppBridge,
   MiniAppSDKLogger,
@@ -126,4 +128,5 @@ export {
   NotificationInfoType,
   NotificationInfoPriority,
   LogType,
+  EsimConfig,
 };
