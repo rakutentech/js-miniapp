@@ -1091,30 +1091,21 @@ describe('getPhoneNumber', () => {
 describe('isEsimSupported', () => {
   it('will receive esim supported boolean', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      2,
-      true
-    );
+    mockExecutor.exec.callsArgWith(2, true);
 
     return expect(bridge.isEsimSupported()).to.eventually.deep.equal(true);
   });
 
   it('will receive esim not supported boolean', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      2,
-      false
-    );
+    mockExecutor.exec.callsArgWith(2, false);
 
     return expect(bridge.isEsimSupported()).to.eventually.deep.equal(false);
   });
 
   it('will parse error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      3,
-      '{ "message": "test message" }'
-    );
+    mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
 
     return expect(bridge.isEsimSupported()).to.eventually.be.rejected;
   });
@@ -1123,35 +1114,29 @@ describe('isEsimSupported', () => {
 describe('setupAndInstallEsim', () => {
   it('will receive esim installed boolean', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      2,
-      true
-    );
+    mockExecutor.exec.callsArgWith(2, true);
 
-    return expect(bridge.setupAndInstallEsim({address: 'someAddresss'} as EsimConfig))
-      .to.eventually.deep.equal(true);
+    return expect(
+      bridge.setupAndInstallEsim({ address: 'someAddresss' } as EsimConfig)
+    ).to.eventually.deep.equal(true);
   });
 
   it('will receive esim not installed boolean', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      2,
-      false
-    );
+    mockExecutor.exec.callsArgWith(2, false);
 
-    return expect(bridge.setupAndInstallEsim({address: 'someAddresss'} as EsimConfig))
-    .to.eventually.deep.equal(false);
+    return expect(
+      bridge.setupAndInstallEsim({ address: 'someAddresss' } as EsimConfig)
+    ).to.eventually.deep.equal(false);
   });
 
   it('will parse error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(
-      3,
-      '{ "message": "test message" }'
-    );
+    mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
 
-    return expect(bridge.setupAndInstallEsim({address: 'someAddresss'} as EsimConfig))
-      .to.eventually.be.rejected;
+    return expect(
+      bridge.setupAndInstallEsim({ address: 'someAddresss' } as EsimConfig)
+    ).to.eventually.be.rejected;
   });
 });
 

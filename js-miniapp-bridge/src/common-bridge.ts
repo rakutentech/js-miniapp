@@ -1089,7 +1089,7 @@ export class MiniAppBridge {
     return new Promise<boolean | never>((resolve, reject) => {
       return this.executor.exec(
         'setupAndInstallEsim',
-        {config},
+        { config },
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },

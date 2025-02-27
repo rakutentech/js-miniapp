@@ -883,36 +883,37 @@ describe('purchaseProductWith', () => {
 
 describe('eSimSupport', () => {
   it('should return if eSim is supported', () => {
-
     window.MiniAppBridge.isEsimSupported.resolves(true);
-    return expect(
-      miniApp.esimService.isEsimSupported()
-    ).to.eventually.equal(true);
+    return expect(miniApp.esimService.isEsimSupported()).to.eventually.equal(
+      true
+    );
   });
 
   it('should return error information', () => {
-
     window.MiniAppBridge.isEsimSupported.returns(Promise.reject('test error'));
-    return expect(
-      miniApp.esimService.isEsimSupported()
-    ).to.eventually.be.rejected;
+    return expect(miniApp.esimService.isEsimSupported()).to.eventually.be
+      .rejected;
   });
 });
 
 describe('setupAndInstallEsim', () => {
   it('should return if eSim is setup and installed', () => {
-
     window.MiniAppBridge.setupAndInstallEsim.resolves(true);
     return expect(
-      miniApp.esimService.setupAndInstallEsim({ address: 'address'} as EsimConfig)
+      miniApp.esimService.setupAndInstallEsim({
+        address: 'address',
+      } as EsimConfig)
     ).to.eventually.equal(true);
   });
 
   it('should return error information', () => {
-
-    window.MiniAppBridge.setupAndInstallEsim.returns(Promise.reject('test error'));
+    window.MiniAppBridge.setupAndInstallEsim.returns(
+      Promise.reject('test error')
+    );
     return expect(
-      miniApp.esimService.setupAndInstallEsim({ address: 'address'} as EsimConfig)
+      miniApp.esimService.setupAndInstallEsim({
+        address: 'address',
+      } as EsimConfig)
     ).to.eventually.be.rejected;
   });
 });

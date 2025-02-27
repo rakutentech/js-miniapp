@@ -1,6 +1,4 @@
-import {
-  EsimConfig,
-} from '../../../js-miniapp-bridge/src';
+import { EsimConfig } from '../../../js-miniapp-bridge/src';
 import { getBridge } from '../sdkbridge';
 
 interface EsimProvider {
@@ -19,7 +17,7 @@ interface EsimProvider {
 
 /** @internal */
 export class Esim implements EsimProvider {
-    isEsimSupported(): Promise<boolean> {
+  isEsimSupported(): Promise<boolean> {
     return getBridge().isEsimSupported();
   }
 
