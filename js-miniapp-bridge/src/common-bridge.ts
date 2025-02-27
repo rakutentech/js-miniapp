@@ -1080,7 +1080,7 @@ export class MiniAppBridge {
     });
   }
 
-    /**
+  /**
    * This interface sends an esimconfiguration object for caller to setup esim
    * @param config Esim configuration values
    * @returns true if device is able to setup and install esim
@@ -1089,7 +1089,7 @@ export class MiniAppBridge {
     return new Promise<boolean | never>((resolve, reject) => {
       return this.executor.exec(
         'setupAndInstallEsim',
-        {config: config},
+        {config},
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
