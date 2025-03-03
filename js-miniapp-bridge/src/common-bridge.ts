@@ -1068,7 +1068,7 @@ export class MiniAppBridge {
    * @returns true if device supports esim
    */
   isEsimSupported() {
-    return new Promise<boolean | never>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'isEsimSupported',
         null,
@@ -1086,7 +1086,7 @@ export class MiniAppBridge {
    * @returns true if device is able to setup and install esim
    */
   setupAndInstallEsim(config: EsimConfig) {
-    return new Promise<boolean | never>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'setupAndInstallEsim',
         { config },
