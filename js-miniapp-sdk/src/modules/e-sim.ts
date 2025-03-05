@@ -3,14 +3,13 @@ import { getBridge } from '../sdkbridge';
 
 interface EsimProvider {
   /**
-   * Retrieves and lists all the products from the play/app store which are available for inapp-purchases.
+   * Checks if esim is supported on native mobile device
    */
   isEsimSupported(): Promise<boolean>;
 
   /**
-   * Triggers the request to host app to Purchase a product using the Product ID.
-   * @param id The product id which must be purchased from inapp-purchase.
-   * This will return the status of inapp-purchase and the details of the purchased product.
+   * Sends information of esim configuration as EsimConfig object
+   * Replies with boolean if esim was configured successfully or not
    */
   setupAndInstallEsim(config: EsimConfig): Promise<boolean>;
 }
