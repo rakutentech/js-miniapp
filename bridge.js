@@ -754,6 +754,31 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.logEvent = function (logMessage, logLevel) {
         return this.utilityManager.logEvent(logMessage, logLevel);
     };
+    /**
+     * This interface checks if the device supports esim
+     * @returns true if device supports esim
+     */
+    MiniAppBridge.prototype.isEsimSupported = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('isEsimSupported', null, function (response) {
+                resolve(MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * This interface sends an esimconfiguration object for caller to setup esim
+     * @param config Esim configuration values
+     * @returns true if device is able to setup and install esim
+     */
+    MiniAppBridge.prototype.setupAndInstallEsim = function (config) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('setupAndInstallEsim', { config: config }, function (response) {
+                resolve(MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
