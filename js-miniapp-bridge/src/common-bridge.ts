@@ -45,6 +45,7 @@ import { UserProfileManager } from './modules/userprofile-manager';
 import { WebViewConfigManager } from './modules/webview-config-manager';
 import { UtitlityManager } from './modules/utility-manager';
 import { LogType } from './types/log-type';
+import { EsimConfig } from './types/e-sim';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -1060,6 +1061,41 @@ export class MiniAppBridge {
    */
   logEvent(logMessage: string, logLevel: LogType) {
     return this.utilityManager.logEvent(logMessage, logLevel);
+  }
+
+  /**
+   * This interface checks if the device supports esim
+   * @returns true if device supports esim
+   */
+  isEsimSupported() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isEsimSupported',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This interface sends an esimconfiguration object for caller to setup esim
+   * @param config Esim configuration values
+   * @returns true if device is able to setup and install esim
+   */
+  setupAndInstallEsim(config: EsimConfig) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'setupAndInstallEsim',
+        { config },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
   }
 }
 
