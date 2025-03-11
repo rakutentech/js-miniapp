@@ -1161,16 +1161,17 @@ describe('forceInternalWebView', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, true);
 
-    return expect(bridge.webviewConfigManager.forceInternalWebView(true)).to.eventually.deep.equal(
-      true
-    );
+    return expect(
+      bridge.webviewConfigManager.forceInternalWebView(true)
+    ).to.eventually.deep.equal(true);
   });
 
   it('will parse error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
 
-    return expect(bridge.webviewConfigManager.forceInternalWebView(true)).to.eventually.be.rejected;
+    return expect(bridge.webviewConfigManager.forceInternalWebView(true)).to
+      .eventually.be.rejected;
   });
 });
 

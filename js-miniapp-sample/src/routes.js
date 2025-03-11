@@ -50,7 +50,7 @@ import ImageUpload from './pages/image-upload';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import LogEventPage from './pages/log-event';
-import LoggedOutPage from './pages/logged-out';
+import LoggedOutPage from './pages/force-logout';
 import Media from './pages/media';
 import TalkToChatBot from './pages/message';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';

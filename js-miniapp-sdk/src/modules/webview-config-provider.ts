@@ -35,7 +35,7 @@ export class WebviewManager implements WebViewConfigProvider {
   /**
    * Define whether URLs are opened in internal Webview or external browser
    * @param enable - whether to force internal Webview to be used or not
-   * @returns true if the settings update is successful
+   * @returns A promise that resolves to a boolean indicating the success of the operation.
    */
   forceInternalWebView(enable: boolean): Promise<boolean> {
     return getBridge().forceInternalWebView(enable);

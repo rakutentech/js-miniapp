@@ -1046,9 +1046,7 @@ export class MiniAppBridge {
   }
 
   forceInternalWebView(enable: boolean) {
-    return this.webviewConfigManager.forceInternalWebView(
-      enable
-    );
+    return this.webviewConfigManager.forceInternalWebView(enable);
   }
 
   /**

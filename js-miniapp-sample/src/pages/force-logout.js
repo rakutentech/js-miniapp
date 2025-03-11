@@ -81,14 +81,11 @@ function ForceLogOutComponent() {
   return (
     <div>
       <div className={classes.container}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleForceLogout}
-        >
+        <Button variant="contained" color="primary" onClick={handleForceLogout}>
           Send force logout signal
         </Button>
-        {(state.forceLogoutState.result != null || state.forceLogoutState.isError) && (
+        {(state.forceLogoutState.result != null ||
+          state.forceLogoutState.isError) && (
           <Typography
             variant="body1"
             color={state.forceLogoutState.isError ? 'error' : 'textSecondary'}
