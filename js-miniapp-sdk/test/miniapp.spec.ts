@@ -18,6 +18,7 @@ import {
   MiniAppSecureStorageKeyValues,
   Platform,
   HostEnvironmentInfo,
+  EsimConfig,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
@@ -65,6 +66,9 @@ window.MiniAppBridge = {
   closeMiniApp: sandbox.stub(),
   getAllProducts: sandbox.stub(),
   purchaseProductWith: sandbox.stub(),
+  getPhoneNumber: sandbox.stub(),
+  isEsimSupported: sandbox.stub(),
+  setupAndInstallEsim: sandbox.stub(),
 };
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
@@ -411,6 +415,17 @@ describe('getAccessToken', () => {
 
       window.MiniAppBridge.getPoints.resolves(response);
       return expect(miniApp.getPoints()).to.eventually.equal(response);
+    });
+  });
+
+  describe('getPhoneNumber', () => {
+    it('should retrieve phone number from the MiniAppBridge if getPhoneNumber is called', () => {
+      const response = '+810000000000';
+
+      window.MiniAppBridge.getPhoneNumber.resolves(response);
+      return expect(miniApp.user.getPhoneNumber()).to.eventually.equal(
+        response
+      );
     });
   });
 
@@ -863,5 +878,42 @@ describe('purchaseProductWith', () => {
     return expect(
       miniApp.purchaseService.purchaseProductWith(productId)
     ).to.eventually.equal(response);
+  });
+});
+
+describe('eSimSupport', () => {
+  it('should return if eSim is supported', () => {
+    window.MiniAppBridge.isEsimSupported.resolves(true);
+    return expect(miniApp.esimService.isEsimSupported()).to.eventually.equal(
+      true
+    );
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.isEsimSupported.returns(Promise.reject('test error'));
+    return expect(miniApp.esimService.isEsimSupported()).to.eventually.be
+      .rejected;
+  });
+});
+
+describe('setupAndInstallEsim', () => {
+  it('should return if eSim is setup and installed', () => {
+    window.MiniAppBridge.setupAndInstallEsim.resolves(true);
+    return expect(
+      miniApp.esimService.setupAndInstallEsim({
+        address: 'address',
+      } as EsimConfig)
+    ).to.eventually.equal(true);
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.setupAndInstallEsim.returns(
+      Promise.reject('test error')
+    );
+    return expect(
+      miniApp.esimService.setupAndInstallEsim({
+        address: 'address',
+      } as EsimConfig)
+    ).to.eventually.be.rejected;
   });
 });

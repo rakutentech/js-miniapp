@@ -23,7 +23,7 @@ import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
 } from './types/secure-storage';
-import { ShareInfoType } from './types/share-info';
+import { ShareInfo } from './types/share-info';
 import { AccessTokenData, NativeTokenData } from './types/token-data';
 import { MiniAppError, parseMiniAppError } from './types/error-types';
 import { MiniAppResponseInfo } from './types/response-types/miniapp';
@@ -39,6 +39,13 @@ import {
   NotificationInfoType,
 } from './types/notification/notification-info';
 import { MiniAppPreferences } from './modules/miniapp-preferences';
+import { BrowserManager } from './modules/browser-manager';
+import { GalleryManager } from './modules/gallery-manager';
+import { UserProfileManager } from './modules/userprofile-manager';
+import { WebViewConfigManager } from './modules/webview-config-manager';
+import { UtitlityManager } from './modules/utility-manager';
+import { LogType } from './types/log-type';
+import { EsimConfig } from './types/e-sim';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -90,12 +97,22 @@ export class MiniAppBridge {
   secureStorageLoadError: MiniAppError | null = null;
   private notificationBridge: NotificationBridge;
   preferences: MiniAppPreferences;
+  browserManager: BrowserManager;
+  galleryManager: GalleryManager;
+  userProfileManager: UserProfileManager;
+  webviewConfigManager: WebViewConfigManager;
+  utilityManager: UtitlityManager;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
     this.platform = executor.getPlatform();
     this.notificationBridge = new NotificationBridge(executor);
     this.preferences = new MiniAppPreferences(executor);
+    this.browserManager = new BrowserManager(executor);
+    this.galleryManager = new GalleryManager(executor);
+    this.userProfileManager = new UserProfileManager(executor);
+    this.webviewConfigManager = new WebViewConfigManager(executor);
+    this.utilityManager = new UtitlityManager(executor);
 
     if (window) {
       window.addEventListener(
@@ -369,7 +386,7 @@ export class MiniAppBridge {
    * This function returns the shared info action state.
    * @param {info} The shared info object.
    */
-  shareInfo(info: ShareInfoType) {
+  shareInfo(info: ShareInfo) {
     return new Promise<string>((resolve, reject) => {
       return this.executor.exec(
         'shareInfo',
@@ -451,6 +468,27 @@ export class MiniAppBridge {
     return new Promise<AccessTokenData>((resolve, reject) => {
       return this.executor.exec(
         'getAccessToken',
+        { audience, scopes },
+        tokenData => {
+          const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
+          resolve(new AccessTokenData(nativeTokenData));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Associating getExchangeToken function to MiniAppBridge object.
+   * This function returns exchange token details from the host app.
+   * It returns error info if user had denied the custom permission
+   * @param {string} audience the audience the MiniApp requests for the token
+   * @param {string[]} scopes the associated scopes with the requested audience
+   */
+  getExchangeToken(audience: string, scopes: string[]) {
+    return new Promise<AccessTokenData>((resolve, reject) => {
+      return this.executor.exec(
+        'getExchangeToken',
         { audience, scopes },
         tokenData => {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
@@ -911,6 +949,149 @@ export class MiniAppBridge {
         null,
         response => {
           resolve(JSON.parse(response) as string[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+  /**
+   * Associating getPhoneNumber function to MiniAppBridge object.
+   * This function returns phone number of the User
+   */
+  getPhoneNumber() {
+    return new Promise<string>((resolve, reject) => {
+      return this.executor.exec(
+        'getPhoneNumber',
+        null,
+        phoneNumber => resolve(phoneNumber),
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * This interface checks if the device contains/has the deeplink to launch
+   * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+   * @returns true if device can find the deeplink available to launch
+   */
+  canOpenAppDeeplink(url: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'canOpenAppDeeplink',
+        { deeplinkURL: url },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * This interface checks if the application supports launching the Deeplink URL,
+   * sometimes application has whitelist URL, so this interface helps to check it.
+   * @param deeplinkURL Deeplink URL that you wanted to check if the device can launch
+   * @returns true if device can find the deeplink available to launch
+   */
+  isAppDeeplinkSupported(url: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isAppDeeplinkSupported',
+        { deeplinkURL: url },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(error)
+      );
+    });
+  }
+
+  /**
+   * This interface helps you to launch URL in External browser
+   * @returns true if browser is launched
+   */
+  launchExternalBrowser(url: string) {
+    return this.browserManager.launchExternalBrowser(url);
+  }
+
+  /**
+   * This interface helps you to launch URL in Internal browser
+   * @returns true if browser is launched
+   */
+  launchInternalBrowser(url: string) {
+    return this.browserManager.launchInternalBrowser(url);
+  }
+
+  /**
+   * This interface helps you to launch Gallery and user can pick a photo
+   * from the library and same will be returned to MiniApp
+   * @returns path of the image which is selected by user
+   */
+  getImageFromGallery() {
+    return this.galleryManager.getImageFromGallery();
+  }
+
+  /**
+   * This interface is used to know if the user login status
+   * @returns true/false based on the user profile status
+   */
+  isLoggedIn() {
+    return this.userProfileManager.isLoggedIn();
+  }
+
+  allowBackForwardNavigationGestures(shouldAllow: boolean) {
+    return this.webviewConfigManager.allowBackForwardNavigationGestures(
+      shouldAllow
+    );
+  }
+
+  /**
+   * Triggers the login UI for the user.
+   * @returns - A promise that resolves when the login UI is triggered.
+   */
+  triggerLoginUI() {
+    return this.userProfileManager.triggerLoginUI();
+  }
+
+  /**
+   * Logs an event with the specified message and log level.
+   * @param {string} logMessage - The log message to be sent.
+   * @param {LogType} logLevel - The log level (debug, info, error).
+   * @returns {Promise<boolean>} - A promise that resolves to true if the log was successfully sent, otherwise rejects with an error.
+   */
+  logEvent(logMessage: string, logLevel: LogType) {
+    return this.utilityManager.logEvent(logMessage, logLevel);
+  }
+
+  /**
+   * This interface checks if the device supports esim
+   * @returns true if device supports esim
+   */
+  isEsimSupported() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isEsimSupported',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * This interface sends an esimconfiguration object for caller to setup esim
+   * @param config Esim configuration values
+   * @returns true if device is able to setup and install esim
+   */
+  setupAndInstallEsim(config: EsimConfig) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'setupAndInstallEsim',
+        { config },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
         error => reject(parseMiniAppError(error))
       );

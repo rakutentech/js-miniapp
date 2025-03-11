@@ -15,7 +15,7 @@ import {
   CustomPermissionStatus,
   CustomPermissionResult,
 } from './types/custom-permissions';
-import { ShareInfoType } from './types/share-info';
+import { ShareInfo } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
 import { Contact } from './types/contact';
@@ -70,6 +70,10 @@ import {
   NotificationInfoPriority,
 } from './types/notification/notification-info';
 
+import { LogType } from './types/log-type';
+
+import { EsimConfig } from './types/e-sim';
+
 export {
   MiniAppBridge,
   MiniAppSDKLogger,
@@ -80,7 +84,7 @@ export {
   CustomPermissionName,
   CustomPermissionStatus,
   CustomPermissionResult,
-  ShareInfoType,
+  ShareInfo,
   ScreenOrientation,
   AccessTokenData,
   Contact,
@@ -123,4 +127,6 @@ export {
   NotificationDetailedInfo,
   NotificationInfoType,
   NotificationInfoPriority,
+  LogType,
+  EsimConfig,
 };

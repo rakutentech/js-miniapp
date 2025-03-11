@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { CardContent, makeStyles } from '@material-ui/core';
 import AppSettingsAltRoundedIcon from '@mui/icons-material/AppSettingsAltRounded';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import PhoneIcon from '@mui/icons-material/Phone';
 import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
 import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
 import HttpRoundedIcon from '@mui/icons-material/HttpRounded';
@@ -15,6 +16,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import TokenIcon from '@mui/icons-material/Token';
 import MiniApp, {
   MAAnalyticsActionType,
   MAAnalyticsEventType,
@@ -82,6 +86,8 @@ const useStyles = makeStyles((theme) => ({
 const Landing = (props: LandingProps) => {
   const classes = useStyles();
   const [darkMode, setDarkMode] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('UNKNOWN');
 
   useEffect(() => {
     try {
@@ -96,6 +102,8 @@ const Landing = (props: LandingProps) => {
       props.getHostInfo();
       checkSecureStorageStorageReady(props);
       getDarkMode();
+      getPhoneNumber();
+      isLoggedIn();
     } catch (e) {
       console.log(e);
     }
@@ -112,9 +120,88 @@ const Landing = (props: LandingProps) => {
       });
   }
 
+  function getPhoneNumber() {
+    MiniApp.user
+      .getPhoneNumber()
+      .then((response) => {
+        setPhoneNumber(response);
+      })
+      .catch((miniAppError) => {
+        console.log('getPhoneNumber - Error: ', miniAppError);
+      });
+  }
+
+  function isLoggedIn() {
+    MiniApp.user
+      .isLoggedIn()
+      .then((response) => {
+        setLoggedIn(response);
+      })
+      .catch((miniAppError) => {
+        console.log('isLoggedIn - Error: ', miniAppError);
+      });
+  }
+
   return (
     <CardContent className={classes.content}>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <AppSettingsAltRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Host Version"
+            secondary={props.hostVersion ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <BuildCircleIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Build Type:"
+            secondary={String(props.hostBuildType) || '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <LanguageRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary="Host Locale:"
+            secondary={props.hostLocale ?? '-'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <HelpRoundedIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            style={{ wordBreak: 'break-word' }}
+            primary="Query Parameters"
+            secondary={window.location.search || 'None'}
+          />
+        </ListItem>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar>
+              <LockOpenIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            style={{ wordBreak: 'break-word' }}
+            primary="Login Status"
+            secondary={String(loggedIn)}
+          />
+        </ListItem>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -140,13 +227,10 @@ const Landing = (props: LandingProps) => {
         <ListItem>
           <ListItemAvatar>
             <Avatar>
-              <AppSettingsAltRoundedIcon />
+              <PhoneIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText
-            primary="Host Version"
-            secondary={props.hostVersion ?? '-'}
-          />
+          <ListItemText primary="Phone #" secondary={String(phoneNumber)} />
         </ListItem>
         <ListItem>
           <ListItemAvatar>
@@ -157,29 +241,6 @@ const Landing = (props: LandingProps) => {
           <ListItemText
             primary="SDK Version"
             secondary={props.sdkVersion ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <LanguageRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Host Locale:"
-            secondary={props.hostLocale ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <HelpRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            style={{ wordBreak: 'break-word' }}
-            primary="Query Parameters"
-            secondary={window.location.search || 'None'}
           />
         </ListItem>
         <ListItem>
@@ -212,21 +273,11 @@ const Landing = (props: LandingProps) => {
           </ListItemAvatar>
           <ListItemText primary="Dark mode" secondary={String(darkMode)} />
         </ListItem>
+
         <ListItem>
           <ListItemAvatar>
             <Avatar>
-              <LanguageRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Build Type:"
-            secondary={String(props.hostBuildType) || '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <LanguageRoundedIcon />
+              <TokenIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
@@ -237,7 +288,7 @@ const Landing = (props: LandingProps) => {
         <ListItem>
           <ListItemAvatar>
             <Avatar>
-              <LanguageRoundedIcon />
+              <TokenIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText

@@ -1,10 +1,12 @@
 import React from 'react';
 
+import ArtTrackIcon from '@material-ui/icons/ArtTrack';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import ChatIcon from '@material-ui/icons/Chat';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import EventIcon from '@material-ui/icons/CompareArrows';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
+import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import GifIcon from '@material-ui/icons/Gif';
 import HomeIcon from '@material-ui/icons/Home';
 import LaptopWindowsIcon from '@material-ui/icons/LaptopWindows';
@@ -17,38 +19,49 @@ import PaletteIcon from '@material-ui/icons/Palette';
 import PersonIcon from '@material-ui/icons/Person';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import SecurityIcon from '@material-ui/icons/Security';
-import DatasetIcon from '@mui/icons-material/Dataset';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
+import SimCardIcon from '@material-ui/icons/SimCard';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import ArtTrackIcon from '@material-ui/icons/ArtTrack';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import WebIcon from '@material-ui/icons/Web';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import DatasetIcon from '@mui/icons-material/Dataset';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+import LoginIcon from '@mui/icons-material/Login';
 
 import Ads from './pages/ads';
+import Analytics from './pages/analytics';
 import { CloseConfirmAlert } from './pages/app-close-alert';
 import AuthToken from './pages/auth-token';
 import Camera from './pages/camera';
 import ColorThemeComponent from './pages/color-theme';
+import CookieManagerComponent from './pages/cookie-manager';
+import DeeplinkSupport from './pages/deeplink-support';
+import ESimPage from './pages/e-sim';
 import EventListener from './pages/event-listener';
+import FeatureListComponent from './pages/feature-list';
 import FileDownload from './pages/file-download';
 import FileUploader from './pages/file-upload';
+import GetExchangeTokenPage from './pages/get-exchange-token';
 import GifPage from './pages/gifs';
+import ImageUpload from './pages/image-upload';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
+import LogEventPage from './pages/log-event';
 import Media from './pages/media';
 import TalkToChatBot from './pages/message';
+import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import SecureStorageComponent from './pages/secure-storage';
 import Share from './pages/share';
+import TriggerLoginUIPage from './pages/trigger-login-ui';
 import UniversalBridge from './pages/universal-bridge';
 import UriSchemes from './pages/uri-schemes';
 import UserDetails from './pages/user-details';
 import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
+import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
-import CookieManagerComponent from './pages/cookie-manager';
-import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
-import FeatureListComponent from './pages/feature-list';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -72,7 +85,7 @@ const deviceLocationNavLink = {
 };
 const authTokenNavLink = {
   navLink: '/auth_token',
-  label: 'Auth token',
+  label: 'Access token',
 };
 const userDetailNavLink = { navLink: '/user_detail', label: 'User Details' };
 const messageNavLink = { navLink: '/chatbot', label: 'Message' };
@@ -123,6 +136,39 @@ const miniFeatureListNavLink = {
   navLink: '/miniapp-feature-list',
   label: 'Feature List',
 };
+const analyticsNavLink = {
+  navLink: '/analytics',
+  label: 'Analytics',
+};
+const deeplinkSupportNavLink = {
+  navLink: '/deeplink-support',
+  label: 'Deeplink Checker',
+};
+const imageUploadNavLink = { navLink: '/image_upload', label: 'Image Upload' };
+const webViewConfigNavLink = {
+  navLink: '/web-view-config',
+  label: 'Web View Config',
+};
+
+const logEventNavLink = {
+  navLink: '/log-event',
+  label: 'Log Event',
+};
+
+const triggerLoginNavLink = {
+  navLink: '/trigger-login',
+  label: 'Trigger Login UI',
+};
+
+const exchangeTokenNavLink = {
+  navLink: '/exchange-token',
+  label: 'Exchange Token',
+};
+
+const eSimNavLink = {
+  navLink: '/e-sim',
+  label: 'E Sim',
+};
 
 const navLinks = [
   iosHomeNavLink,
@@ -152,6 +198,14 @@ const navLinks = [
   colorThemeNavLink,
   cookieManagerNavLink,
   miniFeatureListNavLink,
+  analyticsNavLink,
+  deeplinkSupportNavLink,
+  imageUploadNavLink,
+  webViewConfigNavLink,
+  logEventNavLink,
+  exchangeTokenNavLink,
+  triggerLoginNavLink,
+  eSimNavLink,
 ];
 
 const homeItem = [
@@ -302,9 +356,57 @@ const appItems = [
     navLink: miniFeatureListNavLink.navLink,
     element: <FeatureListComponent />,
   },
+  {
+    icon: <AnalyticsIcon />,
+    label: analyticsNavLink.label,
+    navLink: analyticsNavLink.navLink,
+    element: <Analytics />,
+  },
+  {
+    icon: <AnalyticsIcon />,
+    label: deeplinkSupportNavLink.label,
+    navLink: deeplinkSupportNavLink.navLink,
+    element: <DeeplinkSupport />,
+  },
+  {
+    icon: <PhotoCamera />,
+    label: imageUploadNavLink.label,
+    navLink: imageUploadNavLink.navLink,
+    element: <ImageUpload />,
+  },
+  {
+    icon: <WebIcon />,
+    label: webViewConfigNavLink.label,
+    navLink: webViewConfigNavLink.navLink,
+    element: <WebViewConfig />,
+  },
+  {
+    icon: <Inventory2Icon />,
+    label: logEventNavLink.label,
+    navLink: logEventNavLink.navLink,
+    element: <LogEventPage />,
+  },
+  {
+    icon: <LoginIcon />,
+    label: triggerLoginNavLink.label,
+    navLink: triggerLoginNavLink.navLink,
+    element: <TriggerLoginUIPage />,
+  },
+  {
+    icon: <VpnKeyIcon />,
+    label: exchangeTokenNavLink.label,
+    navLink: exchangeTokenNavLink.navLink,
+    element: <GetExchangeTokenPage />,
+  },
+  {
+    icon: <SimCardIcon />,
+    label: eSimNavLink.label,
+    navLink: eSimNavLink.navLink,
+    element: <ESimPage />,
+  },
 ];
 
-const navItems: Object[] = homeItem.concat(
+const navItems = homeItem.concat(
   appItems.sort((a, b) => a.label.localeCompare(b.label))
 );
 

@@ -5,7 +5,6 @@ import {
   CircularProgress,
   FormGroup,
   Typography,
-  CardContent,
   FormControl,
   TextField,
 } from '@material-ui/core';
@@ -22,7 +21,6 @@ import {
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
 
-import GreyCard from '../components/GreyCard';
 import { displayDate } from '../js_sdk';
 import { requestCustomPermissions } from '../services/permissions/actions';
 import { requestAccessToken } from '../services/user/actions';
@@ -30,16 +28,19 @@ import { sendAnalytics } from './helper';
 import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    display: 'inline-block',
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '40px',
-    overflowY: 'scroll',
+    padding: theme.spacing(3),
+  },
+  formControl: {
+    margin: theme.spacing(2),
+    minWidth: 300,
   },
   wrapper: {
     position: 'relative',
-    marginTop: 20,
+    marginTop: theme.spacing(3),
   },
   buttonSuccess: {
     backgroundColor: green[500],
@@ -55,18 +56,20 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonProgress: {
     position: 'absolute',
-    top: 'calc(50% - 10px)',
-    left: 'calc(50% - 10px)',
+    top: '50%',
+    left: '50%',
+    marginTop: -10,
+    marginLeft: -10,
   },
   error: {
     color: red[500],
-    marginTop: 20,
+    marginTop: theme.spacing(2),
   },
   success: {
     color: green[500],
-    marginTop: 20,
+    marginTop: theme.spacing(2),
     textAlign: 'center',
-    wordBreak: 'break-all',
+    wordWrap: 'anywhere',
   },
   rootFormGroup: {
     alignItems: 'center',
@@ -161,7 +164,7 @@ function AuthToken(props: AuthTokenProps) {
     sendAnalytics(
       MAAnalyticsEventType.appear,
       MAAnalyticsActionType.open,
-      'Auth Token',
+      'Access Token', // Changed title here
       'Screen',
       'Page',
       ''
@@ -223,78 +226,72 @@ function AuthToken(props: AuthTokenProps) {
     }
   }
 
-  function ButtonWrapper() {
-    return (
-      <div className={classes.wrapper}>
-        <Button
-          onClick={handleClick}
-          variant="contained"
-          color="primary"
-          className={buttonClassname}
-          disabled={state.isLoading}
-          data-testid="authButton"
-        >
-          Authentication
-        </Button>
-        {state.isLoading && (
-          <CircularProgress size={20} className={classes.buttonProgress} />
-        )}
-      </div>
-    );
-  }
-
   return (
-    <GreyCard height="auto" className={classes.card}>
-      <CardContent>
-        <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
-          <Fragment>
-            <FormControl className={classes.formControl}>
-              <TextField
-                id="audience"
-                label="Audience"
-                className={classes.fields}
-                onChange={onAudienceChange}
-                value={scope.audience}
-              />
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <TextField
-                id="scopes"
-                label="Scopes"
-                className={classes.fields}
-                onChange={onScopesChange}
-                value={scope.scopes.join(', ')}
-              />
-            </FormControl>
-          </Fragment>
-          {ButtonWrapper()}
-          {!state.isLoading &&
-            state.isSuccess &&
-            !state.isError &&
-            !state.permissionDenied &&
-            props.accessToken && (
-              <div>
-                <Typography variant="body1" className={classes.success}>
-                  Token: {props.accessToken.token}
-                </Typography>
-                <Typography variant="body1" className={classes.success}>
-                  Valid until: {displayDate(props.accessToken.validUntil)}
-                </Typography>
-              </div>
-            )}
-          {!state.isLoading && state.isError && !state.permissionDenied && (
-            <Typography variant="body1" className={classes.red}>
-              {state.error}
-            </Typography>
+    <div className={classes.container}>
+      <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
+        <Fragment>
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="audience"
+              label="Audience"
+              variant="outlined"
+              className={classes.fields}
+              onChange={onAudienceChange}
+              value={scope.audience}
+            />
+          </FormControl>
+          <FormControl className={classes.formControl}>
+            <TextField
+              id="scopes"
+              label="Scopes"
+              variant="outlined"
+              className={classes.fields}
+              onChange={onScopesChange}
+              value={scope.scopes.join(', ')}
+            />
+          </FormControl>
+        </Fragment>
+        <div className={classes.wrapper}>
+          <Button
+            onClick={handleClick}
+            variant="contained"
+            color="primary"
+            className={buttonClassname}
+            disabled={state.isLoading}
+            data-testid="authButton"
+          >
+            Get Access Token
+          </Button>
+          {state.isLoading && (
+            <CircularProgress size={20} className={classes.buttonProgress} />
           )}
-          {!state.isLoading && state.permissionDenied && (
-            <Typography variant="body1" className={classes.red}>
-              ACCESS_TOKEN Permission is denied by the user
-            </Typography>
+        </div>
+        {!state.isLoading &&
+          state.isSuccess &&
+          !state.isError &&
+          !state.permissionDenied &&
+          props.accessToken && (
+            <div>
+              <Typography variant="body1" className={classes.success}>
+                Token: {props.accessToken.token}
+              </Typography>
+              <Typography variant="body1" className={classes.success}>
+                Valid until: {displayDate(props.accessToken.validUntil)}
+              </Typography>
+            </div>
           )}
-        </FormGroup>
-      </CardContent>
-    </GreyCard>
+        {!state.isLoading && state.isError && !state.permissionDenied && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error}
+          </Typography>
+        )}
+        {!state.isLoading && state.permissionDenied && (
+          <Typography variant="body1" className={classes.red}>
+            ACCESS_TOKEN Permission is denied by the user
+          </Typography>
+        )}
+      </FormGroup>
+    </div>
   );
 }
 

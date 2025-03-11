@@ -1,5 +1,28 @@
 ## CHANGELOG
 
+### 1.23.0 (2025-01-21)
+- **Feature:** Added new interface `triggerLoginUI` to trigger the login UI for the user.
+- **Feature:** Added new interface `getExchangeToken` to get the exchange token from the Host app.
+- **Feature:** Added new interface `logEvent` to log an event with the specified message and log level.
+
+### 1.22.0 (2024-12-05)
+- **Feature:** Added new interface `launchExternalBrowser` which helps the MiniApps to launch a URL in external browser
+- **Feature:** Added new interface `launchInternalBrowser` which helps the MiniApps to launch a URL in internal browser
+- **Feature:** Added new interface `getImageFromGallery` to get image from Gallery. User can select one image and the same will be returned  to MiniApp
+- **Feature:** Added new interface `isLoggedIn` to get the Login status of the User in the Host application
+- **Feature:** Added new interface `allowBackForwardNavigationGestures` to enable/disable swipe gestures in iOS Host application
+- **Update:** Update `shareInfo` to allow sharing URL & Image as well
+
+---
+
+### 1.21.0 (2024-07-30)
+- **Feature:** Added new interface `isAppDeeplinkSupported` which helps to check if the application have whitelisted/allows the deeplink to open
+- **Feature:** Added new interface `canOpenAppDeeplink` which helps to check if the device can open the deeplink scheme
+- **Feature:** Added new interface `getPhoneNumber` to get the phone number from the native application
+- **Fix:** Updated `MAAnalyticsInfo` in SDK to have more parameters
+
+---
+
 ### 1.20.2 (2024-03-27)
 - **Fix:** Remove dependecy of `libbase64` and we moved the encode/decode internally in SDK
 

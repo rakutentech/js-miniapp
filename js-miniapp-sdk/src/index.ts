@@ -10,7 +10,7 @@ import {
   CustomPermissionName,
   CustomPermissionStatus,
   CustomPermissionResult,
-  ShareInfoType,
+  ShareInfo,
   ScreenOrientation,
   AccessTokenData,
   Contact,
@@ -47,6 +47,8 @@ import {
   MAAnalyticsEventType,
   UniversalBridgeInfo,
   CookieInfo,
+  LogType,
+  EsimConfig,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -66,7 +68,7 @@ export {
   CustomPermissionStatus,
   CustomPermissionResult,
   Reward,
-  ShareInfoType,
+  ShareInfo,
   ScreenOrientation,
   AccessTokenData,
   Contact,
@@ -106,4 +108,6 @@ export {
   MAAnalyticsEventType,
   UniversalBridgeInfo,
   CookieInfo,
+  LogType,
+  EsimConfig,
 };
