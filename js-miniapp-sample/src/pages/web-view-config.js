@@ -67,18 +67,40 @@ const useStyles = makeStyles((theme) => ({
 const WebViewConfig = () => {
   const classes = useStyles();
   const [toggle, setToggle] = React.useState(true);
+  const [toggle2, setToggle2] = React.useState(true);
 
   const handleToggleChange = (event) => {
     const newToggleValue = event.target.checked;
-    setToggle(newToggleValue);
-    MiniApp.webviewManager
-      .allowBackForwardNavigationGestures(newToggleValue)
-      .then((response) => {
-        console.log('allowBackForwardNavigationGestures Response: ', response);
-      })
-      .catch((error) => {
-        console.log('allowBackForwardNavigationGestures Error: ', error);
-      });
+    try {
+      MiniApp.webviewManager
+        .allowBackForwardNavigationGestures(newToggleValue)
+        .then((response) => {
+          console.log('allowBackForwardNavigationGestures Response: ', response);
+          setToggle(response);
+        })
+        .catch((error) => {
+          console.log('allowBackForwardNavigationGestures Error: ', error);
+        });
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  const handleForceWebviewToggleChange = (event) => {
+    const newToggleValue = event.target.checked;
+    try {
+      MiniApp.webviewManager
+        .forceInternalWebView(newToggleValue)
+        .then((response) => {
+          console.log('allowBackForwardNavigationGestures Response: ', response);
+          setToggle2(response);
+        })
+        .catch((error) => {
+          console.log('allowBackForwardNavigationGestures Error: ', error);
+        });
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -97,6 +119,19 @@ const WebViewConfig = () => {
             />
           }
           label="Allow Back/Forward Navigation Gestures"
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={toggle2}
+              onChange={handleForceWebviewToggleChange}
+              classes={{
+                switchBase: classes.iosSwitchBase,
+                track: classes.iosSwitchTrack,
+              }}
+            />
+          }
+          label="Force use of internal web view"
         />
       </CardContent>
     </Card>

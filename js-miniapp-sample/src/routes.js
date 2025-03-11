@@ -29,6 +29,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import Ads from './pages/ads';
 import Analytics from './pages/analytics';
@@ -49,6 +50,7 @@ import ImageUpload from './pages/image-upload';
 import Landing from './pages/landing';
 import LocalStorage from './pages/local-storage';
 import LogEventPage from './pages/log-event';
+import LoggedOutPage from './pages/logged-out';
 import Media from './pages/media';
 import TalkToChatBot from './pages/message';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
@@ -170,6 +172,11 @@ const eSimNavLink = {
   label: 'E Sim',
 };
 
+const forceLogoutStateNavLink = {
+  navLink: '/force-logout',
+  label: 'Force Logout',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -206,6 +213,7 @@ const navLinks = [
   exchangeTokenNavLink,
   triggerLoginNavLink,
   eSimNavLink,
+  forceLogoutStateNavLink,
 ];
 
 const homeItem = [
@@ -403,6 +411,12 @@ const appItems = [
     label: eSimNavLink.label,
     navLink: eSimNavLink.navLink,
     element: <ESimPage />,
+  },
+  {
+    icon: <LogoutIcon />,
+    label: forceLogoutStateNavLink.label,
+    navLink: forceLogoutStateNavLink.navLink,
+    element: <LoggedOutPage />,
   },
 ];
 

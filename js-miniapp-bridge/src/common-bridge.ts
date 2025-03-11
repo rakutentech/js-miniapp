@@ -1045,6 +1045,12 @@ export class MiniAppBridge {
     );
   }
 
+  forceInternalWebView(enable: boolean) {
+    return this.webviewConfigManager.forceInternalWebView(
+      enable
+    );
+  }
+
   /**
    * Triggers the login UI for the user.
    * @returns - A promise that resolves when the login UI is triggered.
@@ -1090,6 +1096,23 @@ export class MiniAppBridge {
       return this.executor.exec(
         'setupAndInstallEsim',
         { config },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Send a signal to native application to force a logout
+   * @returns true if logout is successful
+   */
+  forceLogout() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'forceLogout',
+        null,
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
