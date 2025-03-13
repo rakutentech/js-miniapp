@@ -28,7 +28,6 @@ import { ShareInfoType } from './types/share-info';
 import { WebviewManager } from './modules/webview-config-provider';
 import { Esim } from './modules/e-sim';
 import { MockMiniAppData } from './mock/mock-miniapp';
-import { jsonData } from './mock/mock-data';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -183,11 +182,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   galleryManager: GalleryBridge = new GalleryBridge();
   webviewManager: WebviewManager = new WebviewManager();
   esimService: Esim = new Esim();
-
-  constructor() {
-    const a = JSON.parse(jsonData) as MockMiniAppData;
-    this.setMockData(a);
-  }
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

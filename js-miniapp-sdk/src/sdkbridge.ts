@@ -4,8 +4,8 @@ import { MockMiniAppData } from './mock/mock-miniapp';
 
 export let mockMiniAppData: MockMiniAppData = { isMockEnabled: false };
 
-export function setMockMiniAppData(newData) {
-  mockMiniAppData = newData;
+export function setMockMiniAppData(mockData: MockMiniAppData) {
+  mockMiniAppData = mockData;
 }
 
 /** @internal */
