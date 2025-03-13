@@ -1170,9 +1170,9 @@ describe('forceInternalWebView', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, true);
 
-    return expect(
-      bridge.forceInternalWebView(true)
-    ).to.eventually.deep.equal(true);
+    return expect(bridge.forceInternalWebView(true)).to.eventually.deep.equal(
+      true
+    );
   });
 
   it('will parse error', () => {
