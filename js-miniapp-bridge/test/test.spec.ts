@@ -1166,6 +1166,15 @@ describe('forceInternalWebView', () => {
     ).to.eventually.deep.equal(true);
   });
 
+  it('will receive result of requesting internal web view 2', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.forceInternalWebView(true)
+    ).to.eventually.deep.equal(true);
+  });
+
   it('will parse error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
