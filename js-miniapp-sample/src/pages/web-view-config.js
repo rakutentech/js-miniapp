@@ -148,7 +148,7 @@ const WebViewConfig = () => {
 
   const allowBackForwardEvent = {
     dispatchType: 'ALLOW_BACK_FORWARD',
-    function: MiniApp?.webviewManager?.allowBackForwardNavigationGestures
+    function: MiniApp?.webviewManager?.allowBackForwardNavigationGestures,
   };
 
   const forceInternalWebViewEvent = {
