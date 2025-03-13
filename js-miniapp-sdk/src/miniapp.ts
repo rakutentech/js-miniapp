@@ -15,7 +15,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
-import { getBridge } from './sdkbridge';
+import { getBridge, setMockMiniAppData } from './sdkbridge';
 import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
@@ -27,6 +27,8 @@ import { GalleryBridge } from './modules/gallery-manager';
 import { ShareInfoType } from './types/share-info';
 import { WebviewManager } from './modules/webview-config-provider';
 import { Esim } from './modules/e-sim';
+import { MockMiniAppData } from './mock/mock-miniapp';
+import { jsonData } from './mock/mock-data';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -182,6 +184,11 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   webviewManager: WebviewManager = new WebviewManager();
   esimService: Esim = new Esim();
 
+  constructor() {
+    const a = JSON.parse(jsonData) as MockMiniAppData;
+    this.setMockData(a);
+  }
+
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);
   }
@@ -302,5 +309,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
+  }
+
+  setMockData(data: MockMiniAppData): Promise<string> {
+    try {
+      setMockMiniAppData(data);
+      return Promise.resolve('success');
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 }
