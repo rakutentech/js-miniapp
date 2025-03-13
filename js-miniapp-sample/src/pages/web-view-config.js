@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const initialState = {
+const initialState = {
   allowBackForwardNavigationGestures: {
     result: false,
     isLoading: false,
@@ -80,13 +80,13 @@ export const initialState = {
   },
 };
 
-export const dataFetchReducer = (state, action) => {
+const dataFetchReducer = (state, action) => {
   switch (action.type) {
     case 'ALLOW_BACK_FORWARD_INIT':
       return {
         ...state,
         allowBackForwardNavigationGestures: {
-          ...state.allowBackForwardNavigationGestures,
+          ...state?.allowBackForwardNavigationGestures,
           isLoading: true,
           isError: false,
         },
@@ -95,7 +95,7 @@ export const dataFetchReducer = (state, action) => {
       return {
         ...state,
         allowBackForwardNavigationGestures: {
-          ...state.allowBackForwardNavigationGestures,
+          ...state?.allowBackForwardNavigationGestures,
           result: action.result,
           isLoading: false,
         },
@@ -104,7 +104,7 @@ export const dataFetchReducer = (state, action) => {
       return {
         ...state,
         allowBackForwardNavigationGestures: {
-          ...state.allowBackForwardNavigationGestures,
+          ...state?.allowBackForwardNavigationGestures,
           isLoading: false,
           isError: true,
         },
@@ -113,7 +113,7 @@ export const dataFetchReducer = (state, action) => {
       return {
         ...state,
         forceInternalWebView: {
-          ...state.forceInternalWebView,
+          ...state?.forceInternalWebView,
           isLoading: true,
           isError: false,
         },
@@ -122,7 +122,7 @@ export const dataFetchReducer = (state, action) => {
       return {
         ...state,
         forceInternalWebView: {
-          ...state.forceInternalWebView,
+          ...state?.forceInternalWebView,
           result: action.result,
           isLoading: false,
         },
@@ -131,7 +131,7 @@ export const dataFetchReducer = (state, action) => {
       return {
         ...state,
         forceInternalWebView: {
-          ...state.forceInternalWebView,
+          ...state?.forceInternalWebView,
           isLoading: false,
           isError: true,
         },
@@ -148,10 +148,7 @@ const WebViewConfig = () => {
 
   const allowBackForwardEvent = {
     dispatchType: 'ALLOW_BACK_FORWARD',
-    function: async () => {
-      await new Promise((r) => setTimeout(r, 2000));
-      return true;
-    },
+    function: MiniApp?.webviewManager?.allowBackForwardNavigationGestures
   };
 
   const forceInternalWebViewEvent = {
@@ -160,7 +157,7 @@ const WebViewConfig = () => {
   };
 
   const handleToggleChange = (data, event) => {
-    dispatch({ type: `${data.dispatchType}_INIT` });
+    dispatch({ type: `${data.dispatchType}_INIT`, result: null });
     const newToggleValue = event.target.checked;
     try {
       data
@@ -174,11 +171,11 @@ const WebViewConfig = () => {
         })
         .catch((error) => {
           console.log('Error: ', error);
-          dispatch({ type: `${data.dispatchType}_FAILED` });
+          dispatch({ type: `${data.dispatchType}_FAILED`, result: null });
         });
     } catch (error) {
       console.log('Error: ', error);
-      dispatch({ type: `${data.dispatchType}_FAILED` });
+      dispatch({ type: `${data.dispatchType}_FAILED`, result: null });
     }
   };
 
