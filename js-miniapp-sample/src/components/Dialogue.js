@@ -8,6 +8,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   errorTypography: {
@@ -23,7 +24,7 @@ const Dialogue = (props) => {
   return (
     <Dialog open={open} onClose={onCloseHandler} className={classes.dialogue}>
       <DialogContent>
-        <Typography>{contentText}</Typography>
+        <Typography>{contentText || 'Placeholder Dialogue'}</Typography>
         {errorText && (
           <Typography className={classes.errorTypography}>
             {errorText}
@@ -36,6 +37,14 @@ const Dialogue = (props) => {
       </DialogActions>
     </Dialog>
   );
+};
+
+Dialogue.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onConfirmHandler: PropTypes.func.isRequired,
+  onCloseHandler: PropTypes.func.isRequired,
+  contentText: PropTypes.string,
+  errorText: PropTypes.string,
 };
 
 export default Dialogue;

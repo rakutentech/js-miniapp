@@ -22,7 +22,6 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
-import { UserInfo } from '../src/modules/user-info';
 
 const sandbox = sinon.createSandbox();
 beforeEach(() => {
@@ -76,7 +75,6 @@ window.MiniAppBridge = {
   forceInternalWebView: sandbox.stub(),
   userProfileManager,
 };
-//sinon.stub(window.MiniAppBridge, 'userProfileManager').value(userProfileManager);
 
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
