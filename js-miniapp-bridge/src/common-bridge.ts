@@ -1093,24 +1093,7 @@ export class MiniAppBridge {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'setupAndInstallEsim',
-        { config },
-        response => {
-          resolve(MiniAppBridgeUtils.BooleanValue(response));
-        },
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  /**
-   * Send a signal to native application to force a logout
-   * @returns true if logout is successful
-   */
-  forceLogout() {
-    return new Promise<boolean>((resolve, reject) => {
-      return this.executor.exec(
-        'forceLogout',
-        null,
+        { eSimConfig: config },
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },

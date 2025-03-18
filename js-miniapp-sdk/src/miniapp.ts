@@ -119,12 +119,6 @@ interface MiniAppFeatures {
    * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
    */
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string>;
-
-  /**
-   * Send a signal to native application to force a logout
-   * @returns true if logout is successful
-   */
-  forceLogout(): Promise<boolean>;
 }
 
 /**
@@ -308,9 +302,5 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
-  }
-
-  forceLogout(): Promise<boolean> {
-    return getBridge().forceLogout();
   }
 }

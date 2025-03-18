@@ -52,4 +52,21 @@ export class UserProfileManager {
       );
     });
   }
+
+  /**
+   * Send a signal to native application to force a logout
+   * @returns true if logout is successful
+   */
+  forceLogout() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'forceLogout',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

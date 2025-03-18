@@ -22,6 +22,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
+import { UserInfo } from '../src/modules/user-info';
 
 const sandbox = sinon.createSandbox();
 beforeEach(() => {
@@ -32,6 +33,9 @@ beforeEach(() => {
 const window: any = {};
 (global as any).window = window;
 
+const userProfileManager = {
+  forceLogout: sandbox.stub(),
+};
 window.MiniAppBridge = {
   getUniqueId: sandbox.stub(),
   getMessagingUniqueId: sandbox.stub(),
@@ -69,9 +73,11 @@ window.MiniAppBridge = {
   getPhoneNumber: sandbox.stub(),
   isEsimSupported: sandbox.stub(),
   setupAndInstallEsim: sandbox.stub(),
-  forceLogout: sandbox.stub(),
   forceInternalWebView: sandbox.stub(),
+  userProfileManager,
 };
+//sinon.stub(window.MiniAppBridge, 'userProfileManager').value(userProfileManager);
+
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
   text: 'test',
@@ -922,13 +928,15 @@ describe('setupAndInstallEsim', () => {
 
 describe('forceLogout', () => {
   it('should return if user is logged out', () => {
-    window.MiniAppBridge.forceLogout.resolves(true);
-    return expect(miniApp.forceLogout()).to.eventually.equal(true);
+    window.MiniAppBridge.userProfileManager.forceLogout.resolves(true);
+    return expect(miniApp.user.forceLogout()).to.eventually.equal(true);
   });
 
   it('should return error information', () => {
-    window.MiniAppBridge.forceLogout.returns(Promise.reject('test error'));
-    return expect(miniApp.forceLogout()).to.eventually.be.rejected;
+    window.MiniAppBridge.userProfileManager.forceLogout.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.user.forceLogout()).to.eventually.be.rejected;
   });
 });
 

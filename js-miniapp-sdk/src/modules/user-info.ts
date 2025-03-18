@@ -67,6 +67,12 @@ export interface UserInfoProvider {
   triggerLoginUI(): Promise<boolean | MiniAppError>;
 
   /**
+   * Send a signal to native application to force a logout
+   * @returns true if logout is successful
+   */
+  forceLogout(): Promise<boolean>;
+
+  /**
    * Fetches the exchange token from host app.
    * @param audience one of the audiences provided in MiniApp manifest
    * @param scopes scopes array associated to the audience
@@ -162,6 +168,14 @@ export class UserInfo implements UserInfoProvider {
    */
   triggerLoginUI(): Promise<boolean | MiniAppError> {
     return getBridge().userProfileManager.triggerLoginUI();
+  }
+
+  /**
+   * Send a signal to native application to force a logout
+   * @returns true if logout is successful
+   */
+  forceLogout(): Promise<boolean> {
+    return getBridge().userProfileManager.forceLogout();
   }
 
   /**

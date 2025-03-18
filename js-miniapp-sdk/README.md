@@ -1701,7 +1701,7 @@ This interface is used to trigger a forced logout action by the MiniApp
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
-MiniApp.
+MiniApp.user
   forceLogout()
   .then((response) => {
     console.log('User logged out');
