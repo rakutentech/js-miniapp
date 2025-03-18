@@ -11,6 +11,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/material": "^5.10.17",
     "bowser": "^2.11.0",
+    "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^18.0.0",
@@ -41,6 +42,7 @@
     "iOS>=11"
   ],
   "devDependencies": {
+    "@mui/icons-material": "^5.11.16",
     "eslint": "^8.29.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.31.11",
@@ -48,8 +50,7 @@
     "flow-typed": "^3.7.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1",
-    "@mui/icons-material": "^5.11.16"
+    "prettier": "^2.8.1"
   },
   "husky": {
     "hooks": {

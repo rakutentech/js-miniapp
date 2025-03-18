@@ -19,6 +19,7 @@
 
 [options]
 all=false
+esproposal.optional_chaining=enable
 
 [strict]
 

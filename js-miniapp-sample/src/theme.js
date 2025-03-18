@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
+import { grey, red } from '@material-ui/core/colors';
 
 export default createTheme({
   palette: {
@@ -11,5 +11,7 @@ export default createTheme({
   color: {
     primary: '#000000',
     secondary: 'lightgrey',
+    white: '#FFFFFF',
+    error: red[500],
   },
 });

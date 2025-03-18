@@ -1140,6 +1140,53 @@ describe('setupAndInstallEsim', () => {
   });
 });
 
+describe('forceLogout', () => {
+  it('will receive result of requesting force logout', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.userProfileManager.forceLogout()
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('will parse error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
+
+    return expect(bridge.userProfileManager.forceLogout()).to.eventually.be
+      .rejected;
+  });
+});
+
+describe('forceInternalWebView', () => {
+  it('will receive result of requesting internal web view', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.webviewConfigManager.forceInternalWebView(true)
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('will receive result of requesting internal web view 2', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(bridge.forceInternalWebView(true)).to.eventually.deep.equal(
+      true
+    );
+  });
+
+  it('will parse error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
+
+    return expect(bridge.webviewConfigManager.forceInternalWebView(true)).to
+      .eventually.be.rejected;
+  });
+});
+
 interface CreateCallbackParams {
   onSuccess?: (success: any) => any;
   onError?: (error: string) => any;

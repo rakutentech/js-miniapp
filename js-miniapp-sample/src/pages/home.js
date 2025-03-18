@@ -5,11 +5,15 @@ import {
   Container,
   useTheme,
   useMediaQuery,
+  IconButton,
 } from '@material-ui/core';
+import LogoutIcon from '@mui/icons-material/Logout';
 import clsx from 'clsx';
+import MiniApp from 'js-miniapp-sdk';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { navItems } from './../routes';
+import Dialogue from '../components/Dialogue';
 import ToolBar from '../components/ToolBar';
 
 const DRAWER_WIDTH = '250px';
@@ -50,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  logOutButton: {
+    marginLeft: 'auto',
+    marginRight: 0,
+    color: theme.color.white,
+  },
 }));
 
 const Home = (props: any) => {
@@ -58,6 +67,9 @@ const Home = (props: any) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [shrink, setShrink] = useState(false);
   const [showDrawer, setShowDrawer] = useState(!isMobile);
+  const [showLogOutConfirmation, setShowLogOutConfirmation] = useState(false);
+  const [logOutError, setLogOutError] = useState('');
+
   useEffect(() => {
     setShowDrawer(!isMobile);
   }, [isMobile]);
@@ -67,6 +79,27 @@ const Home = (props: any) => {
   const onDrawerToggle = (show) => {
     setShowDrawer(show);
   };
+  const openLogOutDialog = () => {
+    setLogOutError('');
+    setShowLogOutConfirmation(true);
+  };
+  const closeLogOutDialog = () => {
+    setShowLogOutConfirmation(false);
+  };
+  const confirmLogOutDialog = async () => {
+    try {
+      MiniApp.user
+        .forceLogout()
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((error) => {
+          setLogOutError(error.message || error);
+        });
+    } catch (error) {
+      setLogOutError(error.message || error);
+    }
+  };
   return (
     <Router>
       <ToolBar
@@ -74,6 +107,14 @@ const Home = (props: any) => {
         onDrawerToggle={onDrawerToggle}
         onShrinkToggle={onShrinkToggle}
         navItems={navItems}
+        actions={
+          <IconButton
+            className={classes.logOutButton}
+            onClick={openLogOutDialog}
+          >
+            <LogoutIcon />
+          </IconButton>
+        }
       ></ToolBar>
       <main
         data-testid="homepage-main-content"
@@ -107,6 +148,13 @@ const Home = (props: any) => {
           </Routes>
         </Container>
       </main>
+      <Dialogue
+        open={showLogOutConfirmation}
+        onCloseHandler={closeLogOutDialog}
+        onConfirmHandler={confirmLogOutDialog}
+        contentText="Are you sure you want to logout?"
+        errorText={logOutError}
+      />
     </Router>
   );
 };

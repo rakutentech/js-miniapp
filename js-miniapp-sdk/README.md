@@ -1636,6 +1636,82 @@ MiniApp.webviewManager
 
 ```
 
+## Check whether device supports ESims
+
+This interface is used to determine whether device supports ESim configuration or not
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.esimService
+  .isEsimSupported()
+  .then((response) => {
+    if(response) {
+      console.log('Esim is supported');
+    } else {
+      console.log('Esim is NOT supported');
+    }
+  })
+  .catch((error) => {
+    console.log('Error: ', error);
+  });
+
+```
+
+## Send ESim configuration
+
+This interface allows MiniApp to send an ESim configuration to create it and install into device
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.esimService
+  .setupAndInstallEsim({ address: 'sample_esim_address', ... })
+  .then((response) => {
+    console.log('Esim configured');
+  })
+  .catch((error) => {
+    console.log('Error: ', error);
+  });
+
+```
+
+## Use internal webview or external browser settings
+
+This interface is used to set whether links of MiniApps should be opened in an internal webview or external browser
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.webviewManager
+  .forceInternalWebView(true)
+  .then((response) => {
+    console.log('Updated');
+  })
+  .catch((error) => {
+    console.log('Error: ', error);
+  });
+
+```
+
+## Force logout user
+
+This interface is used to trigger a forced logout action by the MiniApp
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+  
+MiniApp.user
+  forceLogout()
+  .then((response) => {
+    console.log('User logged out');
+  })
+  .catch((error) => {
+    console.log('Error: ', error);
+  });
+
+```
+
 
 
 ## Advanced Usage
