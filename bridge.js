@@ -710,6 +710,9 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.allowBackForwardNavigationGestures = function (shouldAllow) {
         return this.webviewConfigManager.allowBackForwardNavigationGestures(shouldAllow);
     };
+    MiniAppBridge.prototype.forceInternalWebView = function (enable) {
+        return this.webviewConfigManager.forceInternalWebView(enable);
+    };
     /**
      * Triggers the login UI for the user.
      * @returns - A promise that resolves when the login UI is triggered.
@@ -746,7 +749,7 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.setupAndInstallEsim = function (config) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('setupAndInstallEsim', { config: config }, function (response) {
+            return _this.executor.exec('setupAndInstallEsim', { eSimConfig: config }, function (response) {
                 resolve(MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
@@ -1131,6 +1134,18 @@ var UserProfileManager = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    /**
+     * Send a signal to native application to force a logout
+     * @returns true if logout is successful
+     */
+    UserProfileManager.prototype.forceLogout = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('forceLogout', null, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return UserProfileManager;
 }());
 exports.UserProfileManager = UserProfileManager;
@@ -1193,6 +1208,19 @@ var WebViewConfigManager = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('allowBackForwardNavigationGestures', { shouldAllowNavigationGestures: shouldAllow }, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * Define whether URLs are opened in internal Webview or external browser
+     * @param enable - whether to force internal Webview to be used or not
+     * @returns A promise that resolves to a boolean indicating the success of the operation.
+     */
+    WebViewConfigManager.prototype.forceInternalWebView = function (enable) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('forceInternalWebView', { shouldOpenInNativeWebView: enable }, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
