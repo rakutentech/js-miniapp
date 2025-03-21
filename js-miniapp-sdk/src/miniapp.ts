@@ -15,7 +15,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
-import { getBridge } from './sdkbridge';
+import { getBridge, setMockMiniAppData } from './sdkbridge';
 import { SecureStorageService } from './modules/secure-storage';
 import { UniversalBridge } from './modules/universal-bridge';
 import { MiniAppUtils } from './modules/utils';
@@ -27,6 +27,7 @@ import { GalleryBridge } from './modules/gallery-manager';
 import { ShareInfoType } from './types/share-info';
 import { WebviewManager } from './modules/webview-config-provider';
 import { Esim } from './modules/e-sim';
+import { MockMiniAppData } from './mock/mock-miniapp';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -302,5 +303,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
+  }
+
+  setMockData(data: MockMiniAppData): Promise<string> {
+    try {
+      setMockMiniAppData(data);
+      return Promise.resolve('success');
+    } catch (e) {
+      return Promise.reject(e);
+    }
   }
 }
