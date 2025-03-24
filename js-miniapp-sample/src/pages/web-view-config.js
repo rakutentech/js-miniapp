@@ -1,5 +1,5 @@
 // @flow
-import React, { useReducer, useRef } from 'react';
+import React from 'react';
 
 import {
   Card,
@@ -12,6 +12,8 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import MiniApp from 'js-miniapp-sdk';
+
+import useWebViewConfigStore from '../store/web-view-config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,115 +69,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const initialState = {
-  allowBackForwardNavigationGestures: {
-    result: false,
-    isLoading: false,
-    isError: false,
-  },
-  forceInternalWebView: {
-    result: false,
-    isLoading: false,
-    isError: false,
-  },
-};
-
-const dataFetchReducer = (state, action) => {
-  switch (action.type) {
-    case 'ALLOW_BACK_FORWARD_INIT':
-      return {
-        ...state,
-        allowBackForwardNavigationGestures: {
-          ...state?.allowBackForwardNavigationGestures,
-          isLoading: true,
-          isError: false,
-        },
-      };
-    case 'ALLOW_BACK_FORWARD_SUCCESS':
-      return {
-        ...state,
-        allowBackForwardNavigationGestures: {
-          ...state?.allowBackForwardNavigationGestures,
-          result: action.result,
-          isLoading: false,
-        },
-      };
-    case 'ALLOW_BACK_FORWARD_FAILED':
-      return {
-        ...state,
-        allowBackForwardNavigationGestures: {
-          ...state?.allowBackForwardNavigationGestures,
-          isLoading: false,
-          isError: true,
-        },
-      };
-    case 'FORCE_INTERNAL_INIT':
-      return {
-        ...state,
-        forceInternalWebView: {
-          ...state?.forceInternalWebView,
-          isLoading: true,
-          isError: false,
-        },
-      };
-    case 'FORCE_INTERNAL_SUCCESS':
-      return {
-        ...state,
-        forceInternalWebView: {
-          ...state?.forceInternalWebView,
-          result: action.result,
-          isLoading: false,
-        },
-      };
-    case 'FORCE_INTERNAL_FAILED':
-      return {
-        ...state,
-        forceInternalWebView: {
-          ...state?.forceInternalWebView,
-          isLoading: false,
-          isError: true,
-        },
-      };
-    default:
-      console.log('Unknown action type');
-  }
-};
-
 const WebViewConfig = () => {
   const classes = useStyles();
-  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
-  const toggle1 = useRef();
+  const allowBackForwardNavigationGestures = useWebViewConfigStore(
+    (state) => state.allowBackForwardNavigationGestures
+  );
+  const forceInternalWebView = useWebViewConfigStore(
+    (state) => state.forceInternalWebView
+  );
+  const {
+    initAllowBackForwardNavigationGestures,
+    successAllowBackForwardNavigationGestures,
+    failAllowBackForwardNavigationGestures,
+    initForceInternalWebView,
+    successForceInternalWebView,
+    failForceInternalWebView,
+  } = useWebViewConfigStore();
 
   const allowBackForwardEvent = {
-    dispatchType: 'ALLOW_BACK_FORWARD',
+    initFunc: initAllowBackForwardNavigationGestures,
     function: MiniApp?.webviewManager?.allowBackForwardNavigationGestures,
+    successFunc: successAllowBackForwardNavigationGestures,
+    failFunc: failAllowBackForwardNavigationGestures,
   };
 
   const forceInternalWebViewEvent = {
-    dispatchType: 'FORCE_INTERNAL',
+    initFunc: initForceInternalWebView,
     function: MiniApp?.webviewManager?.forceInternalWebView,
+    successFunc: successForceInternalWebView,
+    failFunc: failForceInternalWebView,
   };
 
   const handleToggleChange = (data, event) => {
-    dispatch({ type: `${data.dispatchType}_INIT`, result: null });
+    data.initFunc();
     const newToggleValue = event.target.checked;
     try {
       data
         .function(newToggleValue)
         .then((response) => {
           console.log('Response: ', response);
-          dispatch({
-            type: `${data.dispatchType}_SUCCESS`,
-            result: newToggleValue,
-          });
+          data.successFunc(newToggleValue);
         })
         .catch((error) => {
           console.log('Error: ', error);
-          dispatch({ type: `${data.dispatchType}_FAILED`, result: null });
+          data.failFunc(error.message || error);
         });
     } catch (error) {
       console.log('Error: ', error);
-      dispatch({ type: `${data.dispatchType}_FAILED`, result: null });
+      data.failFunc(error.message || error);
     }
   };
 
@@ -186,11 +127,8 @@ const WebViewConfig = () => {
         <FormControlLabel
           control={
             <Switch
-              ref={toggle1}
-              checked={
-                state?.allowBackForwardNavigationGestures?.result || false
-              }
-              disabled={state?.allowBackForwardNavigationGestures?.isLoading}
+              checked={allowBackForwardNavigationGestures.result || false}
+              disabled={allowBackForwardNavigationGestures.isLoading}
               onChange={(event) =>
                 handleToggleChange(allowBackForwardEvent, event)
               }
@@ -202,26 +140,26 @@ const WebViewConfig = () => {
           }
           label="Allow Back/Forward Navigation Gestures"
         />
-        {state?.allowBackForwardNavigationGestures?.isLoading && (
+        {allowBackForwardNavigationGestures.isLoading && (
           <Box sx={{ display: 'flex' }}>
             <CircularProgress />
           </Box>
         )}
-        {state?.allowBackForwardNavigationGestures?.isError && (
+        {allowBackForwardNavigationGestures.error && (
           <Typography
             variant="body1"
             color={'error'}
             style={{ marginTop: '20px', wordBreak: 'break-all' }}
           >
-            Encountered error while calling allowBackForwardNavigationGestures
+            {allowBackForwardNavigationGestures.error}
           </Typography>
         )}
 
         <FormControlLabel
           control={
             <Switch
-              checked={state?.forceInternalWebView?.result || false}
-              disabled={state?.forceInternalWebView?.isLoading}
+              checked={forceInternalWebView.result || false}
+              disabled={forceInternalWebView.isLoading}
               onChange={(event) =>
                 handleToggleChange(forceInternalWebViewEvent, event)
               }
@@ -233,18 +171,18 @@ const WebViewConfig = () => {
           }
           label="Force use of internal web view"
         />
-        {state?.forceInternalWebView?.isLoading && (
+        {forceInternalWebView.isLoading && (
           <Box sx={{ display: 'flex' }}>
             <CircularProgress />
           </Box>
         )}
-        {state?.forceInternalWebView?.isError && (
+        {forceInternalWebView.error && (
           <Typography
             variant="body1"
             color={'error'}
             style={{ marginTop: '20px', wordBreak: 'break-all' }}
           >
-            Encountered error while calling forceInternalWebView
+            {forceInternalWebView.error}
           </Typography>
         )}
       </CardContent>
