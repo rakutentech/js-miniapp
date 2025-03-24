@@ -20,7 +20,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "semver": "^7.5.2"
+    "semver": "^7.5.2",
+    "zustand": "^5.0.3"
   },
   "scripts": {
     "format": "prettier --config ./prettier.config.js --write 'src/**/*.js'",
