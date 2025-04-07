@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 1.24.0 (2025-04-07)
+- **Feature:** Added new interface `forceLogout` to force a user logout.
+- **Feature:** Added new interface `forceInternalWebView` to set whether links should be opened in external or internal web view.
+- **Feature:** Added new interface `esimService` to support esim functionality.
+
 ### 1.23.0 (2025-01-21)
 - **Feature:** Added new interface `triggerLoginUI` to trigger the login UI for the user.
 - **Feature:** Added new interface `getExchangeToken` to get the exchange token from the Host app.
