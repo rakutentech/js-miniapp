@@ -1636,7 +1636,7 @@ MiniApp.webviewManager
 
 ```
 
-## Check whether device supports ESims
+## Check whether device supports ESims <small style="color:green;font-size: 12px">Available from v1.24.0</small>
 
 This interface is used to determine whether device supports ESim configuration or not
 
@@ -1658,7 +1658,7 @@ MiniApp.esimService
 
 ```
 
-## Send ESim configuration
+## Send ESim configuration <small style="color:green;font-size: 12px">Available from v1.24.0</small>
 
 This interface allows MiniApp to send an ESim configuration to create it and install into device
 
@@ -1676,7 +1676,7 @@ MiniApp.esimService
 
 ```
 
-## Use internal webview or external browser settings
+## Use internal webview or external browser settings <small style="color:green;font-size: 12px">Available from v1.24.0</small>
 
 This interface is used to set whether links of MiniApps should be opened in an internal webview or external browser
 
@@ -1694,7 +1694,7 @@ MiniApp.webviewManager
 
 ```
 
-## Force logout user
+## Force logout user <small style="color:green;font-size: 12px">Available from v1.24.0</small>
 
 This interface is used to trigger a forced logout action by the MiniApp
 
