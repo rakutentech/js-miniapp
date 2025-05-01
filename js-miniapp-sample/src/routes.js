@@ -39,6 +39,7 @@ import ColorThemeComponent from './pages/color-theme';
 import CookieManagerComponent from './pages/cookie-manager';
 import DeeplinkSupport from './pages/deeplink-support';
 import ESimPage from './pages/e-sim';
+import AppSettingsLaunch from './pages/app-settings-launch';
 import EventListener from './pages/event-listener';
 import FeatureListComponent from './pages/feature-list';
 import FileDownload from './pages/file-download';
@@ -170,6 +171,11 @@ const eSimNavLink = {
   label: 'E Sim',
 };
 
+const appSettingsLink = {
+  navLink: '/app-settings-launch',
+  label: 'App Settings',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -206,6 +212,7 @@ const navLinks = [
   exchangeTokenNavLink,
   triggerLoginNavLink,
   eSimNavLink,
+  appSettingsLink,
 ];
 
 const homeItem = [
@@ -403,6 +410,12 @@ const appItems = [
     label: eSimNavLink.label,
     navLink: eSimNavLink.navLink,
     element: <ESimPage />,
+  },
+  {
+    icon: <SimCardIcon />,
+    label: appSettingsLink.label,
+    navLink: appSettingsLink.navLink,
+    element: <AppSettingsLaunch />,
   },
 ];
 

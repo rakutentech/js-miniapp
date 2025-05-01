@@ -28,6 +28,7 @@ import { ShareInfoType } from './types/share-info';
 import { WebviewManager } from './modules/webview-config-provider';
 import { Esim } from './modules/e-sim';
 import { MockMiniAppData } from './mock/mock-miniapp';
+import { AppSettingsLaunch } from './modules/app-settings-launch';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -182,6 +183,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   galleryManager: GalleryBridge = new GalleryBridge();
   webviewManager: WebviewManager = new WebviewManager();
   esimService: Esim = new Esim();
+  appSettingsLaunch: AppSettingsLaunch = new AppSettingsLaunch();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

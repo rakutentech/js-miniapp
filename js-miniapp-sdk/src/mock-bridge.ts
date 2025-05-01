@@ -474,4 +474,12 @@ export class MockBridge {
       return Promise.reject(e);
     });
   }
+
+  forceInternalWebView() {
+    return Promise.resolve(true);
+  }
+
+  launchAppSettings() {
+    return Promise.resolve(true);
+  }
 }

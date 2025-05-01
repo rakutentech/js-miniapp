@@ -1101,6 +1101,23 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * This interface checks if the device supports esim
+   * @returns true if device supports esim
+   */
+  launchAppSettings() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppSettings',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**
