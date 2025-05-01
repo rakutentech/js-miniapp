@@ -7,8 +7,13 @@ import {
   makeStyles,
   Switch,
   FormControlLabel,
+  Typography,
+  Box,
+  CircularProgress,
 } from '@material-ui/core';
 import MiniApp from 'js-miniapp-sdk';
+
+import useWebViewConfigStore from '../store/web-view-config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,19 +71,53 @@ const useStyles = makeStyles((theme) => ({
 
 const WebViewConfig = () => {
   const classes = useStyles();
-  const [toggle, setToggle] = React.useState(true);
+  const allowBackForwardNavigationGestures = useWebViewConfigStore(
+    (state) => state.allowBackForwardNavigationGestures
+  );
+  const forceInternalWebView = useWebViewConfigStore(
+    (state) => state.forceInternalWebView
+  );
+  const {
+    initAllowBackForwardNavigationGestures,
+    successAllowBackForwardNavigationGestures,
+    failAllowBackForwardNavigationGestures,
+    initForceInternalWebView,
+    successForceInternalWebView,
+    failForceInternalWebView,
+  } = useWebViewConfigStore();
 
-  const handleToggleChange = (event) => {
+  const allowBackForwardEvent = {
+    initFunc: initAllowBackForwardNavigationGestures,
+    function: MiniApp?.webviewManager?.allowBackForwardNavigationGestures,
+    successFunc: successAllowBackForwardNavigationGestures,
+    failFunc: failAllowBackForwardNavigationGestures,
+  };
+
+  const forceInternalWebViewEvent = {
+    initFunc: initForceInternalWebView,
+    function: MiniApp?.webviewManager?.forceInternalWebView,
+    successFunc: successForceInternalWebView,
+    failFunc: failForceInternalWebView,
+  };
+
+  const handleToggleChange = (data, event) => {
+    data.initFunc();
     const newToggleValue = event.target.checked;
-    setToggle(newToggleValue);
-    MiniApp.webviewManager
-      .allowBackForwardNavigationGestures(newToggleValue)
-      .then((response) => {
-        console.log('allowBackForwardNavigationGestures Response: ', response);
-      })
-      .catch((error) => {
-        console.log('allowBackForwardNavigationGestures Error: ', error);
-      });
+    try {
+      data
+        .function(newToggleValue)
+        .then((response) => {
+          console.log('Response: ', response);
+          data.successFunc(newToggleValue);
+        })
+        .catch((error) => {
+          console.log('Error: ', error);
+          data.failFunc(error.message || error);
+        });
+    } catch (error) {
+      console.log('Error: ', error);
+      data.failFunc(error.message || error);
+    }
   };
 
   return (
@@ -88,8 +127,11 @@ const WebViewConfig = () => {
         <FormControlLabel
           control={
             <Switch
-              checked={toggle}
-              onChange={handleToggleChange}
+              checked={allowBackForwardNavigationGestures.result || false}
+              disabled={allowBackForwardNavigationGestures.isLoading}
+              onChange={(event) =>
+                handleToggleChange(allowBackForwardEvent, event)
+              }
               classes={{
                 switchBase: classes.iosSwitchBase,
                 track: classes.iosSwitchTrack,
@@ -98,6 +140,51 @@ const WebViewConfig = () => {
           }
           label="Allow Back/Forward Navigation Gestures"
         />
+        {allowBackForwardNavigationGestures.isLoading && (
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {allowBackForwardNavigationGestures.error && (
+          <Typography
+            variant="body1"
+            color={'error'}
+            style={{ marginTop: '20px', wordBreak: 'break-all' }}
+          >
+            {allowBackForwardNavigationGestures.error}
+          </Typography>
+        )}
+
+        <FormControlLabel
+          control={
+            <Switch
+              checked={forceInternalWebView.result || false}
+              disabled={forceInternalWebView.isLoading}
+              onChange={(event) =>
+                handleToggleChange(forceInternalWebViewEvent, event)
+              }
+              classes={{
+                switchBase: classes.iosSwitchBase,
+                track: classes.iosSwitchTrack,
+              }}
+            />
+          }
+          label="Force use of internal web view"
+        />
+        {forceInternalWebView.isLoading && (
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {forceInternalWebView.error && (
+          <Typography
+            variant="body1"
+            color={'error'}
+            style={{ marginTop: '20px', wordBreak: 'break-all' }}
+          >
+            {forceInternalWebView.error}
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );

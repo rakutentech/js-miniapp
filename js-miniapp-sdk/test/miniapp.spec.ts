@@ -32,6 +32,9 @@ beforeEach(() => {
 const window: any = {};
 (global as any).window = window;
 
+const userProfileManager = {
+  forceLogout: sandbox.stub(),
+};
 window.MiniAppBridge = {
   getUniqueId: sandbox.stub(),
   getMessagingUniqueId: sandbox.stub(),
@@ -69,7 +72,10 @@ window.MiniAppBridge = {
   getPhoneNumber: sandbox.stub(),
   isEsimSupported: sandbox.stub(),
   setupAndInstallEsim: sandbox.stub(),
+  forceInternalWebView: sandbox.stub(),
+  userProfileManager,
 };
+
 const miniApp = new MiniApp();
 const messageToContact: MessageToContact = {
   text: 'test',
@@ -915,5 +921,36 @@ describe('setupAndInstallEsim', () => {
         address: 'address',
       } as EsimConfig)
     ).to.eventually.be.rejected;
+  });
+});
+
+describe('forceLogout', () => {
+  it('should return if user is logged out', () => {
+    window.MiniAppBridge.userProfileManager.forceLogout.resolves(true);
+    return expect(miniApp.user.forceLogout()).to.eventually.equal(true);
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.userProfileManager.forceLogout.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.user.forceLogout()).to.eventually.be.rejected;
+  });
+});
+
+describe('forceInternalWebView', () => {
+  it('should return if webview settings were updated', () => {
+    window.MiniAppBridge.forceInternalWebView.resolves(true);
+    return expect(
+      miniApp.webviewManager.forceInternalWebView(true)
+    ).to.eventually.equal(true);
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.forceInternalWebView.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.webviewManager.forceInternalWebView(true)).to
+      .eventually.be.rejected;
   });
 });

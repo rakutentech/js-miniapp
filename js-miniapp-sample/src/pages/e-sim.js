@@ -20,11 +20,11 @@ const useStyles = makeStyles(() => ({
 export const initialState = {
   eSimSupport: {
     result: null,
-    isError: false,
+    error: false,
   },
   eSimConfig: {
     result: null,
-    isError: false,
+    error: false,
   },
 };
 
@@ -36,7 +36,7 @@ export const dataFetchReducer = (state, action) => {
         eSimSupport: {
           ...state.eSimSupport,
           result: null,
-          isError: false,
+          error: '',
         },
       };
     case 'SIM_SUPPORTED_SUCCESS':
@@ -52,7 +52,7 @@ export const dataFetchReducer = (state, action) => {
         ...state,
         eSimSupport: {
           ...state.eSimSupport,
-          isError: true,
+          error: action.error,
         },
       };
     case 'SIM_CONFIG_INIT':
@@ -61,7 +61,7 @@ export const dataFetchReducer = (state, action) => {
         eSimConfig: {
           ...state.eSimConfig,
           result: null,
-          isError: false,
+          error: '',
         },
       };
     case 'SIM_CONFIG_SUCCESS':
@@ -77,7 +77,7 @@ export const dataFetchReducer = (state, action) => {
         ...state,
         eSimConfig: {
           ...state.eSimConfig,
-          isError: true,
+          error: action.error,
         },
       };
     default:
@@ -113,6 +113,8 @@ function ESimComponent() {
       console.log(error);
       dispatch({
         type: 'SIM_SUPPORTED_FAILED',
+        error:
+          error.message || 'Encountered error while calling isESimSupported',
       });
     }
   };
@@ -132,6 +134,9 @@ function ESimComponent() {
       console.log(error);
       dispatch({
         type: 'SIM_CONFIG_FAILED',
+        error:
+          error.message ||
+          'Encountered error while calling setupAndInstallEsim',
       });
     }
   };
@@ -146,14 +151,14 @@ function ESimComponent() {
         >
           Check if eSim Supported
         </Button>
-        {(state.eSimSupport.support != null || state.eSimSupport.isError) && (
+        {(state.eSimSupport.support != null || state.eSimSupport.error) && (
           <Typography
             variant="body1"
-            color={state.eSimSupport.isError ? 'error' : 'textSecondary'}
+            color={state.eSimSupport.error ? 'error' : 'textSecondary'}
             style={{ marginTop: '20px', wordBreak: 'break-all' }}
           >
-            {state.eSimSupport.isError
-              ? 'Encountered error while calling isESimSupported'
+            {state.eSimSupport.error
+              ? state.eSimSupport.error
               : `eSim is supported: ${state.eSimSupport.support}`}
           </Typography>
         )}
@@ -262,14 +267,14 @@ function ESimComponent() {
             Send eSim Config
           </Button>
         </div>
-        {(state.eSimConfig.result != null || state.eSimConfig.isError) && (
+        {(state.eSimConfig.result != null || state.eSimConfig.error) && (
           <Typography
             variant="body1"
-            color={state.eSimConfig.isError ? 'error' : 'textSecondary'}
+            color={state.eSimConfig.error ? 'error' : 'textSecondary'}
             style={{ marginTop: '20px', wordBreak: 'break-all' }}
           >
-            {state.eSimConfig.isError
-              ? 'Encountered error while calling setupAndInstallEsim'
+            {state.eSimConfig.error
+              ? state.eSimConfig.error
               : `eSim config send result: ${state.eSimConfig.result}`}
           </Typography>
         )}

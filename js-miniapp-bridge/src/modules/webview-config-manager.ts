@@ -34,4 +34,22 @@ export class WebViewConfigManager {
       );
     });
   }
+
+  /**
+   * Define whether URLs are opened in internal Webview or external browser
+   * @param enable - whether to force internal Webview to be used or not
+   * @returns A promise that resolves to a boolean indicating the success of the operation.
+   */
+  forceInternalWebView(enable: boolean) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'forceInternalWebView',
+        { shouldOpenInNativeWebView: enable },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

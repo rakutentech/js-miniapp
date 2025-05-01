@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp-sample",
-  "version": "1.23.0",
+  "version": "1.24.0",
   "description": "Mini App Sample for JavaScript SDK",
   "dependencies": {
     "@brightcove/react-player-loader": "^1.4.2",
@@ -11,6 +11,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/material": "^5.10.17",
     "bowser": "^2.11.0",
+    "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^18.0.0",
@@ -19,7 +20,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "semver": "^7.5.2"
+    "semver": "^7.5.2",
+    "zustand": "^5.0.3"
   },
   "scripts": {
     "format": "prettier --config ./prettier.config.js --write 'src/**/*.js'",
@@ -41,6 +43,7 @@
     "iOS>=11"
   ],
   "devDependencies": {
+    "@mui/icons-material": "^5.11.16",
     "eslint": "^8.29.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.31.11",
@@ -48,8 +51,7 @@
     "flow-typed": "^3.7.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.1",
-    "@mui/icons-material": "^5.11.16"
+    "prettier": "^2.8.1"
   },
   "husky": {
     "hooks": {

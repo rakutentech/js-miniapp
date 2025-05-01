@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     // flexGrow: 1,
   },
+  actions: {
+    marginRight: 0,
+    marginLeft: 'auto',
+  },
 }));
 
 type ToolBarProps = {
@@ -94,7 +98,7 @@ const ToolBar = (props: ToolBarProps) => {
           <Typography variant="h6" className={classes.title}>
             {title}
           </Typography>
-          <div className="actions">{props.actions}</div>
+          <div className={classes.actions}>{props.actions}</div>
         </Toolbar>
       </AppBar>
       <Drawer

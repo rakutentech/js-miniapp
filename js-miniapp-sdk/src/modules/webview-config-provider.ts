@@ -10,6 +10,13 @@ export interface WebViewConfigProvider {
    * @returns A promise that resolves to a boolean indicating the success of the operation.
    */
   allowBackForwardNavigationGestures(shouldAllow: boolean): Promise<boolean>;
+
+  /**
+   * Define whether URLs are opened in internal Webview or external browser
+   * @param enable - whether to force internal Webview to be used or not
+   * @returns true if the settings update is successful
+   */
+  forceInternalWebView(enable: boolean): Promise<boolean>;
 }
 
 /**
@@ -23,5 +30,14 @@ export class WebviewManager implements WebViewConfigProvider {
    */
   allowBackForwardNavigationGestures(shouldAllow: boolean): Promise<boolean> {
     return getBridge().allowBackForwardNavigationGestures(shouldAllow);
+  }
+
+  /**
+   * Define whether URLs are opened in internal Webview or external browser
+   * @param enable - whether to force internal Webview to be used or not
+   * @returns A promise that resolves to a boolean indicating the success of the operation.
+   */
+  forceInternalWebView(enable: boolean): Promise<boolean> {
+    return getBridge().forceInternalWebView(enable);
   }
 }
