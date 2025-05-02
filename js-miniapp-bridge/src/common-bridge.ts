@@ -1103,8 +1103,8 @@ export class MiniAppBridge {
   }
 
   /**
-   * This interface checks if the device supports esim
-   * @returns true if device supports esim
+   * This interface checks if the app settings is launched
+   * @returns true if launched sucessfully
    */
   launchAppSettings() {
     return new Promise<boolean>((resolve, reject) => {
