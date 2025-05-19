@@ -46,6 +46,7 @@ import { WebViewConfigManager } from './modules/webview-config-manager';
 import { UtitlityManager } from './modules/utility-manager';
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
+import { Platform } from './types/platform';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -176,9 +177,9 @@ export class MiniAppBridge {
     // and decoded here.
     let result = value;
     if (eventType === 'miniappreceivejsoninfo') {
-      if (this.platform === 'iOS') {
+      if (this.platform === Platform.IOS) {
         result = convertUnicodeCharacters(value);
-      } else {
+      } else if (this.platform === Platform.ANDROID) {
         result = convertUnicodeCharactersForAndroid(value);
       }
     }
@@ -409,10 +410,10 @@ export class MiniAppBridge {
         'getUserName',
         null,
         userName => {
-          let value;
-          if (this.platform === 'iOS') {
+          let value = userName;
+          if (this.platform === Platform.IOS) {
             value = convertUnicodeCharacters(userName);
-          } else {
+          } else if (this.platform === Platform.ANDROID) {
             value = convertUnicodeCharactersForAndroid(userName);
           }
           resolve(value);
