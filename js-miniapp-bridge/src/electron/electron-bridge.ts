@@ -28,10 +28,10 @@ class ElectronExecutor implements PlatformExecutor {
 
     (window as any).MiniAppElectron[action]({ param, id: callback.id })
       .then(response => {
-        return callback.onSuccess(response)
+        return callback.onSuccess(response);
       })
       .catch(error => {
-        return callback.onError(error)
+        return callback.onError(error);
       });
   }
 
