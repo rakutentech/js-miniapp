@@ -415,6 +415,8 @@ export class MiniAppBridge {
             value = convertUnicodeCharacters(userName);
           } else if (this.platform === Platform.ANDROID) {
             value = convertUnicodeCharactersForAndroid(userName);
+          } else if (this.platform !== Platform.ELECTRON) {
+            value = convertUnicodeCharactersForAndroid(userName);
           }
           resolve(value);
         },
