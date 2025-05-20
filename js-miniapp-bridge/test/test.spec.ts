@@ -1199,6 +1199,6 @@ function createCallback({
   return {
     onSuccess: onSuccess || (() => undefined),
     onError: onError || (() => undefined),
-    id: String(Math.random()),
+    id: String(Bridge.cryptoRandom()),
   };
 }

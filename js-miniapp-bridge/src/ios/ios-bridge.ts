@@ -3,11 +3,12 @@ import {
   MiniAppBridge,
   Callback,
   mabMessageQueue,
+  cryptoRandom,
 } from '../common-bridge';
 import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
-let uniqueId = Math.random();
+let uniqueId = cryptoRandom();
 
 // tslint:disable-next-line: variable-name
 const GeolocationPositionError = {

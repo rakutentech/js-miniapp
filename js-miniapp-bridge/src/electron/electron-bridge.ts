@@ -3,11 +3,12 @@ import {
   MiniAppBridge,
   Callback,
   mabMessageQueue,
+  cryptoRandom,
 } from '../common-bridge'; // Adjust the import path as needed
 import { Platform } from '../types/platform'; // Adjust the import path as needed
 
 /* tslint:disable:no-any */
-let uniqueId = Math.random();
+let uniqueId = cryptoRandom();
 
 class ElectronExecutor implements PlatformExecutor {
   execEvents(event: Event): void {

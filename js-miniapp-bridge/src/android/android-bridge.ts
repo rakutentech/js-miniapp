@@ -3,11 +3,12 @@ import {
   MiniAppBridge,
   Callback,
   mabMessageQueue,
+  cryptoRandom,
 } from '../common-bridge';
 import { Platform } from '../types/platform';
 
 /* tslint:disable:no-any */
-let uniqueId = Math.random();
+let uniqueId = cryptoRandom();
 
 class AndroidExecutor implements PlatformExecutor {
   execEvents(event) {

@@ -3,6 +3,7 @@
 /**
  * Bridge for communicating with Mini App
  */
+const crypto = require('crypto');
 
 import { AdTypes } from './types/ad-types';
 import { Contact } from './types/contact';
@@ -1206,4 +1207,15 @@ export class MiniAppBridgeUtils {
     }
     return false;
   }
+}
+
+/**
+ * @description Math.random is a security risk, crypto is used to generate strong pseudo numbers
+ * @returns random float number
+ */
+export function cryptoRandom() {
+  const typedArray = new Uint32Array(1);
+  const randomValue = crypto.getRandomValues(typedArray)[0];
+  const randomFloat = randomValue / Math.pow(2, 32);
+  return randomFloat;
 }
