@@ -21,14 +21,16 @@
     "source-map-support": "^0.5.21",
     "ts-node": "^8.8.1",
     "tslint": "^6.1.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "electron": "13.6.1"
   },
   "scripts": {
     "lint": "gts check",
     "clean": "gts clean",
     "browserify-android": "browserify ./build/src/android/android-bridge.js > build/src/android/bridge.js && browserify ./build/src/android/android-log.js > build/src/android/log.js",
     "browserify-ios": "browserify ./build/src/ios/ios-bridge.js > build/src/ios/bridge.js && browserify ./build/src/ios/ios-log.js > build/src/ios/log.js",
-    "compile": "tsc -p . && npm run browserify-android  && npm run browserify-ios",
+    "browserify-electron": "browserify ./build/src/electron/electron-bridge.js > build/src/electron/bridge.js && browserify ./build/src/electron/electron-log.js > build/src/electron/log.js",
+    "compile": "tsc -p . && npm run browserify-android  && npm run browserify-ios  && npm run browserify-electron",
     "prebuild": "npm run clean && npm run lint",
     "buildBridge": "npm run lint && npm run compile && npm run test",
     "fix": "gts fix",

@@ -1,9 +1,9 @@
 /* tslint:disable:no-any */
 import { MiniAppSDKLogger, PlatformLogger } from '../common-log';
 
-class IOSSDKLogger implements PlatformLogger {
+class ElectronSDKLogger implements PlatformLogger {
   log(emoji, type, args) {
-    (window as any).webkit.messageHandlers.MiniAppLogging.postMessage(
+    (window as any).MiniAppElectron.log(
       `${emoji} console.${type}: ${Object.values(args)
         .map(v => {
           if (typeof v === 'undefined') return 'undefined';
@@ -16,5 +16,5 @@ class IOSSDKLogger implements PlatformLogger {
   }
 }
 
-const iOSLogger = new IOSSDKLogger();
-(window as any).MiniAppSDKLogger = new MiniAppSDKLogger(iOSLogger);
+const electronLogger = new ElectronSDKLogger();
+(window as any).MiniAppSDKLogger = new MiniAppSDKLogger(electronLogger);

@@ -4,6 +4,7 @@
 export enum Platform {
   ANDROID = 'Android',
   IOS = 'iOS',
+  ELECTRON = 'Electron',
 }
 
 /** Device Build Types. */

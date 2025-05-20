@@ -3,6 +3,7 @@
 /**
  * Bridge for communicating with Mini App
  */
+const crypto = require('crypto');
 
 import { AdTypes } from './types/ad-types';
 import { Contact } from './types/contact';
@@ -46,6 +47,7 @@ import { WebViewConfigManager } from './modules/webview-config-manager';
 import { UtitlityManager } from './modules/utility-manager';
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
+import { Platform } from './types/platform';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -176,9 +178,9 @@ export class MiniAppBridge {
     // and decoded here.
     let result = value;
     if (eventType === 'miniappreceivejsoninfo') {
-      if (this.platform === 'iOS') {
+      if (this.platform === Platform.IOS) {
         result = convertUnicodeCharacters(value);
-      } else {
+      } else if (this.platform === Platform.ANDROID) {
         result = convertUnicodeCharactersForAndroid(value);
       }
     }
@@ -409,10 +411,12 @@ export class MiniAppBridge {
         'getUserName',
         null,
         userName => {
-          let value;
-          if (this.platform === 'iOS') {
+          let value = userName;
+          if (this.platform === Platform.IOS) {
             value = convertUnicodeCharacters(userName);
-          } else {
+          } else if (this.platform === Platform.ANDROID) {
+            value = convertUnicodeCharactersForAndroid(userName);
+          } else if (this.platform !== Platform.ELECTRON) {
             value = convertUnicodeCharactersForAndroid(userName);
           }
           resolve(value);
@@ -1203,4 +1207,14 @@ export class MiniAppBridgeUtils {
     }
     return false;
   }
+}
+
+/**
+ * @description Math.random is a security risk, crypto is used to generate strong pseudo numbers
+ * @returns random float number
+ */
+export function cryptoRandom() {
+  const buffer = crypto.randomBytes(4); // Generate 4 random bytes
+  const value = buffer.readUInt32LE(0);
+  return value / 0xffffffff;
 }
