@@ -1214,8 +1214,7 @@ export class MiniAppBridgeUtils {
  * @returns random float number
  */
 export function cryptoRandom() {
-  const typedArray = new Uint32Array(1);
-  const randomValue = crypto.getRandomValues(typedArray)[0];
-  const randomFloat = randomValue / Math.pow(2, 32);
-  return randomFloat;
+  const buffer = crypto.randomBytes(4); // Generate 4 random bytes
+  const value = buffer.readUInt32LE(0);
+  return value / 0xffffffff;
 }
