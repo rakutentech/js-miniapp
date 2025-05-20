@@ -108,11 +108,12 @@ var IOSSDKLogger = /** @class */ (function () {
     IOSSDKLogger.prototype.log = function (emoji, type, args) {
         window.webkit.messageHandlers.MiniAppLogging.postMessage("".concat(emoji, " console.").concat(type, ": ").concat(Object.values(args)
             .map(function (v) {
-            return typeof v === 'undefined'
-                ? 'undefined'
-                : typeof v === 'object'
-                    ? JSON.stringify(v)
-                    : v.toString();
+            if (typeof v === 'undefined')
+                return 'undefined';
+            else if (typeof v === 'object')
+                return JSON.stringify(v);
+            else
+                return v.toString();
         })
             .map(function (v) { return v.substring(0, 3000); }) // Limit msg to 3000 chars
             .join(', ')));
