@@ -924,6 +924,30 @@ describe('setupAndInstallEsim', () => {
   });
 });
 
+// describe('launchAppSettings', () => {
+//   it('should return if app settings is launched', () => {
+//     window.MiniAppBridge.launchAppSettings.resolves(true);
+//     return expect(
+//       miniApp.appSettingsLaunch.launchAppSettings()
+//     ).to.eventually.equal(true);
+//   });
+
+//   it('should return if app settings is not launched', () => {
+//     window.MiniAppBridge.launchAppSettings.resolves(false);
+//     return expect(
+//       miniApp.appSettingsLaunch.launchAppSettings()
+//     ).to.eventually.equal(false);
+//   });
+
+//   it('should return error information', () => {
+//     window.MiniAppBridge.launchAppSettings.returns(
+//       Promise.reject('test error')
+//     );
+//     return expect(miniApp.appSettingsLaunch.launchAppSettings()).to.eventually
+//       .be.rejected;
+//   });
+// });
+
 describe('forceLogout', () => {
   it('should return if user is logged out', () => {
     window.MiniAppBridge.userProfileManager.forceLogout.resolves(true);
