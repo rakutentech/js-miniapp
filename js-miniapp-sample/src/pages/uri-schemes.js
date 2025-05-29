@@ -92,8 +92,12 @@ const UriSchemes = () => {
     'https://www.google.com'
   );
   // Add state for POST browser
-  const [internalPostUrl, setInternalPostUrl] = useState('https://www.google.com');
-  const [internalPostBody, setInternalPostBody] = useState('{"isWebview": "true"}');
+  const [internalPostUrl, setInternalPostUrl] = useState(
+    'https://www.google.com'
+  );
+  const [internalPostBody, setInternalPostBody] = useState(
+    '{"isWebview": "true"}'
+  );
   const [internalPostError, setInternalPostError] = useState('');
   // Add state for audience and scopes
   const [internalPostAudience, setInternalPostAudience] = useState('');
@@ -186,6 +190,11 @@ const UriSchemes = () => {
         console.log('openInternalBrowser (POST) - SUCCESS: ', response);
       })
       .catch((miniAppError) => {
+        setInternalPostError(
+          miniAppError && miniAppError.message
+            ? miniAppError.message
+            : 'Failed to launch internal browser'
+        );
         console.log('openInternalBrowser (POST) - Error: ', miniAppError);
       });
   }
@@ -429,7 +438,10 @@ const UriSchemes = () => {
           />
         </CardContent>
         {internalPostError && (
-          <CardContent className={deeplinkClass.content} style={{ color: 'red', fontSize: 14 }}>
+          <CardContent
+            className={deeplinkClass.content}
+            style={{ color: 'red', fontSize: 14 }}
+          >
             {internalPostError}
           </CardContent>
         )}
@@ -445,7 +457,10 @@ const UriSchemes = () => {
                 internalPostBody,
                 internalPostAudience || undefined,
                 internalPostScopes
-                  ? internalPostScopes.split(',').map((s) => s.trim()).filter(Boolean)
+                  ? internalPostScopes
+                      .split(',')
+                      .map((s) => s.trim())
+                      .filter(Boolean)
                   : undefined
               )
             }
