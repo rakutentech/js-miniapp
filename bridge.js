@@ -722,11 +722,14 @@ var MiniAppBridge = /** @class */ (function () {
         return this.browserManager.launchExternalBrowser(url);
     };
     /**
-     * This interface helps you to launch URL in Internal browser
+     * This interface helps you to launch URL in Internal browser.
+     * You can pass either a string URL or a LaunchBrowserOptions object to specify
+     * HTTP method, body, audience, and scopes.
+     * @param urlOrParams The URL string or LaunchBrowserOptions object.
      * @returns true if browser is launched
      */
-    MiniAppBridge.prototype.launchInternalBrowser = function (url) {
-        return this.browserManager.launchInternalBrowser(url);
+    MiniAppBridge.prototype.launchInternalBrowser = function (urlOrParams) {
+        return this.browserManager.launchInternalBrowser(urlOrParams);
     };
     /**
      * This interface helps you to launch Gallery and user can pick a photo
@@ -931,14 +934,17 @@ var BrowserManager = /** @class */ (function () {
     };
     /**
      * Launches the specified URL in an internal browser.
-     * @param {string} url - The URL to be opened in the internal browser.
+     * You can pass either a string URL or a LaunchBrowserOptions object to specify
+     * HTTP method, body, audience, and scopes.
+     * @param {string | LaunchBrowserOptions} urlOrParams - The URL string or LaunchBrowserOptions object.
      * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
      * @see {launchInternalBrowser}
      */
-    BrowserManager.prototype.launchInternalBrowser = function (url) {
+    BrowserManager.prototype.launchInternalBrowser = function (urlOrParams) {
         var _this = this;
+        var params = typeof urlOrParams === 'string' ? { url: urlOrParams } : urlOrParams;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('launchInternalBrowser', { url: url }, function (response) {
+            return _this.executor.exec('launchInternalBrowser', params, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
