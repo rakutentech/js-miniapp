@@ -7,6 +7,10 @@ import {
   CardActions,
   TextField,
   makeStyles,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from '@material-ui/core';
 
 import GreyCard from '../components/GreyCard';
@@ -21,7 +25,10 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     width: '100%',
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 80,
+    height: '100vh', // Use height instead of minHeight for scrollable container
+    boxSizing: 'border-box',
+    // Remove display: flex and flexDirection: column to allow normal block flow and scrolling
   },
   card: {
     width: '100%',
@@ -84,6 +91,19 @@ const UriSchemes = () => {
   const [internalBrowserUrl, setInternalBrowserUrl] = useState(
     'https://www.google.com'
   );
+  // Add state for POST browser
+  const [internalPostUrl, setInternalPostUrl] = useState(
+    'https://www.google.com'
+  );
+  const [internalPostBody, setInternalPostBody] = useState(
+    '{"isWebview": "true"}'
+  );
+  const [internalPostError, setInternalPostError] = useState('');
+  // Add state for audience and scopes
+  const [internalPostAudience, setInternalPostAudience] = useState('');
+  const [internalPostScopes, setInternalPostScopes] = useState('');
+  // Add state for httpMethod
+  const [internalPostMethod, setInternalPostMethod] = useState('POST');
 
   function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
@@ -140,6 +160,42 @@ const UriSchemes = () => {
       })
       .catch((miniAppError) => {
         console.log('openInternalBrowser - Error: ', miniAppError);
+      });
+  }
+
+  // Add new function for POST
+  function openInternalBrowserPost(
+    url: string,
+    bodyStr: string,
+    audience?: string,
+    scopes?: string[]
+  ) {
+    let httpBody;
+    setInternalPostError('');
+    try {
+      httpBody = JSON.parse(bodyStr);
+    } catch (e) {
+      setInternalPostError('Invalid JSON in body params');
+      return;
+    }
+    MiniApp.miniappUtils
+      .launchInternalBrowser({
+        url,
+        httpMethod: internalPostMethod,
+        httpBody,
+        audience,
+        scopes,
+      })
+      .then((response) => {
+        console.log('openInternalBrowser (POST) - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        setInternalPostError(
+          miniAppError && miniAppError.message
+            ? miniAppError.message
+            : 'Failed to launch internal browser'
+        );
+        console.log('openInternalBrowser (POST) - Error: ', miniAppError);
       });
   }
 
@@ -305,6 +361,116 @@ const UriSchemes = () => {
         </CardActions>
       </GreyCard>
       <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in Internal Browsers (POST)
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          {/* HttpMethod dropdown */}
+          <FormControl variant="outlined" className={classes.textfield}>
+            <InputLabel id="http-method-label">HTTP Method</InputLabel>
+            <Select
+              labelId="http-method-label"
+              value={internalPostMethod}
+              onChange={(e) => setInternalPostMethod(e.target.value)}
+              label="HTTP Method"
+              inputProps={{
+                'data-testid': 'internal-post-method-field',
+              }}
+            >
+              <MenuItem value="POST">POST</MenuItem>
+              <MenuItem value="GET">GET</MenuItem>
+              <MenuItem value="PUT">PUT</MenuItem>
+              <MenuItem value="DELETE">DELETE</MenuItem>
+            </Select>
+          </FormControl>
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInternalPostUrl(e.currentTarget.value)}
+            value={internalPostUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-post-url-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInternalPostBody(e.currentTarget.value)}
+            value={internalPostBody}
+            label="Body (JSON) (optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-post-body-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInternalPostAudience(e.currentTarget.value)}
+            value={internalPostAudience}
+            label="Audience (optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-post-audience-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInternalPostScopes(e.currentTarget.value)}
+            value={internalPostScopes}
+            label="Scopes (comma separated, optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-post-scopes-field',
+            }}
+          />
+        </CardContent>
+        {internalPostError && (
+          <CardContent
+            className={deeplinkClass.content}
+            style={{ color: 'red', fontSize: 14 }}
+          >
+            {internalPostError}
+          </CardContent>
+        )}
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              internalPostUrl &&
+              internalPostBody &&
+              openInternalBrowserPost(
+                internalPostUrl,
+                internalPostBody,
+                internalPostAudience || undefined,
+                internalPostScopes
+                  ? internalPostScopes
+                      .split(',')
+                      .map((s) => s.trim())
+                      .filter(Boolean)
+                  : undefined
+              )
+            }
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <div style={{ flexGrow: 1 }} />
     </div>
   );
 };

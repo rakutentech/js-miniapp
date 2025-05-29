@@ -122,40 +122,64 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
 
 ## Mini App Features
 
-- [Retrieve a unique ID](#retrieve-a-unique-id)
-- [Get Phone Number](#get-phone-number)
-- [Request Permissions](#request-permissions)
-- [Show Ads](#show-ads)
-- [Share info](#share-info)
-- [Events](#mini-app-events)
-- [Requesting User details](#requesting-user-details)
-- [Set Screen orientation](#set-screen-orientation)
-- [Send Message](#send-message)
-- [Set Close alert info](#set-close-alert)
-- [Universal Bridge](#universal-bridge)
-- [Close Mini app](#close-miniapp)
-- [In-App Purchases](#in-app-purchases)
-- [Get Points](#get-points)
-- [Check Platform - Android/iOS](#get-platform)
-- [Host Environment Info](#get-host-info)
-- [Download file](#download-file)
-- [Secure storage](#secure-storage)
-- [Host app theme colors](#host-theme-colors)
-- [isDarkMode](#dark-mode)
-- [Send Analytics](#send-analytics)
-- [Get Cookies](#get-cookies)
-- [MiniApp Storage](#miniapp-storage)
-- [MiniApp Finished Loading](#miniapp-finished-loading)
-- [Get Feature list](#get-feature-list)
-- [Can open App Deeplink](#can-open-app-deeplink)
-- [App supports deeplink](#is-app-deeplink-supported)
-- [Launch Internal browser](#launch-internal-browser)
-- [Launch External browser](#launch-external-browser)
-- [Get Image from Gallery](#get-image-from-gallery)
-- [Get User Login status](#is-loggedIn)
-- [Trigger Login UI](#trigger-login-ui)
-- [Log Event](#log-event)
-- [Enable/Disable Navigation Gestures](#enable-disable-navigation-gestures)
+- [Mini App JS SDK](#mini-app-js-sdk)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Usage as NPM module](#usage-as-npm-module)
+    - [Usage via bundled script](#usage-via-bundled-script)
+  - [Mini App Manifest](#mini-app-manifest)
+  - [Mini App Features](#mini-app-features)
+  - [User details](#user-details)
+    - [Retrieve a unique ID](#retrieve-a-unique-id)
+  - [Request Permissions](#request-permissions)
+      - [Custom Permissions](#custom-permissions)
+        - [Usage example](#usage-example)
+      - [Device Permissions](#device-permissions)
+        - [Usage example](#usage-example-1)
+  - [Show Ads](#show-ads)
+  - [Events](#events)
+    - [Mini App Events](#mini-app-events)
+    - [Keyboard events](#keyboard-events)
+    - [Host app events Available from v1.16.0](#host-app-events-available-from-v1160)
+  - [Share Info](#share-info)
+  - [Requesting User details](#requesting-user-details)
+      - [User name](#user-name)
+      - [Profile Photo](#profile-photo)
+      - [Contact List](#contact-list)
+      - [Access Token](#access-token)
+      - [Exchange Token Available from v1.23.0](#exchange-token-available-from-v1230)
+  - [Set screen orientation](#set-screen-orientation)
+  - [Send message](#send-message)
+      - [Send message to the single contact](#send-message-to-the-single-contact)
+      - [Send message by contact id](#send-message-by-contact-id)
+      - [Send message to multiple contacts](#send-message-to-multiple-contacts)
+    - [Open device camera](#open-device-camera)
+  - [Set Close alert Available from v1.15.0](#set-close-alert-available-from-v1150)
+  - [Universal Bridge Available from v1.16.0](#universal-bridge-available-from-v1160)
+    - [Send a JSON/String from MiniApp to HostApp](#send-a-jsonstring-from-miniapp-to-hostapp)
+    - [Send a UniversalBridgeInfo from MiniApp to HostApp Available from v1.18.0](#send-a-universalbridgeinfo-from-miniapp-to-hostapp-available-from-v1180)
+      - [Receive a JSON/String from HostApp to MiniApp](#receive-a-jsonstring-from-hostapp-to-miniapp)
+  - [Close miniapp Available from v1.16.0](#close-miniapp-available-from-v1160)
+  - [In-App Purchases](#in-app-purchases)
+    - [Get all products list](#get-all-products-list)
+    - [Purchase a product with product id](#purchase-a-product-with-product-id)
+    - [Consume a purchase](#consume-a-purchase)
+  - [Get Points](#get-points)
+    - [getPoints()](#getpoints)
+  - [Check Android/iOS device](#check-androidios-device)
+  - [Get Host application info](#get-host-application-info)
+  - [Download File](#download-file)
+  - [Secure Storage](#secure-storage)
+  - [Host app Theme colors Available from v1.18.0](#host-app-theme-colors-available-from-v1180)
+  - [Dark Mode Available from v1.18.0](#dark-mode-available-from-v1180)
+  - [Send Analytics to Host app Available from v1.18.0](#send-analytics-to-host-app-available-from-v1180)
+  - [MiniApp Finished Loading Available from v1.20.0](#miniapp-finished-loading-available-from-v1200)
+  - [Get Cookies from host application Available from v1.19.0](#get-cookies-from-host-application-available-from-v1190)
+  - [MiniApp storage using Key/Value Available from v1.20.0](#miniapp-storage-using-keyvalue-available-from-v1200)
+  - [Get feature list Available from v1.20.0](#get-feature-list-available-from-v1200)
+  - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
+  - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
+  - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
 
 ## User details
 
@@ -1473,340 +1497,41 @@ MiniApp.miniappUtils
 
 ## Launch Internal browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
 
-This interface will help the MiniApps to launch URL in internal browser
+This interface will help the MiniApps to launch URL in internal browser.
 
+You can pass either a string URL or a `LaunchBrowserOptions` object to specify HTTP method, body, audience, and scopes.
+
+**Usage with URL string:**
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
   
 MiniApp.miniappUtils
-  .launchInternalBrowser(url)
+  .launchInternalBrowser("https://www.rakuten.co.jp")
   .then((response) => {
     console.log(response);
   })
   .catch((miniAppError) => {
     console.log(miniAppError);
   });
-
 ```
 
-<div id='launch-external-browser'/>
-
-## Launch External browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
-
-This interface will help the MiniApps to launch URL in External browser
-
+**Usage with LaunchBrowserOptions:**
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
-  
+import { HttpMethod } from 'js-miniapp-sdk'; // or from the bridge types
+
 MiniApp.miniappUtils
-  .launchExternalBrowser("https:///www.rakuten.co.jp")
+  .launchInternalBrowser({
+    url: "https://www.rakuten.co.jp",
+    httpMethod: HttpMethod.POST,
+    httpBody: { key: "value" },
+    audience: "your_audience",
+    scopes: ["scope1", "scope2"]
+  })
   .then((response) => {
     console.log(response);
   })
   .catch((miniAppError) => {
     console.log(miniAppError);
   });
-
 ```
-
-<div id='get-image-from-gallery'/>
-
-## Get Image from Gallery <small style="color:green;font-size: 12px">Available from v1.22.0</small>
-
-This interface will help you to launch the gallery directly and user can select the image and the same image will be returned.
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.galleryManager
-  .getImageFromGallery()
-  .then((response) => {
-    console.error('Success');
-  })
-  .catch((error) => {
-    console.error('Error selecting image from gallery:', error);
-  });
-
-```
-
-Please note that the response will be of GalleryFileResponse
-
-```javascript
-/**
- * Represents a file in the gallery.
- */
-export interface GalleryFileResponse {
-  /** The name of the file (optional). */
-  filename?: string;
-  /** The binary data of the file. */
-  data: Blob;
-}
-
-```
-
-<div id='is-loggedIn'/>
-
-## Get User Login status <small style="color:green;font-size: 12px">Available from v1.22.0</small>
-
-This interface will help the MiniApps to know if the User is logged in.
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.user
-  .isLoggedIn()
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((miniAppError) => {
-    console.log(miniAppError);
-  });
-
-```
-
-<div id='trigger-login-ui'/>
-
-## Trigger Login UI <small style="color:green;font-size: 12px">Available from v1.23.0</small>
-
-<dl>
-<dd>
-
-**API:** [UserProfileManager.triggerLoginUI](api/interfaces/userprofilemanager.md#triggerloginui)
-
-This interface triggers the login UI for the user.
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-
-MiniApp.userProfileManager
-  .triggerLoginUI()
-  .then(() => {
-    console.log('Login UI triggered');
-  })
-  .catch(error => {
-    console.error('Error triggering login UI:', error);
-  });
-```
-
-</dd>
-
-<div id='log-event'/>
-
-## Log Event <small style="color:green;font-size: 12px">Available from v1.23.0</small>
-
-<dl>
-<dd>
-
-**API:** [UtilityManager.logEvent](api/interfaces/utilitymanager.md#logevent)
-
-This interface logs an event with the specified message and log level.
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-
-MiniApp.utilityManager
-  .logEvent('Sample log message', 'info')
-  .then(success => {
-    console.log('Log event successful:', success);
-  })
-  .catch(error => {
-    console.error('Error logging event:', error);
-  });
-```
-
-</dd>
-
-<div id='enable-disable-navigation-gestures'/>
-
-## Enable/Disable Navigation Gestures <small style="color:green;font-size: 12px">Available from v1.22.0</small>
-
-This interface will help the MiniApps to enable/disable the forward/back navigation gestures in iOS
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.webviewManager
-  .allowBackForwardNavigationGestures(false)
-  .then((response) => {
-    console.log('Updated');
-  })
-  .catch((error) => {
-    console.log('Error: ', error);
-  });
-
-```
-
-## Check whether device supports ESims <small style="color:green;font-size: 12px">Available from v1.24.0</small>
-
-This interface is used to determine whether device supports ESim configuration or not
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.esimService
-  .isEsimSupported()
-  .then((response) => {
-    if(response) {
-      console.log('Esim is supported');
-    } else {
-      console.log('Esim is NOT supported');
-    }
-  })
-  .catch((error) => {
-    console.log('Error: ', error);
-  });
-
-```
-
-## Send ESim configuration <small style="color:green;font-size: 12px">Available from v1.24.0</small>
-
-This interface allows MiniApp to send an ESim configuration to create it and install into device
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.esimService
-  .setupAndInstallEsim({ address: 'sample_esim_address', ... })
-  .then((response) => {
-    console.log('Esim configured');
-  })
-  .catch((error) => {
-    console.log('Error: ', error);
-  });
-
-```
-
-## Use internal webview or external browser settings <small style="color:green;font-size: 12px">Available from v1.24.0</small>
-
-This interface is used to set whether links of MiniApps should be opened in an internal webview or external browser
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.webviewManager
-  .forceInternalWebView(true)
-  .then((response) => {
-    console.log('Updated');
-  })
-  .catch((error) => {
-    console.log('Error: ', error);
-  });
-
-```
-
-## Force logout user <small style="color:green;font-size: 12px">Available from v1.24.0</small>
-
-This interface is used to trigger a forced logout action by the MiniApp
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-  
-MiniApp.user
-  forceLogout()
-  .then((response) => {
-    console.log('User logged out');
-  })
-  .catch((error) => {
-    console.log('Error: ', error);
-  });
-
-```
-
-
-
-## Advanced Usage
-
-<dl>
-<dd>
-
-### Errors management
-
-#### Access Token error
-
-When an access token is requested, different `Error` subtypes can be thrown to the MiniApp:
-
-Here is a complete example of you can manage Access Token errors:
-
-```javascript
-MiniApp.user.getAccessToken("TOKEN_AUDIENCE", ["TOKEN_SCOPE1","TOKEN_SCOPE2"])
-  .then(data => {
-      ...
-  })
-  .catch(error => {                            //Example of values :
-      console.error(error.name);              // AudienceNotSupportedError
-      console.error(error.message);          //  The value passed for 'audience' is not supported.
-
-      if (error instanceof AuthorizationFailureError) {
-          // handle error
-      } else if (error instanceof AudienceNotSupportedError) {
-          // handle error
-      } else if (error instanceof ScopesNotSupportedError) {
-          // handle error
-      } else if (error instanceof MiniAppError) {
-          // handle error
-      } else {
-          // unexepected error caused by SDK
-      }
-  })
-```
-
-
-### Usage when testing in the browser
-
-Currently, the SDK does not support testing in the browser. You must test using the [Android Mini App Demo App](https://github.com/rakutentech/android-miniapp) or [iOS Mini App Demo App](https://github.com/rakutentech/ios-miniapp) on an actual Android or iOS device.
-
-If you wish to be able to test in a browser, you can return a mock value instead of calling the SDK method.
-
-<details><summary markdown="span"><b>Click to expand code example</b>
-</summary>
-
-```javascript
-import MiniApp from 'js-miniapp-sdk';
-
-const platform = MiniApp.getPlatform();
-
-function getId() {
-  if (platform != 'Unknown') {
-    return MiniApp
-      .getUniqueId()
-      .then(id => {
-        console.log(id);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  } else {
-    return Promise.resolve('mock_unique_id_value');
-  }
-}
-```
-
-</details>
-
-</dd>
-
-
-## Troubleshooting & FAQs
-
-<details><summary markdown="span"><b>Error: "Uncaught TypeError: Cannot read property 'getUniqueId' of undefined"</b>
-</summary>
-
-This is an error that you could see on Android devices when using any of the SDK functions.
-
-Please ensure that you have defined a `<title>` tag within your HTML document's `<head>` before the Mini App SDK `<script>` tag. For example:
-
-```html
-<head>
-  <title>My Mini App title</title>
-  <script src="miniapp.bundle.js"></script>
-  <head></head>
-</head>
-```
-
-In the Android SDK, we will inject some necessary JavaScript from the native side, and we do this after receiving a callback that the mini app's `<title>` has been set. So if you do not set a `<title>`, then the JavaScript will be injected at an unpredictable time and you could see errors when trying to use SDK functions.
-
-</details>
-
-## Changelog
-
-See the full [CHANGELOG](https://github.com/rakutentech/js-miniapp/blob/master/js-miniapp-sdk/CHANGELOG.md).

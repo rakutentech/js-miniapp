@@ -5,6 +5,7 @@ import {
   MAAnalyticsInfo,
 } from '../../../js-miniapp-bridge/src';
 import { LogType } from '../../../js-miniapp-bridge/src/types/log-type';
+import { LaunchBrowserOptions } from '../../../js-miniapp-bridge/src/types/browser-options';
 
 /**
  * Mini App Utility methods
@@ -67,10 +68,14 @@ export interface MiniAppUtilsProvider {
   launchExternalBrowser(url: string): Promise<boolean>;
 
   /**
-   * This interface will be used to launch the URL in Internal browser
-   * @param url Remote URL
+   * This interface will be used to launch the URL in Internal browser.
+   * You can pass either a string URL or a LaunchBrowserOptions object to specify
+   * HTTP method, body, audience, and scopes.
+   * @param urlOrParams The URL string or LaunchBrowserOptions object.
    */
-  launchInternalBrowser(url: string): Promise<boolean>;
+  launchInternalBrowser(
+    urlOrParams: string | LaunchBrowserOptions
+  ): Promise<boolean>;
 
   /**
    * Interface to log events with a message and log type.
@@ -119,8 +124,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().browserManager.launchExternalBrowser(url);
   }
 
-  launchInternalBrowser(url: string): Promise<boolean> {
-    return getBridge().browserManager.launchInternalBrowser(url);
+  launchInternalBrowser(
+    urlOrParams: string | LaunchBrowserOptions
+  ): Promise<boolean> {
+    return getBridge().browserManager.launchInternalBrowser(urlOrParams);
   }
 
   logEvent(message: string, type: LogType = LogType.DEBUG): Promise<boolean> {
