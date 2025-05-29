@@ -1,4 +1,5 @@
 import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
+import { LaunchBrowserOptions } from '../types/browser-options';
 import { parseMiniAppError } from '../types/error-types';
 
 /**
@@ -34,15 +35,21 @@ export class BrowserManager {
 
   /**
    * Launches the specified URL in an internal browser.
-   * @param {string} url - The URL to be opened in the internal browser.
+   * You can pass either a string URL or a LaunchBrowserOptions object to specify
+   * HTTP method, body, audience, and scopes.
+   * @param {string | LaunchBrowserOptions} urlOrParams - The URL string or LaunchBrowserOptions object.
    * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
    * @see {launchInternalBrowser}
    */
-  launchInternalBrowser(url: string) {
+  launchInternalBrowser(
+    urlOrParams: string | LaunchBrowserOptions
+  ): Promise<boolean> {
+    const params =
+      typeof urlOrParams === 'string' ? { url: urlOrParams } : urlOrParams;
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'launchInternalBrowser',
-        { url },
+        params,
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },

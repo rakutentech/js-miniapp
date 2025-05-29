@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.25.0 (2025-XX-XX)
+- **Feature:** `launchInternalBrowser` now supports passing an options object (`LaunchBrowserOptions`) with `httpMethod`, `httpBody`, `audience`, and `scopes`.
+---
+
 ### 1.24.0 (2025-04-07)
 - **Feature:** Added new interface `forceLogout` to force a user logout.
 - **Feature:** Added new interface `forceInternalWebView` to set whether links should be opened in external or internal web view.

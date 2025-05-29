@@ -48,6 +48,7 @@ import { UtitlityManager } from './modules/utility-manager';
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 import { Platform } from './types/platform';
+import { LaunchBrowserOptions } from './types/browser-options';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -1019,11 +1020,14 @@ export class MiniAppBridge {
   }
 
   /**
-   * This interface helps you to launch URL in Internal browser
+   * This interface helps you to launch URL in Internal browser.
+   * You can pass either a string URL or a LaunchBrowserOptions object to specify
+   * HTTP method, body, audience, and scopes.
+   * @param urlOrParams The URL string or LaunchBrowserOptions object.
    * @returns true if browser is launched
    */
-  launchInternalBrowser(url: string) {
-    return this.browserManager.launchInternalBrowser(url);
+  launchInternalBrowser(urlOrParams: string | LaunchBrowserOptions) {
+    return this.browserManager.launchInternalBrowser(urlOrParams);
   }
 
   /**
