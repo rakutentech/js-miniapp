@@ -1109,6 +1109,23 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * This interface checks if the app settings is launched
+   * @returns true if launched sucessfully
+   */
+  launchAppSettings() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppSettings',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
 
 /**
