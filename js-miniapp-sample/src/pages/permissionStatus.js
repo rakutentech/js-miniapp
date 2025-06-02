@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
+import MiniApp, {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+  PermissionName,
+} from 'js-miniapp-sdk';
+
 import { sendAnalytics } from './helper';
-import MiniApp, { MAAnalyticsActionType, MAAnalyticsEventType, PermissionName } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,10 +59,8 @@ const PermissionStatus = () => {
   const classes = useStyles();
 
   const [cameraPermission, setCameraPermission] = useState('');
-  const [microphonePermission, setMicrophonePermission] =
-    useState('');
-  const [galleryPermission, setGalleryPermission] =
-    useState('');
+  const [microphonePermission, setMicrophonePermission] = useState('');
+  const [galleryPermission, setGalleryPermission] = useState('');
 
   useEffect(() => {
     sendAnalytics(
@@ -79,13 +82,13 @@ const PermissionStatus = () => {
   async function getPermission(type) {
     try {
       const result = await MiniApp.getPermissionStatus(type);
-      if (type === PermissionName.CAMERA) setCameraPermission(result)
-      if (type === PermissionName.MICROPHONE) setMicrophonePermission(result)
-      if (type === PermissionName.GALLERY) setGalleryPermission(result)
+      if (type === PermissionName.CAMERA) setCameraPermission(result);
+      if (type === PermissionName.MICROPHONE) setMicrophonePermission(result);
+      if (type === PermissionName.GALLERY) setGalleryPermission(result);
     } catch (error) {
-      if (type === PermissionName.CAMERA) setCameraPermission(error)
-      if (type === PermissionName.MICROPHONE) setMicrophonePermission(error)
-      if (type === PermissionName.GALLERY) setGalleryPermission(error)
+      if (type === PermissionName.CAMERA) setCameraPermission(error);
+      if (type === PermissionName.MICROPHONE) setMicrophonePermission(error);
+      if (type === PermissionName.GALLERY) setGalleryPermission(error);
     }
   }
 
