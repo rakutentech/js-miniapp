@@ -3,7 +3,7 @@ import { parseMiniAppError } from '../types/error-types';
 import { LogType } from '../types/log-type';
 import { PermissionName } from '../types/permissions';
 
-export class UtitlityManager {
+export class UtilityManager {
   executor: PlatformExecutor;
   platform: string;
 

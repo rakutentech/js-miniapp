@@ -44,7 +44,7 @@ import { BrowserManager } from './modules/browser-manager';
 import { GalleryManager } from './modules/gallery-manager';
 import { UserProfileManager } from './modules/userprofile-manager';
 import { WebViewConfigManager } from './modules/webview-config-manager';
-import { UtitlityManager } from './modules/utility-manager';
+import { UtilityManager } from './modules/utility-manager';
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 import { Platform } from './types/platform';
@@ -104,7 +104,7 @@ export class MiniAppBridge {
   galleryManager: GalleryManager;
   userProfileManager: UserProfileManager;
   webviewConfigManager: WebViewConfigManager;
-  utilityManager: UtitlityManager;
+  utilityManager: UtilityManager;
 
   constructor(executor: PlatformExecutor) {
     this.executor = executor;
@@ -115,7 +115,7 @@ export class MiniAppBridge {
     this.galleryManager = new GalleryManager(executor);
     this.userProfileManager = new UserProfileManager(executor);
     this.webviewConfigManager = new WebViewConfigManager(executor);
-    this.utilityManager = new UtitlityManager(executor);
+    this.utilityManager = new UtilityManager(executor);
 
     if (window) {
       window.addEventListener(
