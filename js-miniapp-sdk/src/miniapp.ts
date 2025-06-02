@@ -13,7 +13,6 @@ import {
   CloseAlertInfo,
   Platform as HostPlatform,
   PermissionName,
-  PermissionStatus,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -306,7 +305,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
     return getBridge().setCloseAlert(alertInfo);
   }
 
-  requestPermissionStatus(name: PermissionName): Promise<string> {
-    return getBridge().getPermissionStatus(name);
+  getPermissionStatus(name: PermissionName): Promise<string> {
+    return getBridge().utilityManager.getPermissionStatus(name);
   }
 }

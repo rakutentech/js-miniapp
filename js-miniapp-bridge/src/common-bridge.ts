@@ -49,7 +49,6 @@ import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 import { Platform } from './types/platform';
 import { LaunchBrowserOptions } from './types/browser-options';
-import { PermissionName } from './types/permissions';
 
 /** @internal */
 const mabMessageQueue: Callback[] = [];
@@ -1106,22 +1105,6 @@ export class MiniAppBridge {
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
-        error => reject(parseMiniAppError(error))
-      );
-    });
-  }
-
-  /**
-   * Request permission status from host
-   * @param permission name - consists of 'camera', 'microphone' and 'gallery'
-   * @returns permission status of 'granted', 'denied' or 'unknown'
-   */
-  getPermissionStatus(permissionName: PermissionName) {
-    return new Promise<string>((resolve, reject) => {
-      return this.executor.exec(
-        'getPermissionStatus',
-        { permissionName },
-        response => resolve(response),
         error => reject(parseMiniAppError(error))
       );
     });

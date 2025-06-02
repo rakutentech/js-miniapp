@@ -76,9 +76,9 @@ const PermissionStatus = () => {
     setGalleryPermission('');
   }
 
-  async function requestPermission(type) {
+  async function getPermission(type) {
     try {
-      const result = await MiniApp.requestPermissionStatus(type);
+      const result = await MiniApp.getPermissionStatus(type);
       if (type === PermissionName.CAMERA) setCameraPermission(result)
       if (type === PermissionName.MICROPHONE) setMicrophonePermission(result)
       if (type === PermissionName.GALLERY) setGalleryPermission(result)
@@ -97,9 +97,9 @@ const PermissionStatus = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => requestPermission(PermissionName.CAMERA)}
+            onClick={() => getPermission(PermissionName.CAMERA)}
           >
-            Request Camera Permission
+            Get Camera Permission
           </Button>
           <label className={classes.label}>{cameraPermission}</label>
         </div>
@@ -107,9 +107,9 @@ const PermissionStatus = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => requestPermission(PermissionName.MICROPHONE)}
+            onClick={() => getPermission(PermissionName.MICROPHONE)}
           >
-            Request Microphone Permission
+            Get Microphone Permission
           </Button>
           <label className={classes.label}>{microphonePermission}</label>
         </div>
@@ -117,14 +117,11 @@ const PermissionStatus = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => requestPermission(PermissionName.GALLERY)}
+            onClick={() => getPermission(PermissionName.GALLERY)}
           >
-            Request Gallery Permission
+            Get Gallery Permission
           </Button>
           <label className={classes.label}>{galleryPermission}</label>
-        </div>
-        <div className={classes.contentSection}>
-          <label id="output" className={classes.label}></label>
         </div>
         <div className={classes.contentSection}>
           <Button variant="contained" color="primary" onClick={() => clear()}>

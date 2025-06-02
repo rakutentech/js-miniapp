@@ -1193,7 +1193,9 @@ describe('requestPermissionStatus', () => {
   it('will call the platform executor', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.getPermissionStatus(PermissionName.MICROPHONE).catch(handleError);
+    bridge.utilityManager
+      .getPermissionStatus(PermissionName.MICROPHONE)
+      .catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, 'getPermissionStatus');
   });
@@ -1203,7 +1205,7 @@ describe('requestPermissionStatus', () => {
     mockExecutor.exec.callsArgWith(2, `granted`);
 
     return expect(
-      bridge.getPermissionStatus(PermissionName.CAMERA)
+      bridge.utilityManager.getPermissionStatus(PermissionName.CAMERA)
     ).to.eventually.deep.equal(PermissionStatus.GRANTED);
   });
 
@@ -1211,8 +1213,9 @@ describe('requestPermissionStatus', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "Gallery not found" }');
 
-    return expect(bridge.getPermissionStatus(PermissionName.GALLERY)).to
-      .eventually.be.rejected;
+    return expect(
+      bridge.utilityManager.getPermissionStatus(PermissionName.GALLERY)
+    ).to.eventually.be.rejected;
   });
 });
 
