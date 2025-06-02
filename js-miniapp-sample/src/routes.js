@@ -62,6 +62,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
+import PermissionStatus from './pages/permissionStatus';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -170,6 +171,11 @@ const eSimNavLink = {
   label: 'E Sim',
 };
 
+const permissionStatusNavLink = {
+  navLink: '/permissionStatus',
+  label: 'Permission Status',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -206,6 +212,7 @@ const navLinks = [
   exchangeTokenNavLink,
   triggerLoginNavLink,
   eSimNavLink,
+  permissionStatusNavLink
 ];
 
 const homeItem = [
@@ -403,6 +410,12 @@ const appItems = [
     label: eSimNavLink.label,
     navLink: eSimNavLink.navLink,
     element: <ESimPage />,
+  },
+  {
+    icon: <VpnKeyIcon />,
+    label: permissionStatusNavLink.label,
+    navLink: permissionStatusNavLink.navLink,
+    element: <PermissionStatus />,
   },
 ];
 

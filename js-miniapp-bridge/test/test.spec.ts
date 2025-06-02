@@ -28,6 +28,8 @@ import {
   SecureStorageUnavailableError,
   SecureStorageIOError,
   EsimConfig,
+  PermissionName,
+  PermissionStatus,
 } from '../src';
 
 /* tslint:disable:no-any */
@@ -1184,6 +1186,36 @@ describe('forceInternalWebView', () => {
 
     return expect(bridge.webviewConfigManager.forceInternalWebView(true)).to
       .eventually.be.rejected;
+  });
+});
+
+describe('requestPermissionStatus', () => {
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.utilityManager
+      .getPermissionStatus(PermissionName.MICROPHONE)
+      .catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'getPermissionStatus');
+  });
+
+  it('will parse the Permission JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `granted`);
+
+    return expect(
+      bridge.utilityManager.getPermissionStatus(PermissionName.CAMERA)
+    ).to.eventually.deep.equal(PermissionStatus.GRANTED);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "Gallery not found" }');
+
+    return expect(
+      bridge.utilityManager.getPermissionStatus(PermissionName.GALLERY)
+    ).to.eventually.be.rejected;
   });
 });
 

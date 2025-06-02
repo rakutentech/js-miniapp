@@ -15,6 +15,7 @@ import {
   CustomPermissionStatus,
   CustomPermissionResult,
 } from './types/custom-permissions';
+import { PermissionName, PermissionStatus } from './types/permissions';
 import { ShareInfo } from './types/share-info';
 import { ScreenOrientation } from './types/screen';
 import { AccessTokenData } from './types/token-data';
@@ -129,4 +130,6 @@ export {
   NotificationInfoPriority,
   LogType,
   EsimConfig,
+  PermissionName,
+  PermissionStatus,
 };

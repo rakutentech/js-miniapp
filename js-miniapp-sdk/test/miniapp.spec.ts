@@ -19,6 +19,8 @@ import {
   Platform,
   HostEnvironmentInfo,
   EsimConfig,
+  PermissionName,
+  PermissionStatus,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
@@ -74,6 +76,9 @@ window.MiniAppBridge = {
   setupAndInstallEsim: sandbox.stub(),
   forceInternalWebView: sandbox.stub(),
   userProfileManager,
+  utilityManager: {
+    getPermissionStatus: sandbox.stub(),
+  },
 };
 
 const miniApp = new MiniApp();
@@ -227,6 +232,18 @@ describe('requestCustomPermissions', () => {
         status: CustomPermissionStatus.ALLOWED,
       },
     ]);
+  });
+});
+
+describe('requestPermissionStatus', () => {
+  it('should request provided permissions from the Mini App Bridge', () => {
+    window.MiniAppBridge.utilityManager.getPermissionStatus.resolves(
+      PermissionStatus.GRANTED
+    );
+
+    return expect(
+      miniApp.getPermissionStatus(PermissionName.CAMERA)
+    ).to.eventually.deep.equal(PermissionStatus.GRANTED);
   });
 });
 
