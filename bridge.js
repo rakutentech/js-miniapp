@@ -51,7 +51,7 @@ var MiniAppBridge = /** @class */ (function () {
         this.galleryManager = new gallery_manager_1.GalleryManager(executor);
         this.userProfileManager = new userprofile_manager_1.UserProfileManager(executor);
         this.webviewConfigManager = new webview_config_manager_1.WebViewConfigManager(executor);
-        this.utilityManager = new utility_manager_1.UtitlityManager(executor);
+        this.utilityManager = new utility_manager_1.UtilityManager(executor);
         if (window) {
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onReady, function () { return (_this.isSecureStorageReady = true); });
             window.addEventListener(secure_storage_1.MiniAppSecureStorageEvents.onLoadError, function (e) {
@@ -1177,12 +1177,12 @@ exports.UserProfileManager = UserProfileManager;
 },{"../common-bridge":1,"../types/error-types":13}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UtitlityManager = void 0;
+exports.UtilityManager = void 0;
 var common_bridge_1 = require("../common-bridge");
 var error_types_1 = require("../types/error-types");
 var log_type_1 = require("../types/log-type");
-var UtitlityManager = /** @class */ (function () {
-    function UtitlityManager(executor) {
+var UtilityManager = /** @class */ (function () {
+    function UtilityManager(executor) {
         this.executor = executor;
         this.platform = executor.getPlatform();
     }
@@ -1192,7 +1192,7 @@ var UtitlityManager = /** @class */ (function () {
      * @param {LogType} [type=LogType.DEBUG] - The type of the log (debug, info, error). Defaults to 'debug'.
      * @returns {Promise<boolean>} - A promise that resolves to true if the log was successfully sent, otherwise rejects with an error.
      */
-    UtitlityManager.prototype.logEvent = function (message, type) {
+    UtilityManager.prototype.logEvent = function (message, type) {
         var _this = this;
         if (type === void 0) { type = log_type_1.LogType.DEBUG; }
         return new Promise(function (resolve, reject) {
@@ -1201,9 +1201,20 @@ var UtitlityManager = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
-    return UtitlityManager;
+    /**
+     * Request permission status from host
+     * @param permission name - consists of 'camera', 'microphone' and 'gallery'
+     * @returns permission status of 'granted', 'denied' or 'unknown'
+     */
+    UtilityManager.prototype.getPermissionStatus = function (permissionName) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getPermissionStatus', { permissionName: permissionName }, function (response) { return resolve(response); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    return UtilityManager;
 }());
-exports.UtitlityManager = UtitlityManager;
+exports.UtilityManager = UtilityManager;
 
 },{"../common-bridge":1,"../types/error-types":13,"../types/log-type":16}],9:[function(require,module,exports){
 "use strict";
