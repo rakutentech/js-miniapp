@@ -894,7 +894,9 @@ export class MiniAppBridge {
           try {
             resolve(convertResponseToCookieInfoArray(response));
           } catch (e) {
-            reject('Fail to convert response to CookieInfo');
+            reject(
+              parseMiniAppError(`Fail to convert response to CookieInfo - ${e}`)
+            );
           }
         },
         error => reject(parseMiniAppError(error))
@@ -911,7 +913,9 @@ export class MiniAppBridge {
           try {
             resolve(convertResponseToCookieInfoArray(response));
           } catch (e) {
-            reject('Fail to convert response to CookieInfo');
+            reject(
+              parseMiniAppError(`Fail to convert response to CookieInfo - ${e}`)
+            );
           }
         },
         error => reject(parseMiniAppError(error))
