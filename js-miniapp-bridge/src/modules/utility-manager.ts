@@ -49,7 +49,7 @@ export class UtilityManager {
 
   /**
    * Trigger launchAppSettings from host
-   * @returns true or false whether launch app settings is enabled or not
+   * @returns true or false whether launch app settings is launched or not
    */
   launchAppSettings() {
     return new Promise<boolean>((resolve, reject) => {

@@ -76,7 +76,7 @@ const LaunchAppSettings = () => {
 
   async function getLaunchAppSettings() {
     try {
-      const result = await MiniApp.launchAppSettings();
+      const result = await MiniApp.MiniAppUtils.launchAppSettings();
       setLaunchAppSettings(result.toString());
     } catch (error) {
       setLaunchAppSettings(error);

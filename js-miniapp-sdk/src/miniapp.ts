@@ -308,8 +308,4 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getPermissionStatus(name: PermissionName): Promise<string> {
     return getBridge().utilityManager.getPermissionStatus(name);
   }
-
-  launchAppSettings(): Promise<boolean> {
-    return getBridge().utilityManager.launchAppSettings();
-  }
 }

@@ -976,13 +976,16 @@ describe('forceInternalWebView', () => {
 describe('launchAppSettings', () => {
   it('should return if launch app settings were updated', () => {
     window.MiniAppBridge.utilityManager.launchAppSettings.resolves(true);
-    return expect(miniApp.launchAppSettings()).to.eventually.equal(true);
+    return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.equal(
+      true
+    );
   });
 
   it('should return error information', () => {
     window.MiniAppBridge.utilityManager.launchAppSettings.returns(
       Promise.reject('test error')
     );
-    return expect(miniApp.launchAppSettings()).to.eventually.be.rejected;
+    return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.be
+      .rejected;
   });
 });

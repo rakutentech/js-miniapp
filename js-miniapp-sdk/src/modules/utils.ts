@@ -134,6 +134,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().utilityManager.logEvent(message, type);
   }
 
+  launchAppSettings(): Promise<boolean> {
+    return getBridge().utilityManager.launchAppSettings();
+  }
+
   /**
    * Converts a list of Blob objects to a list of number arrays.
    * Each Blob is converted to an ArrayBuffer, which is then converted to a Uint8Array.
