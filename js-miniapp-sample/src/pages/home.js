@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'initial',
     alignItems: 'center',
+    overflow: 'auto',
   },
   drawerClosed: {
     width: '100% !important',

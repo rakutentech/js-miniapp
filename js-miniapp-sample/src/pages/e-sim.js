@@ -105,17 +105,26 @@ function ESimComponent() {
     });
     try {
       const result = await MiniApp.esimService.isEsimSupported();
-      dispatch({
-        type: 'SIM_SUPPORTED_SUCCESS',
-        result,
-      });
+      if (result) {
+        dispatch({
+          type: 'SIM_SUPPORTED_SUCCESS',
+          result,
+        });
+        alert('Success! Esim is supported');
+      } else {
+        dispatch({
+          type: 'SIM_SUPPORTED_FAILED',
+          error: 'Esim supported is not available',
+        });
+        alert('Esim support is not available');
+      }
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'SIM_SUPPORTED_FAILED',
         error:
           error.message || 'Encountered error while calling isESimSupported',
       });
+      alert('Fail! Esim is support failed');
     }
   };
 
@@ -126,10 +135,17 @@ function ESimComponent() {
     });
     try {
       const result = await MiniApp.esimService.setupAndInstallEsim(configInput);
-      dispatch({
-        type: 'SIM_CONFIG_SUCCESS',
-        result,
-      });
+      if (result) {
+        dispatch({
+          type: 'SIM_CONFIG_SUCCESS',
+          result,
+        });
+      } else {
+        dispatch({
+          type: 'SIM_CONFIG_FAILED',
+          error: 'Esim setupAndInstallEsim is not available',
+        });
+      }
     } catch (error) {
       console.log(error);
       dispatch({
@@ -178,7 +194,7 @@ function ESimComponent() {
             })
           }
         />
-        <TextField
+        {/* <TextField
           variant="outlined"
           className={classes.formInput}
           id="input-confirmationCode"
@@ -216,7 +232,7 @@ function ESimComponent() {
               iccid: e.target.value,
             })
           }
-        />
+        /> */}
         <TextField
           variant="outlined"
           className={classes.formInput}
@@ -230,7 +246,7 @@ function ESimComponent() {
             })
           }
         />
-        <TextField
+        {/* <TextField
           variant="outlined"
           className={classes.formInput}
           id="input-oid"
@@ -242,7 +258,7 @@ function ESimComponent() {
               oid: e.target.value,
             })
           }
-        />
+        /> */}
         <div className={classes.container}>
           <Button
             variant="contained"
@@ -275,7 +291,7 @@ function ESimComponent() {
           >
             {state.eSimConfig.error
               ? state.eSimConfig.error
-              : `eSim config send result: ${state.eSimConfig.result}`}
+              : `eSim config send setupAndInstallEsim was success`}
           </Typography>
         )}
       </div>
