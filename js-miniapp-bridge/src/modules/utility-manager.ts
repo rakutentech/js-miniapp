@@ -46,4 +46,19 @@ export class UtilityManager {
       );
     });
   }
+
+  /**
+   * Trigger launchAppSettings from host
+   * @returns true or false whether launch app settings is launched or not
+   */
+  launchAppSettings() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppSettings',
+        null,
+        response => resolve(MiniAppBridgeUtils.BooleanValue(response)),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }
