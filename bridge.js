@@ -1191,6 +1191,16 @@ var UtilityManager = /** @class */ (function () {
             return _this.executor.exec('getPermissionStatus', { permissionName: permissionName }, function (response) { return resolve(response); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    /**
+     * Trigger launchAppSettings from host
+     * @returns true or false whether launch app settings is launched or not
+     */
+    UtilityManager.prototype.launchAppSettings = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('launchAppSettings', null, function (response) { return resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response)); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     return UtilityManager;
 }());
 exports.UtilityManager = UtilityManager;
