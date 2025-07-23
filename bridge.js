@@ -793,6 +793,24 @@ var MiniAppBridge = /** @class */ (function () {
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    /**
+     * Launches the app using the provided deeplink URL.
+     *
+     * @param url - The deeplink URL to open the app.
+     * @returns The result of the deeplink launch operation.
+     */
+    MiniAppBridge.prototype.launchAppDeeplink = function (url) {
+        return this.utilityManager.launchAppUsingDeeplink(url);
+    };
+    /**
+     * Launches an application on the device using its package name. This method is useful for Android devices where applications can be launched using their unique package names.
+     *
+     * @param packageName - The unique package name of the application to launch.
+     * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
+     */
+    MiniAppBridge.prototype.launchAppUsingPackageName = function (packageName) {
+        return this.utilityManager.launchAppUsingPackageName(packageName);
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
@@ -1199,6 +1217,34 @@ var UtilityManager = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('launchAppSettings', null, function (response) { return resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response)); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * Launches an app using the provided deeplink URL.
+     *
+     * @param deeplink - The deeplink URL to use for launching the app.
+     * @returns A promise that resolves to `true` if the app was launched successfully, or `false` otherwise.
+     */
+    UtilityManager.prototype.launchAppUsingDeeplink = function (deeplink) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('launchAppUsingDeeplink', { deeplink: deeplink }, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * Launches an application on the device using its package name. Please note that this method is only applicable for Android devices.
+     *
+     * @param packageName - The package name of the application to launch.
+     * @returns A promise that resolves to `true` if the application was successfully launched, or `false` otherwise.
+     */
+    UtilityManager.prototype.launchAppUsingPackageName = function (packageName) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('launchAppUsingPackageName', { packageName: packageName }, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
     return UtilityManager;
