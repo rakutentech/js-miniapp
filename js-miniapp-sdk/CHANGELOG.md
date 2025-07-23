@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.26.0 (2025-06-10)
+- **Feature:** Added new interfaces `launchAppDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
+- **Test:** Added test cases to verify correct parameter passing for deeplink and package name launch functions.
+
 ### 1.25.0 (2025-06-09)
 - **Feature:** `launchInternalBrowser` now supports passing an options object (`LaunchBrowserOptions`) with `httpMethod`, `httpBody`, `audience`, and `scopes`.
 - **Feature:** Added new interface `getPermissionStatus` to check the status of a permission.

@@ -1573,3 +1573,42 @@ MiniApp.miniappUtils
     console.log(miniAppError);
   });
 ```
+
+
+## Launch App Deeplink <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+You can launch an external app using a deeplink URL. This is supported on both Android and iOS.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchAppUsingDeeplink('myapp://deeplink')
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });****
+```
+
+### Launch App Using Package Name <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+You can launch an external app using its package name (Android only).
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchAppUsingPackageName('com.example.app')
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+> **Note:** These functions require the host app to support launching external apps. Unit tests only verify correct parameter passing, not actual app launching.

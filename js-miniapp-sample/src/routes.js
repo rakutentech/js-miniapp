@@ -144,7 +144,7 @@ const analyticsNavLink = {
 };
 const deeplinkSupportNavLink = {
   navLink: '/deeplink-support',
-  label: 'Deeplink Checker',
+  label: 'Deeplink Handler',
 };
 const imageUploadNavLink = { navLink: '/image_upload', label: 'Image Upload' };
 const webViewConfigNavLink = {
