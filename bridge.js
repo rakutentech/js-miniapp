@@ -1249,7 +1249,7 @@ var UtilityManager = /** @class */ (function () {
     UtilityManager.prototype.launchAppUsingDeeplink = function (deeplink) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('launchAppUsingDeeplink', { deeplink: deeplink }, function (response) {
+            return _this.executor.exec('launchAppUsingDeeplink', { url: deeplink }, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
