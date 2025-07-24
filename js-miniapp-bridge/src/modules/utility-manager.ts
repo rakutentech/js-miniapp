@@ -72,7 +72,7 @@ export class UtilityManager {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'launchAppUsingDeeplink',
-        { deeplink },
+        { url: deeplink },
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
         },
