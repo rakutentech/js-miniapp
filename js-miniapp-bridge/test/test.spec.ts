@@ -1297,8 +1297,8 @@ describe('launchAppUsingDeeplink', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "deeplink error" }');
 
-    return expect(bridge.launchAppUsingDeeplink('myapp://deeplink')).to.eventually.be
-      .rejected;
+    return expect(bridge.launchAppUsingDeeplink('myapp://deeplink')).to
+      .eventually.be.rejected;
   });
 });
 
