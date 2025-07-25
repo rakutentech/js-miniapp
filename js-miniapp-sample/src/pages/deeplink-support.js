@@ -162,22 +162,18 @@ const DeeplinkSupport = () => {
       setLauncherError('Please enter a Package Name');
       return;
     }
-    if (typeof MiniApp.miniappUtils.launchAppByPackageName === 'function') {
-      MiniApp.miniappUtils
-        .launchAppByPackageName(packageInput)
-        .then(() => {
-          setLauncherError('');
-        })
-        .catch((err) => {
-          setLauncherError(
-            err && err.message
-              ? err.message
-              : 'Failed to launch App by Package Name'
-          );
-        });
-    } else {
-      setLauncherError('launchAppByPackageName is not supported');
-    }
+    MiniApp.miniappUtils
+      .launchAppUsingPackageName(packageInput)
+      .then(() => {
+        setLauncherError('');
+      })
+      .catch((err) => {
+        setLauncherError(
+          err && err.message
+            ? err.message
+            : 'Failed to launch App by Package Name'
+        );
+      });
   };
 
   return (
