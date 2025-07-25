@@ -1116,7 +1116,7 @@ export class MiniAppBridge {
    * @param url - The deeplink URL to open the app.
    * @returns The result of the deeplink launch operation.
    */
-  launchAppDeeplink(url: string) {
+  launchAppUsingDeeplink(url: string) {
     return this.utilityManager.launchAppUsingDeeplink(url);
   }
 

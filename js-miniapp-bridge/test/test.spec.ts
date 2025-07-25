@@ -1274,13 +1274,13 @@ function createCallback({
   };
 }
 
-describe('launchAppDeeplink', () => {
+describe('launchAppUsingDeeplink', () => {
   it('should resolve to true when deeplink launch succeeds', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, true);
 
     return expect(
-      bridge.launchAppDeeplink('myapp://deeplink')
+      bridge.launchAppUsingDeeplink('myapp://deeplink')
     ).to.eventually.deep.equal(true);
   });
 
@@ -1289,7 +1289,7 @@ describe('launchAppDeeplink', () => {
     mockExecutor.exec.callsArgWith(2, false);
 
     return expect(
-      bridge.launchAppDeeplink('myapp://deeplink')
+      bridge.launchAppUsingDeeplink('myapp://deeplink')
     ).to.eventually.deep.equal(false);
   });
 
@@ -1297,7 +1297,7 @@ describe('launchAppDeeplink', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "deeplink error" }');
 
-    return expect(bridge.launchAppDeeplink('myapp://deeplink')).to.eventually.be
+    return expect(bridge.launchAppUsingDeeplink('myapp://deeplink')).to.eventually.be
       .rejected;
   });
 });

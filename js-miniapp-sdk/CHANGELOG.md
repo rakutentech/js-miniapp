@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 ### 1.26.0 (2025-06-10)
-- **Feature:** Added new interfaces `launchAppDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
+- **Feature:** Added new interfaces `launchAppUsingDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
 - **Test:** Added test cases to verify correct parameter passing for deeplink and package name launch functions.
 
 ### 1.25.0 (2025-06-09)
