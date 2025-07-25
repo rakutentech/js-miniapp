@@ -799,7 +799,7 @@ var MiniAppBridge = /** @class */ (function () {
      * @param url - The deeplink URL to open the app.
      * @returns The result of the deeplink launch operation.
      */
-    MiniAppBridge.prototype.launchAppDeeplink = function (url) {
+    MiniAppBridge.prototype.launchAppUsingDeeplink = function (url) {
         return this.utilityManager.launchAppUsingDeeplink(url);
     };
     /**
