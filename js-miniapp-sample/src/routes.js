@@ -29,6 +29,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 import Ads from './pages/ads';
 import Analytics from './pages/analytics';
@@ -52,6 +53,7 @@ import LocalStorage from './pages/local-storage';
 import LogEventPage from './pages/log-event';
 import Media from './pages/media';
 import TalkToChatBot from './pages/message';
+import ScrollToAnchor from './pages/scroll-to-anchor';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
 import PermissionStatus from './pages/permissionStatus';
 import SecureStorageComponent from './pages/secure-storage';
@@ -182,6 +184,11 @@ const launchAppSettingsNavLink = {
   label: 'Launch App Settings',
 };
 
+const scrollToAnchorNavLink = {
+  navLink: '/scroll-to-anchor',
+  label: 'Scroll To Anchor',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -220,6 +227,7 @@ const navLinks = [
   eSimNavLink,
   permissionStatusNavLink,
   launchAppSettingsNavLink,
+  scrollToAnchorNavLink,
 ];
 
 const homeItem = [
@@ -429,6 +437,12 @@ const appItems = [
     label: launchAppSettingsNavLink.label,
     navLink: launchAppSettingsNavLink.navLink,
     element: <LaunchAppSettings />,
+  },
+  {
+    icon: <DocumentScannerIcon />,
+    label: scrollToAnchorNavLink.label,
+    navLink: scrollToAnchorNavLink.navLink,
+    element: <ScrollToAnchor />,
   },
 ];
 

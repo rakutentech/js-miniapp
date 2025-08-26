@@ -194,7 +194,7 @@ function ESimComponent() {
             })
           }
         />
-        {/* <TextField
+        <TextField
           variant="outlined"
           className={classes.formInput}
           id="input-confirmationCode"
@@ -207,7 +207,7 @@ function ESimComponent() {
             })
           }
         />
-        <TextField
+        {/*<TextField
           variant="outlined"
           className={classes.formInput}
           id="input-eid"

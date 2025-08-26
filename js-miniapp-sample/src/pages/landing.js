@@ -20,6 +20,7 @@ import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import TokenIcon from '@mui/icons-material/Token';
 import MiniApp, {
+  HostAppEvents,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from 'js-miniapp-sdk';
@@ -88,6 +89,7 @@ const Landing = (props: LandingProps) => {
   const [darkMode, setDarkMode] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('UNKNOWN');
+  const [queryParams, setQueryParams] = useState('UNKNOWN');
 
   useEffect(() => {
     try {
@@ -104,6 +106,15 @@ const Landing = (props: LandingProps) => {
       getDarkMode();
       getPhoneNumber();
       isLoggedIn();
+      window.addEventListener(HostAppEvents.DID_RECEIVE_QUERY_PARAMS, function (e) {
+        window.location.search = 'None';
+        let message = e.detail.message;
+        console.log(message);
+        if (!message || message.length === 0) {
+          message = 'None';
+        }
+        setQueryParams(message);
+      });
     } catch (e) {
       console.log(e);
     }
@@ -187,7 +198,11 @@ const Landing = (props: LandingProps) => {
           <ListItemText
             style={{ wordBreak: 'break-word' }}
             primary="Query Parameters"
-            secondary={window.location.search || 'None'}
+            secondary={
+              queryParams && queryParams !== 'UNKNOWN'
+              ? queryParams
+              : window.location.search || 'None'
+            }
           />
         </ListItem>
         <ListItem>
