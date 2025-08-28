@@ -1,17 +1,12 @@
-import {
-  HostAppEvents,
-  MAAnalyticsActionType,
-  MAAnalyticsEventType,
-} from 'js-miniapp-sdk';
+import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
 import React, { useEffect, useRef } from 'react';
 import { sendAnalytics } from './helper';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink'];
 
 const ScrollToAnchor = () => {
   const divRefs = useRef({});
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const { pathname, hash } = useLocation();
 
@@ -31,8 +26,6 @@ const ScrollToAnchor = () => {
       ''
     );
   }, [pathname, hash]);
-
-  console.log(`ScrollToAnchor searchParams -> ${searchParams}`);
 
   return (
     <div style={{ padding: 24 }}>

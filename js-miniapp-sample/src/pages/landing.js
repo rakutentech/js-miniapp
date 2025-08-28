@@ -21,7 +21,6 @@ import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import TokenIcon from '@mui/icons-material/Token';
 import MiniApp, {
-  HostAppEvents,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from 'js-miniapp-sdk';
@@ -46,6 +45,7 @@ type LandingProps = {
   getHostInfo: Function,
   onSecureStorageReady: Function,
   secureStorageStatus: string,
+  queryParams: string,
 };
 
 const useStyles = makeStyles((theme) => ({

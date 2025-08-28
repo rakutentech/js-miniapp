@@ -1,4 +1,3 @@
-import type { setPageTitle, setQueryParams } from './actions';
 import { SET_CURRENT_PAGE_TITLE, SET_QUERY_PARAMS } from './types';
 
 type HomePageState = {

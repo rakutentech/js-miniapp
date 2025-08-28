@@ -17,7 +17,6 @@ import {
   Route,
   Routes,
   useNavigate,
-  useSearchParams,
 } from 'react-router-dom';
 
 import { navItems } from './../routes';
@@ -78,7 +77,6 @@ const Home = (props: HomeProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [shrink, setShrink] = useState(false);
@@ -98,9 +96,9 @@ const Home = (props: HomeProps) => {
         let url,
           _message = JSON.parse(e.detail.message);
         _message.forEach((val, ind, arr) => {
-          if (val.name == 'navigateTo' || val.name == 'scrollTo') {
-            if (val.name == 'scrollTo') url.hash = val.value;
-            if (val.name == 'navigateTo')
+          if (val.name === 'navigateTo' || val.name === 'scrollTo') {
+            if (val.name === 'scrollTo') url.hash = val.value;
+            if (val.name === 'navigateTo')
               url = new URL(`${window.location.origin}/${val.value}`);
           } else search.set(val.name, val.value);
         });
@@ -113,7 +111,7 @@ const Home = (props: HomeProps) => {
       } catch (e) {}
       props.changeQueryParams(e.detail.message);
     });
-  }, [isMobile]);
+  }, [navigate, props, isMobile]);
   const onShrinkToggle = (shrinkState) => {
     setShrink(shrinkState);
   };
