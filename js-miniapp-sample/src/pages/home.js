@@ -108,7 +108,9 @@ const Home = (props: HomeProps) => {
           search: url.search,
           pathname: url.pathname,
         });
-      } catch (e) {}
+      } catch (e) {
+        console.error(`on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Error -> ${e}`)
+      }
       props.changeQueryParams(e.detail.message);
     });
   }, [navigate, props, isMobile]);
