@@ -12,7 +12,13 @@ import {
 import LogoutIcon from '@mui/icons-material/Logout';
 import clsx from 'clsx';
 import MiniApp, { HostAppEvents } from 'js-miniapp-sdk';
-import { BrowserRouter as Router, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 import { navItems } from './../routes';
 import Dialogue from '../components/Dialogue';
@@ -65,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type HomeProps = {
-  changeQueryParams: Function
+  changeQueryParams: Function,
 };
 
 const Home = (props: HomeProps) => {
@@ -73,39 +79,39 @@ const Home = (props: HomeProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [shrink, setShrink] = useState(false);
   const [showDrawer, setShowDrawer] = useState(!isMobile);
   const [showLogOutConfirmation, setShowLogOutConfirmation] = useState(false);
   const [logOutError, setLogOutError] = useState('');
 
-
   useEffect(() => {
     setShowDrawer(!isMobile);
 
     window.addEventListener(HostAppEvents.DID_RECEIVE_QUERY_PARAMS, (e) => {
-      console.log(`on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`);
+      console.log(
+        `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`
+      );
       let search = new URLSearchParams();
-      try{
-        let url, _message = JSON.parse(e.detail.message);
-        _message.forEach((val, ind, arr)=>{
-          if(val.name == 'navigateTo' || val.name == 'scrollTo') {
-            if(val.name == 'scrollTo') url.hash = val.value;
-            if(val.name == 'navigateTo') url = new URL(`${window.location.origin}/${val.value}`);
-          }
-          else search.set(val.name, val.value)
-        })
+      try {
+        let url,
+          _message = JSON.parse(e.detail.message);
+        _message.forEach((val, ind, arr) => {
+          if (val.name == 'navigateTo' || val.name == 'scrollTo') {
+            if (val.name == 'scrollTo') url.hash = val.value;
+            if (val.name == 'navigateTo')
+              url = new URL(`${window.location.origin}/${val.value}`);
+          } else search.set(val.name, val.value);
+        });
         url.search = search.toString();
         navigate({
           hash: url.hash,
           search: url.search,
           pathname: url.pathname,
         });
-      }
-      catch(e){
-      }
-      props.changeQueryParams(e.detail.message)
+      } catch (e) {}
+      props.changeQueryParams(e.detail.message);
     });
   }, [isMobile]);
   const onShrinkToggle = (shrinkState) => {

@@ -15,7 +15,7 @@ const setQueryParams = (params: string): SetQueryParamAction => {
     type: SET_QUERY_PARAMS,
     payload: params,
   };
-}
+};
 
 export { setPageTitle, setQueryParams };
 export type { SetPageAction, SetQueryParamAction };

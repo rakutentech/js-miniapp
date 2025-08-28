@@ -20,8 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import TokenIcon from '@mui/icons-material/Token';
-import MiniApp, { 
-  HostAppEvents, 
+import MiniApp, {
+  HostAppEvents,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from 'js-miniapp-sdk';
@@ -191,8 +191,8 @@ const Landing = (props: LandingProps) => {
             primary="Query Parameters"
             secondary={
               props.queryParams && props.queryParams !== 'UNKNOWN'
-              ? props.queryParams
-              : window.location.search || 'None'
+                ? props.queryParams
+                : window.location.search || 'None'
             }
           />
         </ListItem>
@@ -338,7 +338,7 @@ const mapStateToProps = (state, props) => {
       (state.secureStorageStatus.isReady && 'Ready') ||
       state.secureStorageStatus.error ||
       'Not Ready',
-  changeQueryParams: Function
+    changeQueryParams: Function,
   };
 };
 
