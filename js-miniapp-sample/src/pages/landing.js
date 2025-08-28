@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { setQueryParams } from '../services/home/actions';
 
 import { CardContent, makeStyles } from '@material-ui/core';
 import AppSettingsAltRoundedIcon from '@mui/icons-material/AppSettingsAltRounded';
@@ -19,7 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import TokenIcon from '@mui/icons-material/Token';
-import MiniApp, {
+import MiniApp, { 
+  HostAppEvents, 
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from 'js-miniapp-sdk';
@@ -187,7 +189,11 @@ const Landing = (props: LandingProps) => {
           <ListItemText
             style={{ wordBreak: 'break-word' }}
             primary="Query Parameters"
-            secondary={window.location.search || 'None'}
+            secondary={
+              props.queryParams && props.queryParams !== 'UNKNOWN'
+              ? props.queryParams
+              : window.location.search || 'None'
+            }
           />
         </ListItem>
         <ListItem>
@@ -318,6 +324,7 @@ function checkSecureStorageStorageReady(props: LandingProps) {
 const mapStateToProps = (state, props) => {
   return {
     ...props,
+    queryParams: state.home.queryParams,
     platform: state.info.platform,
     platformVersion: state.info.platformVersion,
     hostVersion: state.info.hostVersion,
@@ -331,6 +338,7 @@ const mapStateToProps = (state, props) => {
       (state.secureStorageStatus.isReady && 'Ready') ||
       state.secureStorageStatus.error ||
       'Not Ready',
+  changeQueryParams: Function
   };
 };
 
@@ -338,6 +346,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getHostInfo: () => dispatch(setHostEnvironmentInfo()),
     onSecureStorageReady: () => dispatch(onSecureStorageReady()),
+    changeQueryParams: (payload) => dispatch(setQueryParams(payload)),
   };
 };
 

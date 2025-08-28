@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { setQueryParams } from '../services/home/actions';
+import { connect } from 'react-redux';
 
 import {
   makeStyles,
@@ -9,8 +11,8 @@ import {
 } from '@material-ui/core';
 import LogoutIcon from '@mui/icons-material/Logout';
 import clsx from 'clsx';
-import MiniApp from 'js-miniapp-sdk';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MiniApp, { HostAppEvents } from 'js-miniapp-sdk';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { navItems } from './../routes';
 import Dialogue from '../components/Dialogue';
@@ -62,17 +64,49 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Home = (props: any) => {
+type HomeProps = {
+  changeQueryParams: Function
+};
+
+const Home = (props: HomeProps) => {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  
   const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const [shrink, setShrink] = useState(false);
   const [showDrawer, setShowDrawer] = useState(!isMobile);
   const [showLogOutConfirmation, setShowLogOutConfirmation] = useState(false);
   const [logOutError, setLogOutError] = useState('');
 
+
   useEffect(() => {
     setShowDrawer(!isMobile);
+
+    window.addEventListener(HostAppEvents.DID_RECEIVE_QUERY_PARAMS, (e) => {
+      console.log(`on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`);
+      let search = new URLSearchParams();
+      try{
+        let url, _message = JSON.parse(e.detail.message);
+        _message.forEach((val, ind, arr)=>{
+          if(val.name == 'navigateTo' || val.name == 'scrollTo') {
+            if(val.name == 'scrollTo') url.hash = val.value;
+            if(val.name == 'navigateTo') url = new URL(`${window.location.origin}/${val.value}`);
+          }
+          else search.set(val.name, val.value)
+        })
+        url.search = search.toString();
+        navigate({
+          hash: url.hash,
+          search: url.search,
+          pathname: url.pathname,
+        });
+      }
+      catch(e){
+      }
+      props.changeQueryParams(e.detail.message)
+    });
   }, [isMobile]);
   const onShrinkToggle = (shrinkState) => {
     setShrink(shrinkState);
@@ -102,7 +136,7 @@ const Home = (props: any) => {
     }
   };
   return (
-    <Router>
+    <>
       <ToolBar
         showDrawer={showDrawer}
         onDrawerToggle={onDrawerToggle}
@@ -156,8 +190,28 @@ const Home = (props: any) => {
         contentText="Are you sure you want to logout?"
         errorText={logOutError}
       />
-    </Router>
+    </>
   );
 };
 
-export default Home;
+const mapStateToProps = (state, props) => {
+  return {
+    ...props,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeQueryParams: (payload) => dispatch(setQueryParams(payload)),
+  };
+};
+
+const ConnectedHome = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+const HomePage = () => (
+  <Router>
+    <ConnectedHome />
+  </Router>
+);
+
+export default HomePage;

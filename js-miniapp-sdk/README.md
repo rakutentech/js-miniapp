@@ -182,6 +182,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
   - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
+  - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
+    - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
 
 ## User details
 
@@ -564,6 +566,20 @@ These `HostAppEvents` will be triggered when the host app wants to notify someth
 
   </details>
 
+- DID_RECEIVE_QUERY_PARAMS <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+  <details><summary markdown="span" padding-right=""><b>Click here to see the Code snippet</b>
+  </summary>
+
+  ```javascript
+  import MiniApp from 'js-miniapp-sdk';
+
+  window.addEventListener(MiniAppKeyboardEvents.DID_RECEIVE_QUERY_PARAMS, function (e) {
+    // To-do
+  });
+  ```
+
+  </details>
 </dd>
 
 
