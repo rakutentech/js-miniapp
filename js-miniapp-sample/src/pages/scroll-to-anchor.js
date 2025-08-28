@@ -1,4 +1,8 @@
-import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+import {
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
+  HostAppEvents,
+} from 'js-miniapp-sdk';
 import React, { useEffect, useRef } from 'react';
 import { sendAnalytics } from './helper';
 import { useLocation } from 'react-router-dom';
@@ -10,6 +14,27 @@ const ScrollToAnchor = () => {
 
   const { pathname, hash } = useLocation();
 
+  const onReceivedQueryParams = (e) => {
+    console.log(
+      `on scroll-to-anchor ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`
+    );
+    try {
+      let _message = JSON.parse(e.detail.message);
+      _message.forEach((val, ind, arr) => {
+        if (val.name === 'scrollTo') {
+          const element = document.getElementById(val.value);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    } catch (e) {
+      console.error(
+        `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Error -> ${e}`
+      );
+    }
+  };
+
   useEffect(() => {
     if (hash) {
       const element = document.getElementById(hash.substring(1)); // Remove the '#'
@@ -17,6 +42,11 @@ const ScrollToAnchor = () => {
         element.scrollIntoView({ behavior: 'smooth' }); // or 'auto'
       }
     }
+    window.addEventListener(
+      HostAppEvents.DID_RECEIVE_QUERY_PARAMS,
+      onReceivedQueryParams
+    );
+
     sendAnalytics(
       MAAnalyticsEventType.appear,
       MAAnalyticsActionType.open,
@@ -25,6 +55,12 @@ const ScrollToAnchor = () => {
       'Page',
       ''
     );
+    return () => {
+      window.removeEventListener(
+        HostAppEvents.DID_RECEIVE_QUERY_PARAMS,
+        onReceivedQueryParams
+      );
+    };
   }, [pathname, hash]);
 
   return (
