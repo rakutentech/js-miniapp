@@ -86,6 +86,44 @@ const Home = (props: HomeProps) => {
 
   useEffect(() => {
     setShowDrawer(!isMobile);
+
+    const onReceivedQueryParams = (e) => {
+      console.log(
+        `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`
+      );
+      let search = new URLSearchParams();
+      try {
+        let url,
+          _message = JSON.parse(e.detail.message);
+        if (e.detail.message.search('navigateTo') === -1) {
+          url = new URL(window.location.toString());
+        }
+        _message.forEach((val, ind, arr) => {
+          if (val.name === 'navigateTo' || val.name === 'scrollTo') {
+            if (!url && val.name === 'navigateTo') {
+              url = new URL(`${window.location.origin}/${val.value}`);
+            }
+            if (val.name === 'scrollTo') {
+              url.hash = val.value;
+            }
+          } else {
+            search.set(val.name, val.value);
+          }
+        });
+        console.log(`URL: ${url.toString()}`);
+        navigate({
+          hash: url.hash,
+          search: search.toString(),
+          pathname: url.pathname,
+        });
+      } catch (e) {
+        console.error(
+          `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Error -> ${e}`
+        );
+      }
+      props.changeQueryParams(e.detail.message);
+    };
+
     window.addEventListener(
       HostAppEvents.DID_RECEIVE_QUERY_PARAMS,
       onReceivedQueryParams
@@ -97,42 +135,6 @@ const Home = (props: HomeProps) => {
       );
     };
   }, [navigate, props, isMobile]);
-  const onReceivedQueryParams = (e) => {
-    console.log(
-      `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Event -> ${e.detail.message}`
-    );
-    let search = new URLSearchParams();
-    try {
-      let url,
-        _message = JSON.parse(e.detail.message);
-      if (e.detail.message.search('navigateTo') === -1) {
-        url = new URL(window.location.toString());
-      }
-      _message.forEach((val, ind, arr) => {
-        if (val.name === 'navigateTo' || val.name === 'scrollTo') {
-          if (!url && val.name === 'navigateTo') {
-            url = new URL(`${window.location.origin}/${val.value}`);
-          }
-          if (val.name === 'scrollTo') {
-            url.hash = val.value;
-          }
-        } else {
-          search.set(val.name, val.value);
-        }
-      });
-      console.log(`URL: ${url.toString()}`);
-      navigate({
-        hash: url.hash,
-        search: search.toString(),
-        pathname: url.pathname,
-      });
-    } catch (e) {
-      console.error(
-        `on home ${HostAppEvents.DID_RECEIVE_QUERY_PARAMS} Error -> ${e}`
-      );
-    }
-    props.changeQueryParams(e.detail.message);
-  };
   const onShrinkToggle = (shrinkState) => {
     setShrink(shrinkState);
   };
