@@ -1,8 +1,8 @@
 ## CHANGELOG
 
-### 1.26.0 (2025-06-10)
+### 1.26.0 (2025-09-01)
 - **Feature:** Added new interfaces `launchAppUsingDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
-- **Test:** Added test cases to verify correct parameter passing for deeplink and package name launch functions.
+- **Feature:** Added support with `HostAppEvents` to receive any Query Parameters as JSON/String from the HostApp to MiniApp with event `DID_RECEIVE_QUERY_PARAMS`.
 
 ### 1.25.0 (2025-06-09)
 - **Feature:** `launchInternalBrowser` now supports passing an options object (`LaunchBrowserOptions`) with `httpMethod`, `httpBody`, `audience`, and `scopes`.
