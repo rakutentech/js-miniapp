@@ -46,4 +46,57 @@ export class UtilityManager {
       );
     });
   }
+
+  /**
+   * Trigger launchAppSettings from host
+   * @returns true or false whether launch app settings is launched or not
+   */
+  launchAppSettings() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppSettings',
+        null,
+        response => resolve(MiniAppBridgeUtils.BooleanValue(response)),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Launches an app using the provided deeplink URL.
+   *
+   * @param deeplink - The deeplink URL to use for launching the app.
+   * @returns A promise that resolves to `true` if the app was launched successfully, or `false` otherwise.
+   */
+  launchAppUsingDeeplink(deeplink: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppUsingDeeplink',
+        { url: deeplink },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Launches an application on the device using its package name. Please note that this method is only applicable for Android devices.
+   *
+   * @param packageName - The package name of the application to launch.
+   * @returns A promise that resolves to `true` if the application was successfully launched, or `false` otherwise.
+   */
+  launchAppUsingPackageName(packageName: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchAppUsingPackageName',
+        { packageName },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

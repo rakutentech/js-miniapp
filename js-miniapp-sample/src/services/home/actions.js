@@ -1,7 +1,7 @@
-import { SET_CURRENT_PAGE_TITLE } from './types';
+import { SET_CURRENT_PAGE_TITLE, SET_QUERY_PARAMS } from './types';
 
 type SetPageAction = { type: string, payload: string };
-type HomeAction = SetPageAction;
+type SetQueryParamAction = { type: string, payload: string };
 
 const setPageTitle = (title: string): SetPageAction => {
   return {
@@ -10,5 +10,12 @@ const setPageTitle = (title: string): SetPageAction => {
   };
 };
 
-export { setPageTitle };
-export type { HomeAction };
+const setQueryParams = (params: string): SetQueryParamAction => {
+  return {
+    type: SET_QUERY_PARAMS,
+    payload: params,
+  };
+};
+
+export { setPageTitle, setQueryParams };
+export type { SetPageAction, SetQueryParamAction };

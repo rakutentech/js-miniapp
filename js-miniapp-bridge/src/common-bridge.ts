@@ -1121,6 +1121,26 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * Launches the app using the provided deeplink URL.
+   *
+   * @param url - The deeplink URL to open the app.
+   * @returns The result of the deeplink launch operation.
+   */
+  launchAppUsingDeeplink(url: string) {
+    return this.utilityManager.launchAppUsingDeeplink(url);
+  }
+
+  /**
+   * Launches an application on the device using its package name. This method is useful for Android devices where applications can be launched using their unique package names.
+   *
+   * @param packageName - The unique package name of the application to launch.
+   * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
+   */
+  launchAppUsingPackageName(packageName: string) {
+    return this.utilityManager.launchAppUsingPackageName(packageName);
+  }
 }
 
 /**

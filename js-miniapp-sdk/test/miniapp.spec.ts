@@ -78,6 +78,7 @@ window.MiniAppBridge = {
   userProfileManager,
   utilityManager: {
     getPermissionStatus: sandbox.stub(),
+    launchAppSettings: sandbox.stub(),
   },
 };
 
@@ -969,5 +970,22 @@ describe('forceInternalWebView', () => {
     );
     return expect(miniApp.webviewManager.forceInternalWebView(true)).to
       .eventually.be.rejected;
+  });
+});
+
+describe('launchAppSettings', () => {
+  it('should return if launch app settings were updated', () => {
+    window.MiniAppBridge.utilityManager.launchAppSettings.resolves(true);
+    return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.equal(
+      true
+    );
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.utilityManager.launchAppSettings.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.be
+      .rejected;
   });
 });

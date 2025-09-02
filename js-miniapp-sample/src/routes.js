@@ -29,6 +29,7 @@ import AnalyticsIcon from '@mui/icons-material/Analytics';
 import DatasetIcon from '@mui/icons-material/Dataset';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
+import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 
 import Ads from './pages/ads';
 import Analytics from './pages/analytics';
@@ -47,11 +48,14 @@ import GetExchangeTokenPage from './pages/get-exchange-token';
 import GifPage from './pages/gifs';
 import ImageUpload from './pages/image-upload';
 import Landing from './pages/landing';
+import LaunchAppSettings from './pages/launch-app-settings';
 import LocalStorage from './pages/local-storage';
 import LogEventPage from './pages/log-event';
 import Media from './pages/media';
 import TalkToChatBot from './pages/message';
 import { MiniAppPreferenceComponent } from './pages/miniapp-preferences';
+import ScrollToAnchor from './pages/scroll-to-anchor';
+import PermissionStatus from './pages/permissionStatus';
 import SecureStorageComponent from './pages/secure-storage';
 import Share from './pages/share';
 import TriggerLoginUIPage from './pages/trigger-login-ui';
@@ -62,7 +66,6 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
-import PermissionStatus from './pages/permissionStatus';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -143,7 +146,7 @@ const analyticsNavLink = {
 };
 const deeplinkSupportNavLink = {
   navLink: '/deeplink-support',
-  label: 'Deeplink Checker',
+  label: 'Deeplink Handler',
 };
 const imageUploadNavLink = { navLink: '/image_upload', label: 'Image Upload' };
 const webViewConfigNavLink = {
@@ -174,6 +177,16 @@ const eSimNavLink = {
 const permissionStatusNavLink = {
   navLink: '/permissionStatus',
   label: 'Permission Status',
+};
+
+const launchAppSettingsNavLink = {
+  navLink: '/launchAppSettings',
+  label: 'Launch App Settings',
+};
+
+const scrollToAnchorNavLink = {
+  navLink: '/scroll-to-anchor',
+  label: 'Scroll To Anchor',
 };
 
 const navLinks = [
@@ -212,7 +225,9 @@ const navLinks = [
   exchangeTokenNavLink,
   triggerLoginNavLink,
   eSimNavLink,
-  permissionStatusNavLink
+  permissionStatusNavLink,
+  launchAppSettingsNavLink,
+  scrollToAnchorNavLink,
 ];
 
 const homeItem = [
@@ -416,6 +431,18 @@ const appItems = [
     label: permissionStatusNavLink.label,
     navLink: permissionStatusNavLink.navLink,
     element: <PermissionStatus />,
+  },
+  {
+    icon: <VpnKeyIcon />,
+    label: launchAppSettingsNavLink.label,
+    navLink: launchAppSettingsNavLink.navLink,
+    element: <LaunchAppSettings />,
+  },
+  {
+    icon: <DocumentScannerIcon />,
+    label: scrollToAnchorNavLink.label,
+    navLink: scrollToAnchorNavLink.navLink,
+    element: <ScrollToAnchor />,
   },
 ];
 

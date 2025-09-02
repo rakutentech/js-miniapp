@@ -136,6 +136,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
         - [Usage example](#usage-example)
       - [Device Permissions](#device-permissions)
         - [Usage example](#usage-example-1)
+    - [Check Permission Status](#check-permission-status)
+    - [Launch App Settings](#launch-app-settings)
   - [Show Ads](#show-ads)
   - [Events](#events)
     - [Mini App Events](#mini-app-events)
@@ -180,6 +182,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
   - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
+  - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
+    - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
 
 ## User details
 
@@ -387,7 +391,57 @@ MiniApp
 ```
 
 
-</dd>
+---
+
+### Check Permission Status
+
+You can check the status of a custom or device permission using the `getPermissionStatus` interface.
+
+**API:** [MiniAppFeatures.getPermissionStatus](api/interfaces/miniappfeatures.md#getpermissionstatus)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+import { PermissionName, PermissionStatus } from 'js-miniapp-sdk';
+
+MiniApp
+  .getPermissionStatus(PermissionName.CAMERA)
+  .then(status => {
+    // status will be PermissionStatus.GRANTED, PermissionStatus.DENIED, or PermissionStatus.UNKNOWN
+    if (status === PermissionStatus.GRANTED) {
+      // Permission granted
+    } else if (status === PermissionStatus.DENIED) {
+      // Permission denied
+    } else {
+      // Permission status unknown
+    }
+    console.log(status);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+```
+
+You can check the status for permissions such as `PermissionName.CAMERA`, `PermissionName.GALLERY`, or `PermissionName.MICROPHONE`.
+
+---
+
+### Launch App Settings
+
+You can open the device's app settings screen for your Mini App using the `launchAppSettings` interface. This is useful for prompting users to manually enable permissions.
+
+**API:** [MiniAppFeatures.launchAppSettings](api/interfaces/miniappfeatures.md#launchappsettings)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils.launchAppSettings()
+  .then(() => {
+    // App settings opened successfully
+  })
+  .catch(error => {
+    console.error(error);
+  });
+```
 
 ## Show Ads
 
@@ -512,6 +566,20 @@ These `HostAppEvents` will be triggered when the host app wants to notify someth
 
   </details>
 
+- DID_RECEIVE_QUERY_PARAMS <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+  <details><summary markdown="span" padding-right=""><b>Click here to see the Code snippet</b>
+  </summary>
+
+  ```javascript
+  import MiniApp from 'js-miniapp-sdk';
+
+  window.addEventListener(MiniAppKeyboardEvents.DID_RECEIVE_QUERY_PARAMS, function (e) {
+    // To-do
+  });
+  ```
+
+  </details>
 </dd>
 
 
@@ -795,7 +863,6 @@ Please make sure that `capture` attribute is available, it will open device came
 
 
 </dd>
-
 <div id='set-close-alert'/>
 
 ## Set Close alert <small style="color:green;font-size: 12px">Available from v1.15.0</small>
@@ -825,7 +892,6 @@ When a Mini app is closed, you can set the close confirmation popup which the ho
   ```
 
 </dd>
-
 <div id='universal-bridge'/>
 
 ## Universal Bridge <small style="color:green;font-size: 12px">Available from v1.16.0</small>
@@ -896,7 +962,6 @@ window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function(e) {
 
 
 </dd>
-
 <div id='close-miniapp'/>
 
 ## Close miniapp <small style="color:green;font-size: 12px">Available from v1.16.0</small>
@@ -904,7 +969,7 @@ window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function(e) {
 <dl>
 <dd>
 
-When the miniapp want's to close, they can use this interface to close by itself. Calling this interface, it would let know the host app know that the miniapp wants to close. Host app can decide if it can proceed with the flow.
+When the miniapp want's to close, they can use this interface to close by itself. Calling this interface, it would let know the host app that the miniapp wants to close. Host app can decide if it can proceed with the flow.
 
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
@@ -915,7 +980,6 @@ MiniApp.miniappUtils.closeMiniApp(true).catch((error) => {
 
 
 </dd>
-
 <div id='in-app-purchases'/>
 
 
@@ -1001,7 +1065,6 @@ MiniApp.user
 
 
 </dd>
-
 <div id='get-platform'/>
 
 ## Check Android/iOS device
@@ -1024,7 +1087,6 @@ When it is not running by Android/iOS, the return value is `Unknown`.
 
 
 </dd>
-
 <div id='get-host-info'/>
 
 ## Get Host application info
@@ -1051,7 +1113,6 @@ MiniApp
 
 
 </dd>
-
 <div id='download-file'/>
 
 ## Download File
@@ -1079,7 +1140,6 @@ import MiniApp from 'js-miniapp-sdk';
 
 
 </dd>
-
 <div id='secure-storage'/>
 
 ## Secure Storage
@@ -1202,7 +1262,6 @@ import MiniApp from 'js-miniapp-sdk';
     ```
 
 </dd>
-
 <div id='host-theme-colors'/>
 
 ## Host app Theme colors <small style="color:green;font-size: 12px">Available from v1.18.0</small>
@@ -1232,7 +1291,6 @@ import MiniApp from 'js-miniapp-sdk';
 
 
 </dd>
-
 <div id='dark-mode'/>
 
 ## Dark Mode <small style="color:green;font-size: 12px">Available from v1.18.0</small>
@@ -1258,7 +1316,6 @@ MiniApp
 ```
 
 </dd>
-
 <div id='send-analytics'/>
 
 ## Send Analytics to Host app <small style="color:green;font-size: 12px">Available from v1.18.0</small>
@@ -1305,7 +1362,6 @@ MiniApp.miniappUtils
 ```
 
 </dd>
-
 <div id='get-cookies'/>
 
 ## Get Cookies from host application <small style="color:green;font-size: 12px">Available from v1.19.0</small>
@@ -1343,7 +1399,6 @@ import MiniApp from 'js-miniapp-sdk';
     });
 
 ```
-
 <div id='miniapp-storage'/>
 
 ## MiniApp storage using Key/Value <small style="color:green;font-size: 12px">Available from v1.20.0</small>
@@ -1492,7 +1547,6 @@ MiniApp.miniappUtils
   });
 
 ```
-
 <div id='launch-internal-browser'/>
 
 ## Launch Internal browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
@@ -1535,3 +1589,42 @@ MiniApp.miniappUtils
     console.log(miniAppError);
   });
 ```
+
+
+## Launch App Deeplink <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+You can launch an external app using a deeplink URL. This is supported on both Android and iOS.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchAppUsingDeeplink('myapp://deeplink')
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });****
+```
+
+### Launch App Using Package Name <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+You can launch an external app using its package name (Android only).
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchAppUsingPackageName('com.example.app')
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+> **Note:** These functions require the host app to support launching external apps. Unit tests only verify correct parameter passing, not actual app launching.

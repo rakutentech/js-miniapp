@@ -1220,6 +1220,45 @@ describe('requestPermissionStatus', () => {
   });
 });
 
+describe('launchAppSettings', () => {
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.utilityManager.launchAppSettings().catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'launchAppSettings');
+  });
+
+  it('will parse the enabled JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `true`);
+
+    return expect(
+      bridge.utilityManager.launchAppSettings()
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('will parse the disabled JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `false`);
+
+    return expect(
+      bridge.utilityManager.launchAppSettings()
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{"message":"Launch App Settings not found"}'
+    );
+
+    return expect(bridge.utilityManager.launchAppSettings()).to.eventually.be
+      .rejected;
+  });
+});
+
 describe('getAllCookies', () => {
   it('will call the platform executor', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
@@ -1332,3 +1371,59 @@ function createCallback({
     id: String(Bridge.cryptoRandom()),
   };
 }
+
+describe('launchAppUsingDeeplink', () => {
+  it('should resolve to true when deeplink launch succeeds', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.launchAppUsingDeeplink('myapp://deeplink')
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('should resolve to false when deeplink launch fails', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, false);
+
+    return expect(
+      bridge.launchAppUsingDeeplink('myapp://deeplink')
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('should reject on error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "deeplink error" }');
+
+    return expect(bridge.launchAppUsingDeeplink('myapp://deeplink')).to
+      .eventually.be.rejected;
+  });
+});
+
+describe('launchAppUsingPackageName', () => {
+  it('should resolve to true when package launch succeeds', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.launchAppUsingPackageName('com.example.app')
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('should resolve to false when package launch fails', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, false);
+
+    return expect(
+      bridge.launchAppUsingPackageName('com.example.app')
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('should reject on error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "package error" }');
+
+    return expect(bridge.launchAppUsingPackageName('com.example.app')).to
+      .eventually.be.rejected;
+  });
+});

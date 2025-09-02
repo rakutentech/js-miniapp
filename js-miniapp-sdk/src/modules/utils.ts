@@ -83,6 +83,24 @@ export interface MiniAppUtilsProvider {
    * @param type - The log type.
    */
   logEvent(message: string, type: LogType): Promise<boolean>;
+
+  /**
+   * Launches an application on the device using a deeplink URL.
+   * This method is useful for both iOS and Android devices where applications can be launched using deeplinks.
+   *
+   * @param url - The deeplink URL of the application to launch.
+   * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
+   */
+  launchAppUsingDeeplink(url: string): Promise<boolean>;
+
+  /**
+   * Launches an application on the device using its package name.
+   * This method is useful for Android devices where applications can be launched using their unique package names.
+   *
+   * @param packageName - The unique package name of the application to launch.
+   * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
+   */
+  launchAppUsingPackageName(packageName: string): Promise<boolean>;
 }
 
 /** @internal */
@@ -132,6 +150,18 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
 
   logEvent(message: string, type: LogType = LogType.DEBUG): Promise<boolean> {
     return getBridge().utilityManager.logEvent(message, type);
+  }
+
+  launchAppSettings(): Promise<boolean> {
+    return getBridge().utilityManager.launchAppSettings();
+  }
+
+  launchAppUsingDeeplink(url: string): Promise<boolean> {
+    return getBridge().utilityManager.launchAppUsingDeeplink(url);
+  }
+
+  launchAppUsingPackageName(packageName: string): Promise<boolean> {
+    return getBridge().utilityManager.launchAppUsingPackageName(packageName);
   }
 
   /**
