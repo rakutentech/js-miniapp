@@ -157,7 +157,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: true,
         isError: false,
         error: null,
-        cookieInfo: null,
+        cookieInfo: [],
       };
     case 'COOKIE_FETCH_SUCCESS':
       return {
@@ -173,7 +173,7 @@ export const dataFetchReducer = (state: State, action: Action) => {
         isLoading: false,
         isError: false,
         error: null,
-        cookieInfo: null,
+        cookieInfo: [],
       };
 
     default:

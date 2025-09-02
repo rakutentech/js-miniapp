@@ -886,12 +886,18 @@ export class MiniAppBridge {
   }
 
   getAllCookies() {
-    return new Promise<[CookieInfo]>((resolve, reject) => {
+    return new Promise<CookieInfo[]>((resolve, reject) => {
       return this.executor.exec(
         'getAllCookies',
         null,
         response => {
-          resolve(JSON.parse(response) as [CookieInfo]);
+          try {
+            resolve(convertResponseToCookieInfoArray(response));
+          } catch (e) {
+            reject(
+              parseMiniAppError(`Fail to convert response to CookieInfo - ${e}`)
+            );
+          }
         },
         error => reject(parseMiniAppError(error))
       );
@@ -899,12 +905,18 @@ export class MiniAppBridge {
   }
 
   getCookies(cookieNameList: string[]) {
-    return new Promise<[CookieInfo]>((resolve, reject) => {
+    return new Promise<CookieInfo[]>((resolve, reject) => {
       return this.executor.exec(
         'getCookies',
         { cookieList: cookieNameList },
         response => {
-          resolve(JSON.parse(response) as [CookieInfo]);
+          try {
+            resolve(convertResponseToCookieInfoArray(response));
+          } catch (e) {
+            reject(
+              parseMiniAppError(`Fail to convert response to CookieInfo - ${e}`)
+            );
+          }
         },
         error => reject(parseMiniAppError(error))
       );
@@ -1205,6 +1217,23 @@ function convertUnicodeCharactersForAndroid(value) {
     return JSON.parse(stringifyMessage);
   } else {
     return JSON.parse(replaced);
+  }
+}
+
+function convertResponseToCookieInfoArray(response: string) {
+  try {
+    const json = JSON.parse(response);
+    const cookiefied = [];
+    if (Array.isArray(json)) {
+      json.forEach((val, ind, arr) => {
+        cookiefied.push(val as CookieInfo);
+      });
+      return cookiefied;
+    } else {
+      throw new Error('Fail to convert to CookieInfo');
+    }
+  } catch (e) {
+    throw new Error(e);
   }
 }
 
