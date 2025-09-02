@@ -604,7 +604,12 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getAllCookies', null, function (response) {
-                resolve(JSON.parse(response));
+                try {
+                    resolve(convertResponseToCookieInfoArray(response));
+                }
+                catch (e) {
+                    reject((0, error_types_1.parseMiniAppError)("Fail to convert response to CookieInfo - ".concat(e)));
+                }
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -612,7 +617,12 @@ var MiniAppBridge = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('getCookies', { cookieList: cookieNameList }, function (response) {
-                resolve(JSON.parse(response));
+                try {
+                    resolve(convertResponseToCookieInfoArray(response));
+                }
+                catch (e) {
+                    reject((0, error_types_1.parseMiniAppError)("Fail to convert response to CookieInfo - ".concat(e)));
+                }
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
@@ -850,6 +860,24 @@ function convertUnicodeCharactersForAndroid(value) {
     }
     else {
         return JSON.parse(replaced);
+    }
+}
+function convertResponseToCookieInfoArray(response) {
+    try {
+        var json = JSON.parse(response);
+        var cookiefied_1 = [];
+        if (Array.isArray(json)) {
+            json.forEach(function (val, ind, arr) {
+                cookiefied_1.push(val);
+            });
+            return cookiefied_1;
+        }
+        else {
+            throw new Error('Fail to convert to CookieInfo');
+        }
+    }
+    catch (e) {
+        throw new Error(e);
     }
 }
 function isValidJson(str) {
