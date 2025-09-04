@@ -30,6 +30,7 @@ import {
   EsimConfig,
   PermissionName,
   PermissionStatus,
+  CookieInfo,
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
 import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
@@ -1256,6 +1257,103 @@ describe('launchAppSettings', () => {
     );
 
     return expect(bridge.utilityManager.launchAppSettings()).to.eventually.be
+      .rejected;
+  });
+});
+
+describe('getAllCookies', () => {
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.getAllCookies().catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'getAllCookies');
+  });
+
+  it('will parse the Permission JSON response', () => {
+    const mock: CookieInfo[] = [
+      {
+        name: 'test',
+        value: '123',
+      },
+    ];
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(mock));
+
+    const expected: CookieInfo[] = [
+      {
+        name: 'test',
+        value: '123',
+      },
+    ];
+    return expect(bridge.getAllCookies()).to.eventually.deep.equal(expected);
+  });
+
+  it('will fail to parse the Permission JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `123`);
+    return expect(bridge.getAllCookies()).to.eventually.be.rejectedWith();
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "Gallery not found" }');
+
+    return expect(bridge.getAllCookies()).to.eventually.be.rejected;
+  });
+});
+
+describe('getCookies', () => {
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.getCookies(['cookie1', 'cookie2']).catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'getCookies');
+  });
+
+  it('will parse the Permission JSON response', () => {
+    const mock: CookieInfo[] = [
+      {
+        name: 'cookie1',
+        value: '123',
+      },
+    ];
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(mock));
+
+    const expected: CookieInfo[] = [
+      {
+        name: 'cookie1',
+        value: '123',
+      },
+    ];
+    return expect(
+      bridge.getCookies(['cookie1', 'cookie2'])
+    ).to.eventually.deep.equal(expected);
+  });
+
+  it('will fail to parse the Permission JSON response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `123`);
+    return expect(
+      bridge.getCookies(['cookie1', 'cookie2'])
+    ).to.eventually.be.rejectedWith();
+  });
+
+  it('will fail to parse the Permission JSON response not same cookieInfo schema', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, `[{'test':'whee'}]`);
+    return expect(
+      bridge.getCookies(['cookie1', 'cookie2'])
+    ).to.eventually.be.rejectedWith();
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "Gallery not found" }');
+
+    return expect(bridge.getCookies(['cookie1', 'cookie2'])).to.eventually.be
       .rejected;
   });
 });
