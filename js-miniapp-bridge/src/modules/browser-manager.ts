@@ -1,5 +1,8 @@
 import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
-import { LaunchBrowserOptions, LoadHTMLStringOptions } from '../types/browser-options';
+import {
+  LaunchBrowserOptions,
+  LoadHTMLStringOptions,
+} from '../types/browser-options';
 import { parseMiniAppError } from '../types/error-types';
 
 /**
