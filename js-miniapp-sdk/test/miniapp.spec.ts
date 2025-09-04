@@ -24,7 +24,6 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
-import { BrowserManager } from '../../js-miniapp-bridge/src/modules/browser-manager';
 
 const sandbox = sinon.createSandbox();
 beforeEach(() => {
