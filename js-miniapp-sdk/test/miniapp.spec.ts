@@ -79,6 +79,7 @@ window.MiniAppBridge = {
   utilityManager: {
     getPermissionStatus: sandbox.stub(),
     launchAppSettings: sandbox.stub(),
+    loadUsingHTMLString: sandbox.stub(),
   },
 };
 
@@ -987,5 +988,35 @@ describe('launchAppSettings', () => {
     );
     return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.be
       .rejected;
+  });
+});
+
+describe('loadUsingHTMLString', () => {
+  const params = {
+    htmlString: '<html><body>Hello World</body></html>',
+    callbackUrl: 'https://localhost:3000/index.html',
+    baseUrl: 'https://localhost',
+  };
+
+  it('should return if load using HTML String', () => {
+    window.MiniAppBridge.utilityManager.loadUsingHTMLString.resolves(true);
+    return expect(
+      miniApp.miniappUtils.loadUsingHTMLString(
+        params.htmlString,
+        params.callbackUrl
+      )
+    ).to.eventually.equal(true);
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.utilityManager.loadUsingHTMLString.returns(
+      Promise.reject('test error')
+    );
+    return expect(
+      miniApp.miniappUtils.loadUsingHTMLString(
+        params.htmlString,
+        params.callbackUrl
+      )
+    ).to.eventually.be.rejected;
   });
 });
