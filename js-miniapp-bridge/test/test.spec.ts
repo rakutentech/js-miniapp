@@ -1342,7 +1342,7 @@ describe('loadUsingHTMLString', () => {
   it('will call the platform executor', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
 
-    bridge.utilityManager.loadUsingHTMLString(params).catch(handleError);
+    bridge.browserManager.loadUsingHTMLString(params).catch(handleError);
 
     sinon.assert.calledWith(mockExecutor.exec, 'loadUsingHTMLString');
   });
@@ -1354,7 +1354,7 @@ describe('loadUsingHTMLString', () => {
       `{"type":"${InternalBrowserErrorType.HTML_STRING_TOO_LARGE}","message":"Load Using HTML String is too long"}`
     );
 
-    return expect(bridge.utilityManager.loadUsingHTMLString(params)).to
+    return expect(bridge.browserManager.loadUsingHTMLString(params)).to
       .eventually.be.rejected;
   });
 });

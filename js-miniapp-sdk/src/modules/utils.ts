@@ -170,7 +170,7 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     callbackUrl: string,
     baseUrl?: string
   ): Promise<string | null> {
-    return getBridge().utilityManager.loadUsingHTMLString({
+    return getBridge().browserManager.loadUsingHTMLString({
       htmlString,
       callbackUrl,
       baseUrl,

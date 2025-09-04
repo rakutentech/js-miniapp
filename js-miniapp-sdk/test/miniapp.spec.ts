@@ -24,6 +24,7 @@ import {
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
+import { BrowserManager } from '../../js-miniapp-bridge/src/modules/browser-manager';
 
 const sandbox = sinon.createSandbox();
 beforeEach(() => {
@@ -79,6 +80,8 @@ window.MiniAppBridge = {
   utilityManager: {
     getPermissionStatus: sandbox.stub(),
     launchAppSettings: sandbox.stub(),
+  },
+  browserManager: {
     loadUsingHTMLString: sandbox.stub(),
   },
 };
@@ -999,7 +1002,7 @@ describe('loadUsingHTMLString', () => {
   };
 
   it('should return if load using HTML String', () => {
-    window.MiniAppBridge.utilityManager.loadUsingHTMLString.resolves(true);
+    window.MiniAppBridge.browserManager.loadUsingHTMLString.resolves(true);
     return expect(
       miniApp.miniappUtils.loadUsingHTMLString(
         params.htmlString,
@@ -1009,7 +1012,7 @@ describe('loadUsingHTMLString', () => {
   });
 
   it('should return error information', () => {
-    window.MiniAppBridge.utilityManager.loadUsingHTMLString.returns(
+    window.MiniAppBridge.browserManager.loadUsingHTMLString.returns(
       Promise.reject('test error')
     );
     return expect(

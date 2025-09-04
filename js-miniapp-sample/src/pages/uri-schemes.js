@@ -106,7 +106,9 @@ const UriSchemes = () => {
   const [internalPostMethod, setInternalPostMethod] = useState('POST');
 
   //For LoadUsingHTMLString Interface
-  const [htmlString, setHtmlString] = useState('<html><body><span>Hello World</span></body></html>');
+  const [htmlString, setHtmlString] = useState(
+    '<html><body><span>Hello World</span><button (click)="window.location=\'file://\'">Click Here</button></body></html>'
+  );
   const [loadHTMLStringCallbackUrl, setLoadHTMLStringCallbackUrl] = useState(
     `${window.location.protocol}//${window.location.host}/index.html`
   );
@@ -210,20 +212,23 @@ const UriSchemes = () => {
   // Add new function for LoadUsingHTMLString
   function loadUsingHTMLString() {
     setLoadHTMLStringError('');
-    if((!htmlString || !callbackUrl) || (htmlString === '' || callbackUrl === '')){
-      return setLoadHTMLStringError('HTML String and Callback Url cannot be empty');
+    if (
+      !htmlString ||
+      !callbackUrl ||
+      htmlString === '' ||
+      callbackUrl === ''
+    ) {
+      return setLoadHTMLStringError(
+        'HTML String and Callback Url cannot be empty'
+      );
     }
     MiniApp.miniappUtils
-      .loadUsingHTMLString({
-        htmlString,
-        callbackUrl,
-        baseUrl
-      })
+      .loadUsingHTMLString(htmlString, callbackUrl, baseUrl)
       .then((response) => {
         console.log('loadUsingHTMLString - SUCCESS: ', response);
       })
       .catch((miniAppError) => {
-        loadHTMLStringError(
+        setLoadHTMLStringError(
           miniAppError && miniAppError.message
             ? miniAppError.message
             : 'Failed to Load Using HTML String'
@@ -523,7 +528,9 @@ const UriSchemes = () => {
         <CardContent className={deeplinkClass.content}>
           <TextField
             className={classes.textfield}
-            onChange={(e) => setLoadHTMLStringCallbackUrl(e.currentTarget.value)}
+            onChange={(e) =>
+              setLoadHTMLStringCallbackUrl(e.currentTarget.value)
+            }
             value={loadHTMLStringCallbackUrl}
             label="CallbackUrl"
             variant="outlined"
