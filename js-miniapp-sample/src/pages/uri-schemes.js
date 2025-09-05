@@ -106,13 +106,13 @@ const UriSchemes = () => {
   const [internalPostMethod, setInternalPostMethod] = useState('POST');
 
   //For LoadUsingHTMLString Interface
-  const [htmlString, setHtmlString] = useState(
-    '<html><body><span>Hello World</span><button (click)="window.location=\'file://\'">Click Here</button></body></html>'
-  );
   const [loadHTMLStringCallbackUrl, setLoadHTMLStringCallbackUrl] = useState(
     `${window.location.protocol}//${window.location.host}/index.html`
   );
   const [baseUrl, setBaseUrl] = useState('');
+  const [htmlString, setHtmlString] = useState(
+    `<html><body><span>Hello World</span><button (click)="window.location.origin='${loadHTMLStringCallbackUrl}'">Click Here</button></body></html>`
+  );
   const [loadHTMLStringError, setLoadHTMLStringError] = useState('');
 
   function validateParams(params: string) {
