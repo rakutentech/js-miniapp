@@ -184,6 +184,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
   - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
     - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
+    - [Load HTML String Available from v1.26.0](#load-html-string-available-from-v1260)
 
 ## User details
 
@@ -1628,3 +1629,28 @@ MiniApp.miniappUtils
 ```
 
 > **Note:** These functions require the host app to support launching external apps. Unit tests only verify correct parameter passing, not actual app launching.
+
+### Load HTML String <small style="color:green;font-size: 12px">Available from v1.26.0</small>
+
+You can load HTML string to Host App. 
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+import { LoadHTMLStringOptions } from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .loadUsingHTMLString({
+    htmlString:'<html><body>Hello&nbsp;World</body></html>',
+    callBackUrl:'https://google.com',
+    baseUrl:'google.com'
+  } as LoadHTMLStringOptions)
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+> **Note:** These functions require the host app to support loading HTML strings. Unit tests only verify correct parameter passing, not actual app launching.

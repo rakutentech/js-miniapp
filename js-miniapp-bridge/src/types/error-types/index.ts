@@ -27,6 +27,10 @@ import {
   parseInAppPurchaseError,
 } from './in-app-purchase-errors';
 import { MiniAppError, MiniAppJson } from './mini-app-error';
+import {
+  InternalBrowserError,
+  parseInternalBrowserError,
+} from './internal-browser-error';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
   try {
@@ -37,6 +41,7 @@ function parseMiniAppError(jsonString: string): MiniAppError {
       parseDownloadError(json) ||
       parseStorageError(json) ||
       parseInAppPurchaseError(json) ||
+      parseInternalBrowserError(json) ||
       new MiniAppError(json)
     );
   } catch (e) {
@@ -73,4 +78,5 @@ export {
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
+  InternalBrowserError,
 };

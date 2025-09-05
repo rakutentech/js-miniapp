@@ -32,6 +32,8 @@ import {
   PermissionStatus,
   CookieInfo,
 } from '../src';
+import { LoadHTMLStringOptions } from '../src/types/browser-options';
+import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
 
 /* tslint:disable:no-any */
 const window: any = {
@@ -1424,6 +1426,33 @@ describe('launchAppUsingPackageName', () => {
     mockExecutor.exec.callsArgWith(3, '{ "message": "package error" }');
 
     return expect(bridge.launchAppUsingPackageName('com.example.app')).to
+      .eventually.be.rejected;
+  });
+});
+
+describe('loadUsingHTMLString', () => {
+  const params = {
+    htmlString: '<html><body>Hello World</body></html>',
+    callbackUrl: 'https://localhost:3000/index.html',
+    baseUrl: 'https://localhost',
+  } as LoadHTMLStringOptions;
+
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.browserManager.loadUsingHTMLString(params).catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'loadUsingHTMLString');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      `{"type":"${InternalBrowserErrorType.HTML_STRING_TOO_LARGE}","message":"Load Using HTML String is too long"}`
+    );
+
+    return expect(bridge.browserManager.loadUsingHTMLString(params)).to
       .eventually.be.rejected;
   });
 });

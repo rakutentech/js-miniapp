@@ -1,5 +1,8 @@
 import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
-import { LaunchBrowserOptions } from '../types/browser-options';
+import {
+  LaunchBrowserOptions,
+  LoadHTMLStringOptions,
+} from '../types/browser-options';
 import { parseMiniAppError } from '../types/error-types';
 
 /**
@@ -52,6 +55,32 @@ export class BrowserManager {
         params,
         response => {
           resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Load HTML String to Host App
+   * Passing a LoadHTMLStringOptions object
+   * @param {LoadHTMLStringOptions} params - The URL string or LoadHTMLStringOptions object.
+   * @returns {Promise<string | null>} - Returns a Promise that resolves with the intercepted URL or null, or rejects with an error, based on the response received from the native side via the bridge.
+   * @see {loadUsingHTMLString}
+   */
+  loadUsingHTMLString(params: LoadHTMLStringOptions): Promise<string | null> {
+    return new Promise<string | null>((resolve, reject) => {
+      return this.executor.exec(
+        'loadUsingHTMLString',
+        params,
+        response => {
+          // Native sends "CANCELLED" string for user cancellation
+          if (response === 'CANCELLED') {
+            resolve(null);
+          } else {
+            // Native sends the intercepted URL string for success
+            resolve(response);
+          }
         },
         error => reject(parseMiniAppError(error))
       );

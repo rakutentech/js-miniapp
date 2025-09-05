@@ -5,7 +5,10 @@ import {
   MAAnalyticsInfo,
 } from '../../../js-miniapp-bridge/src';
 import { LogType } from '../../../js-miniapp-bridge/src/types/log-type';
-import { LaunchBrowserOptions } from '../../../js-miniapp-bridge/src/types/browser-options';
+import {
+  LaunchBrowserOptions,
+  LoadHTMLStringOptions,
+} from '../../../js-miniapp-bridge/src/types/browser-options';
 
 /**
  * Mini App Utility methods
@@ -101,6 +104,20 @@ export interface MiniAppUtilsProvider {
    * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
    */
   launchAppUsingPackageName(packageName: string): Promise<boolean>;
+
+  /**
+   * Direct HTML String loading from Host app to Miniapp
+   *
+   * @param htmlString - HTML in string format.
+   * @param callbackUrl - callbackUrl call after loading
+   * @param baseUrl - optional
+   * @returns A promise whether successful or not
+   */
+  loadUsingHTMLString(
+    htmlString: string,
+    callbackUrl: string,
+    baseUrl?: string
+  ): Promise<string | null>;
 }
 
 /** @internal */
@@ -146,6 +163,18 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     urlOrParams: string | LaunchBrowserOptions
   ): Promise<boolean> {
     return getBridge().browserManager.launchInternalBrowser(urlOrParams);
+  }
+
+  loadUsingHTMLString(
+    htmlString: string,
+    callbackUrl: string,
+    baseUrl?: string
+  ): Promise<string | null> {
+    return getBridge().browserManager.loadUsingHTMLString({
+      htmlString,
+      callbackUrl,
+      baseUrl,
+    } as LoadHTMLStringOptions);
   }
 
   logEvent(message: string, type: LogType = LogType.DEBUG): Promise<boolean> {

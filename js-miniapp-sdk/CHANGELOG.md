@@ -1,6 +1,7 @@
 ## CHANGELOG
 
 ### 1.26.0 (2025-09-01)
+- **Feature:** Added new interfaces `loadUsingHTMLString` passing an options object `LoadHTMLStringOptions` containing `htmlString`, `callBackUrl` and `baseUrl`.
 - **Feature:** Added new interfaces `launchAppUsingDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
 - **Feature:** Added support with `HostAppEvents` to receive any Query Parameters as JSON/String from the HostApp to MiniApp with event `DID_RECEIVE_QUERY_PARAMS`.
 

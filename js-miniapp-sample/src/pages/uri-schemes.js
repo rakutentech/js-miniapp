@@ -105,6 +105,16 @@ const UriSchemes = () => {
   // Add state for httpMethod
   const [internalPostMethod, setInternalPostMethod] = useState('POST');
 
+  //For LoadUsingHTMLString Interface
+  const [loadHTMLStringCallbackUrl, setLoadHTMLStringCallbackUrl] = useState(
+    `${window.location.protocol}//${window.location.host}/index.html`
+  );
+  const [baseUrl, setBaseUrl] = useState('');
+  const [htmlString, setHtmlString] = useState(
+    `<html><body><span>Hello World</span><button (click)="window.location.origin='${loadHTMLStringCallbackUrl}'">Click Here</button></body></html>`
+  );
+  const [loadHTMLStringError, setLoadHTMLStringError] = useState('');
+
   function validateParams(params: string) {
     return params.startsWith('?') && params.indexOf('=') >= 0;
   }
@@ -196,6 +206,34 @@ const UriSchemes = () => {
             : 'Failed to launch internal browser'
         );
         console.log('openInternalBrowser (POST) - Error: ', miniAppError);
+      });
+  }
+
+  // Add new function for LoadUsingHTMLString
+  function loadUsingHTMLString() {
+    setLoadHTMLStringError('');
+    if (
+      !htmlString ||
+      !callbackUrl ||
+      htmlString === '' ||
+      callbackUrl === ''
+    ) {
+      return setLoadHTMLStringError(
+        'HTML String and Callback Url cannot be empty'
+      );
+    }
+    MiniApp.miniappUtils
+      .loadUsingHTMLString(htmlString, callbackUrl, baseUrl)
+      .then((response) => {
+        console.log('loadUsingHTMLString - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        setLoadHTMLStringError(
+          miniAppError && miniAppError.message
+            ? miniAppError.message
+            : 'Failed to Load Using HTML String'
+        );
+        console.log('loadUsingHTMLString - Error: ', miniAppError);
       });
   }
 
@@ -464,6 +502,70 @@ const UriSchemes = () => {
                   : undefined
               )
             }
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Load Using HTML String
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setHtmlString(e.currentTarget.value)}
+            value={htmlString}
+            label="HTML String"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'internal-post-body-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) =>
+              setLoadHTMLStringCallbackUrl(e.currentTarget.value)
+            }
+            value={loadHTMLStringCallbackUrl}
+            label="CallbackUrl"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'load-html-string-callback-url-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setBaseUrl(e.currentTarget.value)}
+            value={baseUrl}
+            label="Base URL (optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'base-url-field',
+            }}
+          />
+        </CardContent>
+        {loadHTMLStringError && (
+          <CardContent
+            className={deeplinkClass.content}
+            style={{ color: 'red', fontSize: 14 }}
+          >
+            {loadHTMLStringError}
+          </CardContent>
+        )}
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={loadUsingHTMLString}
           >
             Open
           </Button>

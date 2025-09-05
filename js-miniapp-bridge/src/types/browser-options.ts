@@ -16,3 +16,9 @@ export interface LaunchBrowserOptions {
   audience?: string;
   scopes?: string[];
 }
+
+export interface LoadHTMLStringOptions {
+  htmlString: string;
+  callbackUrl: string;
+  baseUrl?: string;
+}
