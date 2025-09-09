@@ -194,7 +194,7 @@ function ESimComponent() {
             })
           }
         />
-        {/* <TextField
+        <TextField
           variant="outlined"
           className={classes.formInput}
           id="input-confirmationCode"
@@ -232,7 +232,7 @@ function ESimComponent() {
               iccid: e.target.value,
             })
           }
-        /> */}
+        />
         <TextField
           variant="outlined"
           className={classes.formInput}
@@ -246,7 +246,7 @@ function ESimComponent() {
             })
           }
         />
-        {/* <TextField
+        <TextField
           variant="outlined"
           className={classes.formInput}
           id="input-oid"
@@ -258,7 +258,7 @@ function ESimComponent() {
               oid: e.target.value,
             })
           }
-        /> */}
+        />
         <div className={classes.container}>
           <Button
             variant="contained"

@@ -113,6 +113,7 @@ const UriSchemes = () => {
   const [htmlString, setHtmlString] = useState(
     `<html><body><span>Hello World</span><button (click)="window.location.origin='${loadHTMLStringCallbackUrl}'">Click Here</button></body></html>`
   );
+  const [loadHTMLStringResponse, setLoadHTMLStringResponse] = useState('');
   const [loadHTMLStringError, setLoadHTMLStringError] = useState('');
 
   function validateParams(params: string) {
@@ -212,6 +213,7 @@ const UriSchemes = () => {
   // Add new function for LoadUsingHTMLString
   function loadUsingHTMLString() {
     setLoadHTMLStringError('');
+    setLoadHTMLStringResponse('');
     if (
       !htmlString ||
       !callbackUrl ||
@@ -226,6 +228,7 @@ const UriSchemes = () => {
       .loadUsingHTMLString(htmlString, callbackUrl, baseUrl)
       .then((response) => {
         console.log('loadUsingHTMLString - SUCCESS: ', response);
+        setLoadHTMLStringResponse(response);
       })
       .catch((miniAppError) => {
         setLoadHTMLStringError(
@@ -559,6 +562,14 @@ const UriSchemes = () => {
             style={{ color: 'red', fontSize: 14 }}
           >
             {loadHTMLStringError}
+          </CardContent>
+        )}
+        {loadHTMLStringResponse && (
+          <CardContent
+            className={deeplinkClass.content}
+            style={{ fontSize: 14 }}
+          >
+            {loadHTMLStringResponse}
           </CardContent>
         )}
         <CardActions className={deeplinkClass.actions}>
