@@ -531,7 +531,9 @@ const UriSchemes = () => {
         <CardContent className={deeplinkClass.content}>
           <TextField
             className={classes.textfield}
-            onChange={(e) => setLoadHTMLStringCallbackUrl(e.currentTarget.value)}
+            onChange={(e) =>
+              setLoadHTMLStringCallbackUrl(e.currentTarget.value)
+            }
             value={loadHTMLStringCallbackUrl}
             label="CallbackUrl"
             variant="outlined"
