@@ -216,16 +216,16 @@ const UriSchemes = () => {
     setLoadHTMLStringResponse('');
     if (
       !htmlString ||
-      !callbackUrl ||
+      !loadHTMLStringCallbackUrl ||
       htmlString === '' ||
-      callbackUrl === ''
+      loadHTMLStringCallbackUrl === ''
     ) {
       return setLoadHTMLStringError(
         'HTML String and Callback Url cannot be empty'
       );
     }
     MiniApp.miniappUtils
-      .loadUsingHTMLString(htmlString, callbackUrl, baseUrl)
+      .loadUsingHTMLString(htmlString, loadHTMLStringCallbackUrl, baseUrl)
       .then((response) => {
         console.log('loadUsingHTMLString - SUCCESS: ', response);
         setLoadHTMLStringResponse(response);
@@ -531,9 +531,7 @@ const UriSchemes = () => {
         <CardContent className={deeplinkClass.content}>
           <TextField
             className={classes.textfield}
-            onChange={(e) =>
-              setLoadHTMLStringCallbackUrl(e.currentTarget.value)
-            }
+            onChange={(e) => setLoadHTMLStringCallbackUrl(e.currentTarget.value)}
             value={loadHTMLStringCallbackUrl}
             label="CallbackUrl"
             variant="outlined"
