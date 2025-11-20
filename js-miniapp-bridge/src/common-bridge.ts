@@ -1141,6 +1141,27 @@ export class MiniAppBridge {
   launchAppUsingPackageName(packageName: string) {
     return this.utilityManager.launchAppUsingPackageName(packageName);
   }
+
+  /**
+   * Checks if an application is installed on the device.
+   *
+   * For Android: Pass the package name to check if an app is installed.
+   * For iOS: Pass the deeplink URL to check if an app is installed.
+   *
+   * @param packageNameOrUrl - Either a package name (Android) or deeplink URL (iOS).
+   * @returns A promise that resolves to true if the application is installed, or false otherwise.
+   *
+   * @example
+   * // For Android
+   * isAppInstalledInDevice('com.example.app')
+   *
+   * @example
+   * // For iOS
+   * isAppInstalledInDevice('myapp://')
+   */
+  isAppInstalledInDevice(packageNameOrUrl: string) {
+    return this.utilityManager.isAppInstalledInDevice(packageNameOrUrl);
+  }
 }
 
 /**

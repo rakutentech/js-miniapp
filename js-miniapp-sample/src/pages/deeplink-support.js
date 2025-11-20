@@ -78,6 +78,9 @@ const DeeplinkSupport = () => {
   const [isAndroid, setIsAndroid] = useState(false);
   const [deeplinkCheckResult, setDeeplinkCheckResult] = useState('');
   const [launcherError, setLauncherError] = useState('');
+  const [installCheckInput, setInstallCheckInput] = useState('');
+  const [installCheckPackageInput, setInstallCheckPackageInput] = useState('');
+  const [installCheckResult, setInstallCheckResult] = useState('');
 
   React.useEffect(() => {
     if (window.navigator.userAgent.toLowerCase().includes('android')) {
@@ -172,6 +175,41 @@ const DeeplinkSupport = () => {
           err && err.message
             ? err.message
             : 'Failed to launch App by Package Name'
+        );
+      });
+  };
+
+  // App Installation Check handlers
+  const checkAppInstalled = () => {
+    setInstallCheckResult('');
+
+    const input = isAndroid ? installCheckPackageInput : installCheckInput;
+
+    if (!input) {
+      setInstallCheckResult(
+        isAndroid ? 'Please enter a Package Name' : 'Please enter a Deeplink URL'
+      );
+      return;
+    }
+
+    MiniApp.miniappUtils
+      .isAppInstalledInDevice(input)
+      .then((isInstalled) => {
+        if (typeof isInstalled === 'boolean') {
+          setInstallCheckResult(
+            isInstalled
+              ? 'App is installed on the device'
+              : 'App is NOT installed on the device'
+          );
+        } else {
+          setInstallCheckResult('Error occurred while checking installation');
+        }
+      })
+      .catch((err) => {
+        setInstallCheckResult(
+          err && err.message
+            ? err.message
+            : 'Error occurred while checking installation'
         );
       });
   };
@@ -337,6 +375,100 @@ const DeeplinkSupport = () => {
             }}
           >
             {launcherError}
+          </CardContent>
+        )}
+      </GreyCard>
+      <br />
+      {/* App Installation Checker Card */}
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          App Installation Checker
+        </CardContent>
+        {isAndroid ? (
+          <>
+            <CardContent className={classes.content}>
+              <TextField
+                variant="outlined"
+                className={classes.formInput}
+                id="install-check-package-input"
+                label={'Package Name'}
+                value={installCheckPackageInput}
+                onChange={(e) => setInstallCheckPackageInput(e.target.value)}
+                InputProps={{
+                  endAdornment: installCheckPackageInput && (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="clear install check package input"
+                        onClick={() => setInstallCheckPackageInput('')}
+                        edge="end"
+                        size="small"
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </CardContent>
+            <CardContent
+              style={{ fontSize: 14, color: '#666', textAlign: 'center' }}
+            >
+              For Android, enter the package name (e.g., com.example.app)
+            </CardContent>
+          </>
+        ) : (
+          <>
+            <CardContent className={classes.content}>
+              <TextField
+                variant="outlined"
+                className={classes.formInput}
+                id="install-check-input"
+                label={'Deeplink URL'}
+                value={installCheckInput}
+                onChange={(e) => setInstallCheckInput(e.target.value)}
+                InputProps={{
+                  endAdornment: installCheckInput && (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="clear install check input"
+                        onClick={() => setInstallCheckInput('')}
+                        edge="end"
+                        size="small"
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </CardContent>
+            <CardContent
+              style={{ fontSize: 14, color: '#666', textAlign: 'center' }}
+            >
+              For iOS, enter the deeplink URL (e.g., myapp://)
+            </CardContent>
+          </>
+        )}
+        <CardActions className={classes.actions}>
+          <Button
+            color="primary"
+            className={classes.button}
+            onClick={checkAppInstalled}
+            variant="contained"
+          >
+            Check if App is Installed
+          </Button>
+        </CardActions>
+        {/* Display result */}
+        {installCheckResult && (
+          <CardContent
+            style={{
+              color: installCheckResult.includes('NOT') ? 'red' : installCheckResult.includes('Error') || installCheckResult.includes('Please') ? 'orange' : 'green',
+              fontSize: 14,
+              textAlign: 'center',
+            }}
+          >
+            {installCheckResult}
           </CardContent>
         )}
       </GreyCard>
