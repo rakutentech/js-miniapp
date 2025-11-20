@@ -1486,7 +1486,7 @@ describe('isAppInstalledInDevice', () => {
 
     // Test URL detection
     bridge.isAppInstalledInDevice('myapp://');
-    expect(execSpy.getCall(0).args[1]).to.deep.equal({ deeplink: 'myapp://' });
+    expect(execSpy.getCall(0).args[1]).to.deep.equal({ url: 'myapp://' });
 
     // Test package name detection
     bridge.isAppInstalledInDevice('com.example.app');

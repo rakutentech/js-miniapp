@@ -187,7 +187,9 @@ const DeeplinkSupport = () => {
 
     if (!input) {
       setInstallCheckResult(
-        isAndroid ? 'Please enter a Package Name' : 'Please enter a Deeplink URL'
+        isAndroid
+          ? 'Please enter a Package Name'
+          : 'Please enter a Deeplink URL'
       );
       return;
     }
@@ -446,6 +448,7 @@ const DeeplinkSupport = () => {
               style={{ fontSize: 14, color: '#666', textAlign: 'center' }}
             >
               For iOS, enter the deeplink URL (e.g., myapp://)
+              For Android, enter the package name (e.g., com.example.app)
             </CardContent>
           </>
         )}
@@ -463,7 +466,12 @@ const DeeplinkSupport = () => {
         {installCheckResult && (
           <CardContent
             style={{
-              color: installCheckResult.includes('NOT') ? 'red' : installCheckResult.includes('Error') || installCheckResult.includes('Please') ? 'orange' : 'green',
+              color: installCheckResult.includes('NOT')
+                ? 'red'
+                : installCheckResult.includes('Error') ||
+                  installCheckResult.includes('Please')
+                ? 'orange'
+                : 'green',
               fontSize: 14,
               textAlign: 'center',
             }}
