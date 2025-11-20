@@ -1474,9 +1474,8 @@ describe('isAppInstalledInDevice', () => {
       '{ "message": "app installation check error" }'
     );
 
-    return expect(
-      bridge.isAppInstalledInDevice('com.example.app')
-    ).to.eventually.be.rejected;
+    return expect(bridge.isAppInstalledInDevice('com.example.app')).to
+      .eventually.be.rejected;
   });
 
   it('should correctly identify URL vs package name', () => {
@@ -1486,7 +1485,9 @@ describe('isAppInstalledInDevice', () => {
 
     // Test URL detection
     bridge.isAppInstalledInDevice('myapp://');
-    expect(mockExecutor.exec.getCall(0).args[1]).to.deep.equal({ url: 'myapp://' });
+    expect(mockExecutor.exec.getCall(0).args[1]).to.deep.equal({
+      url: 'myapp://',
+    });
 
     // Test package name detection
     bridge.isAppInstalledInDevice('com.example.app');
