@@ -1630,6 +1630,53 @@ MiniApp.miniappUtils
 
 > **Note:** These functions require the host app to support launching external apps. Unit tests only verify correct parameter passing, not actual app launching.
 
+## Check if App is Installed <small style="color:green;font-size: 12px">Available from v1.26.1</small>
+
+You can check if an application is installed on the device. The method automatically detects whether you're passing a package name (Android) or a deeplink URL (iOS) based on the presence of `://` in the string.
+
+### For Android (using package name):
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .isAppInstalledInDevice('com.example.app')
+  .then((isInstalled) => {
+    if (isInstalled) {
+      console.log('App is installed');
+    } else {
+      console.log('App is not installed');
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+### For iOS (using deeplink URL):
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .isAppInstalledInDevice('myapp://')
+  .then((isInstalled) => {
+    if (isInstalled) {
+      console.log('App is installed');
+    } else {
+      console.log('App is not installed');
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+**How it works:**
+- If the string contains `://`, it's treated as a deeplink URL and sent to the native bridge as `{ url: 'myapp://' }`
+- Otherwise, it's treated as a package name and sent as `{ packageName: 'com.example.app' }`
+- Returns `true` if the app is installed, `false` otherwise
+
+> **Note:** On Android, the package name is required because Android doesn't allow checking app installation via deeplink. On iOS, deeplink URLs are used to check if an app is installed.
+
 ### Load HTML String <small style="color:green;font-size: 12px">Available from v1.26.0</small>
 
 You can load HTML string to Host App. 
