@@ -447,8 +447,8 @@ const DeeplinkSupport = () => {
             <CardContent
               style={{ fontSize: 14, color: '#666', textAlign: 'center' }}
             >
-              For iOS, enter the deeplink URL (e.g., myapp://)
-              For Android, enter the package name (e.g., com.example.app)
+              For iOS, enter the deeplink URL (e.g., myapp://) For Android,
+              enter the package name (e.g., com.example.app)
             </CardContent>
           </>
         )}

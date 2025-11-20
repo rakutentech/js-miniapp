@@ -1480,17 +1480,17 @@ describe('isAppInstalledInDevice', () => {
   });
 
   it('should correctly identify URL vs package name', () => {
+    mockExecutor.exec.resetHistory();
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    const execSpy = mockExecutor.exec;
-    execSpy.callsArgWith(2, true);
+    mockExecutor.exec.callsArgWith(2, true);
 
     // Test URL detection
     bridge.isAppInstalledInDevice('myapp://');
-    expect(execSpy.getCall(0).args[1]).to.deep.equal({ url: 'myapp://' });
+    expect(mockExecutor.exec.getCall(0).args[1]).to.deep.equal({ url: 'myapp://' });
 
     // Test package name detection
     bridge.isAppInstalledInDevice('com.example.app');
-    expect(execSpy.getCall(1).args[1]).to.deep.equal({
+    expect(mockExecutor.exec.getCall(1).args[1]).to.deep.equal({
       packageName: 'com.example.app',
     });
   });
