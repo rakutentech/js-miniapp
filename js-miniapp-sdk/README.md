@@ -46,7 +46,7 @@ First, download the bundled script file from the [releases page](https://github.
 <script src="miniapp.bundle.js"></script>
 ```
 
-Then you can acces the SDK methods via `window.MiniApp.default`.
+Then you can access the SDK methods via `window.MiniApp.default`.
 
 ```javascript
 window.MiniApp.default.getMessagingUniqueId()
@@ -184,6 +184,9 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
   - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
     - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
+  - [Check if App is Installed Available from v1.26.1](#check-if-app-is-installed-available-from-v1261)
+    - [For Android (using package name):](#for-android-using-package-name)
+    - [For iOS (using deeplink URL):](#for-ios-using-deeplink-url)
     - [Load HTML String Available from v1.26.0](#load-html-string-available-from-v1260)
 
 ## User details
@@ -231,7 +234,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
       });
     ```
 
-3. getMessagingUniqueId() - This method is used to retrieve a Unqiue ID that can be used for messages. 
+3. getMessagingUniqueId() - This method is used to retrieve a Unique ID that can be used for messages.
 
     **API:** [MiniAppFeatures.getmessaginguniqueid](api/interfaces/miniappfeatures.md#getmessaginguniqueid)
 
@@ -240,7 +243,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
     import MiniApp from 'js-miniapp-sdk';
 
     MiniApp
-      .getMauid()
+      .getMessagingUniqueId()
       .then(id => {
         console.log(id);
       })
@@ -476,9 +479,8 @@ MiniApp
     MiniApp
       .showInterstitialAd(adUnitID)
       .then(response => console.log(response))
-      .catch(error => console.error(response));
+      .catch(error => console.error(error));
   })
-  .catch(error => console.error(response));
 ```
 
 ```javascript
@@ -492,9 +494,9 @@ MiniApp
     MiniApp
       .showRewardedAd(adUnitID)
       .then(response => console.log(response))
-      .catch(error => console.error(response));
+      .catch(error => console.error(error));
   })
-  .catch(error => console.error(response));
+  .catch(error => console.error(error));
 ```
 
 </dd>
@@ -1607,7 +1609,7 @@ MiniApp.miniappUtils
   })
   .catch((error) => {
     console.error(error);
-  });****
+  });
 ```
 
 ### Launch App Using Package Name <small style="color:green;font-size: 12px">Available from v1.26.0</small>

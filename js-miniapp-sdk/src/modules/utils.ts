@@ -88,6 +88,13 @@ export interface MiniAppUtilsProvider {
   logEvent(message: string, type: LogType): Promise<boolean>;
 
   /**
+   * Opens the device's app settings screen for the Mini App.
+   * This is useful for prompting users to manually enable permissions.
+   * @returns A promise that resolves to true if the settings screen was opened successfully.
+   */
+  launchAppSettings(): Promise<boolean>;
+
+  /**
    * Launches an application on the device using a deeplink URL.
    * This method is useful for both iOS and Android devices where applications can be launched using deeplinks.
    *
