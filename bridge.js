@@ -821,6 +821,26 @@ var MiniAppBridge = /** @class */ (function () {
     MiniAppBridge.prototype.launchAppUsingPackageName = function (packageName) {
         return this.utilityManager.launchAppUsingPackageName(packageName);
     };
+    /**
+     * Checks if an application is installed on the device.
+     *
+     * For Android: Pass the package name to check if an app is installed.
+     * For iOS: Pass the deeplink URL to check if an app is installed.
+     *
+     * @param packageNameOrUrl - Either a package name (Android) or deeplink URL (iOS).
+     * @returns A promise that resolves to true if the application is installed, or false otherwise.
+     *
+     * @example
+     * // For Android
+     * isAppInstalledInDevice('com.example.app')
+     *
+     * @example
+     * // For iOS
+     * isAppInstalledInDevice('myapp://')
+     */
+    MiniAppBridge.prototype.isAppInstalledInDevice = function (packageNameOrUrl) {
+        return this.utilityManager.isAppInstalledInDevice(packageNameOrUrl);
+    };
     return MiniAppBridge;
 }());
 exports.MiniAppBridge = MiniAppBridge;
@@ -1293,6 +1313,19 @@ var UtilityManager = /** @class */ (function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
             return _this.executor.exec('launchAppUsingPackageName', { packageName: packageName }, function (response) {
+                resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    UtilityManager.prototype.isAppInstalledInDevice = function (packageNameOrUrl) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            // Determine if it's a URL (contains ://) or a package name
+            var isUrl = packageNameOrUrl.includes('://');
+            var options = isUrl
+                ? { url: packageNameOrUrl }
+                : { packageName: packageNameOrUrl };
+            return _this.executor.exec('isAppInstalledInDevice', options, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
