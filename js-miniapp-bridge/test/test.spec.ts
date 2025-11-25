@@ -1430,6 +1430,73 @@ describe('launchAppUsingPackageName', () => {
   });
 });
 
+describe('isAppInstalledInDevice', () => {
+  it('should resolve to true when app is installed (using deeplink URL)', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.isAppInstalledInDevice('myapp://')
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('should resolve to false when app is not installed (using deeplink URL)', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, false);
+
+    return expect(
+      bridge.isAppInstalledInDevice('myapp://')
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('should resolve to true when app is installed (using package name)', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(
+      bridge.isAppInstalledInDevice('com.example.app')
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('should resolve to false when app is not installed (using package name)', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, false);
+
+    return expect(
+      bridge.isAppInstalledInDevice('com.example.app')
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('should reject on error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "message": "app installation check error" }'
+    );
+
+    return expect(bridge.isAppInstalledInDevice('com.example.app')).to
+      .eventually.be.rejected;
+  });
+
+  it('should correctly identify URL vs package name', () => {
+    mockExecutor.exec.resetHistory();
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    // Test URL detection
+    bridge.isAppInstalledInDevice('myapp://');
+    expect(mockExecutor.exec.getCall(0).args[1]).to.deep.equal({
+      url: 'myapp://',
+    });
+
+    // Test package name detection
+    bridge.isAppInstalledInDevice('com.example.app');
+    expect(mockExecutor.exec.getCall(1).args[1]).to.deep.equal({
+      packageName: 'com.example.app',
+    });
+  });
+});
+
 describe('loadUsingHTMLString', () => {
   const params = {
     htmlString: '<html><body>Hello World</body></html>',

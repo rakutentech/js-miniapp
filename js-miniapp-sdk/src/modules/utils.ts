@@ -88,6 +88,13 @@ export interface MiniAppUtilsProvider {
   logEvent(message: string, type: LogType): Promise<boolean>;
 
   /**
+   * Opens the device's app settings screen for the Mini App.
+   * This is useful for prompting users to manually enable permissions.
+   * @returns A promise that resolves to true if the settings screen was opened successfully.
+   */
+  launchAppSettings(): Promise<boolean>;
+
+  /**
    * Launches an application on the device using a deeplink URL.
    * This method is useful for both iOS and Android devices where applications can be launched using deeplinks.
    *
@@ -104,6 +111,25 @@ export interface MiniAppUtilsProvider {
    * @returns A promise or result from the underlying utility manager indicating the success or failure of the launch operation.
    */
   launchAppUsingPackageName(packageName: string): Promise<boolean>;
+
+  /**
+   * Checks if an application is installed on the device.
+   *
+   * For Android: Pass the package name to check if an app is installed.
+   * For iOS: Pass the deeplink URL to check if an app is installed.
+   *
+   * @param packageNameOrUrl - Either a package name (Android) or deeplink URL (iOS).
+   * @returns A promise that resolves to true if the application is installed, or false otherwise.
+   *
+   * @example
+   * // For Android
+   * isAppInstalledInDevice('com.example.app')
+   *
+   * @example
+   * // For iOS
+   * isAppInstalledInDevice('myapp://')
+   */
+  isAppInstalledInDevice(packageNameOrUrl: string): Promise<boolean>;
 
   /**
    * Direct HTML String loading from Host app to Miniapp
@@ -191,6 +217,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
 
   launchAppUsingPackageName(packageName: string): Promise<boolean> {
     return getBridge().utilityManager.launchAppUsingPackageName(packageName);
+  }
+
+  isAppInstalledInDevice(packageNameOrUrl: string): Promise<boolean> {
+    return getBridge().utilityManager.isAppInstalledInDevice(packageNameOrUrl);
   }
 
   /**

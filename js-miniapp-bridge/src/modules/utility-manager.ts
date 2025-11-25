@@ -99,4 +99,45 @@ export class UtilityManager {
       );
     });
   }
+
+  /**
+   * Checks if an application is installed on the device using a package name (Android).
+   *
+   * @param packageName - The package name of the application to check (e.g., 'com.example.app').
+   * @returns A promise that resolves to `true` if the application is installed, or `false` otherwise.
+   *
+   * @example
+   * isAppInstalledInDevice('com.example.app')
+   */
+  isAppInstalledInDevice(packageName: string): Promise<boolean>;
+
+  /**
+   * Checks if an application is installed on the device using a deeplink URL (iOS).
+   *
+   * @param url - The deeplink URL scheme to check (e.g., 'myapp://').
+   * @returns A promise that resolves to `true` if the application is installed, or `false` otherwise.
+   *
+   * @example
+   * isAppInstalledInDevice('myapp://')
+   */
+  isAppInstalledInDevice(url: string): Promise<boolean>;
+
+  isAppInstalledInDevice(packageNameOrUrl: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      // Determine if it's a URL (contains ://) or a package name
+      const isUrl = packageNameOrUrl.includes('://');
+      const options = isUrl
+        ? { url: packageNameOrUrl }
+        : { packageName: packageNameOrUrl };
+
+      return this.executor.exec(
+        'isAppInstalledInDevice',
+        options,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

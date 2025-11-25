@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.26.1 (TBD)
+- **Feature:** Added new interface `isAppInstalledInDevice` to check if an application is installed on the device. For Android, pass a package name (e.g., `'com.example.app'`), and for iOS, pass a deeplink URL (e.g., `'myapp://'`). The method automatically detects the parameter type and returns a boolean indicating whether the app is installed.
+
 ### 1.26.0 (2025-10-01)
 - **Feature:** Added new interfaces `loadUsingHTMLString` passing an options object `LoadHTMLStringOptions` containing `htmlString`, `callBackUrl` and `baseUrl`.
 - **Feature:** Added new interfaces `launchAppUsingDeeplink` and `launchAppUsingPackageName` to MiniAppUtils for launching external apps via deeplink or package name.
