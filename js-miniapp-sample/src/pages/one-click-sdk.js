@@ -1,5 +1,4 @@
 import React, { useState, useReducer } from 'react';
-import { OneClickSdkICInfo } from 'js-miniapp-sdk';
 
 import {
   Button,
@@ -13,7 +12,7 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { OneClickSdkICInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -136,9 +135,12 @@ export const dataFetchReducer = (state: State, action: Action) => {
       };
 
     default:
-      throw Error('Unknown action type');
+      throw new Error('Unknown action type');
   }
 };
+function isEmpty(str) {
+  return !str || str.trim().length === 0;
+}
 
 function OneClickSdk() {
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
@@ -151,10 +153,6 @@ function OneClickSdk() {
   const [supportedKycTypes, setSupportedKycTypes] = useState('');
   const [baseUrl, setBaseUrl] = useState('');
   const [enabledSecurityCheck, setEnabledSecurityCheck] = useState(false);
-
-  function isEmpty(str) {
-    return !str || str.trim().length === 0;
-  }
 
   function isTextFieldValuesValid(textFieldValue, fieldName) {
     if (isEmpty(textFieldValue)) {
