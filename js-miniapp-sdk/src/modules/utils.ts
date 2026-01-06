@@ -3,6 +3,7 @@ import {
   CloseAlertInfo,
   HostThemeColor,
   MAAnalyticsInfo,
+  MAAnalyticsConfig,
 } from '../../../js-miniapp-bridge/src';
 import { LogType } from '../../../js-miniapp-bridge/src/types/log-type';
 import {
@@ -142,6 +143,12 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
       return getBridge().sendAnalytics(analytics);
     }
     return Promise.reject('sendAnalytics Error');
+  }
+  configureAnalytics(config: MAAnalyticsConfig): Promise<string> {
+    if (typeof getBridge().configureAnalytics === 'function') {
+      return getBridge().configureAnalytics(config);
+    }
+    return Promise.reject('configureAnalytics Error');
   }
   getFeatureList(): Promise<string[]> {
     return getBridge().getFeatureList();

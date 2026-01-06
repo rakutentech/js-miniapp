@@ -36,3 +36,14 @@ export interface MAAnalyticsInfo {
   accountId?: string;
   applicationId?: string;
 }
+
+/**
+ * Mini App Analytics Configuration type
+ */
+export interface MAAnalyticsConfig {
+  applicationId: string;
+  accountId: string;
+  ssc: string;
+  customerId?: string;
+  contractedPlan?: string;
+}

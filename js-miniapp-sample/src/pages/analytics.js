@@ -14,7 +14,7 @@ import Tab from '@material-ui/core/Tab';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
-import { sendAnalytics } from './helper';
+import { sendAnalytics, configureAnalytics } from './helper';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -159,6 +159,7 @@ function Analytics() {
   const [etype, setEtype] = useState('');
   const [customerId, setCustomerId] = useState('');
   const [elementType, setElementType] = useState('');
+  const [contractedPlan, setContractedPlan] = useState('');
   const defaultJsonString = '{"contracted_plan": "Test"}';
 
   // Initialize the state with the default JSON string and its parsed object
@@ -397,6 +398,130 @@ function Analytics() {
     );
   }
 
+  function ConfigureAnalyticsPanel() {
+    const configureAnalyticsHandler = async () => {
+      if (!isTextFieldValuesValid(accountId)) {
+        dispatch({
+          type: 'INPUT_FAILURE',
+          miniAppError: null,
+          inputError: 'Account ID cannot be empty',
+        });
+        setTabValue('1');
+        return;
+      }
+      if (!isTextFieldValuesValid(applicationId)) {
+        dispatch({
+          type: 'INPUT_FAILURE',
+          miniAppError: null,
+          inputError: 'Application ID cannot be empty',
+        });
+        setTabValue('1');
+        return;
+      }
+      if (!isTextFieldValuesValid(ssc)) {
+        dispatch({
+          type: 'INPUT_FAILURE',
+          miniAppError: null,
+          inputError: 'SSC cannot be empty',
+        });
+        return;
+      }
+
+      try {
+        dispatch({
+          type: 'SET_ANALYTICS_INIT',
+          miniAppError: null,
+          inputError: null,
+        });
+
+        await configureAnalytics(
+          applicationId,
+          accountId,
+          ssc,
+          customerId,
+          contractedPlan
+        );
+
+        dispatch({
+          type: 'SET_ANALYTICS_SUCCESS',
+          miniAppError: null,
+          inputError: null,
+        });
+      } catch (error) {
+        dispatch({
+          type: 'SET_ANALYTICS_FAILURE',
+          miniAppError: error,
+          inputError: null,
+        });
+      }
+    };
+
+    return (
+      <FormGroup column="true" className={classes.rootUserGroup}>
+        <br />
+        <TextField
+          variant="outlined"
+          className={classes.formInput}
+          id="input-ssc"
+          label={'SSC'}
+          value={ssc}
+          onChange={(e) => setSsc(e.target.value)}
+        />
+        <br />
+        <TextField
+          variant="outlined"
+          className={classes.formInput}
+          id="input-customerid"
+          label={'Customer ID (Optional)'}
+          value={customerId}
+          onChange={(e) => setCustomerId(e.target.value)}
+        />
+        <br />
+        <TextField
+          variant="outlined"
+          className={classes.formInput}
+          id="input-contracted-plan"
+          label={'Contracted Plan (Optional)'}
+          value={contractedPlan}
+          onChange={(e) => setContractedPlan(e.target.value)}
+        />
+        <Grid>
+          {state.isLoading && (
+            <Typography variant="body1" className={classes.label}>
+              Configuring analytics...
+            </Typography>
+          )}
+          {!state.isLoading && state.isError && (
+            <Typography variant="body1" className={classes.red}>
+              {state.inputError}
+            </Typography>
+          )}
+          {!state.isLoading && state.isError && state.error && (
+            <Typography variant="body1" className={classes.red}>
+              {state.error.message || 'Configuration failed'}
+            </Typography>
+          )}
+          {!state.isLoading && state.isSuccess && (
+            <Typography variant="body1" className={classes.green}>
+              Analytics configured Successfully
+            </Typography>
+          )}
+        </Grid>
+        <Grid className={classes.grid} align="center">
+          <div className={classes.contentSection}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={configureAnalyticsHandler}
+            >
+              Configure Analytics
+            </Button>
+          </div>
+        </Grid>
+      </FormGroup>
+    );
+  }
+
   const [tabValue, setTabValue] = React.useState('1');
 
   const handleTabChange = (event: Event, newValue: string) => {
@@ -415,9 +540,11 @@ function Analytics() {
           <TabList variant="scrollable" onChange={handleTabChange}>
             <Tab label="Account Details" value="1" />
             <Tab label="Analytics Info" value="2" />
+            <Tab label="Configure Analytics" value="3" />
           </TabList>
           <TabPanel value="1">{SetAnalyticsAccountPanel()}</TabPanel>
           <TabPanel value="2">{SendAnalyticsPanel()}</TabPanel>
+          <TabPanel value="3">{ConfigureAnalyticsPanel()}</TabPanel>
         </TabContext>
       </Container>
     </div>

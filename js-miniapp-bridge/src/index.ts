@@ -29,6 +29,7 @@ import { CloseAlertInfo } from './types/close-alert';
 import { HostThemeColor } from './types/host-color-scheme';
 import {
   MAAnalyticsInfo,
+  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from './types/analytics/analytics';
@@ -120,6 +121,7 @@ export {
   UserCancelledPurchaseError,
   HostThemeColor,
   MAAnalyticsInfo,
+  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   UniversalBridgeInfo,
