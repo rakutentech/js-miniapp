@@ -74,6 +74,7 @@ import {
 import { LogType } from './types/log-type';
 
 import { EsimConfig } from './types/e-sim';
+import { OneClickSdkICInfo } from './types/one-click-sdk';
 
 export {
   MiniAppBridge,
@@ -132,4 +133,5 @@ export {
   EsimConfig,
   PermissionName,
   PermissionStatus,
+  OneClickSdkICInfo,
 };

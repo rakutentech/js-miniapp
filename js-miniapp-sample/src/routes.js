@@ -30,6 +30,7 @@ import DatasetIcon from '@mui/icons-material/Dataset';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import TouchAppIcon from '@mui/icons-material/TouchAppOutlined';
 
 import Ads from './pages/ads';
 import Analytics from './pages/analytics';
@@ -66,6 +67,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
+import OneClickSdk from './pages/one-click-sdk';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -187,6 +189,11 @@ const launchAppSettingsNavLink = {
 const scrollToAnchorNavLink = {
   navLink: '/scroll-to-anchor',
   label: 'Scroll To Anchor',
+};
+
+const oneClickNavLink = {
+  navLink: '/one-click',
+  label: 'OneClick',
 };
 
 const navLinks = [
@@ -443,6 +450,12 @@ const appItems = [
     label: scrollToAnchorNavLink.label,
     navLink: scrollToAnchorNavLink.navLink,
     element: <ScrollToAnchor />,
+  },
+  {
+    icon: <TouchAppIcon />,
+    label: oneClickNavLink.label,
+    navLink: oneClickNavLink.navLink,
+    element: <OneClickSdk />,
   },
 ];
 

@@ -185,6 +185,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
     - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
     - [Load HTML String Available from v1.26.0](#load-html-string-available-from-v1260)
+  - [OneClick SDK Available from v1.27.0](#oneclick-sdk-available-from-v1270)
+    - [Start OneClick SDK IC Chip KYC Available from v1.27.0](#start-oneclick-sdk-ic-chip-kyc-available-from-v1270)
 
 ## User details
 
@@ -1654,3 +1656,37 @@ MiniApp.miniappUtils
 ```
 
 > **Note:** These functions require the host app to support loading HTML strings. Unit tests only verify correct parameter passing, not actual app launching.
+>
+> 
+
+<div id='oneclick-sdk-available-from-v1270'/>
+
+## OneClick SDK <small style="color:green;font-size: 12px">Available from v1.27.0</small>
+
+<div id='start-oneclick-sdk-ic-chip-kyc-available-from-v1270'/>
+
+### Start OneClick SDK IC Chip KYC <small style="color:green;font-size: 12px">Available from v1.27.0</small>
+
+You can request OneClick SDK IC Chip to Host App. 
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+import { LoadHTMLStringOptions } from 'js-miniapp-sdk';
+
+MiniApp.oneClickSdk
+  .startICChipKyc({
+    idid:'abc123',
+    minor:'abc123',
+    redirectUri:'abc123',
+    supportedKycTypes:'abc123'
+  } as OneClickSdkICInfo)
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+> **Note:** These functions require the host app to support OneClick SDK. Unit tests only verify correct parameter passing, not actual app launching.
