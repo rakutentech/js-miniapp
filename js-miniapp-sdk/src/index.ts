@@ -51,7 +51,6 @@ import {
   CookieInfo,
   LogType,
   EsimConfig,
-  OneClickSdkICInfo,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -115,5 +114,4 @@ export {
   CookieInfo,
   LogType,
   EsimConfig,
-  OneClickSdkICInfo,
 };
