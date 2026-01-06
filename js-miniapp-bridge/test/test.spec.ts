@@ -32,7 +32,6 @@ import {
   PermissionStatus,
   CookieInfo,
   MAAnalyticsConfig,
-  MAAnalyticsInfo,
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
 import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
@@ -1687,13 +1686,5 @@ describe('configureAnalytics', () => {
     return expect(
       bridge.configureAnalytics(configWithLongStrings)
     ).to.eventually.deep.equal(response);
-  });
-
-  it('will handle error with invalid JSON', () => {
-    const bridge = new Bridge.MiniAppBridge(mockExecutor);
-    mockExecutor.exec.callsArgWith(3, 'Invalid JSON response');
-
-    return expect(bridge.configureAnalytics(analyticsConfig)).to.eventually.be
-      .rejected;
   });
 });

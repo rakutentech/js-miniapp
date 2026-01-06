@@ -45,7 +45,6 @@ import {
   UserCancelledPurchaseError,
   HostThemeColor,
   MAAnalyticsInfo,
-  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   UniversalBridgeInfo,
@@ -65,6 +64,8 @@ import {
 const miniAppInstance = new MiniApp();
 
 export default miniAppInstance;
+
+export { MAAnalyticsConfig } from '../../js-miniapp-bridge/src';
 export {
   CustomPermission,
   CustomPermissionName,
@@ -109,7 +110,6 @@ export {
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
   MAAnalyticsInfo,
-  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   UniversalBridgeInfo,

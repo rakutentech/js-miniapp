@@ -29,7 +29,6 @@ import { CloseAlertInfo } from './types/close-alert';
 import { HostThemeColor } from './types/host-color-scheme';
 import {
   MAAnalyticsInfo,
-  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
 } from './types/analytics/analytics';
@@ -76,6 +75,8 @@ import { LogType } from './types/log-type';
 
 import { EsimConfig } from './types/e-sim';
 
+export { MAAnalyticsConfig } from './types/analytics/analytics';
+
 export {
   MiniAppBridge,
   MiniAppSDKLogger,
@@ -121,7 +122,6 @@ export {
   UserCancelledPurchaseError,
   HostThemeColor,
   MAAnalyticsInfo,
-  MAAnalyticsConfig,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   UniversalBridgeInfo,

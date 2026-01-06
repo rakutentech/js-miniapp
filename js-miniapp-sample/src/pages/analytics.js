@@ -165,6 +165,79 @@ function Analytics() {
   // Initialize the state with the default JSON string and its parsed object
   const [jsonString, setJsonString] = useState(defaultJsonString);
 
+  const [tabValue, setTabValue] = React.useState('1');
+
+  const handleTabChange = (event: Event, newValue: string) => {
+    dispatch({
+      type: 'SET_ANALYTICS_INIT',
+      miniAppError: null,
+      inputError: null,
+    });
+    setTabValue(newValue);
+  };
+
+  const handleCustomDataChange = (e) => {
+    const newJsonString = e.target.value;
+    setJsonString(newJsonString);
+  };
+
+  const configureAnalyticsHandler = async () => {
+    if (!isTextFieldValuesValid(accountId)) {
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Account ID cannot be empty',
+      });
+      setTabValue('1');
+      return;
+    }
+    if (!isTextFieldValuesValid(applicationId)) {
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'Application ID cannot be empty',
+      });
+      setTabValue('1');
+      return;
+    }
+    if (!isTextFieldValuesValid(ssc)) {
+      dispatch({
+        type: 'INPUT_FAILURE',
+        miniAppError: null,
+        inputError: 'SSC cannot be empty',
+      });
+      return;
+    }
+
+    try {
+      dispatch({
+        type: 'SET_ANALYTICS_INIT',
+        miniAppError: null,
+        inputError: null,
+      });
+
+      await configureAnalytics(
+        applicationId,
+        accountId,
+        ssc,
+        customerId,
+        contractedPlan
+      );
+
+      dispatch({
+        type: 'SET_ANALYTICS_SUCCESS',
+        miniAppError: null,
+        inputError: null,
+      });
+    } catch (error) {
+      dispatch({
+        type: 'SET_ANALYTICS_FAILURE',
+        miniAppError: error,
+        inputError: null,
+      });
+    }
+  };
+
   function SaveAnalyticsInfo() {
     if (!isTextFieldValuesValid(accountId)) {
       dispatch({
@@ -188,11 +261,6 @@ function Analytics() {
       inputError: null,
     });
   }
-
-  const handleCustomDataChange = (e) => {
-    const newJsonString = e.target.value;
-    setJsonString(newJsonString);
-  };
 
   function isEmpty(str) {
     return !str || str.trim().length === 0;
@@ -399,63 +467,6 @@ function Analytics() {
   }
 
   function ConfigureAnalyticsPanel() {
-    const configureAnalyticsHandler = async () => {
-      if (!isTextFieldValuesValid(accountId)) {
-        dispatch({
-          type: 'INPUT_FAILURE',
-          miniAppError: null,
-          inputError: 'Account ID cannot be empty',
-        });
-        setTabValue('1');
-        return;
-      }
-      if (!isTextFieldValuesValid(applicationId)) {
-        dispatch({
-          type: 'INPUT_FAILURE',
-          miniAppError: null,
-          inputError: 'Application ID cannot be empty',
-        });
-        setTabValue('1');
-        return;
-      }
-      if (!isTextFieldValuesValid(ssc)) {
-        dispatch({
-          type: 'INPUT_FAILURE',
-          miniAppError: null,
-          inputError: 'SSC cannot be empty',
-        });
-        return;
-      }
-
-      try {
-        dispatch({
-          type: 'SET_ANALYTICS_INIT',
-          miniAppError: null,
-          inputError: null,
-        });
-
-        await configureAnalytics(
-          applicationId,
-          accountId,
-          ssc,
-          customerId,
-          contractedPlan
-        );
-
-        dispatch({
-          type: 'SET_ANALYTICS_SUCCESS',
-          miniAppError: null,
-          inputError: null,
-        });
-      } catch (error) {
-        dispatch({
-          type: 'SET_ANALYTICS_FAILURE',
-          miniAppError: error,
-          inputError: null,
-        });
-      }
-    };
-
     return (
       <FormGroup column="true" className={classes.rootUserGroup}>
         <br />
@@ -521,17 +532,6 @@ function Analytics() {
       </FormGroup>
     );
   }
-
-  const [tabValue, setTabValue] = React.useState('1');
-
-  const handleTabChange = (event: Event, newValue: string) => {
-    dispatch({
-      type: 'SET_ANALYTICS_INIT',
-      miniAppError: null,
-      inputError: null,
-    });
-    setTabValue(newValue);
-  };
 
   return (
     <div className={classes.scrollable}>
