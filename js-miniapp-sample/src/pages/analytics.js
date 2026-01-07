@@ -466,72 +466,70 @@ function Analytics() {
     );
   }
 
-  function ConfigureAnalyticsPanel() {
-    return (
-      <FormGroup column="true" className={classes.rootUserGroup}>
-        <br />
-        <TextField
-          variant="outlined"
-          className={classes.formInput}
-          id="input-ssc"
-          label={'SSC'}
-          value={ssc}
-          onChange={(e) => setSsc(e.target.value)}
-        />
-        <br />
-        <TextField
-          variant="outlined"
-          className={classes.formInput}
-          id="input-customerid"
-          label={'Customer ID (Optional)'}
-          value={customerId}
-          onChange={(e) => setCustomerId(e.target.value)}
-        />
-        <br />
-        <TextField
-          variant="outlined"
-          className={classes.formInput}
-          id="input-contracted-plan"
-          label={'Contracted Plan (Optional)'}
-          value={contractedPlan}
-          onChange={(e) => setContractedPlan(e.target.value)}
-        />
-        <Grid>
-          {state.isLoading && (
-            <Typography variant="body1" className={classes.label}>
-              Configuring analytics...
-            </Typography>
-          )}
-          {!state.isLoading && state.isError && (
-            <Typography variant="body1" className={classes.red}>
-              {state.inputError}
-            </Typography>
-          )}
-          {!state.isLoading && state.isError && state.error && (
-            <Typography variant="body1" className={classes.red}>
-              {state.error.message || 'Configuration failed'}
-            </Typography>
-          )}
-          {!state.isLoading && state.isSuccess && (
-            <Typography variant="body1" className={classes.green}>
-              Analytics configured Successfully
-            </Typography>
-          )}
-        </Grid>
-        <Grid className={classes.grid} align="center">
-          <div className={classes.contentSection}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={configureAnalyticsHandler}
-            >
-              Configure Analytics
-            </Button>
-          </div>
-        </Grid>
-      </FormGroup>
-    );
-  }
+  const ConfigureAnalyticsPanel = (
+    <FormGroup column="true" className={classes.rootUserGroup}>
+      <br />
+      <TextField
+        variant="outlined"
+        className={classes.formInput}
+        id="input-ssc"
+        label={'SSC'}
+        value={ssc}
+        onChange={(e) => setSsc(e.target.value)}
+      />
+      <br />
+      <TextField
+        variant="outlined"
+        className={classes.formInput}
+        id="input-customerid"
+        label={'Customer ID (Optional)'}
+        value={customerId}
+        onChange={(e) => setCustomerId(e.target.value)}
+      />
+      <br />
+      <TextField
+        variant="outlined"
+        className={classes.formInput}
+        id="input-contracted-plan"
+        label={'Contracted Plan (Optional)'}
+        value={contractedPlan}
+        onChange={(e) => setContractedPlan(e.target.value)}
+      />
+      <Grid>
+        {state.isLoading && (
+          <Typography variant="body1" className={classes.label}>
+            Configuring analytics...
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && (
+          <Typography variant="body1" className={classes.red}>
+            {state.inputError}
+          </Typography>
+        )}
+        {!state.isLoading && state.isError && state.error && (
+          <Typography variant="body1" className={classes.red}>
+            {state.error.message || 'Configuration failed'}
+          </Typography>
+        )}
+        {!state.isLoading && state.isSuccess && (
+          <Typography variant="body1" className={classes.green}>
+            Analytics configured Successfully
+          </Typography>
+        )}
+      </Grid>
+      <Grid className={classes.grid} align="center">
+        <div className={classes.contentSection}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={configureAnalyticsHandler}
+          >
+            Configure Analytics
+          </Button>
+        </div>
+      </Grid>
+    </FormGroup>
+  );
 
   return (
     <div className={classes.scrollable}>
@@ -544,7 +542,7 @@ function Analytics() {
           </TabList>
           <TabPanel value="1">{SetAnalyticsAccountPanel()}</TabPanel>
           <TabPanel value="2">{SendAnalyticsPanel()}</TabPanel>
-          <TabPanel value="3">{ConfigureAnalyticsPanel()}</TabPanel>
+          <TabPanel value="3">{ConfigureAnalyticsPanel}</TabPanel>
         </TabContext>
       </Container>
     </div>
