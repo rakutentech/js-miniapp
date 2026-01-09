@@ -38,7 +38,7 @@ export interface MAAnalyticsInfo {
 }
 
 /**
- * Mini App Analytics Configuration type
+ * Mini App Analytics Configuration type is only for passing information across to another SDK/module.
  */
 export interface MAAnalyticsConfig {
   applicationId: string;
