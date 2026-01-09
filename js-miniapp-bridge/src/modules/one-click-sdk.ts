@@ -21,7 +21,7 @@ export class OneClickSdk {
   /**
    * Start IC Chip KYC
    * @param {OneClickSdkICInfo} info - IC Chip Info.
-   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the login status.
+   * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the IC Chip status.
    */
   startICChipKyc(info: OneClickSdkICInfo) {
     return new Promise<boolean>((resolve, reject) => {

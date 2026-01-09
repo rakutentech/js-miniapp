@@ -1719,16 +1719,16 @@ MiniApp.miniappUtils
 You can request OneClick SDK IC Chip to Host App. 
 
 ```javascript
-import MiniApp from 'js-miniapp-sdk';
-import { LoadHTMLStringOptions } from 'js-miniapp-sdk';
-
-MiniApp.oneClickSdk
-  .startICChipKyc({
+import MiniApp, { OneClickSdkICInfo } from 'js-miniapp-sdk';
+const info: OneClickSdkICInfo = {
     idid:'abc123',
     minor:'abc123',
     redirectUri:'abc123',
     supportedKycTypes:'abc123'
-  } as OneClickSdkICInfo)
+  };
+  
+MiniApp.oneClickSdk
+  .startICChipKyc(info)
   .then((success) => {
     // true if launch succeeded, false otherwise
     console.log(success);

@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.27.0 (TBD)
+- **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.
+
 ### 1.26.1 (TBD)
 - **Feature:** Added new interface `isAppInstalledInDevice` to check if an application is installed on the device. For Android, pass a package name (e.g., `'com.example.app'`), and for iOS, pass a deeplink URL (e.g., `'myapp://'`). The method automatically detects the parameter type and returns a boolean indicating whether the app is installed.
 
