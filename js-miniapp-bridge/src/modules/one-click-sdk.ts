@@ -1,6 +1,6 @@
 import { MiniAppBridgeUtils, PlatformExecutor } from '../common-bridge';
 import { parseMiniAppError } from '../types/error-types';
-import { OneClickSdkICInfo } from '../types/one-click-sdk';
+import { OneClickSdkInfo } from '../types/one-click-sdk';
 
 /**
  * Manages OneClick related operations.
@@ -20,10 +20,10 @@ export class OneClickSdk {
 
   /**
    * Start IC Chip KYC
-   * @param {OneClickSdkICInfo} info - IC Chip Info.
+   * @param {OneClickSdkInfo} info - IC Chip Info.
    * @returns {Promise<boolean>} A promise that resolves to a boolean indicating the IC Chip status.
    */
-  startICChipKyc(info: OneClickSdkICInfo) {
+  startICChipKyc(info: OneClickSdkInfo) {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'startICChipKyc',

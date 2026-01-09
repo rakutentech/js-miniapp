@@ -21,7 +21,7 @@ import {
   EsimConfig,
   PermissionName,
   PermissionStatus,
-  OneClickSdkICInfo,
+  OneClickSdkInfo,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
@@ -1028,9 +1028,9 @@ describe('loadUsingHTMLString', () => {
 });
 
 describe('startICChipKyc', () => {
-  const info: OneClickSdkICInfo = {
+  const info: OneClickSdkInfo = {
     idid: '123',
-    minor: '123',
+    minor: true,
     redirectUri: '123',
     supportedKycTypes: '123',
   };

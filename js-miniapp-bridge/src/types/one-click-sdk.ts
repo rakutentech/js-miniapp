@@ -1,8 +1,7 @@
-export interface OneClickSdkICInfo {
+export interface OneClickSdkInfo {
   idid: string;
-  minor: string;
+  minor: boolean;
   redirectUri: string;
   supportedKycTypes: string;
-  baseUrl?: string;
   enabledSecurityCheck?: boolean;
 }

@@ -12,7 +12,7 @@ import {
   Checkbox,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
-import MiniApp, { OneClickSdkICInfo } from 'js-miniapp-sdk';
+import MiniApp, { OneClickSdkInfo } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles((theme) => ({
   scrollable: {
@@ -148,10 +148,9 @@ function OneClickSdk() {
   const classes = useStyles();
 
   const [idid, setIdid] = useState('');
-  const [minor, setMinor] = useState('');
+  const [minor, setMinor] = useState(false);
   const [redirectUri, setRedirectUri] = useState('');
   const [supportedKycTypes, setSupportedKycTypes] = useState('');
-  const [baseUrl, setBaseUrl] = useState('');
   const [enabledSecurityCheck, setEnabledSecurityCheck] = useState(false);
 
   function isTextFieldValuesValid(textFieldValue, fieldName) {
@@ -172,9 +171,6 @@ function OneClickSdk() {
     if (!isTextFieldValuesValid(idid, 'IDID')) {
       return;
     }
-    if (!isTextFieldValuesValid(minor, 'Minor')) {
-      return;
-    }
     if (!isTextFieldValuesValid(redirectUri, 'Redirect URI')) {
       return;
     }
@@ -188,19 +184,18 @@ function OneClickSdk() {
       inputError: null,
     });
 
-    const icInfo: OneClickSdkICInfo = {
-      idid: idid,
-      minor: minor,
-      redirectUri: redirectUri,
-      supportedKycTypes: supportedKycTypes,
-      baseUrl: baseUrl || undefined,
-      enabledSecurityCheck: enabledSecurityCheck,
+    const info: OneClickSdkInfo = {
+      idid,
+      minor,
+      redirectUri,
+      supportedKycTypes,
+      enabledSecurityCheck,
     };
 
     try {
-      console.log('Starting IC Chip KYC with info:', icInfo);
+      console.log('Starting IC Chip KYC with info:', info);
       MiniApp.oneClickSdk
-        .startICChipKyc(icInfo)
+        .startICChipKyc(info)
         .then((response) => {
           console.log('IC Chip KYC started successfully:', response);
           dispatch({
@@ -245,14 +240,17 @@ function OneClickSdk() {
             placeholder="Enter IDID"
           />
           <br />
-          <TextField
-            variant="outlined"
-            className={classes.formInput}
-            id="input-minor"
+          <FormControlLabel
+            control={
+              <Checkbox
+                variant="outlined"
+                checked={minor}
+                onChange={(e) => setMinor(e.target.checked)}
+                name="Minor"
+                color="primary"
+              />
+            }
             label="Minor (required)"
-            value={minor}
-            onChange={(e) => setMinor(e.target.value)}
-            placeholder="Enter minor version"
           />
           <br />
           <TextField
@@ -273,16 +271,6 @@ function OneClickSdk() {
             value={supportedKycTypes}
             onChange={(e) => setSupportedKycTypes(e.target.value)}
             placeholder="Enter supported KYC types"
-          />
-          <br />
-          <TextField
-            variant="outlined"
-            className={classes.formInput}
-            id="input-base-url"
-            label="Base URL (optional)"
-            value={baseUrl}
-            onChange={(e) => setBaseUrl(e.target.value)}
-            placeholder="Enter base URL (optional)"
           />
           <br />
           <FormControlLabel

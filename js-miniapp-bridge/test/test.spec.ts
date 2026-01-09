@@ -31,7 +31,7 @@ import {
   PermissionName,
   PermissionStatus,
   CookieInfo,
-  OneClickSdkICInfo,
+  OneClickSdkInfo,
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
 import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
@@ -1526,9 +1526,9 @@ describe('loadUsingHTMLString', () => {
 });
 
 describe('startICChipKyc', () => {
-  const info: OneClickSdkICInfo = {
+  const info: OneClickSdkInfo = {
     idid: '123',
-    minor: '123',
+    minor: true,
     redirectUri: '123',
     supportedKycTypes: '123',
   };
