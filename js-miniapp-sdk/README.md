@@ -1722,7 +1722,7 @@ You can request OneClick SDK IC Chip to Host App.
 import MiniApp, { OneClickSdkInfo } from 'js-miniapp-sdk';
 const info: OneClickSdkInfo = {
     idid:'abc123',
-    minor:'abc123',
+    minor:false,
     redirectUri:'abc123',
     supportedKycTypes:'abc123'
   };
