@@ -564,7 +564,7 @@ These `HostAppEvents` will be triggered when the host app wants to notify someth
   ```javascript
   import MiniApp from 'js-miniapp-sdk';
 
-  window.addEventListener(MiniAppKeyboardEvents.RECEIVE_JSON_INFO, function (e) {
+  window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
     // To-do
   });
   ```
