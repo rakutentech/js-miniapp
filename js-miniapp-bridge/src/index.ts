@@ -76,6 +76,8 @@ import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 
 export { OneClickSdkInfo } from './types/one-click-sdk';
+export { MAAnalyticsConfig } from './types/analytics/analytics';
+
 export {
   MiniAppBridge,
   MiniAppSDKLogger,

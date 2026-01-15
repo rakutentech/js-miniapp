@@ -175,6 +175,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Host app Theme colors Available from v1.18.0](#host-app-theme-colors-available-from-v1180)
   - [Dark Mode Available from v1.18.0](#dark-mode-available-from-v1180)
   - [Send Analytics to Host app Available from v1.18.0](#send-analytics-to-host-app-available-from-v1180)
+  - [Send Configurations Analytics to Host app Available from v1.27.0](#send-configurations-analytics-to-host-app-available-from-v1270)
   - [MiniApp Finished Loading Available from v1.20.0](#miniapp-finished-loading-available-from-v1200)
   - [Get Cookies from host application Available from v1.19.0](#get-cookies-from-host-application-available-from-v1190)
   - [MiniApp storage using Key/Value Available from v1.20.0](#miniapp-storage-using-keyvalue-available-from-v1200)
@@ -1321,7 +1322,7 @@ MiniApp
 ```
 
 </dd>
-<div id='send-analytics'/>
+<div id='send-analytics-to-host-app-available-from-v1180'/>
 
 ## Send Analytics to Host app <small style="color:green;font-size: 12px">Available from v1.18.0</small>
 
@@ -1340,6 +1341,26 @@ import MiniApp from 'js-miniapp-sdk';
   };
   
   MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
+```
+
+<div id='send-configurations-analytics-to-host-app-available-from-v1270'/>
+
+## Send Configurations Analytics to Host app <small style="color:green;font-size: 12px">Available from v1.27.0</small>
+
+You can use the following interface to send analytics to Host app. Host app can use this data to record them to any server.
+
+```javascript
+import MiniApp, { MAAnalyticsConfig } from 'js-miniapp-sdk';
+
+  const analyticsConfig: MAAnalyticsConfig = {
+    applicationId: "applicationId",
+    accountId: "accountId",
+    ssc: "ssc",
+    customerId?: "customerId",
+    contractedPlan?: "contractedPlan",
+  }
+  
+  MiniApp.miniappUtils.configureAnalytics(analyticsConfig);
 ```
 
 <div id='miniapp-finished-loading'/>

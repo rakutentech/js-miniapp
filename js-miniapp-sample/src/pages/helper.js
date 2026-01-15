@@ -2,6 +2,7 @@ import MiniApp, {
   MAAnalyticsInfo,
   MAAnalyticsEventType,
   MAAnalyticsActionType,
+  MAAnalyticsConfig,
 } from 'js-miniapp-sdk';
 
 export function sendAnalytics(
@@ -58,5 +59,39 @@ export function sendAnalytics(
     MiniApp.miniappUtils.sendAnalytics(analyticsInfo);
   } catch (error) {
     console.error('An error occurred while sending analytics:', error);
+  }
+}
+
+export function configureAnalytics(
+  applicationId: string,
+  accountId: string,
+  ssc: string,
+  customerId?: string,
+  contractedPlan?: string
+) {
+  const analyticsConfig: MAAnalyticsConfig = {
+    applicationId,
+    accountId,
+    ssc,
+    customerId,
+    contractedPlan,
+  };
+  try {
+    console.log(
+      'Application ID: ' +
+        applicationId +
+        '\nAccount ID: ' +
+        accountId +
+        '\nSSC: ' +
+        ssc +
+        '\nCustomer ID: ' +
+        customerId +
+        '\nContracted Plan: ' +
+        contractedPlan
+    );
+    return MiniApp.miniappUtils.configureAnalytics(analyticsConfig);
+  } catch (error) {
+    console.error('An error occurred while configuring analytics:', error);
+    throw error;
   }
 }
