@@ -21,6 +21,7 @@ import {
   EsimConfig,
   PermissionName,
   PermissionStatus,
+  MAAnalyticsConfig,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
 import miniAppInstance from '../src';
@@ -75,6 +76,8 @@ window.MiniAppBridge = {
   isEsimSupported: sandbox.stub(),
   setupAndInstallEsim: sandbox.stub(),
   forceInternalWebView: sandbox.stub(),
+  sendAnalytics: sandbox.stub(),
+  configureAnalytics: sandbox.stub(),
   userProfileManager,
   utilityManager: {
     getPermissionStatus: sandbox.stub(),
@@ -1020,5 +1023,154 @@ describe('loadUsingHTMLString', () => {
         params.callbackUrl
       )
     ).to.eventually.be.rejected;
+  });
+});
+
+describe('configureAnalytics', () => {
+  const analyticsConfig: MAAnalyticsConfig = {
+    applicationId: 'test-app-id',
+    accountId: 'test-account-id',
+    ssc: 'test-ssc',
+    customerId: 'test-customer-id',
+    contractedPlan: 'test-plan',
+  };
+
+  it('should successfully configure analytics with all fields', () => {
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(analyticsConfig)
+    ).to.eventually.equal(response);
+  });
+
+  it('should successfully configure analytics with required fields only', () => {
+    const minimalConfig: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(minimalConfig)
+    ).to.eventually.equal(response);
+  });
+
+  it('should successfully configure analytics with optional customerId', () => {
+    const configWithCustomerId: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+      customerId: 'optional-customer-id',
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(configWithCustomerId)
+    ).to.eventually.equal(response);
+  });
+
+  it('should successfully configure analytics with optional contractedPlan', () => {
+    const configWithPlan: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+      contractedPlan: 'premium-plan',
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(configWithPlan)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve MiniAppError when configureAnalytics fails', () => {
+    const error = new MiniAppError({
+      type: 'AnalyticsError',
+      message: 'Failed to configure analytics',
+    });
+
+    window.MiniAppBridge.configureAnalytics.resolves(error);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(analyticsConfig)
+    ).to.eventually.equal(error);
+  });
+
+  it('should handle error when bridge function is not available', () => {
+    const originalConfigureAnalytics = window.MiniAppBridge.configureAnalytics;
+    delete window.MiniAppBridge.configureAnalytics;
+
+    const result = miniApp.miniappUtils.configureAnalytics(analyticsConfig);
+
+    window.MiniAppBridge.configureAnalytics = originalConfigureAnalytics;
+
+    return expect(result).to.eventually.be.rejectedWith(
+      'configureAnalytics Error'
+    );
+  });
+
+  it('should handle empty string values in config', () => {
+    const configWithEmptyStrings: MAAnalyticsConfig = {
+      applicationId: '',
+      accountId: '',
+      ssc: '',
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(configWithEmptyStrings)
+    ).to.eventually.equal(response);
+  });
+
+  it('should handle special characters in config values', () => {
+    const configWithSpecialChars: MAAnalyticsConfig = {
+      applicationId: 'app-id-with-special@#$%',
+      accountId: 'account-id-with-special!@#',
+      ssc: 'ssc-with-special&*()[]',
+      customerId: 'customer-id-with-special<>?',
+      contractedPlan: 'plan-with-special{}|',
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(configWithSpecialChars)
+    ).to.eventually.equal(response);
+  });
+
+  it('should retrieve generic MiniAppError when error has no type', () => {
+    const error = new MiniAppError({});
+
+    expect(error.message).to.equal(undefined);
+    expect(error.name).to.equal(undefined);
+
+    window.MiniAppBridge.configureAnalytics.resolves(error);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(analyticsConfig)
+    ).to.eventually.equal(error);
+  });
+
+  it('should handle long string values in config', () => {
+    const longString = 'a'.repeat(1000);
+    const configWithLongStrings: MAAnalyticsConfig = {
+      applicationId: longString,
+      accountId: longString,
+      ssc: longString,
+      customerId: longString,
+      contractedPlan: longString,
+    };
+    const response = 'success';
+    window.MiniAppBridge.configureAnalytics.resolves(response);
+
+    return expect(
+      miniApp.miniappUtils.configureAnalytics(configWithLongStrings)
+    ).to.eventually.equal(response);
   });
 });

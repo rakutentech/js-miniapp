@@ -64,6 +64,8 @@ import {
 const miniAppInstance = new MiniApp();
 
 export default miniAppInstance;
+
+export { MAAnalyticsConfig } from '../../js-miniapp-bridge/src';
 export {
   CustomPermission,
   CustomPermissionName,

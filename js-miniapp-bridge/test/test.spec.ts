@@ -31,6 +31,7 @@ import {
   PermissionName,
   PermissionStatus,
   CookieInfo,
+  MAAnalyticsConfig,
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
 import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
@@ -1521,5 +1522,169 @@ describe('loadUsingHTMLString', () => {
 
     return expect(bridge.browserManager.loadUsingHTMLString(params)).to
       .eventually.be.rejected;
+  });
+});
+
+describe('configureAnalytics', () => {
+  const analyticsConfig: MAAnalyticsConfig = {
+    applicationId: 'test-app-id',
+    accountId: 'test-account-id',
+    ssc: 'test-ssc',
+    customerId: 'test-customer-id',
+    contractedPlan: 'test-plan',
+  };
+
+  it('will call the platform executor with configureAnalytics', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.configureAnalytics(analyticsConfig).catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'configureAnalytics');
+  });
+
+  it('will pass the correct config object to the executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.configureAnalytics(analyticsConfig).catch(handleError);
+
+    sinon.assert.calledWith(
+      mockExecutor.exec,
+      'configureAnalytics',
+      analyticsConfig
+    );
+  });
+
+  it('will return success response when configuration succeeds', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(analyticsConfig)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will handle configuration with required fields only', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const minimalConfig: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(minimalConfig)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will handle configuration with optional customerId', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const configWithCustomerId: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+      customerId: 'optional-customer-id',
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(configWithCustomerId)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will handle configuration with optional contractedPlan', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const configWithPlan: MAAnalyticsConfig = {
+      applicationId: 'test-app-id',
+      accountId: 'test-account-id',
+      ssc: 'test-ssc',
+      contractedPlan: 'premium-plan',
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(configWithPlan)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will parse and reject MiniAppError when configuration fails', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{"type":"AnalyticsError","message":"Failed to configure analytics"}'
+    );
+
+    return expect(bridge.configureAnalytics(analyticsConfig)).to.eventually.be
+      .rejected;
+  });
+
+  it('will handle generic error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{"message":"Configuration failed"}');
+
+    return expect(bridge.configureAnalytics(analyticsConfig)).to.eventually.be
+      .rejected;
+  });
+
+  it('will handle error with empty message', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{"message":""}');
+
+    return expect(bridge.configureAnalytics(analyticsConfig)).to.eventually.be
+      .rejected;
+  });
+
+  it('will handle configuration with empty string values', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const configWithEmptyStrings: MAAnalyticsConfig = {
+      applicationId: '',
+      accountId: '',
+      ssc: '',
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(configWithEmptyStrings)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will handle configuration with special characters', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const configWithSpecialChars: MAAnalyticsConfig = {
+      applicationId: 'app-id-with-special@#$%',
+      accountId: 'account-id-with-special!@#',
+      ssc: 'ssc-with-special&*()[]',
+      customerId: 'customer-id-with-special<>?',
+      contractedPlan: 'plan-with-special{}|',
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(configWithSpecialChars)
+    ).to.eventually.deep.equal(response);
+  });
+
+  it('will handle configuration with long string values', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const longString = 'a'.repeat(1000);
+    const configWithLongStrings: MAAnalyticsConfig = {
+      applicationId: longString,
+      accountId: longString,
+      ssc: longString,
+      customerId: longString,
+      contractedPlan: longString,
+    };
+    const response = 'success';
+    mockExecutor.exec.callsArgWith(2, response);
+
+    return expect(
+      bridge.configureAnalytics(configWithLongStrings)
+    ).to.eventually.deep.equal(response);
   });
 });
