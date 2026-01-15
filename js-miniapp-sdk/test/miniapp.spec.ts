@@ -21,6 +21,7 @@ import {
   EsimConfig,
   PermissionName,
   PermissionStatus,
+  OneClickSdkInfo,
   MAAnalyticsConfig,
 } from '../../js-miniapp-bridge/src';
 import { MiniApp } from '../src/miniapp';
@@ -85,6 +86,9 @@ window.MiniAppBridge = {
   },
   browserManager: {
     loadUsingHTMLString: sandbox.stub(),
+  },
+  oneClickSdk: {
+    startICChipKyc: sandbox.stub(),
   },
 };
 
@@ -1023,6 +1027,29 @@ describe('loadUsingHTMLString', () => {
         params.callbackUrl
       )
     ).to.eventually.be.rejected;
+  });
+});
+
+describe('startICChipKyc', () => {
+  const info: OneClickSdkInfo = {
+    idid: '123',
+    minor: true,
+    redirectUri: '123',
+    supportedKycTypes: '123',
+  };
+  it('should return if start IC Chip KYC flow', () => {
+    window.MiniAppBridge.oneClickSdk.startICChipKyc.resolves(true);
+    return expect(miniApp.oneClickSdk.startICChipKyc(info)).to.eventually.equal(
+      true
+    );
+  });
+
+  it('should return error information', () => {
+    window.MiniAppBridge.oneClickSdk.startICChipKyc.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.oneClickSdk.startICChipKyc(info)).to.eventually.be
+      .rejected;
   });
 });
 

@@ -189,6 +189,8 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
     - [For Android (using package name):](#for-android-using-package-name)
     - [For iOS (using deeplink URL):](#for-ios-using-deeplink-url)
     - [Load HTML String Available from v1.26.0](#load-html-string-available-from-v1260)
+  - [OneClick SDK Available from v1.27.0](#oneclick-sdk-available-from-v1270)
+    - [Start OneClick SDK IC Chip KYC Available from v1.27.0](#start-oneclick-sdk-ic-chip-kyc-available-from-v1270)
 
 ## User details
 
@@ -563,7 +565,7 @@ These `HostAppEvents` will be triggered when the host app wants to notify someth
   ```javascript
   import MiniApp from 'js-miniapp-sdk';
 
-  window.addEventListener(MiniAppKeyboardEvents.RECEIVE_JSON_INFO, function (e) {
+  window.addEventListener(HostAppEvents.RECEIVE_JSON_INFO, function (e) {
     // To-do
   });
   ```
@@ -1724,3 +1726,37 @@ MiniApp.miniappUtils
 ```
 
 > **Note:** These functions require the host app to support loading HTML strings. Unit tests only verify correct parameter passing, not actual app launching.
+>
+> 
+
+<div id='oneclick-sdk-available-from-v1270'/>
+
+## OneClick SDK <small style="color:green;font-size: 12px">Available from v1.27.0</small>
+
+<div id='start-oneclick-sdk-ic-chip-kyc-available-from-v1270'/>
+
+### Start OneClick SDK IC Chip KYC <small style="color:green;font-size: 12px">Available from v1.27.0</small>
+
+You can request OneClick SDK IC Chip to Host App. 
+
+```javascript
+import MiniApp, { OneClickSdkInfo } from 'js-miniapp-sdk';
+const info: OneClickSdkInfo = {
+    idid:'abc123',
+    minor:false,
+    redirectUri:'abc123',
+    supportedKycTypes:'abc123'
+  };
+  
+MiniApp.oneClickSdk
+  .startICChipKyc(info)
+  .then((success) => {
+    // true if launch succeeded, false otherwise
+    console.log(success);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+> **Note:** These functions require the host app to support OneClick SDK. Unit tests only verify correct parameter passing, not actual app launching.

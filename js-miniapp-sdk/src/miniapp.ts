@@ -28,6 +28,7 @@ import { GalleryBridge } from './modules/gallery-manager';
 import { ShareInfoType } from './types/share-info';
 import { WebviewManager } from './modules/webview-config-provider';
 import { Esim } from './modules/e-sim';
+import { OneClickSdk } from './modules/one-click-sdk';
 
 /**
  * A module layer for webapps and mobile native interaction.
@@ -182,6 +183,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   galleryManager: GalleryBridge = new GalleryBridge();
   webviewManager: WebviewManager = new WebviewManager();
   esimService: Esim = new Esim();
+  oneClickSdk: OneClickSdk = new OneClickSdk();
 
   private requestPermission(permissionType: DevicePermission): Promise<string> {
     return getBridge().requestPermission(permissionType);

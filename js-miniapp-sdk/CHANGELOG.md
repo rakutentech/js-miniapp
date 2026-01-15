@@ -1,6 +1,7 @@
 ## CHANGELOG
 
 ### 1.27.0 (TBD)
+- **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.
 - **Feature:** Added new interface `configureAnalytics` to pass analytics configuration to HostApp.
 
 ### 1.26.1 (TBD)

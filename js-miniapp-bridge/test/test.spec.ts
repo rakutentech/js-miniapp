@@ -31,6 +31,7 @@ import {
   PermissionName,
   PermissionStatus,
   CookieInfo,
+  OneClickSdkInfo,
   MAAnalyticsConfig,
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
@@ -1522,6 +1523,31 @@ describe('loadUsingHTMLString', () => {
 
     return expect(bridge.browserManager.loadUsingHTMLString(params)).to
       .eventually.be.rejected;
+  });
+});
+
+describe('startICChipKyc', () => {
+  const info: OneClickSdkInfo = {
+    idid: '123',
+    minor: true,
+    redirectUri: '123',
+    supportedKycTypes: '123',
+  };
+
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.oneClickSdk.startICChipKyc(info).catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'startICChipKyc');
+  });
+
+  it('will parse the Error response', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "startICChipKyc error" }');
+
+    return expect(bridge.oneClickSdk.startICChipKyc(info)).to.eventually.be
+      .rejected;
   });
 });
 
