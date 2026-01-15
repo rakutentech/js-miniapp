@@ -600,6 +600,12 @@ var MiniAppBridge = /** @class */ (function () {
             return _this.executor.exec('sendAnalytics', { analyticsInfo: analytics }, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
     };
+    MiniAppBridge.prototype.configureAnalytics = function (config) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('configureAnalytics', config, function (success) { return resolve(success); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
     MiniAppBridge.prototype.getAllCookies = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
