@@ -1050,6 +1050,9 @@ describe('startICChipKyc', () => {
     );
     return expect(miniApp.oneClickSdk.startICChipKyc(info)).to.eventually.be
       .rejected;
+  });
+});
+
 describe('configureAnalytics', () => {
   const analyticsConfig: MAAnalyticsConfig = {
     applicationId: 'test-app-id',

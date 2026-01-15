@@ -1549,6 +1549,8 @@ describe('startICChipKyc', () => {
     return expect(bridge.oneClickSdk.startICChipKyc(info)).to.eventually.be
       .rejected;
   });
+});
+
 describe('configureAnalytics', () => {
   const analyticsConfig: MAAnalyticsConfig = {
     applicationId: 'test-app-id',
