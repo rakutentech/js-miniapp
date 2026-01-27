@@ -152,6 +152,7 @@ function OneClickSdk() {
   const [redirectUri, setRedirectUri] = useState('');
   const [supportedKycTypes, setSupportedKycTypes] = useState('');
   const [enabledSecurityCheck, setEnabledSecurityCheck] = useState(false);
+  const [baseUrl, setBaseUrl] = useState('');
 
   function isTextFieldValuesValid(textFieldValue, fieldName) {
     if (isEmpty(textFieldValue)) {
@@ -190,6 +191,7 @@ function OneClickSdk() {
       redirectUri,
       supportedKycTypes,
       enabledSecurityCheck,
+      baseUrl
     };
 
     try {
@@ -283,6 +285,16 @@ function OneClickSdk() {
               />
             }
             label="Enable Security Check"
+          />
+          <br />
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-base-url"
+            label="Base Url"
+            value={baseUrl}
+            onChange={(e) => setBaseUrl(e.target.value)}
+            placeholder="Enter Base Url"
           />
           <br />
           <Grid>

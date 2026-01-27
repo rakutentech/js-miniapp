@@ -4,4 +4,5 @@ export interface OneClickSdkInfo {
   redirectUri: string;
   supportedKycTypes: string;
   enabledSecurityCheck?: boolean;
+  baseUrl?: string;
 }
