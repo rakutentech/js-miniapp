@@ -1036,8 +1036,8 @@ describe('startICChipKyc', () => {
     minor: true,
     redirectUri: '123',
     supportedKycTypes: '123',
-    enabledSecurityCheck: false,
     baseUrl: 'abc',
+    enabledSecurityCheck: false,
   };
   it('should return if start IC Chip KYC flow', () => {
     window.MiniAppBridge.oneClickSdk.startICChipKyc.resolves(true);
