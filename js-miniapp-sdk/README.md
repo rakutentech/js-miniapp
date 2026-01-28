@@ -1745,6 +1745,7 @@ const info: OneClickSdkInfo = {
     idid:'abc123',
     minor:false,
     redirectUri:'abc123',
+    baseUrl:'abc',
     supportedKycTypes:'abc123'
   };
   

@@ -190,8 +190,8 @@ function OneClickSdk() {
       minor,
       redirectUri,
       supportedKycTypes,
+      baseUrl,
       enabledSecurityCheck,
-      baseUrl
     };
 
     try {
@@ -275,6 +275,16 @@ function OneClickSdk() {
             placeholder="Enter supported KYC types"
           />
           <br />
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-base-url"
+            label="Base Url (required)"
+            value={baseUrl}
+            onChange={(e) => setBaseUrl(e.target.value)}
+            placeholder="Enter Base Url"
+          />
+          <br />
           <FormControlLabel
             control={
               <Checkbox
@@ -285,16 +295,6 @@ function OneClickSdk() {
               />
             }
             label="Enable Security Check"
-          />
-          <br />
-          <TextField
-            variant="outlined"
-            className={classes.formInput}
-            id="input-base-url"
-            label="Base Url"
-            value={baseUrl}
-            onChange={(e) => setBaseUrl(e.target.value)}
-            placeholder="Enter Base Url"
           />
           <br />
           <Grid>

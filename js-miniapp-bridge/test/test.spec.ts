@@ -1532,8 +1532,8 @@ describe('startICChipKyc', () => {
     minor: true,
     redirectUri: '123',
     supportedKycTypes: '123',
-    enabledSecurityCheck: false,
     baseUrl: 'abc',
+    enabledSecurityCheck: false,
   };
 
   it('will call the platform executor', () => {
