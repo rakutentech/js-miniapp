@@ -1746,7 +1746,8 @@ const info: OneClickSdkInfo = {
     minor:false,
     redirectUri:'abc123',
     baseUrl:'abc',
-    supportedKycTypes:'abc123'
+    supportedKycTypes:'abc123',
+    enabledSecurityCheck:true
   };
   
 MiniApp.oneClickSdk
