@@ -3,5 +3,6 @@ export interface OneClickSdkInfo {
   minor: boolean;
   redirectUri: string;
   supportedKycTypes: string;
+  baseUrl: string;
   enabledSecurityCheck?: boolean;
 }

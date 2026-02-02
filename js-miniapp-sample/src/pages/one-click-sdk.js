@@ -152,6 +152,7 @@ function OneClickSdk() {
   const [redirectUri, setRedirectUri] = useState('');
   const [supportedKycTypes, setSupportedKycTypes] = useState('');
   const [enabledSecurityCheck, setEnabledSecurityCheck] = useState(false);
+  const [baseUrl, setBaseUrl] = useState('');
 
   function isTextFieldValuesValid(textFieldValue, fieldName) {
     if (isEmpty(textFieldValue)) {
@@ -189,6 +190,7 @@ function OneClickSdk() {
       minor,
       redirectUri,
       supportedKycTypes,
+      baseUrl,
       enabledSecurityCheck,
     };
 
@@ -271,6 +273,16 @@ function OneClickSdk() {
             value={supportedKycTypes}
             onChange={(e) => setSupportedKycTypes(e.target.value)}
             placeholder="Enter supported KYC types"
+          />
+          <br />
+          <TextField
+            variant="outlined"
+            className={classes.formInput}
+            id="input-base-url"
+            label="Base Url (required)"
+            value={baseUrl}
+            onChange={(e) => setBaseUrl(e.target.value)}
+            placeholder="Enter Base Url"
           />
           <br />
           <FormControlLabel
