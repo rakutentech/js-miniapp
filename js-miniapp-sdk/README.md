@@ -183,6 +183,17 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
   - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
+  - [Launch External Browser Available from v1.22.0](#launch-external-browser-available-from-v1220)
+  - [Get Image from Gallery Available from v1.22.0](#get-image-from-gallery-available-from-v1220)
+  - [Is Logged In Available from v1.22.0](#is-logged-in-available-from-v1220)
+  - [Allow Back/Forward Navigation Gestures Available from v1.22.0](#allow-backforward-navigation-gestures-available-from-v1220)
+  - [Trigger Login UI Available from v1.23.0](#trigger-login-ui-available-from-v1230)
+  - [Log Event Available from v1.23.0](#log-event-available-from-v1230)
+  - [Force Logout Available from v1.24.0](#force-logout-available-from-v1240)
+  - [Force Internal Web View Available from v1.24.0](#force-internal-web-view-available-from-v1240)
+  - [eSIM Service Available from v1.24.0](#esim-service-available-from-v1240)
+    - [is eSIM Supported Available from v1.24.0](#is-esim-supported-from-v1240)
+    - [Setup And Install eSIM Available from v1.24.0](#setup-and-install-esim-from-v1240)
   - [Launch App Deeplink Available from v1.26.0](#launch-app-deeplink-available-from-v1260)
     - [Launch App Using Package Name Available from v1.26.0](#launch-app-using-package-name-available-from-v1260)
   - [Check if App is Installed Available from v1.26.1](#check-if-app-is-installed-available-from-v1261)
@@ -1616,6 +1627,229 @@ MiniApp.miniappUtils
   });
 ```
 
+
+<div id='launch-external-browser-available-from-v1220'/>
+
+## Launch External Browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to launch a URL in the device's external browser.
+
+**API:** [MiniAppUtilsProvider.launchExternalBrowser](api/interfaces/miniapputilsprovider.md#launchexternalbrowser)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchExternalBrowser("https://www.rakuten.co.jp")
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+```
+
+<div id='get-image-from-gallery-available-from-v1220'/>
+
+## Get Image from Gallery <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface allows the user to select a single image from their device gallery.
+
+**API:** [GalleryBridgeProvider.getImageFromGallery](api/interfaces/gallerybridgeprovider.md#getimagefromgallery)
+
+Returns a `GalleryFileResponse` object containing `filename` (optional) and `data` (Blob).
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.galleryManager
+  .getImageFromGallery()
+  .then((response) => {
+    // response.filename - the file name (optional)
+    // response.data - the image as a Blob
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='is-logged-in-available-from-v1220'/>
+
+## Is Logged In <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+Get the login status of the user in the Host application.
+
+**API:** [UserInfoProvider.isLoggedIn](api/interfaces/userinfoprovider.md#isloggedin)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.user
+  .isLoggedIn()
+  .then((isLoggedIn) => {
+    console.log(isLoggedIn); // true or false
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='allow-backforward-navigation-gestures-available-from-v1220'/>
+
+## Allow Back/Forward Navigation Gestures <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+Enable or disable swipe back/forward navigation gestures in the iOS Host application.
+
+**API:** [WebViewConfigProvider.allowBackForwardNavigationGestures](api/interfaces/webviewconfigprovider.md#allowbackforwardnavigationgestures)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.webviewManager
+  .allowBackForwardNavigationGestures(true) // pass false to disable
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='trigger-login-ui-available-from-v1230'/>
+
+## Trigger Login UI <small style="color:green;font-size: 12px">Available from v1.23.0</small>
+
+Trigger the login UI for the user in the Host application.
+
+**API:** [UserInfoProvider.triggerLoginUI](api/interfaces/userinfoprovider.md#triggerloginui)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.user
+  .triggerLoginUI()
+  .then((result) => {
+    console.log(result); // true if login UI was triggered successfully
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='log-event-available-from-v1230'/>
+
+## Log Event <small style="color:green;font-size: 12px">Available from v1.23.0</small>
+
+Log an event with a specified message and log level to the Host application.
+
+**API:** [MiniAppUtilsProvider.logEvent](api/interfaces/miniapputilsprovider.md#logevent)
+
+```javascript
+import MiniApp, { LogType } from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .logEvent("Something happened", LogType.DEBUG) // LogType.DEBUG is the default
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='force-logout-available-from-v1240'/>
+
+## Force Logout <small style="color:green;font-size: 12px">Available from v1.24.0</small>
+
+Force a user logout in the Host application.
+
+**API:** [UserInfoProvider.forceLogout](api/interfaces/userinfoprovider.md#forcelogout)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.user
+  .forceLogout()
+  .then((result) => {
+    console.log(result); // true if logout was successful
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='force-internal-web-view-available-from-v1240'/>
+
+## Force Internal Web View <small style="color:green;font-size: 12px">Available from v1.24.0</small>
+
+Set whether links should be opened in the internal or external web view.
+
+**API:** [WebViewConfigProvider.forceInternalWebView](api/interfaces/webviewconfigprovider.md#forceinternalwebview)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.webviewManager
+  .forceInternalWebView(true) // pass false to use external web view
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='esim-service-available-from-v1240'/>
+
+## eSIM Service <small style="color:green;font-size: 12px">Available from v1.24.0</small>
+
+<div id='is-esim-supported-from-v1240'/>
+
+eSIM functionality support. You can check if eSIM is supported on the device and set up/install an eSIM profile.
+
+**API:** [Esim](api/classes/esim.md)
+
+### Check if eSIM is supported <small style="color:green;font-size: 12px">Available from v1.24.0</small>
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.esimService
+  .isEsimSupported()
+  .then((isSupported) => {
+    console.log(isSupported); // true or false
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+<div id='setup-and-install-esim-from-v1240'/>
+
+### Setup and install eSIM <small style="color:green;font-size: 12px">Available from v1.24.0</small>
+
+```javascript
+import MiniApp, { EsimConfig } from 'js-miniapp-sdk';
+
+const config: EsimConfig = {
+  address: "smdp.example.com",       // smdpAddress (required)
+  confirmationCode: "ACTIVATION123", // activationLink (optional)
+  eid: "89000000000000000000000000000000", // optional
+  iccid: "8988211000000543792",      // optional
+  matchingId: "matchingId123",       // optional
+  oid: "oid123",                     // optional
+};
+
+MiniApp.esimService
+  .setupAndInstallEsim(config)
+  .then((success) => {
+    console.log(success); // true if installation succeeded
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
 
 ## Launch App Deeplink <small style="color:green;font-size: 12px">Available from v1.26.0</small>
 
