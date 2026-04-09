@@ -1,0 +1,52 @@
+{
+  "short_name": "SDK Health",
+  "name": "JS MiniApp SDK Health Check",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1a237e",
+  "background_color": "#ffffff",
+
+  "reqPermissions": [
+    {
+      "name": "rakuten.miniapp.user.USER_NAME",
+      "reason": "Health check requires user name to test the getUserName API"
+    },
+    {
+      "name": "rakuten.miniapp.user.PROFILE_PHOTO",
+      "reason": "Health check requires profile photo to test the getProfilePhoto API"
+    }
+  ],
+
+  "optPermissions": [
+    {
+      "name": "rakuten.miniapp.user.CONTACT_LIST",
+      "reason": "Health check requires contact list to test the getContacts API"
+    },
+    {
+      "name": "rakuten.miniapp.device.LOCATION",
+      "reason": "Health check requires location to test location APIs"
+    },
+    {
+      "name": "rakuten.miniapp.user.ACCESS_TOKEN",
+      "reason": "Health check requires access token to test the getAccessToken API"
+    },
+    {
+      "name": "rakuten.miniapp.user.POINTS",
+      "reason": "Health check requires points to test the getPoints API"
+    }
+  ],
+
+  "accessTokenPermissions": [
+    {
+      "audience": "rae",
+      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+    }
+  ]
+}

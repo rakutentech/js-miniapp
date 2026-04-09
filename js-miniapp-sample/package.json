@@ -28,7 +28,7 @@
     "prettify": "prettier --config ./prettier.config.js --check src/**/*.js",
     "lint": "eslint src/ --fix-dry-run",
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build && npm run zip",
+    "build": "react-scripts --openssl-legacy-provider build && npm run zip",
     "dockerBuild": "cd ci && make build",
     "eject": "react-scripts eject",
     "flow": "flow",

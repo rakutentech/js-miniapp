@@ -1,0 +1,34 @@
+{
+  "name": "js-miniapp-health-check",
+  "version": "1.0.0",
+  "description": "SDK Health Check MiniApp - Tests all JS MiniApp SDK interfaces automatically",
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.10.17",
+    "js-miniapp-sdk": "1.27.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build && npm run zip",
+    "eject": "react-scripts eject",
+    "deleteUnsupportedBuildFiles": "(cd build; find . -type f -name \"*.txt\" -delete -o -name \".DS_Store\" -delete)",
+    "zip": "(npm run deleteUnsupportedBuildFiles; cd build; zip -r js-miniapp-health-check.zip ./*)"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all",
+    "Chrome>=37",
+    "iOS>=11"
+  ],
+  "homepage": ""
+}
