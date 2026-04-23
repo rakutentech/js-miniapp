@@ -1203,3 +1203,41 @@ describe('configureAnalytics', () => {
     ).to.eventually.equal(response);
   });
 });
+
+describe('openSystemSettings', () => {
+  it('should return true when settings are opened successfully', () => {
+    window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
+      .stub()
+      .resolves(true);
+    return expect(
+      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.equal(true);
+  });
+
+  it('should return false when host returns false', () => {
+    window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
+      .stub()
+      .resolves(false);
+    return expect(
+      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.equal(false);
+  });
+
+  it('should reject when bridge rejects', () => {
+    window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
+      .stub()
+      .returns(Promise.reject('test error'));
+    return expect(
+      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.be.rejected;
+  });
+
+  it('should use APP_SETTINGS as default parameter', () => {
+    window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
+      .stub()
+      .resolves(true);
+    return expect(
+      miniApp.miniappUtils.openSystemSettings()
+    ).to.eventually.equal(true);
+  });
+});

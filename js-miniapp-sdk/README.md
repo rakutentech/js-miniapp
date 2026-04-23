@@ -461,6 +461,34 @@ MiniApp.miniappUtils.launchAppSettings()
   });
 ```
 
+### Open System Settings
+
+You can open a specific system settings screen using the `openSystemSettings` interface. Pass a settings type string (default: `APP_SETTINGS`) to control which screen opens.
+
+**API:** [MiniAppFeatures.openSystemSettings](api/interfaces/miniappfeatures.md#opensystemsettings)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+// Open app settings (default)
+MiniApp.openSystemSettings()
+  .then(() => {
+    // settings opened successfully
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+// Open a specific settings screen
+MiniApp.openSystemSettings('WIFI_SETTINGS')
+  .then(() => {
+    // settings opened successfully
+  })
+  .catch(error => {
+    console.error(error);
+  });
+```
+
 ## Show Ads
 
 <dl>

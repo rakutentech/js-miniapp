@@ -31,6 +31,7 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 import TouchAppIcon from '@mui/icons-material/TouchAppOutlined';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import Ads from './pages/ads';
 import Analytics from './pages/analytics';
@@ -50,6 +51,7 @@ import GifPage from './pages/gifs';
 import ImageUpload from './pages/image-upload';
 import Landing from './pages/landing';
 import LaunchAppSettings from './pages/launch-app-settings';
+import OpenSystemSettings from './pages/open-system-settings';
 import LocalStorage from './pages/local-storage';
 import LogEventPage from './pages/log-event';
 import Media from './pages/media';
@@ -186,6 +188,11 @@ const launchAppSettingsNavLink = {
   label: 'Launch App Settings',
 };
 
+const openSystemSettingsNavLink = {
+  navLink: '/openSystemSettings',
+  label: 'Open System Settings',
+};
+
 const scrollToAnchorNavLink = {
   navLink: '/scroll-to-anchor',
   label: 'Scroll To Anchor',
@@ -234,6 +241,7 @@ const navLinks = [
   eSimNavLink,
   permissionStatusNavLink,
   launchAppSettingsNavLink,
+  openSystemSettingsNavLink,
   scrollToAnchorNavLink,
 ];
 
@@ -444,6 +452,12 @@ const appItems = [
     label: launchAppSettingsNavLink.label,
     navLink: launchAppSettingsNavLink.navLink,
     element: <LaunchAppSettings />,
+  },
+  {
+    icon: <SettingsIcon />,
+    label: openSystemSettingsNavLink.label,
+    navLink: openSystemSettingsNavLink.navLink,
+    element: <OpenSystemSettings />,
   },
   {
     icon: <DocumentScannerIcon />,

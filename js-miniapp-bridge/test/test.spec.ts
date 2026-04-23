@@ -1716,3 +1716,52 @@ describe('configureAnalytics', () => {
     ).to.eventually.deep.equal(response);
   });
 });
+
+describe('openSystemSettings', () => {
+  it('will call the platform executor', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+
+    bridge.utilityManager.openSystemSettings('APP_SETTINGS').catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'openSystemSettings');
+  });
+
+  it('will resolve with true on success', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'true');
+
+    return expect(
+      bridge.utilityManager.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.deep.equal(true);
+  });
+
+  it('will resolve with false when host returns false', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'false');
+
+    return expect(
+      bridge.utilityManager.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.deep.equal(false);
+  });
+
+  it('will reject with parsed error on failure', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{"message":"openSystemSettings not supported"}'
+    );
+
+    return expect(
+      bridge.utilityManager.openSystemSettings('APP_SETTINGS')
+    ).to.eventually.be.rejected;
+  });
+
+  it('will use APP_SETTINGS as default parameter', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'true');
+
+    bridge.utilityManager.openSystemSettings().catch(handleError);
+
+    sinon.assert.calledWith(mockExecutor.exec, 'openSystemSettings');
+  });
+});
