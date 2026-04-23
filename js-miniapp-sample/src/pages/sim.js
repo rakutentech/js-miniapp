@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
   },
   contentSection: {
-    height: '30%',
+    height: 'auto',
     padding: '10px',
   },
   label: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RakutenSim = () => {
+const Sim = () => {
   const classes = useStyles();
   const [result, setResult] = useState('');
 
@@ -58,8 +58,6 @@ const RakutenSim = () => {
             Check Rakuten SIM
           </Button>
           <label className={classes.label}>{result}</label>
-        </div>
-        <div className={classes.contentSection}>
           <Button variant="contained" color="primary" onClick={() => clear()}>
             Clear
           </Button>
@@ -69,4 +67,4 @@ const RakutenSim = () => {
   );
 };
 
-export default RakutenSim;
+export default Sim;
