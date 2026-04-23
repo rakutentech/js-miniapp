@@ -1210,7 +1210,7 @@ describe('openSystemSettings', () => {
       .stub()
       .resolves(true);
     return expect(
-      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+      miniApp.openSystemSettings('APP_SETTINGS')
     ).to.eventually.equal(true);
   });
 
@@ -1219,7 +1219,7 @@ describe('openSystemSettings', () => {
       .stub()
       .resolves(false);
     return expect(
-      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+      miniApp.openSystemSettings('APP_SETTINGS')
     ).to.eventually.equal(false);
   });
 
@@ -1228,7 +1228,7 @@ describe('openSystemSettings', () => {
       .stub()
       .returns(Promise.reject('test error'));
     return expect(
-      miniApp.miniappUtils.openSystemSettings('APP_SETTINGS')
+      miniApp.openSystemSettings('APP_SETTINGS')
     ).to.eventually.be.rejected;
   });
 
@@ -1237,7 +1237,7 @@ describe('openSystemSettings', () => {
       .stub()
       .resolves(true);
     return expect(
-      miniApp.miniappUtils.openSystemSettings()
+      miniApp.openSystemSettings()
     ).to.eventually.equal(true);
   });
 });

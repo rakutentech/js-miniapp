@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
   },
   contentSection: {
-    height: '30%',
+    height: 'auto',
     padding: '10px',
   },
   label: {
@@ -83,9 +83,9 @@ const OpenSystemSettings = () => {
           >
             Open Settings
           </Button>
-          <label className={classes.label}>{result}</label>
         </div>
         <div className={classes.contentSection}>
+          <label className={classes.label}>{result}</label>
           <Button variant="contained" color="primary" onClick={() => clear()}>
             Clear
           </Button>
