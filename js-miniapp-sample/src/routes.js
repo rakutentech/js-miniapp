@@ -68,6 +68,7 @@ import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
 import OneClickSdk from './pages/one-click-sdk';
+import SimInstalledPage from './pages/sim';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -174,6 +175,11 @@ const exchangeTokenNavLink = {
 const eSimNavLink = {
   navLink: '/e-sim',
   label: 'E Sim',
+};
+
+const simInstalledNavLink = {
+  navLink: '/sim-installed',
+  label: 'Sim Installed',
 };
 
 const permissionStatusNavLink = {
@@ -432,6 +438,12 @@ const appItems = [
     label: eSimNavLink.label,
     navLink: eSimNavLink.navLink,
     element: <ESimPage />,
+  },
+  {
+    icon: <SimCardIcon />,
+    label: simInstalledNavLink.label,
+    navLink: simInstalledNavLink.navLink,
+    element: <SimInstalledPage />,
   },
   {
     icon: <VpnKeyIcon />,

@@ -1123,6 +1123,23 @@ export class MiniAppBridge {
   }
 
   /**
+   * This interface checks if a SIM card is installed in the device
+   * @returns true if SIM is installed
+   */
+  isSimInstalled() {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isSimInstalled',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
    * This interface sends an esimconfiguration object for caller to setup esim
    * @param config Esim configuration values
    * @returns true if device is able to setup and install esim
