@@ -68,6 +68,7 @@ import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
 import OneClickSdk from './pages/one-click-sdk';
+import RakutenSim from './pages/sim';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -196,6 +197,11 @@ const oneClickNavLink = {
   label: 'OneClick',
 };
 
+const rakutenSimNavLink = {
+  navLink: '/rakuten-sim',
+  label: 'Rakuten SIM',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -235,6 +241,7 @@ const navLinks = [
   permissionStatusNavLink,
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
+  rakutenSimNavLink,
 ];
 
 const homeItem = [
@@ -456,6 +463,12 @@ const appItems = [
     label: oneClickNavLink.label,
     navLink: oneClickNavLink.navLink,
     element: <OneClickSdk />,
+  },
+  {
+    icon: <SimCardIcon />,
+    label: rakutenSimNavLink.label,
+    navLink: rakutenSimNavLink.navLink,
+    element: <RakutenSim />,
   },
 ];
 

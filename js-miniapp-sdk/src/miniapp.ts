@@ -310,4 +310,8 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   getPermissionStatus(name: PermissionName): Promise<string> {
     return getBridge().utilityManager.getPermissionStatus(name);
   }
+
+  isRakutenSimInstalled(): Promise<boolean> {
+    return getBridge().utilityManager.isRakutenSimInstalled();
+  }
 }

@@ -1936,6 +1936,27 @@ MiniApp.miniappUtils
 
 > **Note:** On Android, the package name is required because Android doesn't allow checking app installation via deeplink. On iOS, deeplink URLs are used to check if an app is installed.
 
+## Check if Rakuten SIM is Installed <small style="color:green;font-size: 12px">Available from v1.28.0</small>
+
+You can check if the Rakuten SIM is installed on the device using the `isRakutenSimInstalled` interface.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp
+  .isRakutenSimInstalled()
+  .then((isInstalled) => {
+    if (isInstalled) {
+      console.log('Rakuten SIM is installed');
+    } else {
+      console.log('Rakuten SIM is NOT installed');
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
 ### Load HTML String <small style="color:green;font-size: 12px">Available from v1.26.0</small>
 
 You can load HTML string to Host App. 

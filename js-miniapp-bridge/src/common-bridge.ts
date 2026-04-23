@@ -1180,6 +1180,15 @@ export class MiniAppBridge {
   isAppInstalledInDevice(packageNameOrUrl: string) {
     return this.utilityManager.isAppInstalledInDevice(packageNameOrUrl);
   }
+
+  /**
+   * Checks if the Rakuten SIM is installed on the device.
+   *
+   * @returns A promise that resolves to `true` if the Rakuten SIM is installed, or `false` otherwise.
+   */
+  isRakutenSimInstalled() {
+    return this.utilityManager.isRakutenSimInstalled();
+  }
 }
 
 /**
