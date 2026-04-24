@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.28.0 (TBD)
+- **Feature:** Added new interface `isSimInstalled` to check if a SIM card is installed on the device.
+
 ### 1.27.0 (2026-03-18)
 - **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.
 - **Feature:** Added new interface `configureAnalytics` to pass analytics configuration to HostApp.

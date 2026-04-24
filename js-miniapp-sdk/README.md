@@ -202,6 +202,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
     - [Load HTML String Available from v1.26.0](#load-html-string-available-from-v1260)
   - [OneClick SDK Available from v1.27.0](#oneclick-sdk-available-from-v1270)
     - [Start OneClick SDK IC Chip KYC Available from v1.27.0](#start-oneclick-sdk-ic-chip-kyc-available-from-v1270)
+  - [Check if SIM is Installed Available from v1.28.0](#check-if-sim-is-installed-available-from-v1280)
 
 ## User details
 
@@ -1996,3 +1997,22 @@ MiniApp.oneClickSdk
 ```
 
 > **Note:** These functions require the host app to support OneClick SDK. Unit tests only verify correct parameter passing, not actual app launching.
+
+<div id='check-if-sim-is-installed-available-from-v1280'/>
+
+## Check if SIM is Installed <small style="color:green;font-size: 12px">Available from v1.28.0</small>
+
+Check whether a physical SIM card is detected in the device.
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp
+  .isSimInstalled()
+  .then((isInstalled) => {
+    console.log(isInstalled); // true if SIM is installed, false otherwise
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
