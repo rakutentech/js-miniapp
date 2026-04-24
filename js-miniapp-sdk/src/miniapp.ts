@@ -67,6 +67,12 @@ interface MiniAppFeatures {
   requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
+   * Request the phone state permission from the host app.
+   * @returns The Promise of permission result of mini app from injected side.
+   */
+  requestPhoneStatePermission(): Promise<string>;
+
+  /**
    *
    * Request that the user grant custom permissions related to accessing user data.
    * Typically, this will show a dialog in the Host App asking the user grant access to your Mini App.
@@ -121,12 +127,6 @@ interface MiniAppFeatures {
    * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
    */
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string>;
-
-  /**
-   * Check if a SIM card is installed in the device.
-   * @returns Promise resolving to true if SIM is installed, false otherwise.
-   */
-  isSimInstalled(): Promise<boolean>;
 }
 
 /**
@@ -241,6 +241,10 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
       );
   }
 
+  requestPhoneStatePermission(): Promise<string> {
+    return this.requestPermission(DevicePermission.PHONE_STATE);
+  }
+
   requestCustomPermissions(
     permissions: CustomPermission[]
   ): Promise<CustomPermissionResult[]> {
@@ -311,10 +315,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
-  }
-
-  isSimInstalled(): Promise<boolean> {
-    return getBridge().isSimInstalled();
   }
 
   getPermissionStatus(name: PermissionName): Promise<string> {

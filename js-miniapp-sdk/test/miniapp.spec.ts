@@ -76,7 +76,6 @@ window.MiniAppBridge = {
   getPhoneNumber: sandbox.stub(),
   isEsimSupported: sandbox.stub(),
   setupAndInstallEsim: sandbox.stub(),
-  isSimInstalled: sandbox.stub(),
   forceInternalWebView: sandbox.stub(),
   sendAnalytics: sandbox.stub(),
   configureAnalytics: sandbox.stub(),
@@ -84,6 +83,7 @@ window.MiniAppBridge = {
   utilityManager: {
     getPermissionStatus: sandbox.stub(),
     launchAppSettings: sandbox.stub(),
+    isSimInstalled: sandbox.stub(),
   },
   browserManager: {
     loadUsingHTMLString: sandbox.stub(),
@@ -933,18 +933,25 @@ describe('eSimSupport', () => {
 
 describe('isSimInstalled', () => {
   it('should return if sim is installed', () => {
-    window.MiniAppBridge.isSimInstalled.resolves(true);
-    return expect(miniApp.isSimInstalled()).to.eventually.equal(true);
+    window.MiniAppBridge.utilityManager.isSimInstalled.resolves(true);
+    return expect(miniApp.miniappUtils.isSimInstalled()).to.eventually.equal(
+      true
+    );
   });
 
   it('should return if sim is not installed', () => {
-    window.MiniAppBridge.isSimInstalled.resolves(false);
-    return expect(miniApp.isSimInstalled()).to.eventually.equal(false);
+    window.MiniAppBridge.utilityManager.isSimInstalled.resolves(false);
+    return expect(miniApp.miniappUtils.isSimInstalled()).to.eventually.equal(
+      false
+    );
   });
 
   it('should return error information', () => {
-    window.MiniAppBridge.isSimInstalled.returns(Promise.reject('test error'));
-    return expect(miniApp.isSimInstalled()).to.eventually.be.rejected;
+    window.MiniAppBridge.utilityManager.isSimInstalled.returns(
+      Promise.reject('test error')
+    );
+    return expect(miniApp.miniappUtils.isSimInstalled()).to.eventually.be
+      .rejected;
   });
 });
 

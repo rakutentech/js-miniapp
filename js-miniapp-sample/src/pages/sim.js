@@ -42,7 +42,7 @@ function Sim() {
   const handleIsSimInstalled = async () => {
     dispatch({ type: 'SIM_INSTALLED_FETCH' });
     try {
-      const result = await MiniApp.isSimInstalled();
+      const result = await MiniApp.miniappUtils.isSimInstalled();
       if (result) {
         dispatch({ type: 'SIM_INSTALLED_SUCCESS', result });
         alert('Success! Sim is installed');

@@ -133,6 +133,12 @@ export interface MiniAppUtilsProvider {
   isAppInstalledInDevice(packageNameOrUrl: string): Promise<boolean>;
 
   /**
+   * Check if a SIM card is installed in the device.
+   * @returns Promise resolving to true if SIM is installed, false otherwise.
+   */
+  isSimInstalled(): Promise<boolean>;
+
+  /**
    * Direct HTML String loading from Host app to Miniapp
    *
    * @param htmlString - HTML in string format.
@@ -228,6 +234,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
 
   isAppInstalledInDevice(packageNameOrUrl: string): Promise<boolean> {
     return getBridge().utilityManager.isAppInstalledInDevice(packageNameOrUrl);
+  }
+
+  isSimInstalled(): Promise<boolean> {
+    return getBridge().utilityManager.isSimInstalled();
   }
 
   /**
