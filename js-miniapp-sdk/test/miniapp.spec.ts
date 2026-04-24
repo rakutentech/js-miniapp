@@ -934,22 +934,17 @@ describe('eSimSupport', () => {
 describe('isSimInstalled', () => {
   it('should return if sim is installed', () => {
     window.MiniAppBridge.isSimInstalled.resolves(true);
-    return expect(miniApp.isSimInstalled()).to.eventually.equal(
-      true
-    );
+    return expect(miniApp.isSimInstalled()).to.eventually.equal(true);
   });
 
   it('should return if sim is not installed', () => {
     window.MiniAppBridge.isSimInstalled.resolves(false);
-    return expect(miniApp.isSimInstalled()).to.eventually.equal(
-      false
-    );
+    return expect(miniApp.isSimInstalled()).to.eventually.equal(false);
   });
 
   it('should return error information', () => {
     window.MiniAppBridge.isSimInstalled.returns(Promise.reject('test error'));
-    return expect(miniApp.isSimInstalled()).to.eventually.be
-      .rejected;
+    return expect(miniApp.isSimInstalled()).to.eventually.be.rejected;
   });
 });
 
