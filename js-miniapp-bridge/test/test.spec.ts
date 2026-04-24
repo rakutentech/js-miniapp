@@ -1537,7 +1537,7 @@ describe('isRakutenSimInstalled', () => {
     expect(mockExecutor.exec.getCall(0).args[0]).to.equal(
       'isRakutenSimInstalled'
     );
-    expect(mockExecutor.exec.getCall(0).args[1]).to.be.null;
+    expect(mockExecutor.exec.getCall(0).args[1]).to.equal(null);
   });
 });
 
