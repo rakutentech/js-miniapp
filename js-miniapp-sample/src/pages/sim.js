@@ -35,7 +35,7 @@ function dataFetchReducer(state, action) {
   }
 }
 
-function SimInstalledComponent() {
+function Sim() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
 
@@ -89,4 +89,4 @@ function SimInstalledComponent() {
   );
 }
 
-export default SimInstalledComponent;
+export default Sim;
