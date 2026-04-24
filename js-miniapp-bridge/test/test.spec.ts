@@ -1751,9 +1751,8 @@ describe('openSystemSettings', () => {
       '{"message":"openSystemSettings not supported"}'
     );
 
-    return expect(
-      bridge.utilityManager.openSystemSettings('APP_SETTINGS')
-    ).to.eventually.be.rejected;
+    return expect(bridge.utilityManager.openSystemSettings('APP_SETTINGS')).to
+      .eventually.be.rejected;
   });
 
   it('will use APP_SETTINGS as default parameter', () => {

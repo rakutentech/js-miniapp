@@ -141,7 +141,7 @@ export class UtilityManager {
     });
   }
 
-  openSystemSettings(settingsType: string = 'APP_SETTINGS'): Promise<boolean> {
+  openSystemSettings(settingsType = 'APP_SETTINGS'): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       return this.executor.exec(
         'openSystemSettings',

@@ -1227,17 +1227,14 @@ describe('openSystemSettings', () => {
     window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
       .stub()
       .returns(Promise.reject('test error'));
-    return expect(
-      miniApp.openSystemSettings('APP_SETTINGS')
-    ).to.eventually.be.rejected;
+    return expect(miniApp.openSystemSettings('APP_SETTINGS')).to.eventually.be
+      .rejected;
   });
 
   it('should use APP_SETTINGS as default parameter', () => {
     window.MiniAppBridge.utilityManager.openSystemSettings = sandbox
       .stub()
       .resolves(true);
-    return expect(
-      miniApp.openSystemSettings()
-    ).to.eventually.equal(true);
+    return expect(miniApp.openSystemSettings()).to.eventually.equal(true);
   });
 });
