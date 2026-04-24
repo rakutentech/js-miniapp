@@ -1499,6 +1499,48 @@ describe('isAppInstalledInDevice', () => {
   });
 });
 
+describe('isRakutenSimInstalled', () => {
+  it('should resolve to true when Rakuten SIM is installed', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    return expect(bridge.isRakutenSimInstalled()).to.eventually.deep.equal(
+      true
+    );
+  });
+
+  it('should resolve to false when Rakuten SIM is not installed', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, false);
+
+    return expect(bridge.isRakutenSimInstalled()).to.eventually.deep.equal(
+      false
+    );
+  });
+
+  it('should reject on error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      '{ "message": "Rakuten SIM check error" }'
+    );
+
+    return expect(bridge.isRakutenSimInstalled()).to.eventually.be.rejected;
+  });
+
+  it('should call the bridge with no parameters', () => {
+    mockExecutor.exec.resetHistory();
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, true);
+
+    bridge.isRakutenSimInstalled();
+    expect(mockExecutor.exec.getCall(0).args[0]).to.equal(
+      'isRakutenSimInstalled'
+    );
+    expect(mockExecutor.exec.getCall(0).args[1]).to.equal(null);
+  });
+});
+
 describe('loadUsingHTMLString', () => {
   const params = {
     htmlString: '<html><body>Hello World</body></html>',

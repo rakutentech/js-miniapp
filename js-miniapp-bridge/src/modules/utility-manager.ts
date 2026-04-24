@@ -140,4 +140,22 @@ export class UtilityManager {
       );
     });
   }
+
+  /**
+   * Checks if the Rakuten SIM is installed on the device.
+   *
+   * @returns A promise that resolves to `true` if the Rakuten SIM is installed, or `false` otherwise.
+   */
+  isRakutenSimInstalled(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'isRakutenSimInstalled',
+        null,
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
 }

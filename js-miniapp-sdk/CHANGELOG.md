@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.28.0 (2026-04-23)
+- **Feature:** Added new interface `isRakutenSimInstalled` to check if the Rakuten SIM is installed on the device. Returns a boolean value.
+
 ### 1.27.0 (2026-03-18)
 - **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.
 - **Feature:** Added new interface `configureAnalytics` to pass analytics configuration to HostApp.

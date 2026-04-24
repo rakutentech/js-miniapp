@@ -47,3 +47,4 @@ js/*.map
 js/ts.js
 
 _site/
+.claude/
