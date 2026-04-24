@@ -31,7 +31,7 @@ function dataFetchReducer(state, action) {
         simInstalled: { result: null, error: action.error },
       };
     default:
-      throw Error('Unknown action type');
+      throw new Error('Unknown action type');
   }
 }
 
