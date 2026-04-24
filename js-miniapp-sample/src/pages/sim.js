@@ -35,7 +35,11 @@ const Sim = () => {
   async function checkRakutenSim() {
     try {
       const isInstalled = await MiniApp.isRakutenSimInstalled();
-      setResult(isInstalled ? 'Rakuten SIM is installed' : 'Rakuten SIM is NOT installed');
+      setResult(
+        isInstalled
+          ? 'Rakuten SIM is installed'
+          : 'Rakuten SIM is NOT installed'
+      );
     } catch (error) {
       setResult(error.message || 'Error occurred while checking Rakuten SIM');
     }
