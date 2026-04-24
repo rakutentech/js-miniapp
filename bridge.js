@@ -771,6 +771,18 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * This interface checks if a SIM card is installed in the device
+     * @returns true if SIM is installed
+     */
+    MiniAppBridge.prototype.isSimInstalled = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('isSimInstalled', null, function (response) {
+                resolve(MiniAppBridgeUtils.BooleanValue(response));
+            }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
      * This interface sends an esimconfiguration object for caller to setup esim
      * @param config Esim configuration values
      * @returns true if device is able to setup and install esim
