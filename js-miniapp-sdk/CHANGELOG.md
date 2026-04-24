@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.28.0 (2026-04-23)
+- **Feature:** Added new interface `openSystemSettings` to request the host app to open a specific system settings screen. Accepts an optional `settingsType` string parameter (default: `APP_SETTINGS`).
+
 ### 1.27.0 (2026-03-18)
 - **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.
 - **Feature:** Added new interface `configureAnalytics` to pass analytics configuration to HostApp.

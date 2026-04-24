@@ -1180,6 +1180,13 @@ export class MiniAppBridge {
   isAppInstalledInDevice(packageNameOrUrl: string) {
     return this.utilityManager.isAppInstalledInDevice(packageNameOrUrl);
   }
+  /**
+   * Requests the system settings to be opened and specific settingsType.
+   *
+   */
+  openSystemSettings(settingsType: string) {
+    return this.utilityManager.openSystemSettings(settingsType);
+  }
 }
 
 /**
