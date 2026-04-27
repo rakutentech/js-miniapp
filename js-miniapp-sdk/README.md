@@ -2041,4 +2041,14 @@ MiniApp
   .catch(error => {
     console.error(error); // 'User denied the permission to this mini app.'
   });
+
+// Request location permission (alternative to requestLocationPermission)
+MiniApp
+  .requestPermission(DevicePermission.LOCATION)
+  .then(result => {
+    console.log(result); // 'ALLOWED'
+  })
+  .catch(error => {
+    console.error(error); // 'User denied the permission to this mini app.'
+  });
 ```

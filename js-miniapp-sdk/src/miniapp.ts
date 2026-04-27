@@ -196,7 +196,7 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   async requestPermission(permissionType: DevicePermission): Promise<string> {
     const result = await getBridge().requestPermission(permissionType);
     if (result === 'DENIED') {
-      return Promise.reject('User denied the permission to this mini app.');
+      throw new Error('User has denied this permission.');
     }
     return result;
   }
