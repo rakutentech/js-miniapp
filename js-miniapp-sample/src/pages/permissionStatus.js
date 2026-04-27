@@ -84,7 +84,9 @@ const PermissionStatus = () => {
 
   async function getPhoneStatePermission() {
     try {
-      const result = await MiniApp.requestPermission(DevicePermission.PHONE_STATE);
+      const result = await MiniApp.requestPermission(
+        DevicePermission.PHONE_STATE
+      );
       setPhoneStatePermission(result);
     } catch (error) {
       setPhoneStatePermission(error.message || String(error));
