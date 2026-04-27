@@ -200,6 +200,29 @@ describe('requestPermission', () => {
       'User has explicitly denied authorization'
     );
   });
+
+  it('will parse the ALLOWED response for phone state permission', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'ALLOWED');
+
+    return expect(
+      bridge.requestPermission(DevicePermission.PHONE_STATE)
+    ).to.eventually.deep.equal('ALLOWED');
+  });
+
+  it('will parse the Error response for phone state permission', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.requestPermission(DevicePermission.PHONE_STATE)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
 });
 
 describe('getToken', () => {

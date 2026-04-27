@@ -67,10 +67,12 @@ interface MiniAppFeatures {
   requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
-   * Request the phone state permission from the host app.
-   * @returns The Promise of permission result of mini app from injected side.
+   * Request a device permission from the host app.
+   * @param permissionType The type of device permission to request e.g. DevicePermission.LOCATION, DevicePermission.PHONE_STATE
+   * @returns The Promise of permission result ('ALLOWED' or 'DENIED') from the host app.
+   * Rejects the promise if the permission is denied.
    */
-  requestPhoneStatePermission(): Promise<string>;
+  requestPermission(permissionType: DevicePermission): Promise<string>;
 
   /**
    *
@@ -191,8 +193,12 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   esimService: Esim = new Esim();
   oneClickSdk: OneClickSdk = new OneClickSdk();
 
-  private requestPermission(permissionType: DevicePermission): Promise<string> {
-    return getBridge().requestPermission(permissionType);
+  async requestPermission(permissionType: DevicePermission): Promise<string> {
+    const result = await getBridge().requestPermission(permissionType);
+    if (result === 'DENIED') {
+      return Promise.reject('User denied the permission to this mini app.');
+    }
+    return result;
   }
 
   /**
@@ -239,10 +245,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
           ? this.requestPermission(DevicePermission.LOCATION)
           : Promise.reject('User denied location permission to this mini app.')
       );
-  }
-
-  requestPhoneStatePermission(): Promise<string> {
-    return this.requestPermission(DevicePermission.PHONE_STATE);
   }
 
   requestCustomPermissions(

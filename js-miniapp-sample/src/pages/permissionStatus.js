@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 import MiniApp, {
+  DevicePermission,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   PermissionName,
@@ -83,7 +84,7 @@ const PermissionStatus = () => {
 
   async function getPhoneStatePermission() {
     try {
-      const result = await MiniApp.requestPhoneStatePermission();
+      const result = await MiniApp.requestPermission(DevicePermission.PHONE_STATE);
       setPhoneStatePermission(result);
     } catch (error) {
       setPhoneStatePermission(error.message || String(error));
