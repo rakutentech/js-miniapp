@@ -76,7 +76,7 @@ function SimStatus() {
       dispatch({
         type: 'SIM_INSTALLED_FAILED',
         error:
-          error.message || 'Encountered error while calling isSimInstalled',
+          error.message || String(error),
       });
       alert('Fail! Sim installed check failed');
     }
@@ -92,9 +92,7 @@ function SimStatus() {
     } catch (error) {
       dispatch({
         type: 'PHONE_STATE_FAILED',
-        error:
-          error.message ||
-          'Encountered error while requesting phone state permission',
+        error: error.message || String(error),
       });
     }
   };
@@ -112,8 +110,11 @@ function SimStatus() {
         {(state.simInstalled.result != null || state.simInstalled.error) && (
           <Typography
             variant="body1"
-            color={state.simInstalled.error ? 'error' : 'textSecondary'}
-            style={{ marginTop: '20px', wordBreak: 'break-all' }}
+            style={{
+              marginTop: '20px',
+              wordBreak: 'break-all',
+              color: state.simInstalled.error ? 'red' : 'green',
+            }}
           >
             {state.simInstalled.error
               ? state.simInstalled.error
@@ -133,12 +134,15 @@ function SimStatus() {
           state.phoneStatePermission.error) && (
           <Typography
             variant="body1"
-            color={state.phoneStatePermission.error ? 'error' : 'textSecondary'}
-            style={{ marginTop: '20px', wordBreak: 'break-all' }}
+            style={{
+              marginTop: '20px',
+              wordBreak: 'break-all',
+              color: state.phoneStatePermission.error ? 'red' : 'green',
+            }}
           >
             {state.phoneStatePermission.error
               ? state.phoneStatePermission.error
-              : `Permission result: ${state.phoneStatePermission.result}`}
+              : `Phone state permission granted: ${state.phoneStatePermission.result}`}
           </Typography>
         )}
       </div>
