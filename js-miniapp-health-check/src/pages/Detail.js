@@ -31,12 +31,10 @@ import { setStoredResult } from '../services/healthCheckStore';
 
 const useStyles = makeStyles(() => ({
   root: {
-    minHeight: '100vh',
     backgroundColor: '#f4f6f8',
-    display: 'flex',
-    flexDirection: 'column',
+    minHeight: '100vh',
   },
-  appBar: { backgroundColor: '#1a237e' },
+  appBar: { backgroundColor: '#1a237e', position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1100 },
   backButton: { color: '#fff', marginRight: 4 },
   appBarTitle: {
     flex: 1,
@@ -48,8 +46,7 @@ const useStyles = makeStyles(() => ({
     textOverflow: 'ellipsis',
   },
   content: {
-    flex: 1,
-    padding: '16px 12px',
+    padding: '12px 12px 24px',
     display: 'flex',
     flexDirection: 'column',
     gap: 12,
@@ -82,6 +79,14 @@ const useStyles = makeStyles(() => ({
     fontWeight: 700,
     textTransform: 'none',
     fontSize: '0.82rem',
+  },
+  content: {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '16px 12px 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 12,
   },
   // Info card
   infoCard: {
@@ -170,6 +175,21 @@ const useStyles = makeStyles(() => ({
     marginTop: 6,
     color: '#546e7a',
     fontSize: '0.75rem',
+  },
+  rawJsonValue: {
+    fontFamily: 'monospace',
+    fontSize: '0.75rem',
+    color: '#37474f',
+    backgroundColor: '#eceff1',
+    borderRadius: 6,
+    padding: '10px 12px',
+    wordBreak: 'break-all',
+    whiteSpace: 'pre-wrap',
+    lineHeight: 1.6,
+    maxHeight: 300,
+    overflowY: 'auto',
+    border: '1px solid #cfd8dc',
+    marginTop: 8,
   },
   // Manual trigger card
   manualCard: {
@@ -288,11 +308,16 @@ function ManualTriggerPanel({ check, onResult }) {
     setValues((prev) => ({ ...prev, [id]: value }));
   };
 
+  const MANUAL_TIMEOUT_MS = 5000;
+
   const handleTrigger = async () => {
     setRunning(true);
     setTriggerResult(null);
     try {
-      const { result } = await manualConfig.run(values);
+      const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error(`Timed out after ${MANUAL_TIMEOUT_MS / 1000}s`)), MANUAL_TIMEOUT_MS)
+      );
+      const { result } = await Promise.race([manualConfig.run(values), timeout]);
       const data = { status: CHECK_STATUS.SUCCESS, result, error: null };
       setTriggerResult(data);
       setStoredResult(check.id, data);
@@ -389,11 +414,12 @@ function Detail() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { checkId, result: initialResult } = location.state || {};
+  const { checkId, result: initialResult, activeFilter } = location.state || {};
   const check = SDK_CHECKS.find((c) => c.id === checkId);
   const [result, setResult] = useState(initialResult || {});
   const [isRetrying, setIsRetrying] = useState(false);
   const [showTips, setShowTips] = useState(false);
+  const [showRaw, setShowRaw] = useState(false);
 
   if (!check) {
     return (
@@ -439,14 +465,20 @@ function Detail() {
   return (
     <div className={classes.root}>
       {/* App Bar */}
-      <AppBar position="static" className={classes.appBar} elevation={0}>
+      <AppBar position="fixed" className={classes.appBar} elevation={2}>
         <Toolbar variant="dense">
-          <IconButton edge="start" className={classes.backButton} onClick={() => navigate(-1)}>
+          <IconButton
+            edge="start"
+            className={classes.backButton}
+            onClick={() => navigate('/', { state: { activeFilter } })}
+          >
             <ArrowBackIcon />
           </IconButton>
           <Typography className={classes.appBarTitle}>{check.name}</Typography>
         </Toolbar>
       </AppBar>
+
+      <Toolbar variant="dense" />
 
       <div className={classes.content}>
 
@@ -518,6 +550,23 @@ function Detail() {
                   <br />• The SDK bridge is not initialised in this environment.
                   <br />• The feature requires a newer host app version.
                 </Typography>
+              </div>
+            </Collapse>
+          </Paper>
+        )}
+
+        {/* Raw JSON — shown whenever there is any result/error payload */}
+        {(result.status === CHECK_STATUS.SUCCESS || result.status === CHECK_STATUS.FAILURE) && (
+          <Paper className={classes.errorCard} elevation={0} style={{ background: '#fff' }}>
+            <div className={classes.expandRow} onClick={() => setShowRaw((v) => !v)}>
+              {showRaw
+                ? <ExpandLessIcon style={{ fontSize: 16 }} />
+                : <ExpandMoreIcon style={{ fontSize: 16 }} />}
+              <span style={{ marginLeft: 4 }}>{showRaw ? 'Hide' : 'Show'} raw response</span>
+            </div>
+            <Collapse in={showRaw}>
+              <div className={classes.rawJsonValue}>
+                {JSON.stringify(result, null, 2)}
               </div>
             </Collapse>
           </Paper>

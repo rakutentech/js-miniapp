@@ -16,8 +16,6 @@ export const CATEGORY = {
   DEVICE: 'Device & Permissions',
   WEBVIEW: 'WebView',
   MESSAGING: 'Messaging',
-  ADS: 'Ads',
-  COMMERCE: 'Commerce',
   ANALYTICS: 'Analytics',
 };
 
@@ -154,7 +152,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.isLoggedIn();
-      return { result: `${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -165,7 +163,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getUserName();
-      return { result: result || '(empty string)' };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -176,7 +174,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getProfilePhoto();
-      return { result: result ? `URL returned (${result.length} chars)` : '(null)' };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -187,7 +185,10 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getContacts();
-      return { result: `${Array.isArray(result) ? result.length : 0} contact(s) returned` };
+      if (Array.isArray(result) && result.length === 0) {
+        throw new Error('Returned empty array — contact permission may not be granted');
+      }
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -209,7 +210,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getPhoneNumber();
-      return { result: result ? 'Phone number returned' : '(null)' };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -220,11 +221,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getAccessToken('rae', ['idinfo_read_openid']);
-      return {
-        result: result && result.token
-          ? `Token returned (expires: ${result.validUntil || 'unknown'})`
-          : JSON.stringify(result),
-      };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -235,11 +232,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.user.getExchangeToken('rae', ['idinfo_read_openid']);
-      return {
-        result: result && result.token
-          ? `Exchange token returned (expires: ${result.validUntil || 'unknown'})`
-          : JSON.stringify(result),
-      };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -283,7 +276,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.miniAppFinishedLoading();
-      return { result: String(result) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -294,7 +287,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.getHostAppThemeColors();
-      return { result: JSON.stringify(result, null, 2) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -305,7 +298,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.isDarkMode();
-      return { result: `isDarkMode: ${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -316,12 +309,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.getFeatureList();
-      const features = Array.isArray(result) ? result : [];
-      return {
-        result: features.length > 0
-          ? `${features.length} feature(s): ${features.join(', ')}`
-          : '(no features returned)',
-      };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -332,7 +320,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.canOpenAppDeeplink('https://example.com');
-      return { result: `canOpen: ${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -343,7 +331,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.isAppDeeplinkSupported('https://example.com');
-      return { result: `isSupported: ${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -354,7 +342,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.isAppInstalledInDevice('com.example.healthcheck.test');
-      return { result: `isInstalled: ${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -365,7 +353,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.setCloseAlert({ shouldDisplay: false, title: '', description: '' });
-      return { result: String(result) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -507,7 +495,7 @@ export const SDK_CHECKS = [
         elementType: 'Screen',
         data: 'sdk_health_check_test',
       });
-      return { result: result !== undefined ? String(result) : 'Event sent' };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -543,7 +531,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.miniappUtils.logEvent('SDK Health Check: log event test', LogType.INFO);
-      return { result: `${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
 
@@ -566,8 +554,8 @@ export const SDK_CHECKS = [
     description: 'Sets one or more key-value pairs in the secure storage.',
     isAutoTestable: true,
     run: async () => {
-      await MiniApp.secureStorageService.setItems({ _health_check_key_: 'health_check_value' });
-      return { result: 'Item set successfully' };
+      const result = await MiniApp.secureStorageService.setItems({ _health_check_key_: 'health_check_value' });
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -588,8 +576,8 @@ export const SDK_CHECKS = [
     description: 'Removes one or more items from secure storage by key.',
     isAutoTestable: true,
     run: async () => {
-      await MiniApp.secureStorageService.removeItems(['_health_check_key_']);
-      return { result: 'Item removed successfully' };
+      const result = await MiniApp.secureStorageService.removeItems(['_health_check_key_']);
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -616,7 +604,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.cookieManager.getAllCookies();
-      return { result: `${Array.isArray(result) ? result.length : 0} cookie(s) returned` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -627,7 +615,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.cookieManager.getCookies(['_health_check_cookie_']);
-      return { result: `${Array.isArray(result) ? result.length : 0} cookie(s) returned` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -638,7 +626,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.preferences.set('_health_check_pref_', 'test_value');
-      return { result: String(result) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -660,7 +648,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.preferences.remove('_health_check_pref_');
-      return { result: String(result) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -689,7 +677,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.webviewManager.allowBackForwardNavigationGestures(false);
-      return { result: `${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -700,7 +688,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.webviewManager.forceInternalWebView(false);
-      return { result: `${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
 
@@ -713,7 +701,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.esimService.isEsimSupported();
-      return { result: `isSupported: ${result}` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -903,131 +891,6 @@ export const SDK_CHECKS = [
     },
   },
 
-  // ─── ADS ─────────────────────────────────────────────────────────────────
-  {
-    id: 'ads_loadInterstitialAd',
-    name: 'loadInterstitialAd()',
-    category: CATEGORY.ADS,
-    description: 'Pre-fetches and loads an interstitial ad by unit ID.',
-    isAutoTestable: false,
-    reason: 'Requires a valid ad unit ID configured in the host app ad network.',
-    manualConfig: {
-      fields: [
-        { id: 'adUnitId', label: 'Ad Unit ID', defaultValue: '', type: 'text', placeholder: 'Enter your interstitial ad unit ID' },
-      ],
-      run: async (v) => {
-        if (!v.adUnitId) throw new Error('Ad Unit ID is required.');
-        const result = await MiniApp.loadInterstitialAd(v.adUnitId);
-        return { result: String(result) };
-      },
-    },
-  },
-  {
-    id: 'ads_loadRewardedAd',
-    name: 'loadRewardedAd()',
-    category: CATEGORY.ADS,
-    description: 'Pre-fetches and loads a rewarded ad by unit ID.',
-    isAutoTestable: false,
-    reason: 'Requires a valid ad unit ID configured in the host app ad network.',
-    manualConfig: {
-      fields: [
-        { id: 'adUnitId', label: 'Ad Unit ID', defaultValue: '', type: 'text', placeholder: 'Enter your rewarded ad unit ID' },
-      ],
-      run: async (v) => {
-        if (!v.adUnitId) throw new Error('Ad Unit ID is required.');
-        const result = await MiniApp.loadRewardedAd(v.adUnitId);
-        return { result: String(result) };
-      },
-    },
-  },
-  {
-    id: 'ads_showInterstitialAd',
-    name: 'showInterstitialAd()',
-    category: CATEGORY.ADS,
-    description: 'Displays a pre-loaded interstitial ad.',
-    isAutoTestable: false,
-    reason: 'Requires loadInterstitialAd() to have succeeded first.',
-    manualConfig: {
-      fields: [
-        { id: 'adUnitId', label: 'Ad Unit ID', defaultValue: '', type: 'text', placeholder: 'Same ID used in loadInterstitialAd' },
-      ],
-      run: async (v) => {
-        if (!v.adUnitId) throw new Error('Ad Unit ID is required.');
-        const result = await MiniApp.showInterstitialAd(v.adUnitId);
-        return { result: String(result) };
-      },
-    },
-  },
-  {
-    id: 'ads_showRewardedAd',
-    name: 'showRewardedAd()',
-    category: CATEGORY.ADS,
-    description: 'Displays a pre-loaded rewarded ad and returns the reward info.',
-    isAutoTestable: false,
-    reason: 'Requires loadRewardedAd() to have succeeded first.',
-    manualConfig: {
-      fields: [
-        { id: 'adUnitId', label: 'Ad Unit ID', defaultValue: '', type: 'text', placeholder: 'Same ID used in loadRewardedAd' },
-      ],
-      run: async (v) => {
-        if (!v.adUnitId) throw new Error('Ad Unit ID is required.');
-        const result = await MiniApp.showRewardedAd(v.adUnitId);
-        return { result: JSON.stringify(result) };
-      },
-    },
-  },
-
-  // ─── COMMERCE ─────────────────────────────────────────────────────────────
-  {
-    id: 'iap_getAllProducts',
-    name: 'purchaseService.getAllProducts()',
-    category: CATEGORY.COMMERCE,
-    description: 'Gets the list of all in-app purchase products available for this MiniApp.',
-    isAutoTestable: true,
-    run: async () => {
-      const result = await MiniApp.purchaseService.getAllProducts();
-      return { result: `${Array.isArray(result) ? result.length : 0} product(s) returned` };
-    },
-  },
-  {
-    id: 'iap_purchase',
-    name: 'purchaseService.purchaseProductWith()',
-    category: CATEGORY.COMMERCE,
-    description: 'Initiates a real in-app purchase transaction for a product.',
-    isAutoTestable: false,
-    reason: 'Would initiate a real financial transaction.',
-    manualConfig: {
-      fields: [
-        { id: 'productId', label: 'Product ID', defaultValue: '', type: 'text', placeholder: 'Enter product ID' },
-      ],
-      run: async (v) => {
-        if (!v.productId) throw new Error('Product ID is required.');
-        const result = await MiniApp.purchaseService.purchaseProductWith(v.productId);
-        return { result: JSON.stringify(result) };
-      },
-    },
-  },
-  {
-    id: 'iap_consume',
-    name: 'purchaseService.consumePurchaseWith()',
-    category: CATEGORY.COMMERCE,
-    description: 'Consumes (finalises) a previously purchased product.',
-    isAutoTestable: false,
-    reason: 'Requires a valid product ID and transaction ID from a prior purchase.',
-    manualConfig: {
-      fields: [
-        { id: 'productId', label: 'Product ID', defaultValue: '', type: 'text', placeholder: 'Enter product ID' },
-        { id: 'transactionId', label: 'Transaction ID', defaultValue: '', type: 'text', placeholder: 'Enter transaction ID' },
-      ],
-      run: async (v) => {
-        if (!v.productId) throw new Error('Product ID is required.');
-        if (!v.transactionId) throw new Error('Transaction ID is required.');
-        const result = await MiniApp.purchaseService.consumePurchaseWith(v.productId, v.transactionId);
-        return { result: JSON.stringify(result) };
-      },
-    },
-  },
-
   // ─── UNIVERSAL BRIDGE ─────────────────────────────────────────────────────
   {
     id: 'bridge_sendJson',
@@ -1039,7 +902,7 @@ export const SDK_CHECKS = [
       const result = await MiniApp.universalBridge.sendJsonToHostapp(
         '{"type":"health_check","source":"js-miniapp-health-check"}'
       );
-      return { result: result !== undefined ? String(result) : 'Message sent' };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -1054,7 +917,7 @@ export const SDK_CHECKS = [
         messageContent: 'test',
         messageDescription: 'SDK Health Check test message',
       });
-      return { result: result !== undefined ? String(result) : 'Info sent' };
+      return { result: JSON.stringify(result) };
     },
   },
 ];

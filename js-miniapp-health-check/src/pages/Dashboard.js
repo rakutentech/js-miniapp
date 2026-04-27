@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   makeStyles,
   AppBar,
@@ -40,7 +40,7 @@ const TIMEOUT_MS = 30000;
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100vh',
     display: 'flex',
@@ -430,14 +430,14 @@ const FILTER_LABELS = {
   [CHECK_STATUS.SUCCESS]: 'Passed',
   [CHECK_STATUS.FAILURE]: 'Failed',
   [CHECK_STATUS.SKIPPED]: 'Manual',
-  [CHECK_STATUS.PENDING]: 'Pending',
 };
 
 function Dashboard() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, null, buildInitialState);
-  const [activeFilter, setActiveFilter] = useState(null);
+  const location = useLocation();
+  const [activeFilter, setActiveFilter] = useState(location.state?.activeFilter ?? null);
   const runningRef = useRef(false);
 
   const runAllChecks = useCallback(async () => {
@@ -446,6 +446,14 @@ function Dashboard() {
     setActiveFilter(null);
     clearStore();
     dispatch({ type: 'START_RUN' });
+
+    // Pre-populate the store with SKIPPED for all manual checks so they are
+    // always present and never fall back to PENDING on back navigation.
+    for (const check of SDK_CHECKS) {
+      if (!check.isAutoTestable) {
+        setStoredResult(check.id, { status: CHECK_STATUS.SKIPPED, result: null, error: null });
+      }
+    }
 
     const autoChecks = SDK_CHECKS.filter((c) => c.isAutoTestable);
 
@@ -484,7 +492,7 @@ function Dashboard() {
 
   const handleCheckClick = (check, result) => {
     // Pass only serializable data — functions on check cannot survive history.state
-    navigate('/detail', { state: { checkId: check.id, result } });
+    navigate('/detail', { state: { checkId: check.id, result, activeFilter } });
   };
 
   const handleFilterToggle = (status) => {
@@ -545,13 +553,6 @@ function Dashboard() {
       color: '#f57f17',
       border: '#ffe082',
     },
-    {
-      status: CHECK_STATUS.PENDING,
-      label: `Pending (${stats.pending + stats.running})`,
-      bg: '#f5f5f5',
-      color: '#757575',
-      border: '#e0e0e0',
-    },
   ];
 
   return (
@@ -582,7 +583,7 @@ function Dashboard() {
                 disabled={state.isRunning}
                 size="small"
               >
-                {state.isRunning ? 'Running' : 'Run All'}
+                {state.isRunning ? `Running (${stats.pending + stats.running})` : 'Run All'}
               </Button>
             </span>
           </Tooltip>

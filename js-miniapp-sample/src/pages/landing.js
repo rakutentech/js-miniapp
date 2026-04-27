@@ -1,353 +1,236 @@
-import React, { useState, useEffect } from 'react';
-import { setQueryParams } from '../services/home/actions';
+import React, { useState, useRef } from 'react';
 
-import { CardContent, makeStyles } from '@material-ui/core';
-import AppSettingsAltRoundedIcon from '@mui/icons-material/AppSettingsAltRounded';
-import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
-import PhoneIcon from '@mui/icons-material/Phone';
-import DevicesOtherIcon from '@mui/icons-material/DevicesOther';
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
-import HttpRoundedIcon from '@mui/icons-material/HttpRounded';
-import LanguageRoundedIcon from '@mui/icons-material/LanguageRounded';
-import SettingsApplicationsRoundedIcon from '@mui/icons-material/SettingsApplicationsRounded';
-import StorageRoundedIcon from '@mui/icons-material/StorageRounded';
-import SystemUpdateIcon from '@mui/icons-material/SystemUpdate';
-import Avatar from '@mui/material/Avatar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import BuildCircleIcon from '@mui/icons-material/BuildCircle';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import TokenIcon from '@mui/icons-material/Token';
-import MiniApp, {
-  MAAnalyticsActionType,
-  MAAnalyticsEventType,
-} from 'js-miniapp-sdk';
-import { connect } from 'react-redux';
-import { sendAnalytics } from './helper';
+import { Button, CardContent, makeStyles, Typography } from '@material-ui/core';
+import MiniApp from 'js-miniapp-sdk';
 
-import {
-  setHostEnvironmentInfo,
-  onSecureStorageReady,
-} from '../services/landing/actions';
+// Simulator: http://localhost:3000
+// Device:    http://10.49.88.198:3000
+const BASE_URL = 'https://10.49.88.198:3000';
 
-type LandingProps = {
-  platform: ?string,
-  platformVersion: ?string,
-  hostVersion: ?string,
-  sdkVersion: ?string,
-  hostLocale: ?string,
-  infoError: string,
-  hostBuildType?: string,
-  deviceToken?: string,
-  pushToken?: string,
-  getHostInfo: Function,
-  onSecureStorageReady: Function,
-  secureStorageStatus: string,
-  queryParams: string,
-};
-
-const useStyles = makeStyles((theme) => ({
-  card: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '40px',
-  },
+const useStyles = makeStyles(() => ({
   content: {
     height: '100%',
-    width: '100%',
-    justifyContent: 'left',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'stretch',
-    fontSize: 18,
-    color: theme.color.primary,
-    fontWeight: 'bold',
-    '& p': {
-      lineHeight: 1.5,
-    },
-    overflowY: 'auto',
-  },
-  info: {
-    fontSize: 16,
-    lineBreak: 'anywhere',
-    wordBreak: 'break-all',
-    marginTop: 0,
+    padding: 16,
+    boxSizing: 'border-box',
   },
   button: {
-    minHeight: 40,
-    margin: 0,
+    marginBottom: 10,
   },
-  paddingTop50: {
-    marginTop: '50px',
+  logArea: {
+    flex: 1,
+    marginTop: 16,
+    backgroundColor: '#1e1e1e',
+    borderRadius: 4,
+    padding: 10,
+    overflowY: 'auto',
+    minHeight: 200,
+  },
+  logEntry: {
+    color: '#d4d4d4',
+    fontFamily: 'monospace',
+    fontSize: 12,
+    marginBottom: 4,
+    wordBreak: 'break-word',
+  },
+  logEmpty: {
+    color: '#666',
+    fontFamily: 'monospace',
+    fontSize: 12,
+  },
+  clearButton: {
+    marginTop: 8,
   },
 }));
 
-const Landing = (props: LandingProps) => {
+function Landing() {
   const classes = useStyles();
-  const [darkMode, setDarkMode] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('UNKNOWN');
+  const [logs, setLogs] = useState([]);
+  const logRef = useRef(null);
 
-  useEffect(() => {
+  function addLog(message) {
+    const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+    setLogs((prev) => [...prev, `[${time}] ${message}`]);
+    setTimeout(() => {
+      if (logRef.current) {
+        logRef.current.scrollTop = logRef.current.scrollHeight;
+      }
+    }, 50);
+  }
+
+  async function handleSetCookie() {
+    addLog('→ GET /api/set-cookie');
     try {
-      sendAnalytics(
-        MAAnalyticsEventType.appear,
-        MAAnalyticsActionType.open,
-        'Home',
-        'Screen',
-        'Page',
-        ''
-      );
-      props.getHostInfo();
-      checkSecureStorageStorageReady(props);
-      getDarkMode();
-      getPhoneNumber();
-      isLoggedIn();
-    } catch (e) {
-      console.log(e);
+      const response = await fetch(`${BASE_URL}/api/set-cookie`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      addLog(`Status: ${response.status}`);
+      try {
+        const data = await response.json();
+        addLog(`Body: ${JSON.stringify(data)}`);
+      } catch (_) {
+        addLog(`Body: ${await response.text()}`);
+      }
+      addLog('Step 1 complete — check if cookies were stored');
+    } catch (err) {
+      addLog(`ERROR: ${err.message || String(err)}`);
     }
-  }, [props]);
+  }
 
-  function getDarkMode() {
-    MiniApp.miniappUtils
-      .isDarkMode()
-      .then((response) => {
-        setDarkMode(response);
+  async function handleSetCookieNoCredentials() {
+    addLog('→ GET /api/set-cookie?mode=no-credentials');
+    addLog('Expected: FAIL — server omits Access-Control-Allow-Credentials');
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/set-cookie?mode=no-credentials`,
+        { method: 'GET', credentials: 'include' }
+      );
+      addLog(`Status: ${response.status}`);
+      try {
+        const data = await response.json();
+        addLog(`Body: ${JSON.stringify(data)}`);
+      } catch (_) {
+        addLog(`Body: ${await response.text()}`);
+      }
+    } catch (err) {
+      addLog(`ERROR: ${err.message || String(err)}`);
+    }
+  }
+
+  async function handleSetCookieNoSameSite() {
+    addLog('→ GET /api/set-cookie?mode=no-samesite');
+    addLog('Expected: FAIL — cookie missing SameSite=None; Secure');
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/set-cookie?mode=no-samesite`,
+        { method: 'GET', credentials: 'include' }
+      );
+      addLog(`Status: ${response.status}`);
+      try {
+        const data = await response.json();
+        addLog(`Body: ${JSON.stringify(data)}`);
+      } catch (_) {
+        addLog(`Body: ${await response.text()}`);
+      }
+    } catch (err) {
+      addLog(`ERROR: ${err.message || String(err)}`);
+    }
+  }
+
+  function handleReadCookieFromNative() {
+    addLog('→ MiniApp.cookieManager.getCookies()');
+    MiniApp.cookieManager
+      .getCookies()
+      .then((cookies) => {
+        if (!cookies || cookies.length === 0) {
+          addLog('Empty — no cookies returned from native');
+        } else {
+          cookies.forEach((c) => addLog(`${c.name} = ${c.value}`));
+        }
       })
-      .catch((miniAppError) => {
-        console.log('getDarkMode - Error: ', miniAppError);
+      .catch((err) => {
+        addLog(`ERROR: ${err.message || String(err)}`);
       });
   }
 
-  function getPhoneNumber() {
-    MiniApp.user
-      .getPhoneNumber()
-      .then((response) => {
-        setPhoneNumber(response);
-      })
-      .catch((miniAppError) => {
-        console.log('getPhoneNumber - Error: ', miniAppError);
+  async function handleCheckCookieSent() {
+    addLog('→ GET /api/check-cookie');
+    try {
+      const response = await fetch(`${BASE_URL}/api/check-cookie`, {
+        method: 'GET',
+        credentials: 'include',
       });
-  }
-
-  function isLoggedIn() {
-    MiniApp.user
-      .isLoggedIn()
-      .then((response) => {
-        setLoggedIn(response);
-      })
-      .catch((miniAppError) => {
-        console.log('isLoggedIn - Error: ', miniAppError);
-      });
+      try {
+        const data = await response.json();
+        addLog(`Body: ${JSON.stringify(data)}`);
+        if (data.hasCookies) {
+          addLog('SUCCESS — cookies were sent to server');
+          addLog(`cookiesReceived: ${data.cookiesReceived}`);
+        } else {
+          addLog('FAILED — no cookies sent');
+        }
+      } catch (_) {
+        addLog(`Body: ${await response.text()}`);
+      }
+    } catch (err) {
+      addLog(`ERROR: ${err.message || String(err)}`);
+    }
   }
 
   return (
     <CardContent className={classes.content}>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <AppSettingsAltRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Host Version"
-            secondary={props.hostVersion ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <BuildCircleIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Build Type:"
-            secondary={String(props.hostBuildType) || '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <LanguageRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Host Locale:"
-            secondary={props.hostLocale ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <HelpRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            style={{ wordBreak: 'break-word' }}
-            primary="Query Parameters"
-            secondary={
-              props.queryParams && props.queryParams !== 'UNKNOWN'
-                ? props.queryParams
-                : window.location.search || 'None'
-            }
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <LockOpenIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            style={{ wordBreak: 'break-word' }}
-            primary="Login Status"
-            secondary={String(loggedIn)}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <DevicesOtherIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Platform"
-            secondary={props.platform ?? props.infoError ?? 'Unknown'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <SystemUpdateIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Platform Version"
-            secondary={props.platformVersion ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <PhoneIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Phone #" secondary={String(phoneNumber)} />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <SettingsApplicationsRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="SDK Version"
-            secondary={props.sdkVersion ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <HttpRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="URL Fragment"
-            secondary={window.location.hash || 'None'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <StorageRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Secure Storage Status"
-            secondary={props.secureStorageStatus}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <DarkModeRoundedIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Dark mode" secondary={String(darkMode)} />
-        </ListItem>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        className={classes.button}
+        onClick={handleSetCookie}
+      >
+        Set Cookie
+      </Button>
+      <Button
+        variant="contained"
+        color="default"
+        fullWidth
+        className={classes.button}
+        onClick={handleSetCookieNoCredentials}
+      >
+        Set Cookie (No Credentials)
+      </Button>
+      <Button
+        variant="contained"
+        color="default"
+        fullWidth
+        className={classes.button}
+        onClick={handleSetCookieNoSameSite}
+      >
+        Set Cookie (No SameSite)
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        className={classes.button}
+        onClick={handleReadCookieFromNative}
+      >
+        Read Cookie (Native)
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        className={classes.button}
+        onClick={handleCheckCookieSent}
+      >
+        Check Cookie Sent
+      </Button>
 
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <TokenIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Device Token:"
-            secondary={props.deviceToken ?? '-'}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar>
-              <TokenIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary="Push Token:"
-            secondary={props.pushToken ?? '-'}
-          />
-        </ListItem>
-      </List>
+      <div className={classes.logArea} ref={logRef}>
+        {logs.length === 0 ? (
+          <Typography className={classes.logEmpty}>
+            No logs yet. Tap a button to start.
+          </Typography>
+        ) : (
+          logs.map((entry, index) => (
+            <Typography key={index} className={classes.logEntry}>
+              {entry}
+            </Typography>
+          ))
+        )}
+      </div>
+
+      <Button
+        variant="outlined"
+        fullWidth
+        className={classes.clearButton}
+        onClick={() => setLogs([])}
+      >
+        Clear
+      </Button>
     </CardContent>
   );
-};
-
-function checkSecureStorageStorageReady(props: LandingProps) {
-  props
-    .onSecureStorageReady()
-    .then((response) => {
-      console.log('Page - checkSecureStorageStorageReady - Success', response);
-    })
-    .catch((miniAppError) => {
-      console.log(
-        'Page - checkSecureStorageStorageReady - Error: ',
-        miniAppError
-      );
-    });
 }
 
-const mapStateToProps = (state, props) => {
-  return {
-    ...props,
-    queryParams: state.home.queryParams,
-    platform: state.info.platform,
-    platformVersion: state.info.platformVersion,
-    hostVersion: state.info.hostVersion,
-    sdkVersion: state.info.sdkVersion,
-    hostLocale: state.info.hostLocale,
-    infoError: state.info.infoError,
-    hostBuildType: state.info.hostBuildType,
-    deviceToken: state.info.deviceToken,
-    pushToken: state.info.pushToken,
-    secureStorageStatus:
-      (state.secureStorageStatus.isReady && 'Ready') ||
-      state.secureStorageStatus.error ||
-      'Not Ready',
-    changeQueryParams: Function,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getHostInfo: () => dispatch(setHostEnvironmentInfo()),
-    onSecureStorageReady: () => dispatch(onSecureStorageReady()),
-    changeQueryParams: (payload) => dispatch(setQueryParams(payload)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Landing);
+export default Landing;
