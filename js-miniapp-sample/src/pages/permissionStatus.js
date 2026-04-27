@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { Card, Grid, Button, makeStyles } from '@material-ui/core';
 import MiniApp, {
-  DevicePermission,
   MAAnalyticsActionType,
   MAAnalyticsEventType,
   PermissionName,
@@ -62,7 +61,6 @@ const PermissionStatus = () => {
   const [cameraPermission, setCameraPermission] = useState('');
   const [microphonePermission, setMicrophonePermission] = useState('');
   const [galleryPermission, setGalleryPermission] = useState('');
-  const [phoneStatePermission, setPhoneStatePermission] = useState('');
 
   useEffect(() => {
     sendAnalytics(
@@ -79,18 +77,6 @@ const PermissionStatus = () => {
     setCameraPermission('');
     setMicrophonePermission('');
     setGalleryPermission('');
-    setPhoneStatePermission('');
-  }
-
-  async function getPhoneStatePermission() {
-    try {
-      const result = await MiniApp.requestPermission(
-        DevicePermission.PHONE_STATE
-      );
-      setPhoneStatePermission(result);
-    } catch (error) {
-      setPhoneStatePermission(error.message || String(error));
-    }
   }
 
   async function getPermission(type) {
@@ -139,16 +125,6 @@ const PermissionStatus = () => {
             Get Gallery Permission
           </Button>
           <label className={classes.label}>{galleryPermission}</label>
-        </div>
-        <div className={classes.contentSection}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => getPhoneStatePermission()}
-          >
-            Get Phone State Permission
-          </Button>
-          <label className={classes.label}>{phoneStatePermission}</label>
         </div>
         <div className={classes.contentSection}>
           <Button variant="contained" color="primary" onClick={() => clear()}>

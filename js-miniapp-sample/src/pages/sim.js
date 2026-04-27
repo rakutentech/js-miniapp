@@ -1,16 +1,23 @@
 import React, { useReducer } from 'react';
 
 import { Button, Typography, makeStyles } from '@material-ui/core';
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { DevicePermission } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles(() => ({
   container: {
     marginTop: '2em',
   },
+  section: {
+    marginTop: '4em',
+  },
 }));
 
 const initialState = {
   simInstalled: {
+    result: null,
+    error: false,
+  },
+  phoneStatePermission: {
     result: null,
     error: false,
   },
@@ -30,12 +37,24 @@ function dataFetchReducer(state, action) {
         ...state,
         simInstalled: { result: null, error: action.error },
       };
+    case 'PHONE_STATE_FETCH':
+      return { ...state, phoneStatePermission: { result: null, error: false } };
+    case 'PHONE_STATE_SUCCESS':
+      return {
+        ...state,
+        phoneStatePermission: { result: action.result, error: false },
+      };
+    case 'PHONE_STATE_FAILED':
+      return {
+        ...state,
+        phoneStatePermission: { result: null, error: action.error },
+      };
     default:
       throw new Error('Unknown action type');
   }
 }
 
-function Sim() {
+function SimStatus() {
   const classes = useStyles();
   const [state, dispatch] = useReducer(dataFetchReducer, initialState);
 
@@ -63,6 +82,23 @@ function Sim() {
     }
   };
 
+  const handleRequestPhoneStatePermission = async () => {
+    dispatch({ type: 'PHONE_STATE_FETCH' });
+    try {
+      const result = await MiniApp.requestPermission(
+        DevicePermission.PHONE_STATE
+      );
+      dispatch({ type: 'PHONE_STATE_SUCCESS', result });
+    } catch (error) {
+      dispatch({
+        type: 'PHONE_STATE_FAILED',
+        error:
+          error.message ||
+          'Encountered error while requesting phone state permission',
+      });
+    }
+  };
+
   return (
     <div>
       <div className={classes.container}>
@@ -85,8 +121,29 @@ function Sim() {
           </Typography>
         )}
       </div>
+      <div className={classes.section}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleRequestPhoneStatePermission}
+        >
+          Request Phone State Permission
+        </Button>
+        {(state.phoneStatePermission.result != null ||
+          state.phoneStatePermission.error) && (
+          <Typography
+            variant="body1"
+            color={state.phoneStatePermission.error ? 'error' : 'textSecondary'}
+            style={{ marginTop: '20px', wordBreak: 'break-all' }}
+          >
+            {state.phoneStatePermission.error
+              ? state.phoneStatePermission.error
+              : `Permission result: ${state.phoneStatePermission.result}`}
+          </Typography>
+        )}
+      </div>
     </div>
   );
 }
 
-export default Sim;
+export default SimStatus;
