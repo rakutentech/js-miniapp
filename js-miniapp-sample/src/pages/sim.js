@@ -75,8 +75,7 @@ function SimStatus() {
     } catch (error) {
       dispatch({
         type: 'SIM_INSTALLED_FAILED',
-        error:
-          error.message || String(error),
+        error: error.message || String(error),
       });
       alert('Fail! Sim installed check failed');
     }

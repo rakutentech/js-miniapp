@@ -242,6 +242,7 @@ const navLinks = [
   permissionStatusNavLink,
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
+  simNavLink,
 ];
 
 const homeItem = [
