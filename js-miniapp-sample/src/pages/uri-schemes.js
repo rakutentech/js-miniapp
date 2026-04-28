@@ -75,6 +75,17 @@ const deepLinkStyle = makeStyles((theme) => ({
   },
 }));
 
+function openInteractiveBrowser(url) {
+  MiniApp.miniappUtils
+    .launchInteractiveBrowser(url)
+    .then((response) => {
+      console.log('openInteractiveBrowser - SUCCESS: ', response);
+    })
+    .catch((miniAppError) => {
+      console.log('openInteractiveBrowser - Error: ', miniAppError);
+    });
+}
+
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
@@ -153,17 +164,6 @@ const UriSchemes = () => {
 
   function onOpenUrl(url: URL) {
     window.location.href = url;
-  }
-
-  function openInteractiveBrowser(url) {
-    MiniApp.miniappUtils
-      .launchInteractiveBrowser(url)
-      .then((response) => {
-        console.log('openInteractiveBrowser - SUCCESS: ', response);
-      })
-      .catch((miniAppError) => {
-        console.log('openInteractiveBrowser - Error: ', miniAppError);
-      });
   }
 
   function openExternalBrowser(url: string) {
