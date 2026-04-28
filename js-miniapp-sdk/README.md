@@ -2008,8 +2008,15 @@ Check whether a physical SIM card is detected in the device.
 
 **API:** [MiniAppUtils.isSimInstalled](api/classes/miniapputils.md#issiminstalled)
 
+The promise rejects with a `SimCheckError` if the host app cannot complete the check. The `SimCheckError.code` will be one of:
+
+| Code | Description |
+| ---- | ----------- |
+| `DENIED` | The host app denied the SIM check request. |
+| `FAILED_TO_CHECK` | The host app encountered an error while checking. |
+
 ```javascript
-import MiniApp from 'js-miniapp-sdk';
+import MiniApp, { SimCheckError } from 'js-miniapp-sdk';
 
 MiniApp.miniappUtils
   .isSimInstalled()
@@ -2017,7 +2024,11 @@ MiniApp.miniappUtils
     console.log(isInstalled); // true if SIM is installed, false otherwise
   })
   .catch((error) => {
-    console.error(error);
+    if (error instanceof SimCheckError) {
+      console.error(`[${error.code}] ${error.message}`); // e.g. [DENIED] ...
+    } else {
+      console.error(error);
+    }
   });
 ```
 

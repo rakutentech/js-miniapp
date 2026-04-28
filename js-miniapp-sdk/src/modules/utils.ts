@@ -135,6 +135,7 @@ export interface MiniAppUtilsProvider {
   /**
    * Check if a SIM card is installed in the device.
    * @returns Promise resolving to true if SIM is installed, false otherwise.
+   * @throws {@link SimCheckError} with code `DENIED` or `FAILED_TO_CHECK` if the host app rejects the request.
    */
   isSimInstalled(): Promise<boolean>;
 

@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 import { Button, Typography, makeStyles } from '@material-ui/core';
-import MiniApp, { DevicePermission } from 'js-miniapp-sdk';
+import MiniApp, { DevicePermission, SimCheckError } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -73,9 +73,13 @@ function SimStatus() {
         alert('Sim is not installed');
       }
     } catch (error) {
+      const errorMessage =
+        error instanceof SimCheckError
+          ? `[${error.code}] ${error.message}`
+          : error.message || String(error);
       dispatch({
         type: 'SIM_INSTALLED_FAILED',
-        error: error.message || String(error),
+        error: errorMessage,
       });
       alert('Fail! Sim installed check failed');
     }
