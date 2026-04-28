@@ -16,6 +16,7 @@ const initialState = {
   simInstalled: {
     result: null,
     error: false,
+    rawResponse: null,
   },
   phoneStatePermission: {
     result: null,
@@ -26,16 +27,27 @@ const initialState = {
 function dataFetchReducer(state, action) {
   switch (action.type) {
     case 'SIM_INSTALLED_FETCH':
-      return { ...state, simInstalled: { result: null, error: false } };
+      return {
+        ...state,
+        simInstalled: { result: null, error: false, rawResponse: null },
+      };
     case 'SIM_INSTALLED_SUCCESS':
       return {
         ...state,
-        simInstalled: { result: action.result, error: false },
+        simInstalled: {
+          result: action.result,
+          error: false,
+          rawResponse: JSON.stringify(action.result),
+        },
       };
     case 'SIM_INSTALLED_FAILED':
       return {
         ...state,
-        simInstalled: { result: null, error: action.error },
+        simInstalled: {
+          result: null,
+          error: action.error,
+          rawResponse: JSON.stringify(action.error),
+        },
       };
     case 'PHONE_STATE_FETCH':
       return { ...state, phoneStatePermission: { result: null, error: false } };
@@ -123,6 +135,26 @@ function SimStatus() {
               ? state.simInstalled.error
               : `Sim is installed: ${state.simInstalled.result}`}
           </Typography>
+        )}
+        {state.simInstalled.rawResponse != null && (
+          <div style={{ marginTop: '12px' }}>
+            <Typography variant="caption" style={{ color: '#888' }}>
+              Raw Response:
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{
+                marginTop: '4px',
+                padding: '8px',
+                background: '#f5f5f5',
+                borderRadius: '4px',
+                wordBreak: 'break-all',
+                fontFamily: 'monospace',
+              }}
+            >
+              {state.simInstalled.rawResponse}
+            </Typography>
+          </div>
         )}
       </div>
       <div className={classes.section}>
