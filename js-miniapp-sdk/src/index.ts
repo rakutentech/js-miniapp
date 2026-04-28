@@ -51,8 +51,8 @@ import {
   CookieInfo,
   LogType,
   EsimConfig,
-  SimCheckError,
 } from '../../js-miniapp-bridge/src';
+export { SimCheckError } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
 import {
@@ -118,5 +118,4 @@ export {
   CookieInfo,
   LogType,
   EsimConfig,
-  SimCheckError,
 };

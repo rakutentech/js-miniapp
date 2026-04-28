@@ -52,8 +52,8 @@ import {
   ProductNotFoundError,
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
-  SimCheckError,
 } from './types/error-types';
+export { SimCheckError } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,
@@ -136,5 +136,4 @@ export {
   EsimConfig,
   PermissionName,
   PermissionStatus,
-  SimCheckError,
 };
