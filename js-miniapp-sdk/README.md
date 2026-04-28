@@ -203,6 +203,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [OneClick SDK Available from v1.27.0](#oneclick-sdk-available-from-v1270)
     - [Start OneClick SDK IC Chip KYC Available from v1.27.0](#start-oneclick-sdk-ic-chip-kyc-available-from-v1270)
   - [Check if SIM is Installed Available from v1.28.0](#check-if-sim-is-installed-available-from-v1280)
+  - [Request Device Permission Available from v1.28.0](#request-device-permission-available-from-v1280)
 
 ## User details
 
@@ -392,6 +393,7 @@ Each device permission is requested using a specific method for that permission.
 | Permission Method                                                                          | Description                                                                       |
 | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
 | [`requestLocationPermission`](api/interfaces/miniappfeatures.md#requestlocationpermission) | Grant access to the device location (both device permission & custom permission). |
+| [`requestPermission`](api/interfaces/miniappfeatures.md#requestpermission)                 | Request any device permission by passing a `DevicePermission` enum value (e.g. `DevicePermission.PHONE_STATE`). Rejects if the user denies. |
 
 ##### Usage example
 
@@ -2004,15 +2006,60 @@ MiniApp.oneClickSdk
 
 Check whether a physical SIM card is detected in the device.
 
-```javascript
-import MiniApp from 'js-miniapp-sdk';
+**API:** [MiniAppUtils.isSimInstalled](api/classes/miniapputils.md#issiminstalled)
 
-MiniApp
+The promise rejects with a `SimCheckError` if the host app cannot complete the check. The `SimCheckError.code` will be one of:
+
+| Code | Description |
+| ---- | ----------- |
+| `DENIED` | The host app denied the SIM check request. |
+| `FAILED_TO_CHECK` | The host app encountered an error while checking. |
+
+```javascript
+import MiniApp, { SimCheckError } from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
   .isSimInstalled()
   .then((isInstalled) => {
     console.log(isInstalled); // true if SIM is installed, false otherwise
   })
   .catch((error) => {
-    console.error(error);
+    if (error instanceof SimCheckError) {
+      console.error(`[${error.code}] ${error.message}`); // e.g. [DENIED] ...
+    } else {
+      console.error(error);
+    }
+  });
+```
+
+<div id='request-device-permission-available-from-v1280'/>
+
+## Request Device Permission <small style="color:green;font-size: 12px">Available from v1.28.0</small>
+
+Request a device permission from the host app using the generic `requestPermission` API. Pass a `DevicePermission` enum value to specify which permission to request. The promise resolves with `'ALLOWED'` if granted, or rejects if the user denies the permission.
+
+**API:** [MiniAppFeatures.requestPermission](api/interfaces/miniappfeatures.md#requestpermission)
+
+```javascript
+import MiniApp, { DevicePermission } from 'js-miniapp-sdk';
+
+// Request phone state permission
+MiniApp
+  .requestPermission(DevicePermission.PHONE_STATE)
+  .then(result => {
+    console.log(result); // 'ALLOWED'
+  })
+  .catch(error => {
+    console.error(error); // 'User denied the permission to this mini app.'
+  });
+
+// Request location permission (alternative to requestLocationPermission)
+MiniApp
+  .requestPermission(DevicePermission.LOCATION)
+  .then(result => {
+    console.log(result); // 'ALLOWED'
+  })
+  .catch(error => {
+    console.error(error); // 'User denied the permission to this mini app.'
   });
 ```

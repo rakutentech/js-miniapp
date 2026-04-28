@@ -200,6 +200,29 @@ describe('requestPermission', () => {
       'User has explicitly denied authorization'
     );
   });
+
+  it('will parse the ALLOWED response for phone state permission', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(2, 'ALLOWED');
+
+    return expect(
+      bridge.requestPermission(DevicePermission.PHONE_STATE)
+    ).to.eventually.deep.equal('ALLOWED');
+  });
+
+  it('will parse the Error response for phone state permission', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      3,
+      'User has explicitly denied authorization'
+    );
+
+    return expect(
+      bridge.requestPermission(DevicePermission.PHONE_STATE)
+    ).to.eventually.be.rejected.and.deep.equal(
+      'User has explicitly denied authorization'
+    );
+  });
 });
 
 describe('getToken', () => {
@@ -1123,21 +1146,26 @@ describe('isSimInstalled', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, true);
 
-    return expect(bridge.isSimInstalled()).to.eventually.deep.equal(true);
+    return expect(
+      bridge.utilityManager.isSimInstalled()
+    ).to.eventually.deep.equal(true);
   });
 
   it('will receive sim not installed boolean', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(2, false);
 
-    return expect(bridge.isSimInstalled()).to.eventually.deep.equal(false);
+    return expect(
+      bridge.utilityManager.isSimInstalled()
+    ).to.eventually.deep.equal(false);
   });
 
   it('will parse error', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(3, '{ "message": "test message" }');
 
-    return expect(bridge.isSimInstalled()).to.eventually.be.rejected;
+    return expect(bridge.utilityManager.isSimInstalled()).to.eventually.be
+      .rejected;
   });
 });
 

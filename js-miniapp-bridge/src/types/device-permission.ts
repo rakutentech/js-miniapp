@@ -6,4 +6,5 @@
 
 export enum DevicePermission {
   LOCATION = 'location',
+  PHONE_STATE = 'phoneState',
 }

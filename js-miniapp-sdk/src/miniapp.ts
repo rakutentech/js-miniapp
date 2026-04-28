@@ -67,6 +67,14 @@ interface MiniAppFeatures {
   requestLocationPermission(permissionDescription?: string): Promise<string>;
 
   /**
+   * Request a device permission from the host app.
+   * @param permissionType The type of device permission to request e.g. DevicePermission.LOCATION, DevicePermission.PHONE_STATE
+   * @returns The Promise of permission result ('ALLOWED' or 'DENIED') from the host app.
+   * Rejects the promise if the permission is denied.
+   */
+  requestPermission(permissionType: DevicePermission): Promise<string>;
+
+  /**
    *
    * Request that the user grant custom permissions related to accessing user data.
    * Typically, this will show a dialog in the Host App asking the user grant access to your Mini App.
@@ -121,12 +129,6 @@ interface MiniAppFeatures {
    * Mini App can choose whether to display Close confirmation alert dialog when mini app is closed
    */
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string>;
-
-  /**
-   * Check if a SIM card is installed in the device.
-   * @returns Promise resolving to true if SIM is installed, false otherwise.
-   */
-  isSimInstalled(): Promise<boolean>;
 }
 
 /**
@@ -191,8 +193,12 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   esimService: Esim = new Esim();
   oneClickSdk: OneClickSdk = new OneClickSdk();
 
-  private requestPermission(permissionType: DevicePermission): Promise<string> {
-    return getBridge().requestPermission(permissionType);
+  async requestPermission(permissionType: DevicePermission): Promise<string> {
+    const result = await getBridge().requestPermission(permissionType);
+    if (result === 'DENIED') {
+      throw new Error('User has denied this permission.');
+    }
+    return result;
   }
 
   /**
@@ -311,10 +317,6 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
 
   setCloseAlert(alertInfo: CloseAlertInfo): Promise<string> {
     return getBridge().setCloseAlert(alertInfo);
-  }
-
-  isSimInstalled(): Promise<boolean> {
-    return getBridge().isSimInstalled();
   }
 
   getPermissionStatus(name: PermissionName): Promise<string> {

@@ -22,6 +22,7 @@ import SecurityIcon from '@material-ui/icons/Security';
 import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
 import SimCardIcon from '@material-ui/icons/SimCard';
+import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import WebIcon from '@material-ui/icons/Web';
@@ -68,7 +69,7 @@ import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
 import OneClickSdk from './pages/one-click-sdk';
-import Sim from './pages/sim';
+import SimStatus from './pages/sim';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -179,7 +180,7 @@ const eSimNavLink = {
 
 const simNavLink = {
   navLink: '/sim',
-  label: 'Sim',
+  label: 'Sim-Status',
 };
 
 const permissionStatusNavLink = {
@@ -241,6 +242,7 @@ const navLinks = [
   permissionStatusNavLink,
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
+  simNavLink,
 ];
 
 const homeItem = [
@@ -440,10 +442,10 @@ const appItems = [
     element: <ESimPage />,
   },
   {
-    icon: <SimCardIcon />,
+    icon: <SimCardDownloadIcon />,
     label: simNavLink.label,
     navLink: simNavLink.navLink,
-    element: <Sim />,
+    element: <SimStatus />,
   },
   {
     icon: <VpnKeyIcon />,
