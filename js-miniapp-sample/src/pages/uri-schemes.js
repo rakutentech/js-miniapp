@@ -88,6 +88,9 @@ const UriSchemes = () => {
   const [externalBrowserUrl, setExternalBrowserUrl] = useState(
     'https://www.google.com'
   );
+  const [interactiveBrowserUrl, setInteractiveBrowserUrl] = useState(
+    'https://www.google.com'
+  );
   const [internalBrowserUrl, setInternalBrowserUrl] = useState(
     'https://www.google.com'
   );
@@ -150,6 +153,17 @@ const UriSchemes = () => {
 
   function onOpenUrl(url: URL) {
     window.location.href = url;
+  }
+
+  function openInteractiveBrowser(url) {
+    MiniApp.miniappUtils
+      .launchInteractiveBrowser(url)
+      .then((response) => {
+        console.log('openInteractiveBrowser - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        console.log('openInteractiveBrowser - Error: ', miniAppError);
+      });
   }
 
   function openExternalBrowser(url: string) {
@@ -577,6 +591,37 @@ const UriSchemes = () => {
             variant="contained"
             color="primary"
             onClick={loadUsingHTMLString}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in Interactive Browser
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractiveBrowserUrl(e.currentTarget.value)}
+            value={interactiveBrowserUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-browser-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              interactiveBrowserUrl &&
+              openInteractiveBrowser(interactiveBrowserUrl)
+            }
           >
             Open
           </Button>
