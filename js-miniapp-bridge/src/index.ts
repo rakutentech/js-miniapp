@@ -53,7 +53,7 @@ import {
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
 } from './types/error-types';
-export { SimCheckError } from './types/error-types';
+export { SimCheckError, SimCheckErrorType } from './types/error-types';
 import {
   MiniAppSecureStorageKeyValues,
   MiniAppSecureStorageSize,

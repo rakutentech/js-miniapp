@@ -32,7 +32,7 @@ import {
   parseInternalBrowserError,
 } from './internal-browser-error';
 import { parseSimError } from './sim-errors';
-export { SimCheckError } from './sim-errors';
+export { SimCheckError, SimCheckErrorType } from './sim-errors';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
   try {
