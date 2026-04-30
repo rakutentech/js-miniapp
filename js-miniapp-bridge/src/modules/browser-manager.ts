@@ -37,6 +37,25 @@ export class BrowserManager {
   }
 
   /**
+   * Launches the specified URL in an interactive browser.
+   * @param {string} url - The URL to be opened in the interactive browser.
+   * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
+   * @see {launchInteractiveBrowser}
+   */
+  launchInteractiveBrowser(url: string) {
+    return new Promise<boolean>((resolve, reject) => {
+      return this.executor.exec(
+        'launchInteractiveBrowser',
+        { url },
+        response => {
+          resolve(MiniAppBridgeUtils.BooleanValue(response));
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
    * Launches the specified URL in an internal browser.
    * You can pass either a string URL or a LaunchBrowserOptions object to specify
    * HTTP method, body, audience, and scopes.
