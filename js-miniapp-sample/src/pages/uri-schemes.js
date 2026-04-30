@@ -75,6 +75,17 @@ const deepLinkStyle = makeStyles((theme) => ({
   },
 }));
 
+function openInteractiveBrowser(url) {
+  MiniApp.miniappUtils
+    .launchInteractiveBrowser(url)
+    .then((response) => {
+      console.log('openInteractiveBrowser - SUCCESS: ', response);
+    })
+    .catch((miniAppError) => {
+      console.log('openInteractiveBrowser - Error: ', miniAppError);
+    });
+}
+
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
@@ -86,6 +97,9 @@ const UriSchemes = () => {
   );
   const [externalUrl, setExternalUrl] = useState('');
   const [externalBrowserUrl, setExternalBrowserUrl] = useState(
+    'https://www.google.com'
+  );
+  const [interactiveBrowserUrl, setInteractiveBrowserUrl] = useState(
     'https://www.google.com'
   );
   const [internalBrowserUrl, setInternalBrowserUrl] = useState(
@@ -577,6 +591,37 @@ const UriSchemes = () => {
             variant="contained"
             color="primary"
             onClick={loadUsingHTMLString}
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in Interactive Browser
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractiveBrowserUrl(e.currentTarget.value)}
+            value={interactiveBrowserUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-browser-input-field',
+            }}
+          />
+        </CardContent>
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              interactiveBrowserUrl &&
+              openInteractiveBrowser(interactiveBrowserUrl)
+            }
           >
             Open
           </Button>
