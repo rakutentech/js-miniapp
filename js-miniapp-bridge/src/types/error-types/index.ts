@@ -31,8 +31,7 @@ import {
   InternalBrowserError,
   parseInternalBrowserError,
 } from './internal-browser-error';
-import { parseSimError } from './sim-errors';
-export { SimCheckError, SimCheckErrorType } from './sim-errors';
+import { SimCheckError, SimCheckErrorType, parseSimError } from './sim-errors';
 
 function parseMiniAppError(jsonString: string): MiniAppError {
   try {
@@ -82,4 +81,6 @@ export {
   ProductPurchasedAlreadyError,
   UserCancelledPurchaseError,
   InternalBrowserError,
+  SimCheckError,
+  SimCheckErrorType,
 };
