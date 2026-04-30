@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 
 import { Button, Typography, makeStyles } from '@material-ui/core';
-import MiniApp, { DevicePermission, SimCheckError } from 'js-miniapp-sdk';
+import MiniApp, { DevicePermission } from 'js-miniapp-sdk';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -37,7 +37,7 @@ function dataFetchReducer(state, action) {
         simInstalled: {
           result: action.result,
           error: false,
-          rawResponse: JSON.stringify(action.result),
+          rawResponse: action.rawResponse,
         },
       };
     case 'SIM_INSTALLED_FAILED':
@@ -46,7 +46,7 @@ function dataFetchReducer(state, action) {
         simInstalled: {
           result: null,
           error: action.error,
-          rawResponse: JSON.stringify(action.error),
+          rawResponse: action.rawResponse,
         },
       };
     case 'PHONE_STATE_FETCH':
@@ -75,23 +75,28 @@ function SimStatus() {
     try {
       const result = await MiniApp.miniappUtils.isSimInstalled();
       if (result) {
-        dispatch({ type: 'SIM_INSTALLED_SUCCESS', result });
+        dispatch({
+          type: 'SIM_INSTALLED_SUCCESS',
+          result,
+          rawResponse: JSON.stringify({ result }),
+        });
         alert('Success! Sim is installed');
       } else {
         dispatch({
           type: 'SIM_INSTALLED_FAILED',
           error: 'Sim is not installed',
+          rawResponse: JSON.stringify({ result }),
         });
         alert('Sim is not installed');
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof SimCheckError
-          ? `[${error.code}] ${error.message}`
-          : error.message || String(error);
       dispatch({
         type: 'SIM_INSTALLED_FAILED',
-        error: errorMessage,
+        error: error.message || String(error),
+        rawResponse: JSON.stringify({
+          type: error.name,
+          message: error.message,
+        }),
       });
       alert('Fail! Sim installed check failed');
     }

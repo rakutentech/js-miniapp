@@ -52,7 +52,6 @@ import {
   LogType,
   EsimConfig,
 } from '../../js-miniapp-bridge/src';
-export { SimCheckError } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
 import {
@@ -119,3 +118,4 @@ export {
   LogType,
   EsimConfig,
 };
+export { SimCheckError, SimCheckErrorType } from '../../js-miniapp-bridge/src';
