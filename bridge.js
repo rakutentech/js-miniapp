@@ -1772,7 +1772,7 @@ exports.parseInAppPurchaseError = parseInAppPurchaseError;
 },{"./mini-app-error":16}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InternalBrowserError = exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = exports.SimCheckError = void 0;
+exports.SimCheckErrorType = exports.SimCheckError = exports.InternalBrowserError = exports.UserCancelledPurchaseError = exports.ProductPurchasedAlreadyError = exports.ProductNotFoundError = exports.ConsumeFailedError = exports.PurchaseFailedError = exports.SecureStorageIOError = exports.SecureStorageUnavailableError = exports.SecureStorageBusyError = exports.SecureStorageFullError = exports.ScopesNotSupportedError = exports.SaveFailureError = exports.parseMiniAppError = exports.MiniAppError = exports.InvalidUrlError = exports.DownloadHttpError = exports.DownloadFailedError = exports.AudienceNotSupportedError = exports.AuthorizationFailureError = void 0;
 var auth_errors_1 = require("./auth-errors");
 Object.defineProperty(exports, "AuthorizationFailureError", { enumerable: true, get: function () { return auth_errors_1.AuthorizationFailureError; } });
 Object.defineProperty(exports, "AudienceNotSupportedError", { enumerable: true, get: function () { return auth_errors_1.AudienceNotSupportedError; } });
@@ -1798,8 +1798,6 @@ Object.defineProperty(exports, "MiniAppError", { enumerable: true, get: function
 var internal_browser_error_1 = require("./internal-browser-error");
 Object.defineProperty(exports, "InternalBrowserError", { enumerable: true, get: function () { return internal_browser_error_1.InternalBrowserError; } });
 var sim_errors_1 = require("./sim-errors");
-var sim_errors_2 = require("./sim-errors");
-Object.defineProperty(exports, "SimCheckError", { enumerable: true, get: function () { return sim_errors_2.SimCheckError; } });
 function parseMiniAppError(jsonString) {
     try {
         var json = JSON.parse(jsonString);
@@ -1826,6 +1824,9 @@ function parseMiniAppError(jsonString) {
     }
 }
 exports.parseMiniAppError = parseMiniAppError;
+var sim_errors_2 = require("./sim-errors");
+Object.defineProperty(exports, "SimCheckError", { enumerable: true, get: function () { return sim_errors_2.SimCheckError; } });
+Object.defineProperty(exports, "SimCheckErrorType", { enumerable: true, get: function () { return sim_errors_2.SimCheckErrorType; } });
 
 },{"./auth-errors":11,"./download-file-errors":12,"./in-app-purchase-errors":13,"./internal-browser-error":15,"./mini-app-error":16,"./secure-storage-errors":17,"./sim-errors":18}],15:[function(require,module,exports){
 "use strict";
@@ -2037,9 +2038,6 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseSimError = exports.SimCheckError = exports.SimCheckErrorType = void 0;
 var mini_app_error_1 = require("./mini-app-error");
-/**
- * Enum for supported SIM check error event types
- */
 var SimCheckErrorType;
 (function (SimCheckErrorType) {
     SimCheckErrorType["DENIED"] = "DENIED";
@@ -2049,9 +2047,8 @@ var SimCheckError = /** @class */ (function (_super) {
     __extends(SimCheckError, _super);
     function SimCheckError(errorInput) {
         var _this = _super.call(this, errorInput) || this;
+        _this.errorInput = errorInput;
         Object.setPrototypeOf(_this, SimCheckError.prototype);
-        _this.code = SimCheckErrorType[errorInput.type];
-        _this.message = errorInput.message || "SIM error: ".concat(_this.code);
         return _this;
     }
     return SimCheckError;
@@ -2061,7 +2058,6 @@ function parseSimError(json) {
     var errorType = SimCheckErrorType[json.type];
     switch (errorType) {
         case SimCheckErrorType.DENIED:
-            return new SimCheckError(json);
         case SimCheckErrorType.FAILED_TO_CHECK:
             return new SimCheckError(json);
         default:
