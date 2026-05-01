@@ -86,7 +86,6 @@ function openInteractiveBrowser(url) {
     });
 }
 
-
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
@@ -675,7 +674,9 @@ const UriSchemes = () => {
         </CardContent>
         <CardContent className={deeplinkClass.content}>
           <FormControl variant="outlined" className={classes.textfield}>
-            <InputLabel id="interactive-http-method-label">HTTP Method</InputLabel>
+            <InputLabel id="interactive-http-method-label">
+              HTTP Method
+            </InputLabel>
             <Select
               labelId="interactive-http-method-label"
               value={interactivePostMethod}
