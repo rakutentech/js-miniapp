@@ -137,7 +137,7 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: publish to NPM
+          name: Publish to NPM
           command: |
             npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             yarn sdk publish
@@ -145,30 +145,42 @@ jobs:
           name: Publish Documentation
           command: |
             set -e
-            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
-              git checkout gh-pages
-              cp -R ./js-miniapp-sdk/publishableDocs/docs/. ./docs
-              cp -R ./js-miniapp-sdk/publishableDocs/_versions/. ./_versions
-              git add docs _versions
-              git config user.name "CI Publisher"
-              git config user.email "dev-opensource@mail.rakuten.com"
-              git commit -m "Publish documentation for $CIRCLE_TAG"
-              git push origin gh-pages
-            else
-              echo "Documentation not published for snapshot version"
-            fi
+            git checkout gh-pages
+            cp -R ./js-miniapp-sdk/publishableDocs/docs/. ./docs
+            cp -R ./js-miniapp-sdk/publishableDocs/_versions/. ./_versions
+            git add docs _versions
+            git config user.name "CI Publisher"
+            git config user.email "dev-opensource@mail.rakuten.com"
+            git commit -m "Publish documentation for $CIRCLE_TAG"
+            git push origin gh-pages
       - run:
           name: Publish GitHub Release
           command: |
             set -e
             curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
-            if [[ ! $CIRCLE_TAG == *"-"* ]]; then
-              echo "Publishing $CIRCLE_TAG release to GitHub"
-              ./bin/hub release create -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
-            else
-              echo "Publishing $CIRCLE_TAG pre-release to GitHub"
-              ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
-            fi
+            echo "Publishing $CIRCLE_TAG release to GitHub"
+            ./bin/hub release create -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
+
+  publish-sdk-prerelease:
+    working_directory: ~/mini-js-sdk
+    docker:
+      - image: circleci/node:14.18.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Publish to NPM (next tag)
+          command: |
+            npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+            cd js-miniapp-sdk && npm publish --tag next
+      - run:
+          name: Publish GitHub Pre-release
+          command: |
+            set -e
+            curl -fsSL https://github.com/github/hub/raw/master/script/get | bash -s 2.14.1
+            echo "Publishing $CIRCLE_TAG pre-release to GitHub"
+            ./bin/hub release create --prerelease -a ./js-miniapp-sdk/build/miniapp.bundle.js -m $CIRCLE_TAG $CIRCLE_TAG
 
   build-sample: # builds  & tests the sample app against latest sdk build.
     working_directory: ~/js-miniapp-sample
@@ -259,7 +271,7 @@ workflows:
       - build-sdk:
           filters:
             tags:
-              only: /^v.*/
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
             branches:
               only: /.*/
       - sdk-release-verification:
@@ -268,7 +280,7 @@ workflows:
             - build-sdk
           filters:
             tags:
-              only: /^v.*/
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
             branches:
               ignore: /.*/
       - publish-sdk:
@@ -276,7 +288,7 @@ workflows:
             - sdk-release-verification
           filters:
             tags:
-              only: /^v.*/
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
             branches:
               ignore: /.*/
       - build-sample
@@ -290,3 +302,29 @@ workflows:
           requires:
            - build-sdk
            - build-bridge
+
+  pre-release:
+    jobs:
+      - build-sdk:
+          filters:
+            tags:
+              only: /^v.*-.*/
+            branches:
+              ignore: /.*/
+      - sdk-prerelease-verification:
+          type: approval
+          requires:
+            - build-sdk
+          filters:
+            tags:
+              only: /^v.*-.*/
+            branches:
+              ignore: /.*/
+      - publish-sdk-prerelease:
+          requires:
+            - sdk-prerelease-verification
+          filters:
+            tags:
+              only: /^v.*-.*/
+            branches:
+              ignore: /.*/
