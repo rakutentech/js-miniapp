@@ -240,7 +240,7 @@ const UriSchemes = () => {
     try {
       httpBody = JSON.parse(bodyStr);
     } catch (e) {
-      setInteractivePostError('Invalid JSON in body params');
+      setInteractivePostError(`Invalid JSON in body params: ${e.message}`);
       return;
     }
     MiniApp.miniappUtils
@@ -256,9 +256,7 @@ const UriSchemes = () => {
       })
       .catch((miniAppError) => {
         setInteractivePostError(
-          miniAppError && miniAppError.message
-            ? miniAppError.message
-            : 'Failed to launch interactive browser'
+          miniAppError?.message ?? 'Failed to launch interactive browser'
         );
         console.log('openInteractiveBrowser (POST) - Error: ', miniAppError);
       });
