@@ -53,32 +53,37 @@ const useStyles = makeStyles(() => ({
   },
   // Status card
   statusCard: {
-    borderRadius: 12,
-    padding: '20px 16px',
+    borderRadius: 10,
+    padding: '12px 16px',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
     boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
   },
-  statusIcon: { fontSize: 56 },
+  statusIcon: { fontSize: 32, flexShrink: 0 },
+  statusTextBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
   statusLabel: {
-    fontWeight: 800,
-    fontSize: '1.15rem',
-    letterSpacing: '0.05em',
+    fontWeight: 700,
+    fontSize: '0.88rem',
+    letterSpacing: '0.04em',
     textTransform: 'uppercase',
   },
   statusSub: {
-    fontSize: '0.78rem',
-    textAlign: 'center',
+    fontSize: '0.74rem',
     lineHeight: 1.4,
+    marginTop: 2,
   },
   retryButton: {
-    marginTop: 4,
+    marginTop: 0,
     borderRadius: 20,
     fontWeight: 700,
     textTransform: 'none',
-    fontSize: '0.82rem',
+    fontSize: '0.76rem',
+    flexShrink: 0,
   },
   content: {
     flex: 1,
@@ -489,23 +494,25 @@ function Detail() {
           elevation={0}
         >
           <StatusIcon className={classes.statusIcon} style={{ color: visual.iconColor }} />
-          <Typography className={classes.statusLabel} style={{ color: visual.labelColor }}>
-            {visual.label}
-          </Typography>
-          <Typography className={classes.statusSub} style={{ color: visual.labelColor }}>
-            {visual.sub}
-          </Typography>
+          <div className={classes.statusTextBlock}>
+            <Typography className={classes.statusLabel} style={{ color: visual.labelColor }}>
+              {visual.label}
+            </Typography>
+            <Typography className={classes.statusSub} style={{ color: visual.labelColor }}>
+              {visual.sub}
+            </Typography>
+          </div>
           {check.isAutoTestable && (
             <Button
               className={classes.retryButton}
               variant="outlined"
               size="small"
-              startIcon={<ReplayIcon style={{ fontSize: 15 }} />}
+              startIcon={<ReplayIcon style={{ fontSize: 14 }} />}
               onClick={handleRetry}
               disabled={isRetrying}
-              style={{ borderColor: visual.iconColor, color: visual.iconColor, marginTop: 8 }}
+              style={{ borderColor: visual.iconColor, color: visual.iconColor }}
             >
-              {isRetrying ? 'Retrying…' : 'Retry This Check'}
+              {isRetrying ? 'Retrying…' : 'Retry'}
             </Button>
           )}
         </Paper>

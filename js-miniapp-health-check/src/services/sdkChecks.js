@@ -50,7 +50,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = MiniApp.getPlatform();
-      return { result: `"${result}"` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -61,7 +61,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.getMessagingUniqueId();
-      return { result };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -72,7 +72,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.getMauid();
-      return { result };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -83,7 +83,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.getHostEnvironmentInfo();
-      return { result: JSON.stringify(result, null, 2) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -94,7 +94,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.getPoints();
-      return { result: JSON.stringify(result, null, 2) };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -111,7 +111,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.shareInfo({ content: v.content, url: v.url || undefined });
-        return { result: String(result) };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -138,7 +138,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.setScreenOrientation(v.orientation);
-        return { result: String(result) };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -246,7 +246,7 @@ export const SDK_CHECKS = [
       fields: [],
       run: async () => {
         const result = await MiniApp.user.triggerLoginUI();
-        return { result: `Result: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -262,7 +262,7 @@ export const SDK_CHECKS = [
       warning: 'This will log you out of the host app immediately.',
       run: async () => {
         const result = await MiniApp.user.forceLogout();
-        return { result: `Logged out: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -368,7 +368,7 @@ export const SDK_CHECKS = [
       warning: '⚠ This will close the MiniApp immediately. All unsaved results will be lost.',
       run: async () => {
         const result = await MiniApp.miniappUtils.closeMiniApp(false);
-        return { result: String(result) };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -385,7 +385,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.miniappUtils.launchExternalBrowser(v.url);
-        return { result: `Launched: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -402,7 +402,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.miniappUtils.launchInternalBrowser(v.url);
-        return { result: `Launched: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -417,7 +417,7 @@ export const SDK_CHECKS = [
       fields: [],
       run: async () => {
         const result = await MiniApp.miniappUtils.launchAppSettings();
-        return { result: `Launched: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -434,7 +434,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.miniappUtils.launchAppUsingDeeplink(v.url);
-        return { result: `Launched: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -451,7 +451,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.miniappUtils.launchAppUsingPackageName(v.packageName);
-        return { result: `Launched: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -474,7 +474,7 @@ export const SDK_CHECKS = [
           v.callbackUrl,
           v.baseUrl || undefined
         );
-        return { result: result !== null ? String(result) : '(null)' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -519,7 +519,7 @@ export const SDK_CHECKS = [
         config.ssc = v.ssc;
         if (v.customerId) config.customerId = v.customerId;
         const result = await MiniApp.miniappUtils.configureAnalytics(config);
-        return { result: result !== undefined ? String(result) : 'Analytics configured' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -566,7 +566,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.secureStorageService.getItem('_health_check_key_');
-      return { result: `"${result}"` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -591,8 +591,8 @@ export const SDK_CHECKS = [
       fields: [],
       warning: 'This will permanently delete ALL data from secure storage.',
       run: async () => {
-        await MiniApp.secureStorageService.clear();
-        return { result: 'Secure storage cleared' };
+        const result = await MiniApp.secureStorageService.clear();
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -637,7 +637,7 @@ export const SDK_CHECKS = [
     isAutoTestable: true,
     run: async () => {
       const result = await MiniApp.preferences.get('_health_check_pref_');
-      return { result: `"${result}"` };
+      return { result: JSON.stringify(result) };
     },
   },
   {
@@ -663,7 +663,7 @@ export const SDK_CHECKS = [
       warning: 'This will permanently delete ALL MiniApp preferences.',
       run: async () => {
         const result = await MiniApp.preferences.clearMiniAppPreferences();
-        return { result: String(result) };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -717,7 +717,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.esimService.setupAndInstallEsim({ activationCode: v.activationCode });
-        return { result: `eSIM installed: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -734,7 +734,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.requestLocationPermission(v.description);
-        return { result: `Status: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -778,7 +778,7 @@ export const SDK_CHECKS = [
       ],
       run: async (v) => {
         const result = await MiniApp.downloadFile(v.filename, v.url, {});
-        return { result: `Saved as: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -793,7 +793,7 @@ export const SDK_CHECKS = [
       fields: [],
       run: async () => {
         const result = await MiniApp.galleryManager.getImageFromGallery();
-        return { result: result ? `Image selected (type: ${result.type || 'unknown'})` : '(null)' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -816,7 +816,7 @@ export const SDK_CHECKS = [
           redirectUri: v.redirectUri,
           scope: v.scope,
         });
-        return { result: `KYC result: ${result}` };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -841,7 +841,7 @@ export const SDK_CHECKS = [
           caption: v.caption || undefined,
           action: v.action || undefined,
         });
-        return { result: result !== null ? `Message sent, id: ${result}` : '(null – user cancelled)' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -864,7 +864,7 @@ export const SDK_CHECKS = [
           text: v.text,
           caption: v.caption || undefined,
         });
-        return { result: result !== null ? `Message sent, id: ${result}` : '(null – contact not found)' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
@@ -885,8 +885,7 @@ export const SDK_CHECKS = [
           text: v.text,
           caption: v.caption || undefined,
         });
-        const count = Array.isArray(result) ? result.length : 0;
-        return { result: result !== null ? `Sent to ${count} contact(s)` : '(null – user cancelled)' };
+        return { result: JSON.stringify(result) };
       },
     },
   },
