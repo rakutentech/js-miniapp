@@ -183,6 +183,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
   - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
+  - [Launch Interactive Browser Available from v1.22.0](#launch-interactive-browser-available-from-v1220)
   - [Launch External Browser Available from v1.22.0](#launch-external-browser-available-from-v1220)
   - [Get Image from Gallery Available from v1.22.0](#get-image-from-gallery-available-from-v1220)
   - [Is Logged In Available from v1.22.0](#is-logged-in-available-from-v1220)
@@ -1616,6 +1617,50 @@ import { HttpMethod } from 'js-miniapp-sdk'; // or from the bridge types
 
 MiniApp.miniappUtils
   .launchInternalBrowser({
+    url: "https://www.rakuten.co.jp",
+    httpMethod: HttpMethod.POST,
+    httpBody: { key: "value" },
+    audience: "your_audience",
+    scopes: ["scope1", "scope2"]
+  })
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+```
+
+
+<div id='launch-interactive-browser-available-from-v1220'/>
+
+## Launch Interactive Browser <small style="color:green;font-size: 12px">Available from v1.22.0</small>
+
+This interface will help the MiniApps to launch URL in an interactive browser.
+
+You can pass either a string URL or a `LaunchBrowserOptions` object to specify HTTP method, body, audience, and scopes.
+
+**Usage with URL string:**
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.miniappUtils
+  .launchInteractiveBrowser("https://www.rakuten.co.jp")
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((miniAppError) => {
+    console.log(miniAppError);
+  });
+```
+
+**Usage with LaunchBrowserOptions:**
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+import { HttpMethod } from 'js-miniapp-sdk'; // or from the bridge types
+
+MiniApp.miniappUtils
+  .launchInteractiveBrowser({
     url: "https://www.rakuten.co.jp",
     httpMethod: HttpMethod.POST,
     httpBody: { key: "value" },

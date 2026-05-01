@@ -3,6 +3,7 @@
 ### 1.28.0 (2026-05-01)
 - **Feature:** Added new interface `isSimInstalled` to `MiniAppUtils` to check if a physical SIM card is installed on the device. Accessible via `MiniApp.miniappUtils.isSimInstalled()`.
 - **Feature:** Added `PHONE_STATE` to `DevicePermission` enum and exposed `requestPermission(permissionType: DevicePermission)` as a public API to request device permissions (e.g. phone state) from the host app. The promise rejects if the user denies the permission.
+- **Update:** `launchInteractiveBrowser` now supports passing an options object (`LaunchBrowserOptions`) with `httpMethod`, `httpBody`, `audience`, and `scopes`, matching the same signature as `launchInternalBrowser`.
 
 ### 1.27.0 (2026-03-18)
 - **Feature:** Added new interface `startICChipKyc` to request Host App to start IC Chip flow.

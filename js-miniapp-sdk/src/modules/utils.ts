@@ -72,10 +72,14 @@ export interface MiniAppUtilsProvider {
   launchExternalBrowser(url: string): Promise<boolean>;
 
   /**
-   * This interface will be used to launch the URL in interactive browser
-   * @param url Remote URL
+   * This interface will be used to launch the URL in interactive browser.
+   * You can pass either a string URL or a LaunchBrowserOptions object to specify
+   * HTTP method, body, audience, and scopes.
+   * @param urlOrParams The URL string or LaunchBrowserOptions object.
    */
-  launchInteractiveBrowser(url: string): Promise<boolean>;
+  launchInteractiveBrowser(
+    urlOrParams: string | LaunchBrowserOptions
+  ): Promise<boolean>;
 
   /**
    * This interface will be used to launch the URL in Internal browser.
@@ -205,8 +209,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
     return getBridge().browserManager.launchExternalBrowser(url);
   }
 
-  launchInteractiveBrowser(url: string): Promise<boolean> {
-    return getBridge().browserManager.launchInteractiveBrowser(url);
+  launchInteractiveBrowser(
+    urlOrParams: string | LaunchBrowserOptions
+  ): Promise<boolean> {
+    return getBridge().browserManager.launchInteractiveBrowser(urlOrParams);
   }
 
   launchInternalBrowser(

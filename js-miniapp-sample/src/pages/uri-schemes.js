@@ -86,6 +86,7 @@ function openInteractiveBrowser(url) {
     });
 }
 
+
 const UriSchemes = () => {
   const EXTERNAL_WEBVIEW_URL =
     'https://htmlpreview.github.io/?https://raw.githubusercontent.com/rakutentech/js-miniapp/master/js-miniapp-sample/external-webview/index.html';
@@ -102,6 +103,16 @@ const UriSchemes = () => {
   const [interactiveBrowserUrl, setInteractiveBrowserUrl] = useState(
     'https://www.google.com'
   );
+  const [interactivePostUrl, setInteractivePostUrl] = useState(
+    'https://www.google.com'
+  );
+  const [interactivePostBody, setInteractivePostBody] = useState(
+    '{"isWebview": "true"}'
+  );
+  const [interactivePostError, setInteractivePostError] = useState('');
+  const [interactivePostAudience, setInteractivePostAudience] = useState('');
+  const [interactivePostScopes, setInteractivePostScopes] = useState('');
+  const [interactivePostMethod, setInteractivePostMethod] = useState('POST');
   const [internalBrowserUrl, setInternalBrowserUrl] = useState(
     'https://www.google.com'
   );
@@ -221,6 +232,36 @@ const UriSchemes = () => {
             : 'Failed to launch internal browser'
         );
         console.log('openInternalBrowser (POST) - Error: ', miniAppError);
+      });
+  }
+
+  function openInteractiveBrowserPost(url, bodyStr, audience, scopes) {
+    let httpBody;
+    setInteractivePostError('');
+    try {
+      httpBody = JSON.parse(bodyStr);
+    } catch (e) {
+      setInteractivePostError('Invalid JSON in body params');
+      return;
+    }
+    MiniApp.miniappUtils
+      .launchInteractiveBrowser({
+        url,
+        httpMethod: interactivePostMethod,
+        httpBody,
+        audience,
+        scopes,
+      })
+      .then((response) => {
+        console.log('openInteractiveBrowser (POST) - SUCCESS: ', response);
+      })
+      .catch((miniAppError) => {
+        setInteractivePostError(
+          miniAppError && miniAppError.message
+            ? miniAppError.message
+            : 'Failed to launch interactive browser'
+        );
+        console.log('openInteractiveBrowser (POST) - Error: ', miniAppError);
       });
   }
 
@@ -621,6 +662,114 @@ const UriSchemes = () => {
             onClick={() =>
               interactiveBrowserUrl &&
               openInteractiveBrowser(interactiveBrowserUrl)
+            }
+          >
+            Open
+          </Button>
+        </CardActions>
+      </GreyCard>
+      <br />
+      <GreyCard className={classes.card}>
+        <CardContent className={classes.content}>
+          Launch URL in Interactive Browser (POST)
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <FormControl variant="outlined" className={classes.textfield}>
+            <InputLabel id="interactive-http-method-label">HTTP Method</InputLabel>
+            <Select
+              labelId="interactive-http-method-label"
+              value={interactivePostMethod}
+              onChange={(e) => setInteractivePostMethod(e.target.value)}
+              label="HTTP Method"
+              inputProps={{
+                'data-testid': 'interactive-post-method-field',
+              }}
+            >
+              <MenuItem value="POST">POST</MenuItem>
+              <MenuItem value="GET">GET</MenuItem>
+              <MenuItem value="PUT">PUT</MenuItem>
+              <MenuItem value="DELETE">DELETE</MenuItem>
+            </Select>
+          </FormControl>
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractivePostUrl(e.currentTarget.value)}
+            value={interactivePostUrl}
+            label="URL"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-post-url-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractivePostBody(e.currentTarget.value)}
+            value={interactivePostBody}
+            label="Body (JSON) (optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-post-body-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractivePostAudience(e.currentTarget.value)}
+            value={interactivePostAudience}
+            label="Audience (optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-post-audience-field',
+            }}
+          />
+        </CardContent>
+        <CardContent className={deeplinkClass.content}>
+          <TextField
+            className={classes.textfield}
+            onChange={(e) => setInteractivePostScopes(e.currentTarget.value)}
+            value={interactivePostScopes}
+            label="Scopes (comma separated, optional)"
+            variant="outlined"
+            color="primary"
+            inputProps={{
+              'data-testid': 'interactive-post-scopes-field',
+            }}
+          />
+        </CardContent>
+        {interactivePostError && (
+          <CardContent
+            className={deeplinkClass.content}
+            style={{ color: 'red', fontSize: 14 }}
+          >
+            {interactivePostError}
+          </CardContent>
+        )}
+        <CardActions className={deeplinkClass.actions}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              interactivePostUrl &&
+              interactivePostBody &&
+              openInteractiveBrowserPost(
+                interactivePostUrl,
+                interactivePostBody,
+                interactivePostAudience || undefined,
+                interactivePostScopes
+                  ? interactivePostScopes
+                      .split(',')
+                      .map((s) => s.trim())
+                      .filter(Boolean)
+                  : undefined
+              )
             }
           >
             Open
