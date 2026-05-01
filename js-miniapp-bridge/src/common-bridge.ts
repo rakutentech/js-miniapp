@@ -1050,11 +1050,14 @@ export class MiniAppBridge {
   }
 
   /**
-   * This interface helps you to launch URL in Interactive browser
+   * This interface helps you to launch URL in Interactive browser.
+   * You can pass either a string URL or a LaunchBrowserOptions object to specify
+   * HTTP method, body, audience, and scopes.
+   * @param urlOrParams The URL string or LaunchBrowserOptions object.
    * @returns true if browser is launched
    */
-  launchInteractiveBrowser(url: string) {
-    return this.browserManager.launchInteractiveBrowser(url);
+  launchInteractiveBrowser(urlOrParams: string | LaunchBrowserOptions) {
+    return this.browserManager.launchInteractiveBrowser(urlOrParams);
   }
 
   /**
