@@ -740,11 +740,14 @@ var MiniAppBridge = /** @class */ (function () {
         return this.browserManager.launchExternalBrowser(url);
     };
     /**
-     * This interface helps you to launch URL in Interactive browser
+     * This interface helps you to launch URL in Interactive browser.
+     * You can pass either a string URL or a LaunchBrowserOptions object to specify
+     * HTTP method, body, audience, and scopes.
+     * @param urlOrParams The URL string or LaunchBrowserOptions object.
      * @returns true if browser is launched
      */
-    MiniAppBridge.prototype.launchInteractiveBrowser = function (url) {
-        return this.browserManager.launchInteractiveBrowser(url);
+    MiniAppBridge.prototype.launchInteractiveBrowser = function (urlOrParams) {
+        return this.browserManager.launchInteractiveBrowser(urlOrParams);
     };
     /**
      * This interface helps you to launch URL in Internal browser.
@@ -1015,14 +1018,17 @@ var BrowserManager = /** @class */ (function () {
     };
     /**
      * Launches the specified URL in an interactive browser.
-     * @param {string} url - The URL to be opened in the interactive browser.
+     * You can pass either a string URL or a LaunchBrowserOptions object to specify
+     * HTTP method, body, audience, and scopes.
+     * @param {string | LaunchBrowserOptions} urlOrParams - The URL string or LaunchBrowserOptions object.
      * @returns {Promise<boolean>} - A promise that resolves to true if the URL was successfully opened, otherwise rejects with an error.
      * @see {launchInteractiveBrowser}
      */
-    BrowserManager.prototype.launchInteractiveBrowser = function (url) {
+    BrowserManager.prototype.launchInteractiveBrowser = function (urlOrParams) {
         var _this = this;
+        var params = typeof urlOrParams === 'string' ? { url: urlOrParams } : urlOrParams;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('launchInteractiveBrowser', { url: url }, function (response) {
+            return _this.executor.exec('launchInteractiveBrowser', params, function (response) {
                 resolve(common_bridge_1.MiniAppBridgeUtils.BooleanValue(response));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
         });
