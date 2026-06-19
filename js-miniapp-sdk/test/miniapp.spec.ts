@@ -211,7 +211,9 @@ describe('requestLocationPermission', () => {
 
   it('should handle case where iOS SDK does not support location custom permission', () => {
     window.MiniAppBridge.requestCustomPermissions.returns(
-      Promise.reject('invalidCustomPermissionsList: test description')
+      Promise.reject(
+        new Error('invalidCustomPermissionsList: test description')
+      )
     );
 
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
@@ -951,7 +953,9 @@ describe('eSimSupport', () => {
   });
 
   it('should return error information', () => {
-    window.MiniAppBridge.isEsimSupported.returns(Promise.reject(new Error('test error')));
+    window.MiniAppBridge.isEsimSupported.returns(
+      Promise.reject(new Error('test error'))
+    );
     return expect(miniApp.esimService.isEsimSupported()).to.eventually.be
       .rejected;
   });
