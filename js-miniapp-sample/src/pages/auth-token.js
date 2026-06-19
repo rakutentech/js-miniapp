@@ -82,7 +82,11 @@ type AuthTokenProps = {
   permissions: CustomPermissionName[],
   accessToken: AccessTokenData,
   error: MiniAppError,
-  getAccessToken: (audience: string, scopes: string[], serviceId?: string) => Promise<string>,
+  getAccessToken: (
+    audience: string,
+    scopes: string[],
+    serviceId?: string
+  ) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
@@ -92,7 +96,10 @@ function AuthToken(props: AuthTokenProps) {
   const classes = useStyles();
 
   const [audience, setAudience] = useState('rae');
-  const [selectedScopes, setSelectedScopes] = useState(['your_service_scope_here', 'your_service_scope_here']);
+  const [selectedScopes, setSelectedScopes] = useState([
+    'your_service_scope_here',
+    'your_service_scope_here',
+  ]);
   const [serviceId, setServiceId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
@@ -133,7 +140,9 @@ function AuthToken(props: AuthTokenProps) {
       })
       .catch((e) => {
         setIsError(true);
-        setStatusMessage(typeof e === 'string' ? e : e.message || 'Failed to get access token');
+        setStatusMessage(
+          typeof e === 'string' ? e : e.message || 'Failed to get access token'
+        );
       })
       .finally(() => setIsLoading(false));
   }
@@ -149,14 +158,18 @@ function AuthToken(props: AuthTokenProps) {
     const permissionsList = [
       {
         name: CustomPermissionName.ACCESS_TOKEN,
-        description: 'We would like to get the Access token details to share with this Mini app',
+        description:
+          'We would like to get the Access token details to share with this Mini app',
       },
     ];
 
     props
       .requestPermissions(permissionsList)
       .then((permissions) => {
-        if (permissions && !hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)) {
+        if (
+          permissions &&
+          !hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)
+        ) {
           fetchToken();
         } else {
           setIsLoading(false);
@@ -176,7 +189,6 @@ function AuthToken(props: AuthTokenProps) {
 
   return (
     <div className={classes.container}>
-
       {/* Audience */}
       <FormControl variant="outlined" fullWidth className={classes.field}>
         <InputLabel id="audience-label">Audience</InputLabel>
@@ -187,7 +199,9 @@ function AuthToken(props: AuthTokenProps) {
           label="Audience"
         >
           {Object.keys(AUDIENCE_SCOPES).map((aud) => (
-            <MenuItem key={aud} value={aud}>{aud}</MenuItem>
+            <MenuItem key={aud} value={aud}>
+              {aud}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
@@ -205,14 +219,22 @@ function AuthToken(props: AuthTokenProps) {
           renderValue={(selected) => (
             <div className={classes.chips}>
               {selected.map((scope) => (
-                <Chip key={scope} label={scope} size="small" className={classes.chip} />
+                <Chip
+                  key={scope}
+                  label={scope}
+                  size="small"
+                  className={classes.chip}
+                />
               ))}
             </div>
           )}
         >
           {availableScopes.map((scope) => (
             <MenuItem key={scope} value={scope}>
-              <Checkbox checked={selectedScopes.includes(scope)} color="primary" />
+              <Checkbox
+                checked={selectedScopes.includes(scope)}
+                color="primary"
+              />
               <ListItemText primary={scope} />
             </MenuItem>
           ))}
@@ -240,15 +262,27 @@ function AuthToken(props: AuthTokenProps) {
         disabled={isLoading || selectedScopes.length === 0}
         data-testid="authButton"
       >
-        {isLoading ? <CircularProgress size={22} color="inherit" /> : 'Get Access Token'}
+        {isLoading ? (
+          <CircularProgress size={22} color="inherit" />
+        ) : (
+          'Get Access Token'
+        )}
       </Button>
 
       {!isLoading && !isError && token && (
         <div className={classes.result}>
-          <Typography variant="body2" className={classes.resultLabel}>Token</Typography>
-          <Typography variant="body2" gutterBottom>{token.token}</Typography>
-          <Typography variant="body2" className={classes.resultLabel}>Valid Until</Typography>
-          <Typography variant="body2">{displayDate(token.validUntil)}</Typography>
+          <Typography variant="body2" className={classes.resultLabel}>
+            Token
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            {token.token}
+          </Typography>
+          <Typography variant="body2" className={classes.resultLabel}>
+            Valid Until
+          </Typography>
+          <Typography variant="body2">
+            {displayDate(token.validUntil)}
+          </Typography>
         </div>
       )}
 
@@ -257,7 +291,6 @@ function AuthToken(props: AuthTokenProps) {
           {statusMessage}
         </Typography>
       )}
-
     </div>
   );
 }
