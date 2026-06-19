@@ -247,6 +247,7 @@ describe('getToken', () => {
 
   it('will pass serviceId when provided', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.reset();
     mockExecutor.exec.callsArgWith(
       2,
       '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
@@ -259,6 +260,7 @@ describe('getToken', () => {
 
   it('will not include serviceId in payload when omitted', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.reset();
     mockExecutor.exec.callsArgWith(
       2,
       '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
