@@ -951,7 +951,7 @@ describe('eSimSupport', () => {
   });
 
   it('should return error information', () => {
-    window.MiniAppBridge.isEsimSupported.returns(Promise.reject('test error'));
+    window.MiniAppBridge.isEsimSupported.returns(Promise.reject(new Error('test error')));
     return expect(miniApp.esimService.isEsimSupported()).to.eventually.be
       .rejected;
   });
@@ -974,7 +974,7 @@ describe('isSimInstalled', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.utilityManager.isSimInstalled.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(miniApp.miniappUtils.isSimInstalled()).to.eventually.be
       .rejected;
@@ -993,7 +993,7 @@ describe('setupAndInstallEsim', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.setupAndInstallEsim.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(
       miniApp.esimService.setupAndInstallEsim({
@@ -1011,7 +1011,7 @@ describe('forceLogout', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.userProfileManager.forceLogout.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(miniApp.user.forceLogout()).to.eventually.be.rejected;
   });
@@ -1027,7 +1027,7 @@ describe('forceInternalWebView', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.forceInternalWebView.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(miniApp.webviewManager.forceInternalWebView(true)).to
       .eventually.be.rejected;
@@ -1044,7 +1044,7 @@ describe('launchAppSettings', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.utilityManager.launchAppSettings.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(miniApp.miniappUtils.launchAppSettings()).to.eventually.be
       .rejected;
@@ -1070,7 +1070,7 @@ describe('loadUsingHTMLString', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.browserManager.loadUsingHTMLString.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(
       miniApp.miniappUtils.loadUsingHTMLString(
@@ -1099,7 +1099,7 @@ describe('startICChipKyc', () => {
 
   it('should return error information', () => {
     window.MiniAppBridge.oneClickSdk.startICChipKyc.returns(
-      Promise.reject('test error')
+      Promise.reject(new Error('test error'))
     );
     return expect(miniApp.oneClickSdk.startICChipKyc(info)).to.eventually.be
       .rejected;

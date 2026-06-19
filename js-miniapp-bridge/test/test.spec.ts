@@ -253,9 +253,13 @@ describe('getToken', () => {
       '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
     );
 
-    return bridge.getAccessToken('AUD', ['SCO1', 'SCO2'], 'MY_SERVICE').then(() => {
-      expect(mockExecutor.exec.getCall(0).args[1]).to.deep.include({ serviceId: 'MY_SERVICE' });
-    });
+    return bridge
+      .getAccessToken('AUD', ['SCO1', 'SCO2'], 'MY_SERVICE')
+      .then(() => {
+        expect(mockExecutor.exec.getCall(0).args[1]).to.deep.include({
+          serviceId: 'MY_SERVICE',
+        });
+      });
   });
 
   it('will not include serviceId in payload when omitted', () => {
@@ -267,7 +271,9 @@ describe('getToken', () => {
     );
 
     return bridge.getAccessToken('AUD', ['SCO1', 'SCO2']).then(() => {
-      expect(mockExecutor.exec.getCall(0).args[1]).to.not.have.property('serviceId');
+      expect(mockExecutor.exec.getCall(0).args[1]).to.not.have.property(
+        'serviceId'
+      );
     });
   });
 
