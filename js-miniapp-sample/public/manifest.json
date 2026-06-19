@@ -54,7 +54,7 @@
   "accessTokenPermissions": [
     {
       "audience": "rae",
-      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+      "scopes": ["your_service_scope_here", "your_service_scope_here"]
     },
     {
       "audience": "api-c",

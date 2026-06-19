@@ -245,6 +245,30 @@ describe('getToken', () => {
     });
   });
 
+  it('will pass serviceId when provided', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
+    );
+
+    return bridge.getAccessToken('AUD', ['SCO1', 'SCO2'], 'MY_SERVICE').then(() => {
+      expect(mockExecutor.exec.getCall(0).args[1]).to.deep.include({ serviceId: 'MY_SERVICE' });
+    });
+  });
+
+  it('will not include serviceId in payload when omitted', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(
+      2,
+      '{ "token": "test", "validUntil": 0, "scopes": { "audience": "AUD", "scopes": ["SCO1","SCO2"]} }'
+    );
+
+    return bridge.getAccessToken('AUD', ['SCO1', 'SCO2']).then(() => {
+      expect(mockExecutor.exec.getCall(0).args[1]).to.not.have.property('serviceId');
+    });
+  });
+
   it('will parse the AccessToken AudienceNotSupportedError JSON response', () => {
     const bridge = new Bridge.MiniAppBridge(mockExecutor);
     mockExecutor.exec.callsArgWith(

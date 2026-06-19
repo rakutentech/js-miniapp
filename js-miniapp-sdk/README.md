@@ -104,7 +104,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   "accessTokenPermissions": [
     {
       "audience": "rae",
-      "scopes": ["idinfo_read_openid", "memberinfo_read_point"]
+      "scopes": ["your_service_scope_here", "your_service_scope_here"]
     },
     {
       "audience": "api-c",
@@ -724,9 +724,12 @@ Returns the [AccessTokenData](api/interfaces/accesstokendata.md) list from the H
 
 **AccessTokenData** contains `token`,`validUntil` and `scopes` details.
 
+An optional `serviceId` string can be passed to identify the service requesting the token. If omitted, the request behaves as before.
+
 ```javascript
 import MiniApp from 'js-miniapp-sdk';
 
+// Without serviceId (existing behaviour)
 MiniApp.user
   .getAccessToken('TOKEN_AUDIENCE', ['TOKEN_SCOPE1', 'TOKEN_SCOPE2'])
   .then(data => {
@@ -735,6 +738,15 @@ MiniApp.user
       const token = data.token;
       // Use token
     }
+  })
+  .catch(error => console.error(error));
+
+// With optional serviceId
+MiniApp.user
+  .getAccessToken('TOKEN_AUDIENCE', ['TOKEN_SCOPE1', 'TOKEN_SCOPE2'], 'MY_SERVICE_ID')
+  .then(data => {
+    const token = data.token;
+    // Use token
   })
   .catch(error => console.error(error));
 ```

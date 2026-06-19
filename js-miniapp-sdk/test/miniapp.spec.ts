@@ -426,6 +426,32 @@ describe('getAccessToken', () => {
     ).to.eventually.equal(response);
   });
 
+  it('should pass serviceId to MiniAppBridge when provided', () => {
+    const response = { token: 'test_token', validUntil: 0 };
+
+    window.MiniAppBridge.getAccessToken.resolves(response);
+    return miniApp.user
+      .getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'], 'MY_SERVICE')
+      .then(() => {
+        expect(
+          window.MiniAppBridge.getAccessToken.calledWith(
+            'AUDIENCE',
+            ['SCOPE1', 'SCOPE2'],
+            'MY_SERVICE'
+          )
+        ).to.equal(true);
+      });
+  });
+
+  it('should work without serviceId (backwards compatibility)', () => {
+    const response = { token: 'test_token', validUntil: 0 };
+
+    window.MiniAppBridge.getAccessToken.resolves(response);
+    return expect(
+      miniApp.user.getAccessToken('AUDIENCE', ['SCOPE1', 'SCOPE2'])
+    ).to.eventually.equal(response);
+  });
+
   describe('getPoints', () => {
     it('should retrieve Points from the MiniAppBridge when request is successful', () => {
       const response = [

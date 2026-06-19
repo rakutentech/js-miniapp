@@ -475,12 +475,13 @@ export class MiniAppBridge {
    * It returns error info if user had denied the custom permission
    * @param {string} audience the audience the MiniApp requests for the token
    * @param {string[]} scopes the associated scopes with the requested audience
+   * @param {string} [serviceId] optional service identifier for the token request
    */
-  getAccessToken(audience: string, scopes: string[]) {
+  getAccessToken(audience: string, scopes: string[], serviceId?: string) {
     return new Promise<AccessTokenData>((resolve, reject) => {
       return this.executor.exec(
         'getAccessToken',
-        { audience, scopes },
+        { audience, scopes, ...(serviceId !== undefined && { serviceId }) },
         tokenData => {
           const nativeTokenData = JSON.parse(tokenData) as NativeTokenData;
           resolve(new AccessTokenData(nativeTokenData));

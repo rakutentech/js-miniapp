@@ -1,22 +1,28 @@
-import React, { Fragment, useReducer, useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Button,
+  Checkbox,
+  Chip,
   CircularProgress,
-  FormGroup,
-  Typography,
+  Divider,
   FormControl,
+  Input,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  Select,
   TextField,
+  Typography,
 } from '@material-ui/core';
-import { red, green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import {
-  CustomPermission,
-  CustomPermissionResult,
-  CustomPermissionName,
-  CustomPermissionStatus,
   AccessTokenData,
+  CustomPermission,
+  CustomPermissionName,
+  CustomPermissionResult,
+  MAAnalyticsActionType,
+  MAAnalyticsEventType,
   MiniAppError,
 } from 'js-miniapp-sdk';
 import { connect } from 'react-redux';
@@ -25,293 +31,250 @@ import { displayDate } from '../js_sdk';
 import { requestCustomPermissions } from '../services/permissions/actions';
 import { requestAccessToken } from '../services/user/actions';
 import { sendAnalytics } from './helper';
-import { MAAnalyticsActionType, MAAnalyticsEventType } from 'js-miniapp-sdk';
+
+const AUDIENCE_SCOPES = {
+  rae: ['your_service_scope_here', 'your_service_scope_here'],
+  'api-c': ['your_service_scope_here'],
+};
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     padding: theme.spacing(3),
+    maxWidth: 480,
+    margin: '0 auto',
   },
-  formControl: {
-    margin: theme.spacing(2),
-    minWidth: 300,
+  field: {
+    marginBottom: theme.spacing(3),
   },
-  wrapper: {
-    position: 'relative',
-    marginTop: theme.spacing(3),
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: theme.spacing(0.5),
   },
-  buttonSuccess: {
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[700],
-    },
+  chip: {
+    margin: theme.spacing(0.25),
   },
-  buttonFailure: {
-    backgroundColor: red[500],
-    '&:hover': {
-      backgroundColor: red[700],
-    },
+  button: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
-  buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -10,
-    marginLeft: -10,
+  divider: {
+    marginBottom: theme.spacing(3),
+  },
+  result: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.grey[100],
+    borderRadius: theme.shape.borderRadius,
+    wordBreak: 'break-all',
+  },
+  resultLabel: {
+    fontWeight: 600,
+    marginBottom: theme.spacing(0.5),
   },
   error: {
-    color: red[500],
-    marginTop: theme.spacing(2),
-  },
-  success: {
-    color: green[500],
-    marginTop: theme.spacing(2),
-    textAlign: 'center',
-    wordWrap: 'anywhere',
-  },
-  rootFormGroup: {
-    alignItems: 'center',
-  },
-  red: {
-    color: red[500],
+    color: theme.palette.error.main,
+    marginTop: theme.spacing(1),
   },
 }));
-
-const initialState = {
-  isLoading: false,
-  isSuccess: false,
-  isError: false,
-  error: null,
-  permissionDenied: false,
-};
-
-const dataFetchReducer = (state, action) => {
-  switch (action.type) {
-    case 'TOKEN_FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isSuccess: false,
-        isError: false,
-        error: null,
-        permissionDenied: false,
-      };
-    case 'TOKEN_FETCH_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isSuccess: true,
-        isError: false,
-        error: null,
-        permissionDenied: false,
-      };
-    case 'TOKEN_FETCH_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isSuccess: false,
-        isError: true,
-        error:
-          (typeof action.error == 'string'
-            ? action.error
-            : action.error.message) || '',
-      };
-    case 'PERMISSION_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isSuccess: false,
-        isError: false,
-        error: null,
-        permissionDenied: true,
-      };
-    default:
-      throw new Error();
-  }
-};
 
 type AuthTokenProps = {
   permissions: CustomPermissionName[],
   accessToken: AccessTokenData,
   error: MiniAppError,
-  getAccessToken: (audience: string, scopes: string[]) => Promise<string>,
+  getAccessToken: (audience: string, scopes: string[], serviceId?: string) => Promise<string>,
   requestPermissions: (
     permissions: CustomPermission[]
   ) => Promise<CustomPermissionResult[]>,
 };
 
 function AuthToken(props: AuthTokenProps) {
-  const [state, dispatch] = useReducer(dataFetchReducer, initialState);
   const classes = useStyles();
-  const [scope, setScope] = useState({
-    audience: 'rae',
-    scopes: ['idinfo_read_openid', 'memberinfo_read_point'],
-  });
-  const buttonClassname = clsx({
-    [classes.buttonFailure]: state.isError,
-    [classes.buttonSuccess]: !state.isError,
-  });
-  const onAudienceChange = (event) => {
-    setScope({ ...scope, audience: event.target.value });
-  };
-  const onScopesChange = (event) => {
-    setScope({ ...scope, scopes: event.target.value.split(', ') });
-  };
+
+  const [audience, setAudience] = useState('rae');
+  const [selectedScopes, setSelectedScopes] = useState(['your_service_scope_here', 'your_service_scope_here']);
+  const [serviceId, setServiceId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     sendAnalytics(
       MAAnalyticsEventType.appear,
       MAAnalyticsActionType.open,
-      'Access Token', // Changed title here
+      'Access Token',
       'Screen',
       'Page',
       ''
     );
-  });
-  function requestAccessTokenPermission() {
-    const permissionsList = [
-      {
-        name: CustomPermissionName.ACCESS_TOKEN,
-        description:
-          'We would like to get the Access token details to share with this Mini app',
-      },
-    ];
-    props
-      .requestPermissions(permissionsList)
-      .then((permissions) => {
-        if (permissions) {
-          permissions
-            .filter(
-              (permission) =>
-                permission.status === CustomPermissionStatus.ALLOWED
-            )
-            .map((permission) => permission.name);
-          if (!hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)) {
-            requestAccessToken();
-          } else {
-            dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
-          }
-        } else {
-          dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
-        }
-      })
-      .catch((error) => {
-        dispatch({ type: 'PERMISSION_FAILURE', permissionDenied: true });
-      });
+  }, []);
+
+  function onAudienceChange(e) {
+    const newAudience = e.target.value;
+    setAudience(newAudience);
+    setSelectedScopes(AUDIENCE_SCOPES[newAudience] || []);
   }
 
-  function hasPermission(permission, permissionList: ?(string[])) {
-    permissionList = permissionList || props.permissions || [];
-    return permissionList.indexOf(permission) > -1;
+  function onScopesChange(e) {
+    setSelectedScopes(e.target.value);
   }
 
-  function requestAccessToken() {
+  function hasPermission(permission, permissionList) {
+    const list = permissionList || props.permissions || [];
+    return list.indexOf(permission) > -1;
+  }
+
+  function fetchToken() {
     props
-      .getAccessToken(scope.audience, scope.scopes)
-      .then((permissions) => {
-        dispatch({ type: 'TOKEN_FETCH_SUCCESS' });
+      .getAccessToken(audience, selectedScopes, serviceId || undefined)
+      .then(() => {
+        setIsError(false);
+        setStatusMessage('');
       })
       .catch((e) => {
-        dispatch({ type: 'TOKEN_FETCH_FAILURE', error: e });
-      });
+        setIsError(true);
+        setStatusMessage(typeof e === 'string' ? e : e.message || 'Failed to get access token');
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleClick(e) {
-    if (!state.isLoading) {
-      e.preventDefault();
-      dispatch({ type: 'TOKEN_FETCH_INIT' });
-      requestAccessTokenPermission();
-    }
+    e.preventDefault();
+    if (isLoading || selectedScopes.length === 0) return;
+
+    setIsLoading(true);
+    setStatusMessage('');
+    setIsError(false);
+
+    const permissionsList = [
+      {
+        name: CustomPermissionName.ACCESS_TOKEN,
+        description: 'We would like to get the Access token details to share with this Mini app',
+      },
+    ];
+
+    props
+      .requestPermissions(permissionsList)
+      .then((permissions) => {
+        if (permissions && !hasPermission(CustomPermissionName.ACCESS_TOKEN, permissions)) {
+          fetchToken();
+        } else {
+          setIsLoading(false);
+          setIsError(true);
+          setStatusMessage('ACCESS_TOKEN permission was denied');
+        }
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setIsError(true);
+        setStatusMessage('ACCESS_TOKEN permission was denied');
+      });
   }
+
+  const availableScopes = AUDIENCE_SCOPES[audience] || [];
+  const token = props.accessToken;
 
   return (
     <div className={classes.container}>
-      <FormGroup column="true" classes={{ root: classes.rootFormGroup }}>
-        <Fragment>
-          <FormControl className={classes.formControl}>
-            <TextField
-              id="audience"
-              label="Audience"
-              variant="outlined"
-              className={classes.fields}
-              onChange={onAudienceChange}
-              value={scope.audience}
-            />
-          </FormControl>
-          <FormControl className={classes.formControl}>
-            <TextField
-              id="scopes"
-              label="Scopes"
-              variant="outlined"
-              className={classes.fields}
-              onChange={onScopesChange}
-              value={scope.scopes.join(', ')}
-            />
-          </FormControl>
-        </Fragment>
-        <div className={classes.wrapper}>
-          <Button
-            onClick={handleClick}
-            variant="contained"
-            color="primary"
-            className={buttonClassname}
-            disabled={state.isLoading}
-            data-testid="authButton"
-          >
-            Get Access Token
-          </Button>
-          {state.isLoading && (
-            <CircularProgress size={20} className={classes.buttonProgress} />
-          )}
-        </div>
-        {!state.isLoading &&
-          state.isSuccess &&
-          !state.isError &&
-          !state.permissionDenied &&
-          props.accessToken && (
-            <div>
-              <Typography variant="body1" className={classes.success}>
-                Token: {props.accessToken.token}
-              </Typography>
-              <Typography variant="body1" className={classes.success}>
-                Valid until: {displayDate(props.accessToken.validUntil)}
-              </Typography>
+
+      {/* Audience */}
+      <FormControl variant="outlined" fullWidth className={classes.field}>
+        <InputLabel id="audience-label">Audience</InputLabel>
+        <Select
+          labelId="audience-label"
+          value={audience}
+          onChange={onAudienceChange}
+          label="Audience"
+        >
+          {Object.keys(AUDIENCE_SCOPES).map((aud) => (
+            <MenuItem key={aud} value={aud}>{aud}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* Scopes */}
+      <FormControl variant="outlined" fullWidth className={classes.field}>
+        <InputLabel id="scopes-label">Scopes</InputLabel>
+        <Select
+          labelId="scopes-label"
+          multiple
+          value={selectedScopes}
+          onChange={onScopesChange}
+          label="Scopes"
+          input={<Input />}
+          renderValue={(selected) => (
+            <div className={classes.chips}>
+              {selected.map((scope) => (
+                <Chip key={scope} label={scope} size="small" className={classes.chip} />
+              ))}
             </div>
           )}
-        {!state.isLoading && state.isError && !state.permissionDenied && (
-          <Typography variant="body1" className={classes.red}>
-            {state.error}
-          </Typography>
-        )}
-        {!state.isLoading && state.permissionDenied && (
-          <Typography variant="body1" className={classes.red}>
-            ACCESS_TOKEN Permission is denied by the user
-          </Typography>
-        )}
-      </FormGroup>
+        >
+          {availableScopes.map((scope) => (
+            <MenuItem key={scope} value={scope}>
+              <Checkbox checked={selectedScopes.includes(scope)} color="primary" />
+              <ListItemText primary={scope} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <Divider className={classes.divider} />
+
+      {/* Service ID */}
+      <TextField
+        label="Service ID (optional)"
+        variant="outlined"
+        fullWidth
+        className={classes.field}
+        value={serviceId}
+        onChange={(e) => setServiceId(e.target.value)}
+      />
+
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        className={classes.button}
+        onClick={handleClick}
+        disabled={isLoading || selectedScopes.length === 0}
+        data-testid="authButton"
+      >
+        {isLoading ? <CircularProgress size={22} color="inherit" /> : 'Get Access Token'}
+      </Button>
+
+      {!isLoading && !isError && token && (
+        <div className={classes.result}>
+          <Typography variant="body2" className={classes.resultLabel}>Token</Typography>
+          <Typography variant="body2" gutterBottom>{token.token}</Typography>
+          <Typography variant="body2" className={classes.resultLabel}>Valid Until</Typography>
+          <Typography variant="body2">{displayDate(token.validUntil)}</Typography>
+        </div>
+      )}
+
+      {!isLoading && isError && (
+        <Typography variant="body2" className={classes.error}>
+          {statusMessage}
+        </Typography>
+      )}
+
     </div>
   );
 }
 
-const mapStateToProps = (state, props) => {
-  return {
-    ...props,
-    permissions: state.permissions,
-    accessToken: state.user.accessToken,
-    error: state.error,
-  };
-};
+const mapStateToProps = (state, props) => ({
+  ...props,
+  permissions: state.permissions,
+  accessToken: state.user.accessToken,
+  error: state.error,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getAccessToken: (audience: string, scopes: string[]) =>
-      dispatch(requestAccessToken(audience, scopes)),
-    requestPermissions: (permissions) =>
-      dispatch(requestCustomPermissions(permissions)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  getAccessToken: (audience, scopes, serviceId) =>
+    dispatch(requestAccessToken(audience, scopes, serviceId)),
+  requestPermissions: (permissions) =>
+    dispatch(requestCustomPermissions(permissions)),
+});
 
 export { AuthToken };
 export default connect(mapStateToProps, mapDispatchToProps)(AuthToken);
