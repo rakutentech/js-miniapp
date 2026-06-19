@@ -211,9 +211,7 @@ describe('requestLocationPermission', () => {
 
   it('should handle case where iOS SDK does not support location custom permission', () => {
     window.MiniAppBridge.requestCustomPermissions.returns(
-      Promise.reject(
-        new Error('invalidCustomPermissionsList: test description')
-      )
+      Promise.reject('invalidCustomPermissionsList: test description')
     );
 
     return expect(miniApp.requestLocationPermission()).to.eventually.equal(
