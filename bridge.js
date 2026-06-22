@@ -321,11 +321,12 @@ var MiniAppBridge = /** @class */ (function () {
      * It returns error info if user had denied the custom permission
      * @param {string} audience the audience the MiniApp requests for the token
      * @param {string[]} scopes the associated scopes with the requested audience
+     * @param {string} [serviceId] optional service identifier for the token request
      */
-    MiniAppBridge.prototype.getAccessToken = function (audience, scopes) {
+    MiniAppBridge.prototype.getAccessToken = function (audience, scopes, serviceId) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            return _this.executor.exec('getAccessToken', { audience: audience, scopes: scopes }, function (tokenData) {
+            return _this.executor.exec('getAccessToken', __assign({ audience: audience, scopes: scopes }, (serviceId !== undefined && { serviceId: serviceId })), function (tokenData) {
                 var nativeTokenData = JSON.parse(tokenData);
                 resolve(new token_data_1.AccessTokenData(nativeTokenData));
             }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
