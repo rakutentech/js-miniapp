@@ -51,6 +51,8 @@ import {
   CookieInfo,
   LogType,
   EsimConfig,
+  NetworkType,
+  NetworkStatus,
 } from '../../js-miniapp-bridge/src';
 
 import { MiniApp } from './miniapp';
@@ -117,5 +119,7 @@ export {
   CookieInfo,
   LogType,
   EsimConfig,
+  NetworkType,
+  NetworkStatus,
 };
 export { SimCheckError, SimCheckErrorType } from '../../js-miniapp-bridge/src';

@@ -13,6 +13,7 @@ import {
   CloseAlertInfo,
   Platform as HostPlatform,
   PermissionName,
+  NetworkStatus,
 } from '../../js-miniapp-bridge/src';
 import { UserInfoProvider, UserInfo } from './modules/user-info';
 import { ChatService } from './modules/chat-service';
@@ -192,6 +193,14 @@ export class MiniApp implements MiniAppFeatures, Ad, Platform {
   webviewManager: WebviewManager = new WebviewManager();
   esimService: Esim = new Esim();
   oneClickSdk: OneClickSdk = new OneClickSdk();
+
+  getNetworkStatus(): Promise<NetworkStatus> {
+    return getBridge().getNetworkStatus();
+  }
+
+  onNetworkStatusChanged(callback: (status: NetworkStatus) => void): void {
+    getBridge().onNetworkStatusChanged(callback);
+  }
 
   async requestPermission(permissionType: DevicePermission): Promise<string> {
     const result = await getBridge().requestPermission(permissionType);

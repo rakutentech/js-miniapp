@@ -44,6 +44,7 @@ import {
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 import { Platform } from './types/platform';
+import { NetworkStatus } from './types/network';
 import { LaunchBrowserOptions } from './types/browser-options';
 
 import { NotificationBridge } from './modules/notification-bridge';
@@ -1150,6 +1151,33 @@ export class MiniAppBridge {
         error => reject(parseMiniAppError(error))
       );
     });
+  }
+
+  /**
+   * Returns the current network connectivity status.
+   */
+  getNetworkStatus(): Promise<NetworkStatus> {
+    return new Promise<NetworkStatus>((resolve, reject) => {
+      return this.executor.exec(
+        'getNetworkStatus',
+        {},
+        (result: string) => resolve(JSON.parse(result) as NetworkStatus),
+        (error: string) => reject(new Error(error))
+      );
+    });
+  }
+
+  /**
+   * Subscribes to network status changes for the lifetime of the MiniApp.
+   * The callback is NOT called immediately with the current state —
+   * use getNetworkStatus() for the current state on load.
+   */
+  onNetworkStatusChanged(callback: (status: NetworkStatus) => void): void {
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent<{ message: NetworkStatus }>;
+      callback(customEvent.detail.message);
+    };
+    window.addEventListener('miniappnetworkstatuschanged', handler);
   }
 
   /**
