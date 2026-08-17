@@ -73,7 +73,9 @@ function NetworkStatusComponent() {
           onClick={handleSubscribe}
           disabled={subscribed}
         >
-          {subscribed ? 'Subscribed to Changes' : 'Subscribe to Network Changes'}
+          {subscribed
+            ? 'Subscribed to Changes'
+            : 'Subscribe to Network Changes'}
         </Button>
         {subscribed && (
           <Typography
