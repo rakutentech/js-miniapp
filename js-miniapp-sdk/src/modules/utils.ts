@@ -56,6 +56,13 @@ export interface MiniAppUtilsProvider {
   getFeatureList(): Promise<string[]>;
 
   /**
+   * Returns the list of font filenames available from the host app.
+   * Use each filename directly in CSS @font-face or the FontFace API —
+   * the host app intercepts requests by filename, no extra path prefix needed.
+   */
+  getAvailableFonts(): Promise<string[]>;
+
+  /**
    * Interface to check if the device has the deeplink available.
    */
   canOpenAppDeeplink(deeplinkURL: string): Promise<boolean>;
@@ -195,6 +202,10 @@ export class MiniAppUtils implements MiniAppUtilsProvider {
   }
   getFeatureList(): Promise<string[]> {
     return getBridge().getFeatureList();
+  }
+
+  getAvailableFonts(): Promise<string[]> {
+    return getBridge().getAvailableFonts();
   }
 
   canOpenAppDeeplink(deeplinkURL: string): Promise<boolean> {

@@ -990,6 +990,24 @@ export class MiniAppBridge {
       );
     });
   }
+
+  /**
+   * Returns the list of font filenames available from the host app.
+   * @returns List of font filenames available from the host app
+   */
+  getAvailableFonts() {
+    return new Promise<string[]>((resolve, reject) => {
+      return this.executor.exec(
+        'getAvailableFonts',
+        null,
+        response => {
+          resolve(JSON.parse(response) as string[]);
+        },
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
   /**
    * Associating getPhoneNumber function to MiniAppBridge object.
    * This function returns phone number of the User

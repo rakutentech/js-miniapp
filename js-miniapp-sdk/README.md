@@ -180,6 +180,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
   - [Get Cookies from host application Available from v1.19.0](#get-cookies-from-host-application-available-from-v1190)
   - [MiniApp storage using Key/Value Available from v1.20.0](#miniapp-storage-using-keyvalue-available-from-v1200)
   - [Get feature list Available from v1.20.0](#get-feature-list-available-from-v1200)
+  - [Get available fonts from host](#get-available-fonts-from-host)
   - [Can open App Deeplink Available from v1.20.3](#can-open-app-deeplink-available-from-v1203)
   - [App supports deeplink Available from v1.20.3](#app-supports-deeplink-available-from-v1203)
   - [Launch Internal browser Available from v1.22.0](#launch-internal-browser-available-from-v1220)
@@ -1558,6 +1559,52 @@ MiniApp.miniappUtils
   });
 
 ```
+
+<div id='get-available-fonts-from-host'/>
+
+## Get available fonts from host
+
+The host app may serve fonts to Mini Apps via WebView interception. Use `getAvailableFonts()` to
+retrieve the list of font filenames available at runtime, without hard-coding them.
+
+**API:** [MiniAppUtilsProvider.getAvailableFonts](api/interfaces/miniapputilsprovider.md#getavailablefonts)
+
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+// Convert filename to a CSS font-family name: strip extension, replace _ with -
+// e.g. "host_font_regular.ttf" → "host-font-regular"
+function fontFamilyName(filename) {
+  return filename.replace(/\.(ttf|otf)$/i, '').replace(/_/g, '-');
+}
+
+MiniApp.miniappUtils
+  .getAvailableFonts()
+  .then((fonts) => {
+    // fonts is a string[] of filenames provided by the host app
+    fonts.forEach((filename) => {
+      const family = fontFamilyName(filename); // derived CSS family name
+      const format = filename.endsWith('.otf') ? 'opentype' : 'truetype';
+      const face = new FontFace(family, `url('/${filename}') format('${format}')`);
+      face.load().then((loaded) => document.fonts.add(loaded));
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+Once loaded, reference the font in CSS using the **hyphenated** family name (underscores replaced with hyphens):
+
+```css
+body {
+  font-family: 'host-font-regular', sans-serif; /* use the name derived from the filename */
+}
+```
+
+> **Note:** Font availability depends on the host app configuration. The host app must enable font
+> access for the mini app. If `getAvailableFonts()` returns an empty list or rejects, fonts are
+> not available in the current host environment.
 
 <div id='can-open-app-deeplink'/>
 

@@ -31,6 +31,7 @@ import DatasetIcon from '@mui/icons-material/Dataset';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import LoginIcon from '@mui/icons-material/Login';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import TextFieldsIcon from '@mui/icons-material/TextFields';
 import TouchAppIcon from '@mui/icons-material/TouchAppOutlined';
 
 import Ads from './pages/ads';
@@ -68,6 +69,7 @@ import UuidFetcher from './pages/uuid-sdk';
 import WebLocation from './pages/web-location';
 import WebViewConfig from './pages/web-view-config';
 import WindowActions from './pages/window-actions';
+import FontTest from './pages/font-test';
 import OneClickSdk from './pages/one-click-sdk';
 import SimStatus from './pages/sim';
 
@@ -198,6 +200,11 @@ const scrollToAnchorNavLink = {
   label: 'Scroll To Anchor',
 };
 
+const fontTestNavLink = {
+  navLink: '/font-test',
+  label: 'Font Test',
+};
+
 const oneClickNavLink = {
   navLink: '/one-click',
   label: 'OneClick',
@@ -243,6 +250,7 @@ const navLinks = [
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
   simNavLink,
+  fontTestNavLink,
 ];
 
 const homeItem = [
@@ -470,6 +478,12 @@ const appItems = [
     label: oneClickNavLink.label,
     navLink: oneClickNavLink.navLink,
     element: <OneClickSdk />,
+  },
+  {
+    icon: <TextFieldsIcon />,
+    label: fontTestNavLink.label,
+    navLink: fontTestNavLink.navLink,
+    element: <FontTest />,
   },
 ];
 
