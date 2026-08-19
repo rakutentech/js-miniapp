@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 1.29.0 (2026-08-19)
+- **Feature:** Added new interface `getNetworkStatus` to retrieve the current network connectivity status, returning a `NetworkStatus` object with `isConnected` (boolean) and `networkType` (`NetworkType` enum: `WIFI_OR_ETHERNET`, `CELLULAR`, `SATELLITE`, `NO_CONNECTION`).
+- **Feature:** Added new event interface `onNetworkStatusChanged` to subscribe to network connectivity changes. The callback receives a `NetworkStatus` object whenever the network state changes. Use `getNetworkStatus()` to get the initial state on load.
+
 ### 1.28.0 (2026-05-01)
 - **Feature:** Added new interface `isSimInstalled` to `MiniAppUtils` to check if a physical SIM card is installed on the device. Accessible via `MiniApp.miniappUtils.isSimInstalled()`.
 - **Feature:** Added `PHONE_STATE` to `DevicePermission` enum and exposed `requestPermission(permissionType: DevicePermission)` as a public API to request device permissions (e.g. phone state) from the host app. The promise rejects if the user denies the permission.
