@@ -74,7 +74,6 @@ import {
 import { LogType } from './types/log-type';
 
 import { EsimConfig } from './types/e-sim';
-import { NetworkType, NetworkStatus } from './types/network';
 
 export { OneClickSdkInfo } from './types/one-click-sdk';
 export { MAAnalyticsConfig } from './types/analytics/analytics';
@@ -136,7 +135,7 @@ export {
   EsimConfig,
   PermissionName,
   PermissionStatus,
-  NetworkType,
-  NetworkStatus,
 };
 export { SimCheckError, SimCheckErrorType } from './types/error-types';
+
+export { NetworkType, NetworkStatus } from './types/network';

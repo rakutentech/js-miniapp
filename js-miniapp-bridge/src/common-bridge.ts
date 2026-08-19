@@ -104,7 +104,7 @@ export class MiniAppBridge {
   platform: string;
   isSecureStorageReady = false;
   secureStorageLoadError: MiniAppError | null = null;
-  private notificationBridge: NotificationBridge;
+  private readonly notificationBridge: NotificationBridge;
   preferences: MiniAppPreferences;
   browserManager: BrowserManager;
   galleryManager: GalleryManager;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button, Typography, makeStyles } from '@material-ui/core';
 import MiniApp from 'js-miniapp-sdk';
@@ -59,9 +59,8 @@ function NetworkStatusComponent() {
             color={currentError ? 'error' : 'textSecondary'}
             className={classes.status}
           >
-            {currentError
-              ? currentError
-              : `Type: ${currentStatus.networkType} | Connected: ${currentStatus.isConnected}`}
+            {currentError ||
+              `Type: ${currentStatus.networkType} | Connected: ${currentStatus.isConnected}`}
           </Typography>
         )}
       </div>
