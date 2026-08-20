@@ -1174,8 +1174,13 @@ export class MiniAppBridge {
    */
   onNetworkStatusChanged(callback: (status: NetworkStatus) => void): void {
     const handler = (event: Event) => {
-      const customEvent = event as CustomEvent<{ message: NetworkStatus }>;
-      callback(customEvent.detail.message);
+      const customEvent = event as CustomEvent<{ message: string }>;
+      try {
+        const json = JSON.parse(customEvent.detail.message);
+        callback(json as NetworkStatus);
+      } catch (e) {
+        throw new Error(e);
+      }
     };
     window.addEventListener('miniappnetworkstatuschanged', handler);
   }
