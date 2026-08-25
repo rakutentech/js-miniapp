@@ -1872,11 +1872,7 @@ describe('onNetworkStatusChanged', () => {
 
     const addEventListenerStub = window.addEventListener as sinon.SinonStub;
     const handler = addEventListenerStub.lastCall.args[1];
-    handler(
-      new CustomEvent('miniappnetworkstatuschanged', {
-        detail: { message: JSON.stringify(status) },
-      })
-    );
+    handler({ detail: { message: JSON.stringify(status) } });
 
     expect(callback.calledOnce).to.equal(true);
     expect(callback.firstCall.args[0]).to.deep.equal(status);
@@ -1891,11 +1887,7 @@ describe('onNetworkStatusChanged', () => {
     const handler = addEventListenerStub.lastCall.args[1];
 
     expect(() =>
-      handler(
-        new CustomEvent('miniappnetworkstatuschanged', {
-          detail: { message: 'Fail to connect' },
-        })
-      )
+      handler({ detail: { message: 'Fail to connect' } })
     ).to.throw(Error);
 
     expect(callback.called).to.equal(false);
