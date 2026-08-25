@@ -30,17 +30,17 @@ const useStyles = makeStyles((theme) => ({
   mainContent: {
     width: '100%',
     height: 'calc(100% - 64px)',
+    overflow: 'auto'
   },
   mainContentMobile: {
     height: 'calc(100% - 56px)',
   },
   wrapperContainer: {
-    height: '100%',
+    height: 'fit-content',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'initial',
     alignItems: 'center',
-    overflow: 'auto',
   },
   drawerClosed: {
     width: '100% !important',
