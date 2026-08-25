@@ -4,6 +4,7 @@ import {
   CardContent,
   FormControlLabel,
   makeStyles,
+  Slider,
   Switch,
   Typography,
 } from '@material-ui/core';
@@ -56,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
   sampleRow: {
     marginBottom: theme.spacing(1.5),
   },
+  sliderRow: {
+    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1, 2),
+    backgroundColor: theme.palette.grey[100],
+    borderRadius: 8,
+  },
+  sliderLabel: {
+    display: 'block',
+    marginBottom: theme.spacing(0.5),
+    color: theme.palette.grey[700],
+  },
 }));
 
 const ENGLISH_SAMPLES = [
@@ -84,13 +96,25 @@ const JAPANESE_SAMPLES = [
   { variant: 'overline', label: 'Overline', text: 'オーバーラインラベル' },
 ];
 
+const FONT_WEIGHT_NAMES = {
+  100: 'Thin',
+  200: 'Extra Thin',
+  300: 'Light',
+  400: 'Regular',
+  500: 'Medium',
+  600: 'Semi Bold',
+  700: 'Bold (CSS bold)',
+  800: 'Extra Bold',
+  900: 'Black',
+};
+
 const TypographyPage = () => {
   const classes = useStyles();
   const [useRakuten, setUseRakuten] = useState(true);
+  const [fontWeight, setFontWeight] = useState(400);
 
   const fontEN = useRakuten ? RAKUTEN_FONTS_EN : GENERAL_FONTS_EN;
   const fontJP = useRakuten ? RAKUTEN_FONTS_JP : GENERAL_FONTS_JP;
-  const fontLabel = useRakuten ? 'Rakuten Sans UI / Rakuten Sans JP' : 'System / General Fonts';
 
   return (
     <GreyCard className={classes.root}>
@@ -108,6 +132,21 @@ const TypographyPage = () => {
           />
         </div>
 
+        <div className={classes.sliderRow}>
+          <Typography variant="caption" className={classes.sliderLabel}>
+            Font Weight: {fontWeight} — {FONT_WEIGHT_NAMES[fontWeight]}
+          </Typography>
+          <Slider
+            value={fontWeight}
+            onChange={(_, val) => setFontWeight(val)}
+            min={100}
+            max={900}
+            step={100}
+            marks
+            valueLabelDisplay="auto"
+          />
+        </div>
+
         <div className={classes.section}>
           <div className={classes.sectionTitle}>English</div>
           <div className={classes.fontLabel}>{fontEN}</div>
@@ -115,7 +154,7 @@ const TypographyPage = () => {
             <div key={variant} className={classes.sampleRow}>
               <Typography
                 variant={variant}
-                style={{ fontFamily: fontEN }}
+                style={{ fontFamily: fontEN, fontWeight }}
                 gutterBottom
               >
                 {text}
@@ -132,7 +171,7 @@ const TypographyPage = () => {
             <div key={variant} className={classes.sampleRow}>
               <Typography
                 variant={variant}
-                style={{ fontFamily: fontJP }}
+                style={{ fontFamily: fontJP, fontWeight }}
                 gutterBottom
               >
                 {text}
