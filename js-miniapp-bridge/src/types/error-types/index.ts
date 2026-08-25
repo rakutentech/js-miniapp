@@ -46,16 +46,10 @@ function parseMiniAppError(jsonString: string): MiniAppError {
       parseSimError(json) ||
       new MiniAppError(json)
     );
-  } catch (e) {
-    if (jsonString !== '' || jsonString !== undefined) {
-      return new MiniAppError({
-        type: 'MiniAppError',
-        message: jsonString,
-      });
-    }
+  } catch (_e) {
     return new MiniAppError({
       type: 'MiniAppError',
-      message: 'Failed to parse the error',
+      message: jsonString || 'Failed to parse the error',
     });
   }
 }

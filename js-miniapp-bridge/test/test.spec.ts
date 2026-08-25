@@ -1887,7 +1887,8 @@ describe('onNetworkStatusChanged', () => {
     const handler = addEventListenerStub.lastCall.args[1];
 
     expect(() => handler({ detail: { message: 'Fail to connect' } })).to.throw(
-      Error
+      Error,
+      /JSON/
     );
 
     expect(callback.called).to.equal(false);
