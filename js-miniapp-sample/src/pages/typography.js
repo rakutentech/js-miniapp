@@ -19,6 +19,7 @@ const RAKUTEN_FONTS =
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    height: '100%',
     maxWidth: '90%',
     padding: theme.spacing(2),
   },
