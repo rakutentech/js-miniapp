@@ -543,7 +543,12 @@ const HTML_ROWS = [
   },
 ];
 
-function FontTestTab({ classes }) {
+const TypographyPage = () => {
+  const classes = useStyles();
+  const [tab, setTab] = useState(0);
+  const [useRakuten, setUseRakuten] = useState(true);
+  const [fontWeight, setFontWeight] = useState(400);
+
   const [fontData, setFontData] = useState(
     Object.fromEntries(
       FONTS.map((f) => [f, { status: 'loading', durationMs: null }])
@@ -556,35 +561,37 @@ function FontTestTab({ classes }) {
     let settled = 0;
 
     FONTS.forEach((filename) => {
-      const family = fontFamilyName(filename);
-      const ext = filename.endsWith('.otf') ? 'opentype' : 'truetype';
-      const url = `${FONT_BASE_PATH}${filename}`;
-      const t0 = performance.now();
-      const face = new FontFace(family, `url(${url}) format('${ext}')`);
+      if (fontData[filename].status !== 'loaded') {
+        const family = fontFamilyName(filename);
+        const ext = filename.endsWith('.otf') ? 'opentype' : 'truetype';
+        const url = `${FONT_BASE_PATH}${filename}`;
+        const t0 = performance.now();
+        const face = new FontFace(family, `url(${url}) format('${ext}')`);
 
-      face
-        .load()
-        .then((loaded) => {
-          document.fonts.add(loaded);
-          const dur = Math.round(performance.now() - t0);
-          setFontData((prev) => ({
-            ...prev,
-            [filename]: { status: 'loaded', durationMs: dur },
-          }));
-        })
-        .catch(() => {
-          const dur = Math.round(performance.now() - t0);
-          setFontData((prev) => ({
-            ...prev,
-            [filename]: { status: 'failed', durationMs: dur },
-          }));
-        })
-        .then(() => {
-          settled += 1;
-          if (settled === FONTS.length) {
-            setTotalMs(Math.round(performance.now() - batchStart));
-          }
-        });
+        face
+          .load()
+          .then((loaded) => {
+            document.fonts.add(loaded);
+            const dur = Math.round(performance.now() - t0);
+            setFontData((prev) => ({
+              ...prev,
+              [filename]: { status: 'loaded', durationMs: dur },
+            }));
+          })
+          .catch(() => {
+            const dur = Math.round(performance.now() - t0);
+            setFontData((prev) => ({
+              ...prev,
+              [filename]: { status: 'failed', durationMs: dur },
+            }));
+          })
+          .then(() => {
+            settled += 1;
+            if (settled === FONTS.length) {
+              setTotalMs(Math.round(performance.now() - batchStart));
+            }
+          });
+      }
     });
   }, []);
 
@@ -598,95 +605,10 @@ function FontTestTab({ classes }) {
     (d) => d.status === 'loading'
   ).length;
 
-  return (
-    <div className={classes.ftRoot}>
-      <div className={classes.ftMetricsBar}>
-        <div className={classes.ftMetricRow}>
-          <span>Total time</span>
-          <span className={classes.ftMetricValue}>
-            {totalMs !== null ? `${totalMs} ms` : pendingCount > 0 ? '…' : '—'}
-          </span>
-        </div>
-        <div className={classes.ftMetricRow}>
-          <span>Loaded</span>
-          <span className={classes.ftMetricValue}>
-            {loadedCount} / {FONTS.length}
-          </span>
-        </div>
-        <div className={classes.ftMetricRow}>
-          <span>Failed</span>
-          <span
-            style={{
-              color: failedCount > 0 ? '#ff6b6b' : '#7ee8a2',
-              fontWeight: 'bold',
-            }}
-          >
-            {failedCount}
-          </span>
-        </div>
-        <div className={classes.ftMetricRow}>
-          <span>Pending</span>
-          <span
-            style={{
-              color: pendingCount > 0 ? '#ffd93d' : '#7ee8a2',
-              fontWeight: 'bold',
-            }}
-          >
-            {pendingCount}
-          </span>
-        </div>
-      </div>
-
-      {FONTS.map((filename) => {
-        const data = fontData[filename] ?? {
-          status: 'loading',
-          durationMs: null,
-        };
-        const family = fontFamilyName(filename);
-        return (
-          <div key={filename} className={classes.ftFontCard}>
-            <div className={classes.ftFontCardHeader}>
-              <span className={classes.ftFontName}>
-                {displayName(filename)}
-                <span className={classes.ftFormatBadge}>
-                  {fileFormat(filename)}
-                </span>
-              </span>
-              <span className={classes.ftTiming}>
-                {data.durationMs !== null ? `${data.durationMs} ms` : '…'}
-              </span>
-            </div>
-            <span
-              className={`${classes.ftLoadBadge} ${badgeClass(
-                data.status,
-                classes
-              )}`}
-            >
-              {data.status}
-            </span>
-            <Typography
-              className={classes.ftFontSample}
-              style={{ fontFamily: `'${family}', sans-serif` }}
-            >
-              {FONT_TEST_SAMPLE}
-            </Typography>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-const TypographyPage = () => {
-  const classes = useStyles();
-  const [tab, setTab] = useState(0);
-  const [useRakuten, setUseRakuten] = useState(true);
-  const [fontWeight, setFontWeight] = useState(400);
-
   const font = useRakuten ? RAKUTEN_FONTS : GENERAL_FONTS;
 
   return (
-    <GreyCard className={classes.root}>
+    <GreyCard className={classes.root} style={{ fontFamily: font }}>
       <CardContent>
         <Tabs
           value={tab}
@@ -700,7 +622,91 @@ const TypographyPage = () => {
           <Tab label="HTML Elements" />
         </Tabs>
 
-        {tab === 0 && <FontTestTab classes={classes} />}
+        {tab === 0 && (
+          <>
+            <div className={classes.ftRoot}>
+              <div className={classes.ftMetricsBar}>
+                <div className={classes.ftMetricRow}>
+                  <span>Total time</span>
+                  <span className={classes.ftMetricValue}>
+                    {totalMs !== null
+                      ? `${totalMs} ms`
+                      : pendingCount > 0
+                      ? '…'
+                      : '—'}
+                  </span>
+                </div>
+                <div className={classes.ftMetricRow}>
+                  <span>Loaded</span>
+                  <span className={classes.ftMetricValue}>
+                    {loadedCount} / {FONTS.length}
+                  </span>
+                </div>
+                <div className={classes.ftMetricRow}>
+                  <span>Failed</span>
+                  <span
+                    style={{
+                      color: failedCount > 0 ? '#ff6b6b' : '#7ee8a2',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {failedCount}
+                  </span>
+                </div>
+                <div className={classes.ftMetricRow}>
+                  <span>Pending</span>
+                  <span
+                    style={{
+                      color: pendingCount > 0 ? '#ffd93d' : '#7ee8a2',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {pendingCount}
+                  </span>
+                </div>
+              </div>
+
+              {FONTS.map((filename) => {
+                const data = fontData[filename] ?? {
+                  status: 'loading',
+                  durationMs: null,
+                };
+                const family = fontFamilyName(filename);
+                return (
+                  <div key={filename} className={classes.ftFontCard}>
+                    <div className={classes.ftFontCardHeader}>
+                      <span className={classes.ftFontName}>
+                        {displayName(filename)}
+                        <span className={classes.ftFormatBadge}>
+                          {fileFormat(filename)}
+                        </span>
+                      </span>
+                      <span className={classes.ftTiming}>
+                        {data.durationMs !== null
+                          ? `${data.durationMs} ms`
+                          : '…'}
+                      </span>
+                    </div>
+                    <span
+                      className={`${classes.ftLoadBadge} ${badgeClass(
+                        data.status,
+                        classes
+                      )}`}
+                    >
+                      {data.status}
+                    </span>
+                    <Typography
+                      className={classes.ftFontSample}
+                      style={{ fontFamily: `'${family}', sans-serif` }}
+                    >
+                      {FONT_TEST_SAMPLE}
+                    </Typography>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
 
         {tab !== 0 && (
           <>
@@ -735,10 +741,7 @@ const TypographyPage = () => {
         )}
 
         {tab === 1 && (
-          <div
-            className={classes.section}
-            style={{ fontFamily: font, fontWeight }}
-          >
+          <div className={classes.section} style={{ fontWeight }}>
             <div className={classes.fontName}>
               {useRakuten ? 'Rakuten Fonts' : 'General Fonts'} <br />
               Font-Family: {font}
@@ -747,14 +750,14 @@ const TypographyPage = () => {
               <div key={variant} className={classes.sampleRow}>
                 <Typography
                   variant={variant}
-                  style={{ fontFamily: font, fontWeight }}
+                  style={{ fontWeight }}
                   gutterBottom
                 >
                   {en}
                 </Typography>
                 <Typography
                   variant={variant}
-                  style={{ fontFamily: font, fontWeight }}
+                  style={{ fontWeight }}
                   gutterBottom
                 >
                   {jp}
@@ -773,11 +776,7 @@ const TypographyPage = () => {
             </div>
             <div className={classes.sectionTitle}>HTML Text Elements</div>
             {HTML_ROWS.map(({ tag, en, jp }) => (
-              <div
-                key={tag}
-                className={classes.htmlRow}
-                style={{ fontFamily: font }}
-              >
+              <div key={tag} className={classes.htmlRow}>
                 <span className={classes.htmlTag}>&lt;{tag}&gt;</span>
                 <div style={{ fontWeight }}>{en}</div>
                 <div style={{ fontWeight }}>{jp}</div>
