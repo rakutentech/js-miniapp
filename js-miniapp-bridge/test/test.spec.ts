@@ -1886,9 +1886,9 @@ describe('onNetworkStatusChanged', () => {
     const addEventListenerStub = window.addEventListener as sinon.SinonStub;
     const handler = addEventListenerStub.lastCall.args[1];
 
-    expect(() =>
-      handler({ detail: { message: 'Fail to connect' } })
-    ).to.throw(Error);
+    expect(() => handler({ detail: { message: 'Fail to connect' } })).to.throw(
+      Error
+    );
 
     expect(callback.called).to.equal(false);
   });
