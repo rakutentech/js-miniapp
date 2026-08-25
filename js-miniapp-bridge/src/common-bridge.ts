@@ -1162,7 +1162,7 @@ export class MiniAppBridge {
         'getNetworkStatus',
         {},
         (result: string) => resolve(JSON.parse(result) as NetworkStatus),
-        (error: string) => reject(new Error(error))
+        error => reject(parseMiniAppError(error))
       );
     });
   }
