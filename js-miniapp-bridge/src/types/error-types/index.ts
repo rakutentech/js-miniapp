@@ -47,6 +47,7 @@ function parseMiniAppError(jsonString: string): MiniAppError {
       new MiniAppError(json)
     );
   } catch (_e) {
+    console.error(_e);
     return new MiniAppError({
       type: 'MiniAppError',
       message: jsonString || 'Failed to parse the error',
