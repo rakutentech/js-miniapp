@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   mainContent: {
     width: '100%',
     height: 'calc(100% - 64px)',
-    overflow: 'auto'
+    overflow: 'auto',
   },
   mainContentMobile: {
     height: 'calc(100% - 56px)',
