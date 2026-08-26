@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 1.29.0 (2026-08-26)
+- **Sample:** Added Typography sample page to demonstrate rendering with Rakuten and General fonts, HTML element styles, and font-weight controls.
+
 ### 1.28.0 (2026-05-01)
 - **Feature:** Added new interface `isSimInstalled` to `MiniAppUtils` to check if a physical SIM card is installed on the device. Accessible via `MiniApp.miniappUtils.isSimInstalled()`.
 - **Feature:** Added `PHONE_STATE` to `DevicePermission` enum and exposed `requestPermission(permissionType: DevicePermission)` as a public API to request device permissions (e.g. phone state) from the host app. The promise rejects if the user denies the permission.

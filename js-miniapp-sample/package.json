@@ -1,6 +1,6 @@
 {
   "name": "js-miniapp-sample",
-  "version": "1.28.0-rc.1",
+  "version": "1.29.0",
   "description": "Mini App Sample for JavaScript SDK",
   "dependencies": {
     "@brightcove/react-player-loader": "^1.4.2",
@@ -27,7 +27,7 @@
     "format": "prettier --config ./prettier.config.js --write 'src/**/*.js'",
     "prettify": "prettier --config ./prettier.config.js --check src/**/*.js",
     "lint": "eslint src/ --fix-dry-run",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build && npm run zip",
     "dockerBuild": "cd ci && make build",
     "eject": "react-scripts eject",

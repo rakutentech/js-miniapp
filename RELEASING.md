@@ -4,12 +4,12 @@
 
 Used when QA is complete and the version is ready for production.
 
-**Tag format:** `v1.28.0` (semver, no suffix)
+**Tag format:** `v1.29.0` (semver, no suffix)
 
 ```bash
 git pull origin master
-git tag v1.28.0
-git push origin v1.28.0
+git tag v1.29.0
+git push origin v1.29.0
 ```
 
 **What CircleCI does (`build-and-release` workflow):**
@@ -23,7 +23,7 @@ git push origin v1.28.0
 ```bash
 npm install js-miniapp-sdk
 # or pinned
-npm install js-miniapp-sdk@1.28.0
+npm install js-miniapp-sdk@1.29.0
 ```
 
 ---
@@ -32,12 +32,12 @@ npm install js-miniapp-sdk@1.28.0
 
 Used to share a work-in-progress version with a specific team before QA is complete.
 
-**Tag format:** `v1.28.0-rc.1` (any suffix after `-`)
+**Tag format:** `v1.29.0` (any suffix after `-`)
 
 ```bash
 git pull origin master
-git tag v1.28.0-rc.1
-git push origin v1.28.0-rc.1
+git tag v1.29.0
+git push origin v1.29.0
 ```
 
 **What CircleCI does (`pre-release` workflow):**
@@ -51,7 +51,7 @@ git push origin v1.28.0-rc.1
 ```bash
 npm install js-miniapp-sdk@next
 # or pinned to exact version
-npm install js-miniapp-sdk@1.28.0-rc.1
+npm install js-miniapp-sdk@1.29.0-rc.1
 ```
 
 ---
@@ -61,8 +61,8 @@ npm install js-miniapp-sdk@1.28.0-rc.1
 Once QA passes, tag the same commit as a stable release:
 
 ```bash
-git tag v1.28.0
-git push origin v1.28.0
+git tag v1.29.0
+git push origin v1.29.0
 ```
 
 This triggers the `build-and-release` workflow and publishes as `latest` on npm.
@@ -73,10 +73,10 @@ This triggers the `build-and-release` workflow and publishes as `latest` on npm.
 
 | Scenario | Tag Example |
 |---|---|
-| Stable release | `v1.28.0` |
-| Release candidate | `v1.28.0-rc.1` |
-| Beta | `v1.28.0-beta.1` |
-| Hotfix candidate | `v1.28.1-rc.1` |
+| Stable release | `v1.29.0` |
+| Release candidate | `v1.29.0-rc.1` |
+| Beta | `v1.29.0-beta.1` |
+| Hotfix candidate | `v1.29.1` |
 
 Any tag containing a `-` triggers the pre-release pipeline.
 Any tag matching exact semver (`vX.Y.Z`) triggers the stable pipeline.
