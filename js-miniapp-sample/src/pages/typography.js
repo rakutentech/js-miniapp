@@ -16,20 +16,55 @@ import GreyCard from '../components/GreyCard';
 const GENERAL_FONTS =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif';
 const RAKUTEN_FONTS =
-  '"Rakuten Sans UI", "Rakuten Sans JP-2", ' + GENERAL_FONTS;
+  '"Rakuten Sans JP-2", "Rakuten Sans UI", ' + GENERAL_FONTS;
 
 const FONT_BASE_PATH = '/';
 const FONT_TEST_SAMPLE =
   'The quick brown fox jumps over the lazy dog — 素早い茶色のキツネが怠け者の犬を飛び越えた';
 
 const FONTS = [
-  'RakutenSansJP2-Regular.ttf',
-  'RakutenSansJP2-Medium.ttf',
-  'RakutenSansJP2-DemiBold.ttf',
-  'RakutenSansJP2-Bold.ttf',
-  'RakutenSansUIApp_Regular.ttf',
-  'RakutenSansUIApp_SemiBold.ttf',
-  'RakutenSansUIApp_Bold.ttf',
+  {
+    file: 'RakutenSansJP2-Regular.ttf',
+    weight: '100 400',
+    fontWeight: '400',
+    family: 'Rakuten Sans JP-2',
+  },
+  {
+    file: 'RakutenSansJP2-Medium.ttf',
+    weight: '500',
+    fontWeight: '500',
+    family: 'Rakuten Sans JP-2',
+  },
+  {
+    file: 'RakutenSansJP2-DemiBold.ttf',
+    weight: '600',
+    fontWeight: '600',
+    family: 'Rakuten Sans JP-2',
+  },
+  {
+    file: 'RakutenSansJP2-Bold.ttf',
+    weight: '700 900',
+    fontWeight: '700',
+    family: 'Rakuten Sans JP-2',
+  },
+  {
+    file: 'RakutenSansUIApp_Regular.ttf',
+    weight: '100 400',
+    fontWeight: '400',
+    family: 'Rakuten Sans UI',
+  },
+  {
+    file: 'RakutenSansUIApp_SemiBold.ttf',
+    weight: '600',
+    fontWeight: '600',
+    family: 'Rakuten Sans UI',
+  },
+  {
+    file: 'RakutenSansUIApp_Bold.ttf',
+    weight: '700 900',
+    fontWeight: '700',
+    family: 'Rakuten Sans UI',
+  },
 ];
 
 function displayName(filename) {
@@ -41,16 +76,15 @@ function fileFormat(filename) {
   return m ? m[1].toUpperCase() : '';
 }
 
-function fontFamilyName(filename) {
-  return filename.replace(/\.(ttf|otf)$/, '').replace(/_/g, '-');
-}
-
 function badgeClass(status, classes) {
-  return status === 'loaded'
-    ? classes.ftLoaded
-    : status === 'failed'
-    ? classes.ftFailed
-    : classes.ftPending;
+  switch (status) {
+    case 'loaded':
+      return classes.ftLoaded;
+    case 'failed':
+      return classes.ftFailed;
+    default:
+      return classes.ftPending;
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -551,7 +585,7 @@ const TypographyPage = () => {
 
   const [fontData, setFontData] = useState(
     Object.fromEntries(
-      FONTS.map((f) => [f, { status: 'loading', durationMs: null }])
+      FONTS.map(({ file }) => [file, { status: 'loading', durationMs: null }])
     )
   );
   const [totalMs, setTotalMs] = useState(null);
@@ -560,38 +594,37 @@ const TypographyPage = () => {
     const batchStart = performance.now();
     let settled = 0;
 
-    FONTS.forEach((filename) => {
-      if (fontData[filename].status !== 'loaded') {
-        const family = fontFamilyName(filename);
-        const ext = filename.endsWith('.otf') ? 'opentype' : 'truetype';
-        const url = `${FONT_BASE_PATH}${filename}`;
-        const t0 = performance.now();
-        const face = new FontFace(family, `url(${url}) format('${ext}')`);
+    FONTS.forEach(({ file, weight, family }) => {
+      const ext = file.endsWith('.otf') ? 'opentype' : 'truetype';
+      const url = `${FONT_BASE_PATH}${file}`;
+      const t0 = performance.now();
+      const face = new FontFace(family, `url(${url}) format('${ext}')`, {
+        weight,
+      });
 
-        face
-          .load()
-          .then((loaded) => {
-            document.fonts.add(loaded);
-            const dur = Math.round(performance.now() - t0);
-            setFontData((prev) => ({
-              ...prev,
-              [filename]: { status: 'loaded', durationMs: dur },
-            }));
-          })
-          .catch(() => {
-            const dur = Math.round(performance.now() - t0);
-            setFontData((prev) => ({
-              ...prev,
-              [filename]: { status: 'failed', durationMs: dur },
-            }));
-          })
-          .then(() => {
-            settled += 1;
-            if (settled === FONTS.length) {
-              setTotalMs(Math.round(performance.now() - batchStart));
-            }
-          });
-      }
+      face
+        .load()
+        .then((loaded) => {
+          document.fonts.add(loaded);
+          const dur = Math.round(performance.now() - t0);
+          setFontData((prev) => ({
+            ...prev,
+            [file]: { status: 'loaded', durationMs: dur },
+          }));
+        })
+        .catch(() => {
+          const dur = Math.round(performance.now() - t0);
+          setFontData((prev) => ({
+            ...prev,
+            [file]: { status: 'failed', durationMs: dur },
+          }));
+        })
+        .then(() => {
+          settled += 1;
+          if (settled === FONTS.length) {
+            setTotalMs(Math.round(performance.now() - batchStart));
+          }
+        });
     });
   }, []);
 
@@ -605,10 +638,15 @@ const TypographyPage = () => {
     (d) => d.status === 'loading'
   ).length;
 
-  const font = useRakuten ? RAKUTEN_FONTS : GENERAL_FONTS;
+  let totalMsLabel;
+  if (totalMs !== null) totalMsLabel = `${totalMs} ms`;
+  else if (pendingCount > 0) totalMsLabel = '…';
+  else totalMsLabel = '—';
+
+  const fontFamily = useRakuten ? RAKUTEN_FONTS : GENERAL_FONTS;
 
   return (
-    <GreyCard className={classes.root} style={{ fontFamily: font }}>
+    <GreyCard className={classes.root} style={{ fontFamily }}>
       <CardContent>
         <Tabs
           value={tab}
@@ -623,89 +661,78 @@ const TypographyPage = () => {
         </Tabs>
 
         {tab === 0 && (
-          <>
-            <div className={classes.ftRoot}>
-              <div className={classes.ftMetricsBar}>
-                <div className={classes.ftMetricRow}>
-                  <span>Total time</span>
-                  <span className={classes.ftMetricValue}>
-                    {totalMs !== null
-                      ? `${totalMs} ms`
-                      : pendingCount > 0
-                      ? '…'
-                      : '—'}
-                  </span>
-                </div>
-                <div className={classes.ftMetricRow}>
-                  <span>Loaded</span>
-                  <span className={classes.ftMetricValue}>
-                    {loadedCount} / {FONTS.length}
-                  </span>
-                </div>
-                <div className={classes.ftMetricRow}>
-                  <span>Failed</span>
-                  <span
-                    style={{
-                      color: failedCount > 0 ? '#ff6b6b' : '#7ee8a2',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {failedCount}
-                  </span>
-                </div>
-                <div className={classes.ftMetricRow}>
-                  <span>Pending</span>
-                  <span
-                    style={{
-                      color: pendingCount > 0 ? '#ffd93d' : '#7ee8a2',
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    {pendingCount}
-                  </span>
-                </div>
+          <div className={classes.ftRoot}>
+            <div className={classes.ftMetricsBar}>
+              <div className={classes.ftMetricRow}>
+                <span>Total time</span>
+                <span className={classes.ftMetricValue}>{totalMsLabel}</span>
               </div>
-
-              {FONTS.map((filename) => {
-                const data = fontData[filename] ?? {
-                  status: 'loading',
-                  durationMs: null,
-                };
-                const family = fontFamilyName(filename);
-                return (
-                  <div key={filename} className={classes.ftFontCard}>
-                    <div className={classes.ftFontCardHeader}>
-                      <span className={classes.ftFontName}>
-                        {displayName(filename)}
-                        <span className={classes.ftFormatBadge}>
-                          {fileFormat(filename)}
-                        </span>
-                      </span>
-                      <span className={classes.ftTiming}>
-                        {data.durationMs !== null
-                          ? `${data.durationMs} ms`
-                          : '…'}
-                      </span>
-                    </div>
-                    <span
-                      className={`${classes.ftLoadBadge} ${badgeClass(
-                        data.status,
-                        classes
-                      )}`}
-                    >
-                      {data.status}
-                    </span>
-                    <Typography
-                      className={classes.ftFontSample}
-                      style={{ fontFamily: `'${family}', sans-serif` }}
-                    >
-                      {FONT_TEST_SAMPLE}
-                    </Typography>
-                  </div>
-                );
-              })}
+              <div className={classes.ftMetricRow}>
+                <span>Loaded</span>
+                <span className={classes.ftMetricValue}>
+                  {loadedCount} / {FONTS.length}
+                </span>
+              </div>
+              <div className={classes.ftMetricRow}>
+                <span>Failed</span>
+                <span
+                  style={{
+                    color: failedCount > 0 ? '#ff6b6b' : '#7ee8a2',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {failedCount}
+                </span>
+              </div>
+              <div className={classes.ftMetricRow}>
+                <span>Pending</span>
+                <span
+                  style={{
+                    color: pendingCount > 0 ? '#ffd93d' : '#7ee8a2',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {pendingCount}
+                </span>
+              </div>
             </div>
-          </>
+
+            {FONTS.map(({ file, fontWeight }) => {
+              const data = fontData[file] ?? {
+                status: 'loading',
+                durationMs: null,
+              };
+              return (
+                <div key={file} className={classes.ftFontCard}>
+                  <div className={classes.ftFontCardHeader}>
+                    <span className={classes.ftFontName}>
+                      {displayName(file)}
+                      <span className={classes.ftFormatBadge}>
+                        {fileFormat(file)}
+                      </span>
+                    </span>
+                    <span className={classes.ftTiming}>
+                      {data.durationMs !== null ? `${data.durationMs} ms` : '…'}
+                    </span>
+                  </div>
+                  <span
+                    className={`${classes.ftLoadBadge} ${badgeClass(
+                      data.status,
+                      classes
+                    )}`}
+                  >
+                    {data.status}
+                  </span>
+                  <Typography
+                    className={classes.ftFontSample}
+                    style={{ fontFamily, fontWeight }}
+                  >
+                    {FONT_TEST_SAMPLE}
+                  </Typography>
+                </div>
+              );
+            })}
+          </div>
         )}
 
         {tab !== 0 && (
@@ -724,7 +751,11 @@ const TypographyPage = () => {
             </div>
 
             <div className={classes.sliderRow}>
-              <Typography variant="caption" className={classes.sliderLabel}>
+              <Typography
+                variant="caption"
+                className={classes.sliderLabel}
+                style={{ fontFamily: RAKUTEN_FONTS }}
+              >
                 Font Weight: {fontWeight} — {FONT_WEIGHT_NAMES[fontWeight]}
               </Typography>
               <Slider
@@ -741,10 +772,10 @@ const TypographyPage = () => {
         )}
 
         {tab === 1 && (
-          <div className={classes.section} style={{ fontWeight }}>
+          <div className={classes.section} style={{ fontFamily, fontWeight }}>
             <div className={classes.fontName}>
               {useRakuten ? 'Rakuten Fonts' : 'General Fonts'} <br />
-              Font-Family: {font}
+              Font-Family: {fontFamily}
             </div>
             {SAMPLES.map(({ variant, label, en, jp }) => (
               <div key={variant} className={classes.sampleRow}>
@@ -772,7 +803,7 @@ const TypographyPage = () => {
           <div className={classes.htmlSection}>
             <div className={classes.fontName}>
               {useRakuten ? 'Rakuten Fonts' : 'General Fonts'} <br />
-              Font-Family: {font}
+              Font-Family: {fontFamily}
             </div>
             <div className={classes.sectionTitle}>HTML Text Elements</div>
             {HTML_ROWS.map(({ tag, en, jp }) => (
