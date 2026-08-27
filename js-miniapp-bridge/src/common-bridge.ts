@@ -44,6 +44,7 @@ import {
 import { LogType } from './types/log-type';
 import { EsimConfig } from './types/e-sim';
 import { Platform } from './types/platform';
+import { NetworkStatus } from './types/network';
 import { LaunchBrowserOptions } from './types/browser-options';
 
 import { NotificationBridge } from './modules/notification-bridge';
@@ -103,7 +104,7 @@ export class MiniAppBridge {
   platform: string;
   isSecureStorageReady = false;
   secureStorageLoadError: MiniAppError | null = null;
-  private notificationBridge: NotificationBridge;
+  private readonly notificationBridge: NotificationBridge;
   preferences: MiniAppPreferences;
   browserManager: BrowserManager;
   galleryManager: GalleryManager;
@@ -1150,6 +1151,38 @@ export class MiniAppBridge {
         error => reject(parseMiniAppError(error))
       );
     });
+  }
+
+  /**
+   * Returns the current network connectivity status.
+   */
+  getNetworkStatus(): Promise<NetworkStatus> {
+    return new Promise<NetworkStatus>((resolve, reject) => {
+      return this.executor.exec(
+        'getNetworkStatus',
+        {},
+        (result: string) => resolve(JSON.parse(result) as NetworkStatus),
+        error => reject(parseMiniAppError(error))
+      );
+    });
+  }
+
+  /**
+   * Subscribes to network status changes for the lifetime of the MiniApp.
+   * The callback is NOT called immediately with the current state —
+   * use getNetworkStatus() for the current state on load.
+   */
+  onNetworkStatusChanged(callback: (status: NetworkStatus) => void): void {
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent<{ message: string }>;
+      try {
+        const json = JSON.parse(customEvent.detail.message);
+        callback(json as NetworkStatus);
+      } catch (e) {
+        throw new Error(e);
+      }
+    };
+    window.addEventListener('miniappnetworkstatuschanged', handler);
   }
 
   /**

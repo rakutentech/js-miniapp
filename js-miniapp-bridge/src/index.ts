@@ -137,3 +137,5 @@ export {
   PermissionStatus,
 };
 export { SimCheckError, SimCheckErrorType } from './types/error-types';
+
+export { NetworkType, NetworkStatus } from './types/network';

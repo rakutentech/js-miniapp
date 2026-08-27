@@ -23,6 +23,7 @@ import SendIcon from '@material-ui/icons/SendSharp';
 import ShareIcon from '@material-ui/icons/Share';
 import SimCardIcon from '@material-ui/icons/SimCard';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
+import NetworkCheckIcon from '@mui/icons-material/NetworkCheck';
 import StorageIcon from '@material-ui/icons/Storage';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import WebIcon from '@material-ui/icons/Web';
@@ -72,6 +73,7 @@ import WindowActions from './pages/window-actions';
 import OneClickSdk from './pages/one-click-sdk';
 import SimStatus from './pages/sim';
 import TypographyPage from './pages/typography';
+import NetworkStatusComponent from './pages/network-status';
 
 //default root location when using ios
 const iosHomeNavLink = { navLink: '/index.html', label: 'Home' };
@@ -205,11 +207,6 @@ const oneClickNavLink = {
   label: 'OneClick',
 };
 
-const typographyNavLink = {
-  navLink: '/typography',
-  label: 'Typography',
-};
-
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -250,7 +247,6 @@ const navLinks = [
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
   simNavLink,
-  typographyNavLink,
 ];
 
 const homeItem = [
@@ -478,12 +474,6 @@ const appItems = [
     label: oneClickNavLink.label,
     navLink: oneClickNavLink.navLink,
     element: <OneClickSdk />,
-  },
-  {
-    icon: <TextFieldsIcon />,
-    label: typographyNavLink.label,
-    navLink: typographyNavLink.navLink,
-    element: <TypographyPage />,
   },
 ];
 

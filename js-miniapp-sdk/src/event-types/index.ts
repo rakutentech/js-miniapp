@@ -21,4 +21,5 @@ export enum MiniAppKeyboardEvents {
 export enum HostAppEvents {
   RECEIVE_JSON_INFO = 'miniappreceivejsoninfo',
   DID_RECEIVE_QUERY_PARAMS = 'miniappdidreceivequeryparams',
+  NETWORK_STATUS_CHANGED = 'miniappnetworkstatuschanged',
 }

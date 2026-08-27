@@ -65,7 +65,11 @@ const miniAppInstance = new MiniApp();
 
 export default miniAppInstance;
 
-export { MAAnalyticsConfig } from '../../js-miniapp-bridge/src';
+export {
+  MAAnalyticsConfig,
+  NetworkType,
+  NetworkStatus,
+} from '../../js-miniapp-bridge/src';
 export { DevicePermission } from '../../js-miniapp-bridge/src';
 export {
   CustomPermission,

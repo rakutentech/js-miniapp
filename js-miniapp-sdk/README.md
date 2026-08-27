@@ -205,6 +205,7 @@ Here is the example of manifest. You can also see [it](https://github.com/rakute
     - [Start OneClick SDK IC Chip KYC Available from v1.27.0](#start-oneclick-sdk-ic-chip-kyc-available-from-v1270)
   - [Check if SIM is Installed Available from v1.28.0](#check-if-sim-is-installed-available-from-v1280)
   - [Request Device Permission Available from v1.28.0](#request-device-permission-available-from-v1280)
+  - [Network Status Available from v1.29.0](#network-status-available-from-v1290)
 
 ## User details
 
@@ -2117,4 +2118,59 @@ MiniApp
   .catch(error => {
     console.error(error); // 'User denied the permission to this mini app.'
   });
+```
+
+<div id='network-status-available-from-v1290'/>
+
+## Network Status <small style="color:green;font-size: 12px">Available from v1.29.0</small>
+
+Get the current network connectivity status or subscribe to changes.
+
+**Types:** `NetworkStatus`, `NetworkType` (exported from `js-miniapp-sdk`)
+
+`NetworkStatus` contains:
+- `isConnected` — `boolean` indicating whether the device has a network connection
+- `networkType` — a `NetworkType` enum value: `WIFI_OR_ETHERNET`, `CELLULAR`, `SATELLITE`, or `NO_CONNECTION`
+
+### getNetworkStatus()
+
+Fetch the current network status as a one-time snapshot.
+
+```javascript
+import MiniApp, { NetworkType } from 'js-miniapp-sdk';
+
+MiniApp
+  .getNetworkStatus()
+  .then((status) => {
+    console.log(status.isConnected);   // true or false
+    console.log(status.networkType);   // e.g. NetworkType.WIFI_OR_ETHERNET
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+### onNetworkStatusChanged()
+
+Subscribe to network status changes for the lifetime of the MiniApp. The callback is **not** called immediately with the current state — use `getNetworkStatus()` to read the initial state on load.
+
+**Using `MiniApp.onNetworkStatusChanged`:**
+```javascript
+import MiniApp from 'js-miniapp-sdk';
+
+MiniApp.onNetworkStatusChanged((status) => {
+  console.log(status.isConnected);  // true or false
+  console.log(status.networkType);  // e.g. 'CELLULAR'
+});
+```
+
+**Using `window.addEventListener` directly:**
+```javascript
+import { HostAppEvents } from 'js-miniapp-sdk';
+
+window.addEventListener(HostAppEvents.NETWORK_STATUS_CHANGED, function(e) {
+  const status = e.detail.message;
+  console.log(status.isConnected);  // true or false
+  console.log(status.networkType);  // e.g. 'CELLULAR'
+});
 ```

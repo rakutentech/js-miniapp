@@ -36,6 +36,7 @@ import {
 } from '../src';
 import { LoadHTMLStringOptions } from '../src/types/browser-options';
 import { InternalBrowserErrorType } from '../src/types/error-types/internal-browser-error';
+import { NetworkStatus, NetworkType } from '../src/types/network';
 
 /* tslint:disable:no-any */
 const window: any = {
@@ -1797,5 +1798,99 @@ describe('configureAnalytics', () => {
     return expect(
       bridge.configureAnalytics(configWithLongStrings)
     ).to.eventually.deep.equal(response);
+  });
+});
+
+describe('getNetworkStatus', () => {
+  it('will resolve with wifi network status', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const status: NetworkStatus = {
+      networkType: NetworkType.WIFI_OR_ETHERNET,
+      isConnected: true,
+    };
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(status));
+
+    return expect(bridge.getNetworkStatus()).to.eventually.deep.equal(status);
+  });
+
+  it('will resolve with cellular network status', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const status: NetworkStatus = {
+      networkType: NetworkType.CELLULAR,
+      isConnected: true,
+    };
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(status));
+
+    return expect(bridge.getNetworkStatus()).to.eventually.deep.equal(status);
+  });
+
+  it('will resolve with no connection status', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const status: NetworkStatus = {
+      networkType: NetworkType.NO_CONNECTION,
+      isConnected: false,
+    };
+    mockExecutor.exec.callsArgWith(2, JSON.stringify(status));
+
+    return expect(bridge.getNetworkStatus()).to.eventually.deep.equal(status);
+  });
+
+  it('will reject with MiniAppError on error', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    mockExecutor.exec.callsArgWith(3, '{ "message": "network error" }');
+
+    return expect(bridge.getNetworkStatus()).to.eventually.be.rejected;
+  });
+});
+
+describe('onNetworkStatusChanged', () => {
+  beforeEach(() => {
+    (global as any).window = window;
+    (window.addEventListener as sinon.SinonStub).reset();
+  });
+
+  it('will register event listener on window', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const callback = sinon.stub();
+    bridge.onNetworkStatusChanged(callback);
+
+    expect(
+      (window.addEventListener as sinon.SinonStub).calledWith(
+        'miniappnetworkstatuschanged'
+      )
+    ).to.equal(true);
+  });
+
+  it('will invoke callback with parsed NetworkStatus on event', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const status: NetworkStatus = {
+      networkType: NetworkType.CELLULAR,
+      isConnected: true,
+    };
+    const callback = sinon.stub();
+    bridge.onNetworkStatusChanged(callback);
+
+    const addEventListenerStub = window.addEventListener as sinon.SinonStub;
+    const handler = addEventListenerStub.lastCall.args[1];
+    handler({ detail: { message: JSON.stringify(status) } });
+
+    expect(callback.calledOnce).to.equal(true);
+    expect(callback.firstCall.args[0]).to.deep.equal(status);
+  });
+
+  it('will throw an error when event message is invalid JSON', () => {
+    const bridge = new Bridge.MiniAppBridge(mockExecutor);
+    const callback = sinon.stub();
+    bridge.onNetworkStatusChanged(callback);
+
+    const addEventListenerStub = window.addEventListener as sinon.SinonStub;
+    const handler = addEventListenerStub.lastCall.args[1];
+
+    expect(() => handler({ detail: { message: 'Fail to connect' } })).to.throw(
+      Error,
+      /JSON/
+    );
+
+    expect(callback.called).to.equal(false);
   });
 });
