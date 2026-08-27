@@ -207,6 +207,16 @@ const oneClickNavLink = {
   label: 'OneClick',
 };
 
+const typographyNavLink = {
+  navLink: '/typography',
+  label: 'Typography',
+};
+
+const networkStatusNavLink = {
+  navLink: '/network-status',
+  label: 'Network Status',
+};
+
 const navLinks = [
   iosHomeNavLink,
   androidHomeNavLink,
@@ -247,6 +257,8 @@ const navLinks = [
   launchAppSettingsNavLink,
   scrollToAnchorNavLink,
   simNavLink,
+  typographyNavLink,
+  networkStatusNavLink,
 ];
 
 const homeItem = [
@@ -474,6 +486,18 @@ const appItems = [
     label: oneClickNavLink.label,
     navLink: oneClickNavLink.navLink,
     element: <OneClickSdk />,
+  },
+  {
+    icon: <TextFieldsIcon />,
+    label: typographyNavLink.label,
+    navLink: typographyNavLink.navLink,
+    element: <TypographyPage />,
+  },
+  {
+    icon: <NetworkCheckIcon />,
+    label: networkStatusNavLink.label,
+    navLink: networkStatusNavLink.navLink,
+    element: <NetworkStatusComponent />,
   },
 ];
 
