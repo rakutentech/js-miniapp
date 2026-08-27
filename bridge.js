@@ -823,6 +823,33 @@ var MiniAppBridge = /** @class */ (function () {
         });
     };
     /**
+     * Returns the current network connectivity status.
+     */
+    MiniAppBridge.prototype.getNetworkStatus = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            return _this.executor.exec('getNetworkStatus', {}, function (result) { return resolve(JSON.parse(result)); }, function (error) { return reject((0, error_types_1.parseMiniAppError)(error)); });
+        });
+    };
+    /**
+     * Subscribes to network status changes for the lifetime of the MiniApp.
+     * The callback is NOT called immediately with the current state —
+     * use getNetworkStatus() for the current state on load.
+     */
+    MiniAppBridge.prototype.onNetworkStatusChanged = function (callback) {
+        var handler = function (event) {
+            var customEvent = event;
+            try {
+                var json = JSON.parse(customEvent.detail.message);
+                callback(json);
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+        };
+        window.addEventListener('miniappnetworkstatuschanged', handler);
+    };
+    /**
      * Launches the app using the provided deeplink URL.
      *
      * @param url - The deeplink URL to open the app.
@@ -1795,17 +1822,11 @@ function parseMiniAppError(jsonString) {
             (0, sim_errors_1.parseSimError)(json) ||
             new mini_app_error_1.MiniAppError(json));
     }
-    catch (e) {
-        console.error(e);
-        if (jsonString !== '' || jsonString !== undefined) {
-            return new mini_app_error_1.MiniAppError({
-                type: 'MiniAppError',
-                message: jsonString,
-            });
-        }
+    catch (_e) {
+        console.error(_e);
         return new mini_app_error_1.MiniAppError({
             type: 'MiniAppError',
-            message: 'Failed to parse the error',
+            message: jsonString || 'Failed to parse the error',
         });
     }
 }
